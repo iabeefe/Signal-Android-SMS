@@ -98,6 +98,7 @@ ktlint {
 def canonicalVersionCode = 1232
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 def canonicalVersionName = "6.14.5.0-JW-JK"
 ||||||| parent of 775ec008cc (Added extra options)
 def canonicalVersionCode = 1235
@@ -638,6 +639,11 @@ def canonicalVersionName = "6.27.2"
 =======
 def canonicalVersionName = "6.27.2.0-JW"
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| parent of 66c339aa35 (Added extra options)
+def canonicalVersionName = "6.14.5"
+=======
+def canonicalVersionName = "6.14.5.0-JW"
+>>>>>>> 66c339aa35 (Added extra options)
 
 def postFixSize = 100
 def abiPostFix = ['universal'   : 0,
@@ -762,10 +768,11 @@ android {
         multiDexEnabled true
 
         vectorDrawables.useSupportLibrary = true
-        project.ext.set("archivesBaseName", "Signal")
+        project.ext.set("archivesBaseName", "Signal-Android") // JW: change basename
 
         manifestPlaceholders = [mapsKey:"AIzaSyCSx9xea86GwDKGznCAULE9Y5a8b-TfN9U"]
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1035,6 +1042,14 @@ android {
         buildConfigField "long", "BUILD_TIMESTAMP", "1000L" // JW: fixed time for reproducible builds, is not used anyway
         buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| parent of 66c339aa35 (Added extra options)
+        buildConfigField "long", "BUILD_TIMESTAMP", getLastCommitTimestamp() + "L"
+        buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
+=======
+        // JW: change back to old code that works without having Git in the path and by downloading the source as zip, timestamp is not used anyway
+        buildConfigField "long", "BUILD_TIMESTAMP", System.currentTimeMillis() + "L"
+        buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
+>>>>>>> 66c339aa35 (Added extra options)
         buildConfigField "String", "SIGNAL_URL", "\"https://chat.signal.org\""
         buildConfigField "String", "STORAGE_URL", "\"https://storage.signal.org\""
         buildConfigField "String", "SIGNAL_CDN_URL", "\"https://cdn.signal.org\""
@@ -1533,6 +1548,7 @@ dependencies {
 
     coreLibraryDesugaring libs.android.tools.desugar
 
+    implementation 'net.lingala.zip4j:zip4j:2.11.5' // JW: added
     implementation (libs.androidx.appcompat) {
         version {
             strictly '1.6.1'
