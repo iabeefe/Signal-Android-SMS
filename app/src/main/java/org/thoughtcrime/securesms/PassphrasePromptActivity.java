@@ -33,6 +33,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+<<<<<<< HEAD
+=======
+import android.view.WindowManager; // JW: added
+import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
+>>>>>>> 66c339aa35 (Added extra options)
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -271,11 +278,24 @@ public class PassphrasePromptActivity extends PassphraseActivity {
   private void setLockTypeVisibility() {
     if (SignalStore.settings().getScreenLockEnabled()) {
       passphraseAuthContainer.setVisibility(View.GONE);
+<<<<<<< HEAD
       unlockView.setVisibility(View.VISIBLE);
       lockScreenButton.setVisibility(View.VISIBLE);
     } else {
       passphraseAuthContainer.setVisibility(View.VISIBLE);
       unlockView.setVisibility(View.GONE);
+=======
+      // JW: to override setSoftInputMode it has to be defined in the manifest file
+      getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); // JW
+      fingerprintPrompt.setVisibility(biometricManager.canAuthenticate(BiometricDeviceAuthentication.BIOMETRIC_AUTHENTICATORS) == BiometricManager.BIOMETRIC_SUCCESS ? View.VISIBLE
+                                                                                                                                       : View.GONE);
+      lockScreenButton.setVisibility(View.VISIBLE);
+    } else {
+      passphraseAuthContainer.setVisibility(View.VISIBLE);
+      getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE); // JW
+      passphraseText.requestFocus(); // JW
+      fingerprintPrompt.setVisibility(View.GONE);
+>>>>>>> 66c339aa35 (Added extra options)
       lockScreenButton.setVisibility(View.GONE);
     }
   }

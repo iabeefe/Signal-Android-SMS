@@ -115,6 +115,10 @@ public final class Megaphones {
       put(Event.BACKUP_SCHEDULE_PERMISSION, shouldShowBackupSchedulePermissionMegaphone(context) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(3)) : NEVER);
       put(Event.ONBOARDING, shouldShowOnboardingMegaphone(context) ? ALWAYS : NEVER);
       put(Event.TURN_OFF_CENSORSHIP_CIRCUMVENTION, shouldShowTurnOffCircumventionMegaphone() ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(7)) : NEVER);
+<<<<<<< HEAD
+=======
+      //put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER); // JW
+>>>>>>> 66c339aa35 (Added extra options)
       put(Event.REMOTE_MEGAPHONE, shouldShowRemoteMegaphone(records) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(1)) : NEVER);
       put(Event.LINKED_DEVICE_INACTIVE, shouldShowLinkedDeviceInactiveMegaphone() ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(3)): NEVER);
       put(Event.PIN_REMINDER, new SignalPinReminderSchedule());
@@ -152,6 +156,13 @@ public final class Megaphones {
         return buildNotificationsMegaphone(context);
       case ADD_A_PROFILE_PHOTO:
         return buildAddAProfilePhotoMegaphone(context);
+<<<<<<< HEAD
+=======
+//      case BECOME_A_SUSTAINER:                             // JW I see these way too often
+//        return buildBecomeASustainerMegaphone(context);
+//      case DONATE_Q2_2022:
+//        return buildDonateQ2Megaphone(context);
+>>>>>>> 66c339aa35 (Added extra options)
       case TURN_OFF_CENSORSHIP_CIRCUMVENTION:
         return buildTurnOffCircumventionMegaphone(context);
       case LINKED_DEVICE_INACTIVE:

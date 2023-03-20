@@ -382,12 +382,23 @@ public class ApplicationContext extends Application implements AppForegroundObse
 
       Log.i(TAG, "Setting first install version to " + BuildConfig.CANONICAL_VERSION_CODE);
       TextSecurePreferences.setFirstInstallVersion(this, BuildConfig.CANONICAL_VERSION_CODE);
+<<<<<<< HEAD
     } else if (!SignalStore.settings().getPassphraseDisabled() && VersionTracker.getDaysSinceFirstInstalled(this) < 90) {
+=======
+// JW: this code bluntly removes the password setting and makes password protected installs crash.
+/*
+    } else if (!TextSecurePreferences.isPasswordDisabled(this) && VersionTracker.getDaysSinceFirstInstalled(this) < 90) {
+>>>>>>> 66c339aa35 (Added extra options)
       Log.i(TAG, "Detected a new install that doesn't have passphrases disabled -- assuming bad initialization.");
       AppInitialization.onRepairFirstEverAppLaunch(this);
     } else if (!SignalStore.settings().getPassphraseDisabled() && VersionTracker.getDaysSinceFirstInstalled(this) < 912) {
       Log.i(TAG, "Detected a not-recent install that doesn't have passphrases disabled -- disabling now.");
+<<<<<<< HEAD
       SignalStore.settings().setPassphraseDisabled(true);
+=======
+      TextSecurePreferences.setPasswordDisabled(this, true);
+*/
+>>>>>>> 66c339aa35 (Added extra options)
     }
   }
 

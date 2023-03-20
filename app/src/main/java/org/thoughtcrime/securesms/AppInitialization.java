@@ -33,7 +33,11 @@ public final class AppInitialization {
     TextSecurePreferences.setJobManagerVersion(context, JobManager.CURRENT_VERSION);
     TextSecurePreferences.setLastVersionCode(context, Util.getCanonicalVersionCode());
     TextSecurePreferences.setHasSeenStickerIntroTooltip(context, true);
+<<<<<<< HEAD
     SignalStore.settings().setPassphraseDisabled(true);
+=======
+    // TextSecurePreferences.setPasswordDisabled(context, true); // JW: don't do this
+>>>>>>> 66c339aa35 (Added extra options)
     TextSecurePreferences.setReadReceiptsEnabled(context, true);
     TextSecurePreferences.setTypingIndicatorsEnabled(context, true);
     TextSecurePreferences.setHasSeenWelcomeScreen(context, false);
@@ -73,8 +77,13 @@ public final class AppInitialization {
     TextSecurePreferences.setJobManagerVersion(context, JobManager.CURRENT_VERSION);
     TextSecurePreferences.setLastVersionCode(context, Util.getCanonicalVersionCode());
     TextSecurePreferences.setHasSeenStickerIntroTooltip(context, true);
+<<<<<<< HEAD
     SignalStore.settings().setPassphraseDisabled(true);
     AppDependencies.getMegaphoneRepository().onFirstEverAppLaunch();
+=======
+    // TextSecurePreferences.setPasswordDisabled(context, true); // JW: don't do this
+    ApplicationDependencies.getMegaphoneRepository().onFirstEverAppLaunch();
+>>>>>>> 66c339aa35 (Added extra options)
     SignalStore.onFirstEverAppLaunch();
     AppDependencies.getJobManager().add(StickerPackDownloadJob.forInstall(BlessedPacks.ZOZO.getPackId(), BlessedPacks.ZOZO.getPackKey(), false));
     AppDependencies.getJobManager().add(StickerPackDownloadJob.forInstall(BlessedPacks.BANDIT.getPackId(), BlessedPacks.BANDIT.getPackKey(), false));

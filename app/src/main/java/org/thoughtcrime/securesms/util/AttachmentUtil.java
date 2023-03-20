@@ -14,6 +14,7 @@ import org.thoughtcrime.securesms.attachments.Attachment;
 import org.thoughtcrime.securesms.attachments.AttachmentId;
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment;
 import org.thoughtcrime.securesms.database.NoSuchMessageException;
+import org.thoughtcrime.securesms.database.MessageTable; // JW: added
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.jobmanager.impl.NotInCallConstraint;
@@ -100,8 +101,17 @@ public class AttachmentUtil {
 
     MessageRecord deletedMessageRecord = null;
     if (attachmentCount <= 1) {
+<<<<<<< HEAD
       deletedMessageRecord = SignalDatabase.messages().getMessageRecordOrNull(mmsId);
       SignalDatabase.messages().deleteMessage(mmsId);
+=======
+      // JW: changed
+      if (!TextSecurePreferences.isDeleteMediaOnly(context)) {
+        SignalDatabase.messages().deleteMessage(mmsId);
+      }  else {
+        SignalDatabase.messages().deleteAttachmentsOnly(mmsId);
+      }
+>>>>>>> 66c339aa35 (Added extra options)
     } else {
       SignalDatabase.attachments().deleteAttachment(attachmentId);
       if (Recipient.self().getDeleteSyncCapability().isSupported()) {
@@ -111,6 +121,7 @@ public class AttachmentUtil {
 
     return deletedMessageRecord;
   }
+
 
   private static boolean isNonDocumentType(String contentType) {
     return

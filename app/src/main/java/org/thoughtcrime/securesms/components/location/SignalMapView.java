@@ -20,8 +20,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.signal.core.util.concurrent.ListenableFuture;
 import org.signal.core.util.concurrent.SettableFuture;
 import org.thoughtcrime.securesms.R;
+<<<<<<< HEAD
 
 import java.util.concurrent.ExecutionException;
+=======
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies; // JW: added
+import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
+import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
+import org.thoughtcrime.securesms.util.concurrent.SettableFuture;
+>>>>>>> 66c339aa35 (Added extra options)
 
 public class SignalMapView extends LinearLayout {
 
@@ -52,6 +59,19 @@ public class SignalMapView extends LinearLayout {
     this.textView  = findViewById(R.id.address_view);
   }
 
+  // JW: set the maptype
+  public void setGoogleMapType(GoogleMap googleMap) {
+    String mapType = TextSecurePreferences.getGoogleMapType(ApplicationDependencies.getApplication());
+
+    if (googleMap != null) {
+      if      (mapType.equals("hybrid"))    { googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); }
+      else if (mapType.equals("satellite")) { googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE); }
+      else if (mapType.equals("terrain"))   { googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); }
+      else if (mapType.equals("none"))      { googleMap.setMapType(GoogleMap.MAP_TYPE_NONE); }
+      else                                  { googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL); }
+    }
+  }
+
   public ListenableFuture<Bitmap> display(final SignalPlace place) {
     final SettableFuture<Bitmap> future = new SettableFuture<>();
 
@@ -59,6 +79,7 @@ public class SignalMapView extends LinearLayout {
     this.textView.setText(place.getDescription());
     snapshot(place, mapView).addListener(new ListenableFuture.Listener<Bitmap>() {
       @Override
+<<<<<<< HEAD
       public void onSuccess(Bitmap result) {
         future.set(result);
         imageView.setImageBitmap(result);
@@ -68,6 +89,31 @@ public class SignalMapView extends LinearLayout {
       @Override
       public void onFailure(ExecutionException e) {
         future.setException(e);
+=======
+      public void onMapReady(final GoogleMap googleMap) {
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLong(), 13));
+        googleMap.addMarker(new MarkerOptions().position(place.getLatLong()));
+        googleMap.setBuildingsEnabled(true);
+        //googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        setGoogleMapType(googleMap); // JW: set maptype
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+          @Override
+          public void onMapLoaded() {
+            googleMap.snapshot(new GoogleMap.SnapshotReadyCallback() {
+              @Override
+              public void onSnapshotReady(Bitmap bitmap) {
+                future.set(bitmap);
+                imageView.setImageBitmap(bitmap);
+                imageView.setVisibility(View.VISIBLE);
+                mapView.setVisibility(View.GONE);
+                mapView.onPause();
+                mapView.onDestroy();
+              }
+            });
+          }
+        });
+>>>>>>> 66c339aa35 (Added extra options)
       }
     });
 
