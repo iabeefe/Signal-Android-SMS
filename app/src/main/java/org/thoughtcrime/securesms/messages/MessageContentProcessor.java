@@ -2357,7 +2357,15 @@ public class MessageContentProcessor {
     Optional<List<LinkPreview>> previews        = getLinkPreviews(message.getDataMessage().get().getPreviews(), message.getDataMessage().get().getBody().orElse(""), false);
     Optional<List<Mention>>     mentions        = getMentions(message.getDataMessage().get().getMentions());
     Optional<GiftBadge>         giftBadge       = getGiftBadge(message.getDataMessage().get().getGiftBadge());
+<<<<<<< HEAD
     boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
+||||||| parent of 775ec008cc (Added extra options)
+    boolean                     viewOnce        = message.getDataMessage().get().isViewOnce();
+    BodyRangeList               bodyRanges      = getBodyRangeList(message.getDataMessage().get().getBodyRanges());
+=======
+    boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
+    BodyRangeList               bodyRanges      = getBodyRangeList(message.getDataMessage().get().getBodyRanges());
+>>>>>>> 775ec008cc (Added extra options)
     List<Attachment>            syncAttachments = viewOnce ? Collections.singletonList(new TombstoneAttachment(MediaUtil.VIEW_ONCE, false))
                                                            : PointerAttachment.forPointers(message.getDataMessage().get().getAttachments());
 

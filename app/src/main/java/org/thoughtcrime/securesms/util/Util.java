@@ -350,6 +350,7 @@ public class Util {
    *         Takes into account both the build age as well as any remote deprecation values.
    */
 <<<<<<< HEAD
+<<<<<<< HEAD
   public static long getTimeUntilBuildExpiry(long currentTime) {
     if (SignalStore.misc().isClientDeprecated()) {
       return 0;
@@ -370,6 +371,35 @@ public class Util {
     // JW never expire builds. This is an ugly hack but it prevents me from making changes all over the code with each new release.
     return Integer.MAX_VALUE;
 >>>>>>> 66c339aa35 (Added extra options)
+||||||| parent of 775ec008cc (Added extra options)
+  public static long getTimeUntilBuildExpiry() {
+    if (SignalStore.misc().isClientDeprecated()) {
+      return 0;
+    }
+
+    long buildAge                   = System.currentTimeMillis() - BuildConfig.BUILD_TIMESTAMP;
+    long timeUntilBuildDeprecation  = BUILD_LIFESPAN - buildAge;
+    long timeUntilRemoteDeprecation = RemoteDeprecation.getTimeUntilDeprecation();
+
+    if (timeUntilRemoteDeprecation != -1) {
+      long timeUntilDeprecation = Math.min(timeUntilBuildDeprecation, timeUntilRemoteDeprecation);
+      return Math.max(timeUntilDeprecation, 0);
+    } else {
+      return Math.max(timeUntilBuildDeprecation, 0);
+    }
+  }
+
+  public static boolean isMmsCapable(Context context) {
+    return (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) || OutgoingLegacyMmsConnection.isConnectionPossible(context);
+=======
+  public static long getTimeUntilBuildExpiry() {
+    // JW never expire builds. This is an ugly hack but it prevents me from making changes all over the code with each new release.
+    return Integer.MAX_VALUE;
+  }
+
+  public static boolean isMmsCapable(Context context) {
+    return (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) || OutgoingLegacyMmsConnection.isConnectionPossible(context);
+>>>>>>> 775ec008cc (Added extra options)
   }
 
   public static <T> T getRandomElement(T[] elements) {

@@ -214,6 +214,7 @@ class PrivacySettingsFragment : DSLSettingsFragment(R.string.preferences__privac
           isChecked = state.isObsoletePasswordEnabled, // JW
           onClick = {
 <<<<<<< HEAD
+<<<<<<< HEAD
             MaterialAlertDialogBuilder(requireContext()).apply {
               setTitle(R.string.ApplicationPreferencesActivity_disable_passphrase)
               setMessage(R.string.ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications)
@@ -250,6 +251,43 @@ class PrivacySettingsFragment : DSLSettingsFragment(R.string.preferences__privac
                 setNegativeButton(android.R.string.cancel, null)
                 show()
 >>>>>>> 66c339aa35 (Added extra options)
+||||||| parent of 775ec008cc (Added extra options)
+            MaterialAlertDialogBuilder(requireContext()).apply {
+              setTitle(R.string.ApplicationPreferencesActivity_disable_passphrase)
+              setMessage(R.string.ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications)
+              setIcon(R.drawable.ic_warning)
+              setPositiveButton(R.string.ApplicationPreferencesActivity_disable) { _, _ ->
+                MasterSecretUtil.changeMasterSecretPassphrase(
+                  activity,
+                  KeyCachingService.getMasterSecret(context),
+                  MasterSecretUtil.UNENCRYPTED_PASSPHRASE
+                )
+                TextSecurePreferences.setPasswordDisabled(activity, true)
+                val intent = Intent(activity, KeyCachingService::class.java)
+                intent.action = KeyCachingService.DISABLE_ACTION
+                requireActivity().startService(intent)
+                viewModel.refresh()
+=======
+            if (state.isObsoletePasswordEnabled) { // JW: added if else
+              MaterialAlertDialogBuilder(requireContext()).apply {
+                setTitle(R.string.ApplicationPreferencesActivity_disable_passphrase)
+                setMessage(R.string.ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications)
+                setIcon(R.drawable.ic_warning)
+                setPositiveButton(R.string.ApplicationPreferencesActivity_disable) { _, _ ->
+                  MasterSecretUtil.changeMasterSecretPassphrase(
+                    activity,
+                    KeyCachingService.getMasterSecret(context),
+                    MasterSecretUtil.UNENCRYPTED_PASSPHRASE
+                  )
+                  TextSecurePreferences.setPasswordDisabled(activity, true)
+                  val intent = Intent(activity, KeyCachingService::class.java)
+                  intent.action = KeyCachingService.DISABLE_ACTION
+                  requireActivity().startService(intent)
+                  viewModel.refresh()
+                }
+                setNegativeButton(android.R.string.cancel, null)
+                show()
+>>>>>>> 775ec008cc (Added extra options)
               }
             } else {
               // enable password

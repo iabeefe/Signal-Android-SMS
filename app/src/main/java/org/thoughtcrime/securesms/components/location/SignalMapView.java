@@ -21,11 +21,17 @@ import org.signal.core.util.concurrent.ListenableFuture;
 import org.signal.core.util.concurrent.SettableFuture;
 import org.thoughtcrime.securesms.R;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import java.util.concurrent.ExecutionException;
 =======
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies; // JW: added
 import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
+||||||| parent of 775ec008cc (Added extra options)
+=======
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies; // JW: added
+import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
+>>>>>>> 775ec008cc (Added extra options)
 import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
 import org.thoughtcrime.securesms.util.concurrent.SettableFuture;
 >>>>>>> 66c339aa35 (Added extra options)

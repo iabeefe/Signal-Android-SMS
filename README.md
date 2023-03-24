@@ -90,10 +90,16 @@ The form and manner of this distribution makes it eligible for export under the 
 ## License
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Copyright 2013-2024 Signal Messenger, LLC
 =======
 Copyright 2013-2021 Signal
 >>>>>>> 66c339aa35 (Added extra options)
+||||||| parent of 775ec008cc (Added extra options)
+Copyright 2013-2022 Signal
+=======
+Copyright 2013-2021 Signal
+>>>>>>> 775ec008cc (Added extra options)
 
 Licensed under the GNU AGPLv3: https://www.gnu.org/licenses/agpl-3.0.html
 
