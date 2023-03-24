@@ -93,6 +93,7 @@ def canonicalVersionCode = 1232
 def canonicalVersionName = "6.14.5.0-JW-JK"
 ||||||| parent of 775ec008cc (Added extra options)
 def canonicalVersionCode = 1235
+<<<<<<< HEAD
 def canonicalVersionName = "6.15.3"
 =======
 def canonicalVersionCode = 1235
@@ -388,6 +389,11 @@ def canonicalVersionName = "6.14.5.0-JW"
 =======
 def canonicalVersionName = "6.14.5.0-JW-JK"
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| parent of 775ec008cc (Added extra options)
+def canonicalVersionName = "6.15.3"
+=======
+def canonicalVersionName = "6.15.3.0-JW"
+>>>>>>> 775ec008cc (Added extra options)
 
 def postFixSize = 100
 def abiPostFix = ['universal'   : 0,
@@ -517,6 +523,7 @@ android {
         manifestPlaceholders = [mapsKey:"AIzaSyCSx9xea86GwDKGznCAULE9Y5a8b-TfN9U"]
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         buildConfigField "long", "BUILD_TIMESTAMP", "1000L" // JW: fixed time for reproducible builds, is not used anyway
         buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
 ||||||| parent of 66c339aa35 (Added extra options)
@@ -527,6 +534,14 @@ android {
         buildConfigField "long", "BUILD_TIMESTAMP", System.currentTimeMillis() + "L"
         buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
 >>>>>>> 66c339aa35 (Added extra options)
+||||||| parent of 775ec008cc (Added extra options)
+        buildConfigField "long", "BUILD_TIMESTAMP", getLastCommitTimestamp() + "L"
+        buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
+=======
+        // JW: change back to old code that works without having Git in the path and by downloading the source as zip, timestamp is not used anyway
+        buildConfigField "long", "BUILD_TIMESTAMP", System.currentTimeMillis() + "L"
+        buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
+>>>>>>> 775ec008cc (Added extra options)
         buildConfigField "String", "SIGNAL_URL", "\"https://chat.signal.org\""
         buildConfigField "String", "STORAGE_URL", "\"https://storage.signal.org\""
         buildConfigField "String", "SIGNAL_CDN_URL", "\"https://cdn.signal.org\""

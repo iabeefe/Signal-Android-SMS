@@ -131,6 +131,7 @@ import org.thoughtcrime.securesms.util.DynamicTheme;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.MediaUtil;
 import org.thoughtcrime.securesms.util.views.SimpleProgressDialog;
 =======
@@ -284,6 +285,10 @@ import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 =======
 import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 >>>>>>> 66c339aa35 (Added extra options)
+||||||| parent of 775ec008cc (Added extra options)
+=======
+import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
+>>>>>>> 775ec008cc (Added extra options)
 
 import java.io.IOException;
 import java.util.List;
