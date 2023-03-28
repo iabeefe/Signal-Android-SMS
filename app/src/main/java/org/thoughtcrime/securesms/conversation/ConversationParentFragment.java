@@ -217,7 +217,7 @@ import org.thoughtcrime.securesms.keyboard.sticker.StickerKeyboardPageFragment;
 import org.thoughtcrime.securesms.keyboard.sticker.StickerSearchDialogFragment;
 import org.thoughtcrime.securesms.keyvalue.PaymentsValues;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
-import org.thoughtcrime.securesms.keyvalue.SmsExportPhase;
+//import org.thoughtcrime.securesms.keyvalue.SmsExportPhase;
 import org.thoughtcrime.securesms.linkpreview.LinkPreview;
 import org.thoughtcrime.securesms.linkpreview.LinkPreviewRepository;
 import org.thoughtcrime.securesms.linkpreview.LinkPreviewViewModel;
@@ -943,7 +943,8 @@ public class ConversationParentFragment extends Fragment
     if (isSingleConversation()) {
       if (viewModel.isPushAvailable())   {
         inflater.inflate(R.menu.conversation_callable_secure, menu);
-      } else if (!recipient.get().isReleaseNotes() && SignalStore.misc().getSmsExportPhase().allowSmsFeatures()) {
+      //} else if (!recipient.get().isReleaseNotes() && SignalStore.misc().getSmsExportPhase().allowSmsFeatures()) {
+      } else if (!recipient.get().isReleaseNotes()) {
         inflater.inflate(R.menu.conversation_callable_insecure, menu);
       }
     } else if (isGroupConversation()) {
@@ -1324,7 +1325,8 @@ public class ConversationParentFragment extends Fragment
   private void handleInviteLink() {
     String inviteText = getString(R.string.ConversationActivity_lets_switch_to_signal, getString(R.string.install_url));
 
-    if (viewModel.isDefaultSmsApplication() && SignalStore.misc().getSmsExportPhase().isSmsSupported()) {
+//    if (viewModel.isDefaultSmsApplication() && SignalStore.misc().getSmsExportPhase().isSmsSupported()) {
+    if (viewModel.isDefaultSmsApplication()) {
       composeText.appendInvite(inviteText);
     } else if (recipient.get().hasSmsAddress()) {
       Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -2771,7 +2773,7 @@ public class ConversationParentFragment extends Fragment
       inputPanel.setHideForBlockedState(true);
       smsExportStub.setVisibility(View.GONE);
       registerButton.setVisibility(View.VISIBLE);
-    } else if (!conversationSecurityInfo.isPushAvailable() && !(SignalStore.misc().getSmsExportPhase().isSmsSupported() && conversationSecurityInfo.isDefaultSmsApplication()) && (recipient.hasSmsAddress() || recipient.isMmsGroup())) {
+    } /*else if (!conversationSecurityInfo.isPushAvailable() && !(SignalStore.misc().getSmsExportPhase().isSmsSupported() && conversationSecurityInfo.isDefaultSmsApplication()) && (recipient.hasSmsAddress() || recipient.isMmsGroup())) {
       unblockButton.setVisibility(View.GONE);
       inputPanel.setHideForBlockedState(true);
       smsExportStub.setVisibility(View.VISIBLE);
@@ -2786,7 +2788,7 @@ public class ConversationParentFragment extends Fragment
       boolean        isPhase1     = SignalStore.misc().getSmsExportPhase() == SmsExportPhase.PHASE_1;
 
       if (conversationSecurityInfo.getHasUnexportedInsecureMessages()) {
-        message.setText(isPhase1 ? R.string.ConversationActivity__sms_messaging_is_currently_disabled_you_can_export_your_messages_to_another_app_on_your_phone
+       message.setText(isPhase1 ? R.string.ConversationActivity__sms_messaging_is_currently_disabled_you_can_export_your_messages_to_another_app_on_your_phone
                                  : R.string.ConversationActivity__sms_messaging_is_no_longer_supported_in_signal_you_can_export_your_messages_to_another_app_on_your_phone);
         actionButton.setText(R.string.ConversationActivity__export_sms_messages);
         actionButton.setOnClickListener(v -> startActivity(SmsExportActivity.createIntent(requireContext())));
@@ -2794,10 +2796,12 @@ public class ConversationParentFragment extends Fragment
         message.setText(requireContext().getString(isPhase1 ? R.string.ConversationActivity__sms_messaging_is_currently_disabled_invite_s_to_to_signal_to_keep_the_conversation_here
                                                             : R.string.ConversationActivity__sms_messaging_is_no_longer_supported_in_signal_invite_s_to_to_signal_to_keep_the_conversation_here,
                                                    recipient.getDisplayName(requireContext())));
+
         actionButton.setText(R.string.ConversationActivity__invite_to_signal);
         actionButton.setOnClickListener(v -> handleInviteLink());
       }
-    } else if (recipient.isReleaseNotes() && !recipient.isBlocked()) {
+    }*/
+    else if (recipient.isReleaseNotes() && !recipient.isBlocked()) {
       unblockButton.setVisibility(View.GONE);
       inputPanel.setHideForBlockedState(true);
       smsExportStub.setVisibility(View.GONE);

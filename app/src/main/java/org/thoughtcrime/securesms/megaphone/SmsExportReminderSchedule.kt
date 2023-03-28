@@ -3,11 +3,11 @@ package org.thoughtcrime.securesms.megaphone
 import android.content.Context
 import androidx.annotation.WorkerThread
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.keyvalue.SmsExportPhase
+//import org.thoughtcrime.securesms.keyvalue.SmsExportPhase
 import org.thoughtcrime.securesms.util.Util
 import kotlin.time.Duration.Companion.days
 
-class SmsExportReminderSchedule(private val context: Context) : MegaphoneSchedule {
+/*class SmsExportReminderSchedule(private val context: Context) : MegaphoneSchedule {
 
   companion object {
     @JvmStatic
@@ -30,3 +30,4 @@ class SmsExportReminderSchedule(private val context: Context) : MegaphoneSchedul
     }
   }
 }
+*/

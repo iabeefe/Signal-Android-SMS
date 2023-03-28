@@ -103,7 +103,7 @@ public class NewConversationActivity extends ContactSelectionActivity
 
   @Override
   public void onBeforeContactSelected(@NonNull Optional<RecipientId> recipientId, String number, @NonNull Consumer<Boolean> callback) {
-    boolean smsSupported = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
+    //boolean smsSupported = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
 
     if (recipientId.isPresent()) {
       launch(Recipient.resolved(recipientId.get()));
@@ -134,7 +134,8 @@ public class NewConversationActivity extends ContactSelectionActivity
           progress.dismiss();
 
           if (resolved != null) {
-            if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
+            //if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
+            if (resolved.isRegistered() && resolved.hasServiceId()) {
               launch(resolved);
             } else {
               new MaterialAlertDialogBuilder(this)
@@ -149,7 +150,8 @@ public class NewConversationActivity extends ContactSelectionActivity
                 .show();
           }
         });
-      } else if (smsSupported) {
+      //} else if (smsSupported) {
+      } else {
         launch(Recipient.external(this, number));
       }
     }
@@ -277,7 +279,8 @@ public class NewConversationActivity extends ContactSelectionActivity
       return null;
     }
 
-    if (recipient.isRegistered() || (SignalStore.misc().getSmsExportPhase().allowSmsFeatures())) {
+    //if (recipient.isRegistered() || (SignalStore.misc().getSmsExportPhase().allowSmsFeatures())) {
+    if (recipient.isRegistered()) {
       return new ActionItem(
           R.drawable.ic_phone_right_24,
           getString(R.string.NewConversationActivity__audio_call),

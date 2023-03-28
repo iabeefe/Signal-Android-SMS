@@ -18,6 +18,7 @@ import org.thoughtcrime.securesms.util.DynamicTheme
 import org.thoughtcrime.securesms.util.visible
 import java.util.Locale
 
+/*
 class SmsExportMegaphoneActivity : PassphraseRequiredActivity() {
 
   companion object {
@@ -64,6 +65,7 @@ class SmsExportMegaphoneActivity : PassphraseRequiredActivity() {
       }
     }
 
+
     binding.exportSmsButton.setOnClickListener {
       smsExportLauncher.launch(SmsExportActivity.createIntent(this))
     }
@@ -80,3 +82,4 @@ class SmsExportMegaphoneActivity : PassphraseRequiredActivity() {
     theme.onResume(this)
   }
 }
+*/

@@ -3,14 +3,14 @@ package org.thoughtcrime.securesms.keyvalue
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
 import org.thoughtcrime.securesms.util.Util
 import kotlin.time.Duration.Companion.days
-
+/*
 enum class SmsExportPhase(val duration: Long) {
   PHASE_1(0.days.inWholeMilliseconds),
   PHASE_2(21.days.inWholeMilliseconds),
   PHASE_3(51.days.inWholeMilliseconds);
 
   fun allowSmsFeatures(): Boolean {
-    return Util.isDefaultSmsProvider(ApplicationDependencies.getApplication()) && SignalStore.misc().smsExportPhase.isSmsSupported()
+    return Util.isDefaultSmsProvider(ApplicationDependencies.getApplication())
   }
 
   fun isSmsSupported(): Boolean {
@@ -32,3 +32,4 @@ enum class SmsExportPhase(val duration: Long) {
     }
   }
 }
+*/

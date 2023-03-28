@@ -20,7 +20,7 @@ import java.util.Locale
  *
  * Layout shared with full screen megaphones for Phase 2/3.
  */
-class SmsRemovalInformationFragment : LoggingFragment() {
+/*class SmsRemovalInformationFragment : LoggingFragment() {
   private val viewModel: SmsExportViewModel by activityViewModels()
 
   private lateinit var binding: SmsRemovalInformationFragmentBinding
@@ -58,3 +58,4 @@ class SmsRemovalInformationFragment : LoggingFragment() {
     }
   }
 }
+*/

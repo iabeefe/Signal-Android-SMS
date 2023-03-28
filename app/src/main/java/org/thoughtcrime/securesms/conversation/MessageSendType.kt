@@ -139,7 +139,7 @@ sealed class MessageSendType(
 
       options += SignalMessageSendType
 
-      if (SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+      //if (SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
         try {
           val subscriptions: Collection<SubscriptionInfoCompat> = SubscriptionManagerCompat(context).activeAndReadySubscriptionInfos
 
@@ -157,7 +157,7 @@ sealed class MessageSendType(
         } catch (e: SecurityException) {
           Log.w(TAG, "Did not have permission to get SMS subscription details!")
         }
-      }
+      //}
 
       return options
     }

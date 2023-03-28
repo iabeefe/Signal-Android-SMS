@@ -157,9 +157,9 @@ class SendButton(context: Context, attributeSet: AttributeSet?) : AppCompatImage
 
   fun showSendTypeMenu(): Boolean {
     return if (availableSendTypes.size == 1) {
-      if (scheduledSendListener == null && !SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+      /*if (scheduledSendListener == null && !SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
         Snackbar.make(snackbarContainer, R.string.InputPanel__sms_messaging_is_no_longer_supported_in_signal, Snackbar.LENGTH_SHORT).show()
-      }
+      }*/
       false
     } else {
       showSendTypeContextMenu(false)
@@ -177,10 +177,10 @@ class SendButton(context: Context, attributeSet: AttributeSet?) : AppCompatImage
       return if (scheduleListener?.canSchedule() == true && selectedSendType.transportType != MessageSendType.TransportType.SMS) {
         scheduleListener.onSendScheduled()
         true
-      } else if (!SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+      }/* else if (!SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
         Snackbar.make(snackbarContainer, R.string.InputPanel__sms_messaging_is_no_longer_supported_in_signal, Snackbar.LENGTH_SHORT).show()
         true
-      } else {
+      }*/ else {
         false
       }
     }

@@ -191,7 +191,8 @@ public final class MultiShareSender {
   }
 
   public static @NonNull MessageSendType resolveTransportOption(@NonNull Context context, boolean forceSms) {
-    if (forceSms && SignalStore.misc().getSmsExportPhase().allowSmsFeatures()) {
+    //if (forceSms && SignalStore.misc().getSmsExportPhase().allowSmsFeatures()) {
+    if (forceSms) {
       return MessageSendType.getFirstForTransport(context, false, MessageSendType.TransportType.SMS);
     } else {
       return MessageSendType.SignalMessageSendType.INSTANCE;

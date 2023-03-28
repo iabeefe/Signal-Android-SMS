@@ -142,7 +142,8 @@ sealed class ConversationSettingsViewModel(
       }
 
       store.update(liveRecipient.liveData) { recipient, state ->
-        val isAudioAvailable = (recipient.isRegistered || SignalStore.misc().smsExportPhase.allowSmsFeatures()) &&
+        //val isAudioAvailable = (recipient.isRegistered || SignalStore.misc().smsExportPhase.allowSmsFeatures()) &&
+        val isAudioAvailable = (recipient.isRegistered) &&
           !recipient.isGroup &&
           !recipient.isBlocked &&
           !recipient.isSelf &&
