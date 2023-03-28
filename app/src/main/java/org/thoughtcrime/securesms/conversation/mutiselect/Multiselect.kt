@@ -71,7 +71,8 @@ object Multiselect {
    */
   fun isMmsSupported(context: Context, mediaUri: Uri, mediaType: String, mediaSize: Long): Boolean {
     val canReadPhoneState = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
-    if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context) || !SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+    //if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context) || !SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+    if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context)) {
       return false
     }
 
@@ -94,7 +95,8 @@ object Multiselect {
    */
   private fun isMmsSupported(context: Context, attachment: Attachment): Boolean {
     val canReadPhoneState = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
-    if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context) || !SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+    //if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context) || !SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+    if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context)) {
       return false
     }
 

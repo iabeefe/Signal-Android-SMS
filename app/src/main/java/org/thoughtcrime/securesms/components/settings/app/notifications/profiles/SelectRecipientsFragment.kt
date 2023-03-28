@@ -115,7 +115,8 @@ class SelectRecipientsFragment : LoggingFragment(), ContactSelectionListFragment
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       ContactSelectionDisplayMode.FLAG_GROUPS_AFTER_CONTACTS
 
-    if (Util.isDefaultSmsProvider(requireContext()) && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+    //if (Util.isDefaultSmsProvider(requireContext()) && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+    if (Util.isDefaultSmsProvider(requireContext())) {
       mode = mode or ContactSelectionDisplayMode.FLAG_SMS
     }
 
