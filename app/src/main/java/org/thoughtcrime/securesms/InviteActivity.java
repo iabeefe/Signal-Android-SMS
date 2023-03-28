@@ -121,11 +121,18 @@ public class InviteActivity extends PassphraseRequiredActivity implements Contac
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     smsButton.setVisibility(View.GONE);
     shareText.setText(R.string.InviteActivity_share);
     shareButton.setOnClickListener(new ShareClickListener());
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     if (Util.isDefaultSmsProvider(this) && SignalStore.misc().getSmsExportPhase().isSmsSupported()) {
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+    if (Util.isDefaultSmsProvider(this) && SignalStore.misc().getSmsExportPhase().isSmsSupported()) {
+=======
+    //if (Util.isDefaultSmsProvider(this) && SignalStore.misc().getSmsExportPhase().isSmsSupported()) {
+    if (Util.isDefaultSmsProvider(this)) {
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     if (Util.isDefaultSmsProvider(this) && SignalStore.misc().getSmsExportPhase().isSmsSupported()) {
 =======

@@ -450,6 +450,7 @@ public abstract class MessageRecord extends DisplayRecord {
       }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     } else if (isSmsExportType()) {
       int messageResource = R.string.MessageRecord__you_can_no_longer_send_sms_messages_in_signal;
       return fromRecipient(getFromRecipient(), r -> context.getString(messageResource, r.getDisplayName(context)), R.drawable.ic_update_info_16);
@@ -468,6 +469,17 @@ public abstract class MessageRecord extends DisplayRecord {
       //                                                                                    R.string.MessageRecord__you_can_no_longer_send_sms_messages_in_signal;
       int messageResource = R.string.MessageRecord__you_will_no_longer_be_able_to_send_sms_messages_from_signal_soon;
 <<<<<<< HEAD
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+    } else if (isSmsExportType()) {
+      int messageResource = SignalStore.misc().getSmsExportPhase().isSmsSupported() ? R.string.MessageRecord__you_will_no_longer_be_able_to_send_sms_messages_from_signal_soon
+                                                                                    : R.string.MessageRecord__you_can_no_longer_send_sms_messages_in_signal;
+=======
+    }
+    else if (isSmsExportType()) {
+      //int messageResource = SignalStore.misc().getSmsExportPhase().isSmsSupported() ? R.string.MessageRecord__you_will_no_longer_be_able_to_send_sms_messages_from_signal_soon :
+      //                                                                                    R.string.MessageRecord__you_can_no_longer_send_sms_messages_in_signal;
+      int messageResource = R.string.MessageRecord__you_will_no_longer_be_able_to_send_sms_messages_from_signal_soon;
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       return fromRecipient(getIndividualRecipient(), r -> context.getString(messageResource, r.getDisplayName(context)), R.drawable.ic_update_info_16);
 =======

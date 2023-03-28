@@ -29,7 +29,13 @@ import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues.PhoneNumberD
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.keyvalue.protos.LeastActiveLinkedDevice;
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+import org.thoughtcrime.securesms.keyvalue.SmsExportPhase;
+=======
+//import org.thoughtcrime.securesms.keyvalue.SmsExportPhase;
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 import org.thoughtcrime.securesms.keyvalue.SmsExportPhase;
 =======
@@ -125,7 +131,13 @@ public final class Megaphones {
       put(Event.NOTIFICATIONS, shouldShowNotificationsMegaphone(context) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(30)) : NEVER);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       put(Event.GRANT_FULL_SCREEN_INTENT, shouldShowGrantFullScreenIntentPermission(context) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(3)) : NEVER);
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+      put(Event.SMS_EXPORT, new SmsExportReminderSchedule(context));
+=======
+      //put(Event.SMS_EXPORT, new SmsExportReminderSchedule(context));
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       put(Event.SMS_EXPORT, new SmsExportReminderSchedule(context));
 =======
@@ -1531,6 +1543,14 @@ public final class Megaphones {
         return buildBackupPermissionMegaphone(context);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+      case SMS_EXPORT:
+        return buildSmsExportMegaphone(context);
+=======
+      //case SMS_EXPORT:
+      //  return buildSmsExportMegaphone(context);
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       case SMS_EXPORT:
         return buildSmsExportMegaphone(context);
@@ -1750,8 +1770,14 @@ public final class Megaphones {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
   private static @NonNull Megaphone buildSmsExportMegaphone(@NonNull Context context) {
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+  private static @NonNull Megaphone buildSmsExportMegaphone(@NonNull Context context) {
+=======
+  /*private static @NonNull Megaphone buildSmsExportMegaphone(@NonNull Context context) {
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
   private static @NonNull Megaphone buildSmsExportMegaphone(@NonNull Context context) {
 =======
@@ -1788,6 +1814,7 @@ public final class Megaphones {
     }
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
   /*private static @NonNull Megaphone buildSmsExportMegaphone(@NonNull Context context) {
@@ -1821,6 +1848,11 @@ public final class Megaphones {
       return builder.build();
     }
   }
+*/
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+
+=======
 */
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)

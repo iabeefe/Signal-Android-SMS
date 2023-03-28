@@ -167,6 +167,7 @@ public class NewConversationActivity extends ContactSelectionActivity
           if (resolved != null) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
 =======
           if (resolved != null) {
@@ -196,6 +197,12 @@ public class NewConversationActivity extends ContactSelectionActivity
 =======
             /*if (resolved.hasServiceId()) {
 >>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+            if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
+=======
+            //if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
+            if (resolved.isRegistered() && resolved.hasServiceId()) {
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
               launch(resolved);
 <<<<<<< HEAD
             }
@@ -236,8 +243,15 @@ public class NewConversationActivity extends ContactSelectionActivity
         });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       } else if (smsSupported) {
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+      } else if (smsSupported) {
+=======
+      //} else if (smsSupported) {
+      } else {
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       } else if (smsSupported) {
 =======
@@ -401,7 +415,14 @@ public class NewConversationActivity extends ContactSelectionActivity
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (recipient.isRegistered()) {
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+    if (recipient.isRegistered() || (SignalStore.misc().getSmsExportPhase().allowSmsFeatures())) {
+=======
+    //if (recipient.isRegistered() || (SignalStore.misc().getSmsExportPhase().allowSmsFeatures())) {
+    if (recipient.isRegistered()) {
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     if (recipient.isRegistered() || (SignalStore.misc().getSmsExportPhase().allowSmsFeatures())) {
 =======

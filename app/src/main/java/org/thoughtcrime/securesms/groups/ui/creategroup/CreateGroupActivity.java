@@ -60,8 +60,20 @@ public class CreateGroupActivity extends ContactSelectionActivity implements Con
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     int displayMode = ContactSelectionDisplayMode.FLAG_PUSH;
 
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+    boolean smsEnabled = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
+    int displayMode = smsEnabled ? ContactSelectionDisplayMode.FLAG_SMS | ContactSelectionDisplayMode.FLAG_PUSH
+                                 : ContactSelectionDisplayMode.FLAG_PUSH;
+
+=======
+    //boolean smsEnabled = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
+    //int displayMode = smsEnabled ? ContactSelectionDisplayMode.FLAG_SMS | ContactSelectionDisplayMode.FLAG_PUSH
+    //                             : ContactSelectionDisplayMode.FLAG_PUSH;
+    int displayMode = ContactSelectionDisplayMode.FLAG_SMS | ContactSelectionDisplayMode.FLAG_PUSH;
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     boolean smsEnabled = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
     int displayMode = smsEnabled ? ContactSelectionDisplayMode.FLAG_SMS | ContactSelectionDisplayMode.FLAG_PUSH
