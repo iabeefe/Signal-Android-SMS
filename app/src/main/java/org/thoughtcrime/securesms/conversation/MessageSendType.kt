@@ -63,8 +63,64 @@ sealed class MessageSendType(
 
   companion object {
     @JvmStatic
+<<<<<<< HEAD
     fun getAllAvailable(): List<MessageSendType> {
       return listOf(SignalMessageSendType)
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+    fun getAllAvailable(context: Context, isMedia: Boolean = false): List<MessageSendType> {
+      val options: MutableList<MessageSendType> = mutableListOf()
+
+      options += SignalMessageSendType
+
+      if (SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+        try {
+          val subscriptions: Collection<SubscriptionInfoCompat> = SubscriptionManagerCompat(context).activeAndReadySubscriptionInfos
+
+          if (subscriptions.size < 2) {
+            options += if (isMedia) MmsMessageSendType() else SmsMessageSendType()
+          } else {
+            options += subscriptions.map {
+              if (isMedia) {
+                MmsMessageSendType(simName = it.displayName, simSubscriptionId = it.subscriptionId)
+              } else {
+                SmsMessageSendType(simName = it.displayName, simSubscriptionId = it.subscriptionId)
+              }
+            }
+          }
+        } catch (e: SecurityException) {
+          Log.w(TAG, "Did not have permission to get SMS subscription details!")
+        }
+      }
+
+      return options
+=======
+    fun getAllAvailable(context: Context, isMedia: Boolean = false): List<MessageSendType> {
+      val options: MutableList<MessageSendType> = mutableListOf()
+
+      options += SignalMessageSendType
+
+      //if (SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+        try {
+          val subscriptions: Collection<SubscriptionInfoCompat> = SubscriptionManagerCompat(context).activeAndReadySubscriptionInfos
+
+          if (subscriptions.size < 2) {
+            options += if (isMedia) MmsMessageSendType() else SmsMessageSendType()
+          } else {
+            options += subscriptions.map {
+              if (isMedia) {
+                MmsMessageSendType(simName = it.displayName, simSubscriptionId = it.subscriptionId)
+              } else {
+                SmsMessageSendType(simName = it.displayName, simSubscriptionId = it.subscriptionId)
+              }
+            }
+          }
+        } catch (e: SecurityException) {
+          Log.w(TAG, "Did not have permission to get SMS subscription details!")
+        }
+      //}
+
+      return options
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     }
 
     @JvmStatic

@@ -1,0 +1,32 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#96cbf0",
+    "activityBar.background": "#96cbf0",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#e33c9e",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#15202b99",
+    "editorGroup.border": "#96cbf0",
+    "panel.border": "#96cbf0",
+    "sash.hoverBorder": "#96cbf0",
+    "sideBar.border": "#96cbf0",
+    "statusBar.background": "#6ab5e9",
+    "statusBar.border": "#6ab5e9",
+    "statusBar.debuggingBackground": "#e99e6a",
+    "statusBar.debuggingBorder": "#e99e6a",
+    "statusBar.debuggingForeground": "#15202b",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#3e9fe2",
+    "statusBarItem.remoteBackground": "#6ab5e9",
+    "statusBarItem.remoteForeground": "#15202b",
+    "tab.activeBorder": "#96cbf0",
+    "titleBar.activeBackground": "#6ab5e9",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.border": "#6ab5e9",
+    "titleBar.inactiveBackground": "#6ab5e999",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "#6ab5e9",
+  "java.configuration.updateBuildConfiguration": "interactive"
+}

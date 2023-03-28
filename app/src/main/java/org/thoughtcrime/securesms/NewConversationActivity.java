@@ -121,7 +121,17 @@ public class NewConversationActivity extends ContactSelectionActivity
   }
 
   @Override
+<<<<<<< HEAD
   public void onBeforeContactSelected(boolean isFromUnknownSearchKey, @NonNull Optional<RecipientId> recipientId, String number, @NonNull Consumer<Boolean> callback) {
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+  public void onBeforeContactSelected(@NonNull Optional<RecipientId> recipientId, String number, @NonNull Consumer<Boolean> callback) {
+    boolean smsSupported = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
+
+=======
+  public void onBeforeContactSelected(@NonNull Optional<RecipientId> recipientId, String number, @NonNull Consumer<Boolean> callback) {
+    //boolean smsSupported = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
+
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     if (recipientId.isPresent()) {
       launch(Recipient.resolved(recipientId.get()));
     } else {
@@ -135,9 +145,18 @@ public class NewConversationActivity extends ContactSelectionActivity
         SimpleTask.run(getLifecycle(), () -> RecipientRepository.lookupNewE164(this, number), result -> {
           progress.dismiss();
 
+<<<<<<< HEAD
           if (result instanceof RecipientRepository.LookupResult.Success) {
             Recipient resolved = Recipient.resolved(((RecipientRepository.LookupResult.Success) result).getRecipientId());
             if (resolved.isRegistered() && resolved.getHasServiceId()) {
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+          if (resolved != null) {
+            if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
+=======
+          if (resolved != null) {
+            //if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
+            if (resolved.isRegistered() && resolved.hasServiceId()) {
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
               launch(resolved);
             }
           } else if (result instanceof RecipientRepository.LookupResult.NotFound || result instanceof RecipientRepository.LookupResult.InvalidEntry) {
@@ -152,6 +171,15 @@ public class NewConversationActivity extends ContactSelectionActivity
                 .show();
           }
         });
+<<<<<<< HEAD
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+      } else if (smsSupported) {
+        launch(Recipient.external(this, number));
+=======
+      //} else if (smsSupported) {
+      } else {
+        launch(Recipient.external(this, number));
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       }
     }
 
@@ -301,7 +329,14 @@ public class NewConversationActivity extends ContactSelectionActivity
       return null;
     }
 
+<<<<<<< HEAD
     if (recipient.isRegistered()) {
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+    if (recipient.isRegistered() || (SignalStore.misc().getSmsExportPhase().allowSmsFeatures())) {
+=======
+    //if (recipient.isRegistered() || (SignalStore.misc().getSmsExportPhase().allowSmsFeatures())) {
+    if (recipient.isRegistered()) {
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       return new ActionItem(
           R.drawable.ic_phone_right_24,
           getString(R.string.NewConversationActivity__audio_call),

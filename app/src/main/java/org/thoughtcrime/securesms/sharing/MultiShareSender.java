@@ -177,6 +177,57 @@ public final class MultiShareSender {
     return new MultiShareSendResultCollection(results);
   }
 
+<<<<<<< HEAD
+||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+  public static @NonNull MessageSendType getWorstTransportOption(@NonNull Context context, @NonNull Set<ContactSearchKey.RecipientSearchKey> recipientSearchKeys) {
+    for (ContactSearchKey.RecipientSearchKey recipientSearchKey : recipientSearchKeys) {
+      MessageSendType type = resolveTransportOption(context, Recipient.resolved(recipientSearchKey.getRecipientId()).isForceSmsSelection() && !recipientSearchKey.isStory());
+      if (type.usesSmsTransport()) {
+        return type;
+      }
+    }
+
+    return MessageSendType.SignalMessageSendType.INSTANCE;
+  }
+
+  private static @NonNull MessageSendType resolveTransportOption(@NonNull Context context, @NonNull Recipient recipient) {
+    return resolveTransportOption(context, !recipient.isDistributionList() && (recipient.isForceSmsSelection() || !recipient.isRegistered()));
+  }
+
+  public static @NonNull MessageSendType resolveTransportOption(@NonNull Context context, boolean forceSms) {
+    if (forceSms && SignalStore.misc().getSmsExportPhase().allowSmsFeatures()) {
+      return MessageSendType.getFirstForTransport(context, false, MessageSendType.TransportType.SMS);
+    } else {
+      return MessageSendType.SignalMessageSendType.INSTANCE;
+    }
+  }
+
+=======
+  public static @NonNull MessageSendType getWorstTransportOption(@NonNull Context context, @NonNull Set<ContactSearchKey.RecipientSearchKey> recipientSearchKeys) {
+    for (ContactSearchKey.RecipientSearchKey recipientSearchKey : recipientSearchKeys) {
+      MessageSendType type = resolveTransportOption(context, Recipient.resolved(recipientSearchKey.getRecipientId()).isForceSmsSelection() && !recipientSearchKey.isStory());
+      if (type.usesSmsTransport()) {
+        return type;
+      }
+    }
+
+    return MessageSendType.SignalMessageSendType.INSTANCE;
+  }
+
+  private static @NonNull MessageSendType resolveTransportOption(@NonNull Context context, @NonNull Recipient recipient) {
+    return resolveTransportOption(context, !recipient.isDistributionList() && (recipient.isForceSmsSelection() || !recipient.isRegistered()));
+  }
+
+  public static @NonNull MessageSendType resolveTransportOption(@NonNull Context context, boolean forceSms) {
+    //if (forceSms && SignalStore.misc().getSmsExportPhase().allowSmsFeatures()) {
+    if (forceSms) {
+      return MessageSendType.getFirstForTransport(context, false, MessageSendType.TransportType.SMS);
+    } else {
+      return MessageSendType.SignalMessageSendType.INSTANCE;
+    }
+  }
+
+>>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
   private static void sendMediaMessageOrCollectStoryToBatch(@NonNull Context context,
                                                             @NonNull MultiShareArgs multiShareArgs,
                                                             @NonNull Recipient recipient,
