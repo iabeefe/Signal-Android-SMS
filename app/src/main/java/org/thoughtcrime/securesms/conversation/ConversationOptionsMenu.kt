@@ -61,7 +61,8 @@ internal object ConversationOptionsMenu {
       if (isSingleConversation()) {
         if (viewModel.isPushAvailable) {
           menuInflater.inflate(R.menu.conversation_callable_secure, menu)
-        } else if (!recipient!!.isReleaseNotes && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+        //} else if (!recipient!!.isReleaseNotes && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+        } else if (!recipient!!.isReleaseNotes) {
           menuInflater.inflate(R.menu.conversation_callable_insecure, menu)
         }
       } else if (isGroupConversation()) {
