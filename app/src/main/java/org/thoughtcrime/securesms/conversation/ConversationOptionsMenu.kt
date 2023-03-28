@@ -118,6 +118,15 @@ internal object ConversationOptionsMenu {
       if (!recipient.isGroup) {
         if (isPushAvailable) {
           menuInflater.inflate(R.menu.conversation_callable_secure, menu)
+<<<<<<< HEAD
+||||||| parent of b6f2d1016b (Bump upstream version to 6.15.3.0-JW)
+        } else if (!recipient!!.isReleaseNotes && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+          menuInflater.inflate(R.menu.conversation_callable_insecure, menu)
+=======
+        //} else if (!recipient!!.isReleaseNotes && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+        } else if (!recipient!!.isReleaseNotes) {
+          menuInflater.inflate(R.menu.conversation_callable_insecure, menu)
+>>>>>>> b6f2d1016b (Bump upstream version to 6.15.3.0-JW)
         }
       } else if (recipient.isGroup) {
         if (isActiveV2Group) {
