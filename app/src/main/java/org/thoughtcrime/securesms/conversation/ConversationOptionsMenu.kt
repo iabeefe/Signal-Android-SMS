@@ -250,8 +250,15 @@ internal object ConversationOptionsMenu {
           menuInflater.inflate(R.menu.conversation_callable_secure, menu)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of b6f2d1016b (Bump upstream version to 6.15.3.0-JW)
         } else if (!recipient!!.isReleaseNotes && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+||||||| parent of b6f2d1016b (Bump upstream version to 6.15.3.0-JW)
+        } else if (!recipient!!.isReleaseNotes && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+=======
+        //} else if (!recipient!!.isReleaseNotes && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+        } else if (!recipient!!.isReleaseNotes) {
+>>>>>>> b6f2d1016b (Bump upstream version to 6.15.3.0-JW)
 ||||||| parent of b6f2d1016b (Bump upstream version to 6.15.3.0-JW)
         } else if (!recipient!!.isReleaseNotes && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
 =======
