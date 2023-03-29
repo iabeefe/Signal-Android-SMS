@@ -1079,6 +1079,7 @@ public class MessageContentProcessor {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (targetMessage != null && MessageConstraintsUtil.isValidRemoteDeleteReceive(targetMessage, senderRecipient.getId(), content.getServerReceivedTimestamp())) {
 ||||||| parent of 66c339aa35 (Added extra options)
 ||||||| parent of 775ec008cc (Added extra options)
@@ -1087,6 +1088,12 @@ public class MessageContentProcessor {
     if (TextSecurePreferences.isIgnoreRemoteDelete(context)) { setMessageReaction(message, targetMessage, "\u2757"); return null; }
 
 >>>>>>> 775ec008cc (Added extra options)
+||||||| parent of 6d8fef5835 (Added extra options)
+=======
+    // JW: set a reaction to indicate the message was attempted to be remote deleted. Sender is myself, emoji is an exclamation.
+    if (TextSecurePreferences.isIgnoreRemoteDelete(context)) { setMessageReaction(message, targetMessage, "\u2757"); return null; }
+
+>>>>>>> 6d8fef5835 (Added extra options)
     if (targetMessage != null && RemoteDeleteUtil.isValidReceive(targetMessage, senderRecipient, content.getServerReceivedTimestamp())) {
 =======
     // JW: set a reaction to indicate the message was attempted to be remote deleted. Sender is myself, emoji is an exclamation.
@@ -2468,6 +2475,7 @@ public class MessageContentProcessor {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
 ||||||| parent of 775ec008cc (Added extra options)
     boolean                     viewOnce        = message.getDataMessage().get().isViewOnce();
@@ -2486,6 +2494,11 @@ public class MessageContentProcessor {
 =======
     boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
 >>>>>>> 775ec008cc (Added extra options)
+||||||| parent of 6d8fef5835 (Added extra options)
+    boolean                     viewOnce        = message.getDataMessage().get().isViewOnce();
+=======
+    boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
+>>>>>>> 6d8fef5835 (Added extra options)
     BodyRangeList               bodyRanges      = getBodyRangeList(message.getDataMessage().get().getBodyRanges());
 =======
     boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
