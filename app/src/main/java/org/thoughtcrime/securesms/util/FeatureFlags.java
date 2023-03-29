@@ -574,7 +574,27 @@ public final class FeatureFlags {
    * Whether or not we should show text formatting options.
    */
   public static boolean textFormatting() {
+<<<<<<< HEAD
     return true; // JW
+||||||| parent of 6d8fef5835 (Added extra options)
+    return getBoolean(TEXT_FORMATTING, false);
+  }
+
+  /**
+   * Whether or not we should show spoiler text formatting option.
+   */
+  public static boolean textFormattingSpoilerSend() {
+    return getBoolean(TEXT_FORMATTING_SPOILER_SEND, false);
+=======
+    return true; // JW
+  }
+
+  /**
+   * Whether or not we should show spoiler text formatting option.
+   */
+  public static boolean textFormattingSpoilerSend() {
+    return getBoolean(TEXT_FORMATTING_SPOILER_SEND, false);
+>>>>>>> 6d8fef5835 (Added extra options)
   }
 
   /**

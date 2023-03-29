@@ -2358,9 +2358,15 @@ public class MessageContentProcessor {
     Optional<List<Mention>>     mentions        = getMentions(message.getDataMessage().get().getMentions());
     Optional<GiftBadge>         giftBadge       = getGiftBadge(message.getDataMessage().get().getGiftBadge());
 <<<<<<< HEAD
+<<<<<<< HEAD
     boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
 ||||||| parent of 775ec008cc (Added extra options)
     boolean                     viewOnce        = message.getDataMessage().get().isViewOnce();
+||||||| parent of 6d8fef5835 (Added extra options)
+    boolean                     viewOnce        = message.getDataMessage().get().isViewOnce();
+=======
+    boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
+>>>>>>> 6d8fef5835 (Added extra options)
     BodyRangeList               bodyRanges      = getBodyRangeList(message.getDataMessage().get().getBodyRanges());
 =======
     boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
