@@ -130,6 +130,7 @@ public final class Megaphones {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       //put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER); // JW
 >>>>>>> 66c339aa35 (Added extra options)
@@ -143,6 +144,11 @@ public final class Megaphones {
 =======
       //put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER); // JW
 >>>>>>> 6d8fef5835 (Added extra options)
+||||||| parent of 246bbae757 (Added extra options)
+      put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER);
+=======
+      //put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER); // JW
+>>>>>>> 246bbae757 (Added extra options)
       put(Event.REMOTE_MEGAPHONE, shouldShowRemoteMegaphone(records) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(1)) : NEVER);
       put(Event.LINKED_DEVICE_INACTIVE, shouldShowLinkedDeviceInactiveMegaphone() ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(3)): NEVER);
       put(Event.PIN_REMINDER, new SignalPinReminderSchedule());
@@ -183,6 +189,7 @@ public final class Megaphones {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 //      case BECOME_A_SUSTAINER:                             // JW I see these way too often
 //        return buildBecomeASustainerMegaphone(context);
@@ -211,6 +218,17 @@ public final class Megaphones {
 //      case DONATE_Q2_2022:
 //        return buildDonateQ2Megaphone(context);
 >>>>>>> 6d8fef5835 (Added extra options)
+||||||| parent of 246bbae757 (Added extra options)
+      case BECOME_A_SUSTAINER:
+        return buildBecomeASustainerMegaphone(context);
+      case DONATE_Q2_2022:
+        return buildDonateQ2Megaphone(context);
+=======
+//      case BECOME_A_SUSTAINER:                             // JW I see these way too often
+//        return buildBecomeASustainerMegaphone(context);
+//      case DONATE_Q2_2022:
+//        return buildDonateQ2Megaphone(context);
+>>>>>>> 246bbae757 (Added extra options)
       case TURN_OFF_CENSORSHIP_CIRCUMVENTION:
         return buildTurnOffCircumventionMegaphone(context);
       case LINKED_DEVICE_INACTIVE:

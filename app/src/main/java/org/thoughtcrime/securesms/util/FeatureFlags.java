@@ -575,9 +575,15 @@ public final class FeatureFlags {
    */
   public static boolean textFormatting() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
 ||||||| parent of 6d8fef5835 (Added extra options)
     return getBoolean(TEXT_FORMATTING, false);
+||||||| parent of 246bbae757 (Added extra options)
+    return getBoolean(TEXT_FORMATTING, false);
+=======
+    return true; // JW
+>>>>>>> 246bbae757 (Added extra options)
   }
 
   /**
