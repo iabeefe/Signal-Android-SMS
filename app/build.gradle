@@ -109,6 +109,7 @@ def canonicalVersionName = "6.16.0.0-JW"
 >>>>>>> 6d8fef5835 (Added extra options)
 ||||||| parent of 246bbae757 (Added extra options)
 def canonicalVersionCode = 1237
+<<<<<<< HEAD
 def canonicalVersionName = "6.16.1"
 =======
 def canonicalVersionCode = 1237
@@ -400,6 +401,11 @@ def canonicalVersionName = "6.16.0"
 =======
 def canonicalVersionName = "6.16.0.0-JW"
 >>>>>>> 6d8fef5835 (Added extra options)
+||||||| parent of 246bbae757 (Added extra options)
+def canonicalVersionName = "6.16.1"
+=======
+def canonicalVersionName = "6.16.1.0-JW"
+>>>>>>> 246bbae757 (Added extra options)
 
 def postFixSize = 100
 def abiPostFix = ['universal'   : 0,
@@ -531,6 +537,7 @@ android {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         buildConfigField "long", "BUILD_TIMESTAMP", "1000L" // JW: fixed time for reproducible builds, is not used anyway
         buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
 ||||||| parent of 66c339aa35 (Added extra options)
@@ -557,6 +564,14 @@ android {
         buildConfigField "long", "BUILD_TIMESTAMP", System.currentTimeMillis() + "L"
         buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
 >>>>>>> 6d8fef5835 (Added extra options)
+||||||| parent of 246bbae757 (Added extra options)
+        buildConfigField "long", "BUILD_TIMESTAMP", getLastCommitTimestamp() + "L"
+        buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
+=======
+        // JW: change back to old code that works without having Git in the path and by downloading the source as zip, timestamp is not used anyway
+        buildConfigField "long", "BUILD_TIMESTAMP", System.currentTimeMillis() + "L"
+        buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
+>>>>>>> 246bbae757 (Added extra options)
         buildConfigField "String", "SIGNAL_URL", "\"https://chat.signal.org\""
         buildConfigField "String", "STORAGE_URL", "\"https://storage.signal.org\""
         buildConfigField "String", "SIGNAL_CDN_URL", "\"https://cdn.signal.org\""
