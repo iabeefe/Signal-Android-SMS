@@ -10,7 +10,7 @@ enum class SmsExportPhase(val duration: Long) {
   PHASE_3(51.days.inWholeMilliseconds);
 
   fun allowSmsFeatures(): Boolean {
-    return Util.isDefaultSmsProvider(ApplicationDependencies.getApplication())
+    return Util.isDefaultSmsProvider(ApplicationDependencies.getApplication()) && SignalStore.misc().smsExportPhase.isSmsSupported()
   }
 
   fun isSmsSupported(): Boolean {
