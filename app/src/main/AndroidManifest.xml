@@ -2573,6 +2573,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!--    <activity android:name=".megaphone.SmsExportMegaphoneActivity"
               android:theme="@style/Theme.Signal.DayNight.NoActionBar"
               android:screenOrientation="portrait"
@@ -2611,13 +2612,24 @@
 >>>>>>> 5f1eac242f (Bumped to upstream version 6.16.1.0-JW.)
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     <activity android:name=".megaphone.SmsExportMegaphoneActivity"
+||||||| parent of 5f1eac242f (Bumped to upstream version 6.16.1.0-JW.)
+    <activity android:name=".megaphone.SmsExportMegaphoneActivity"
+=======
+<!--    <activity android:name=".megaphone.SmsExportMegaphoneActivity"
+>>>>>>> 5f1eac242f (Bumped to upstream version 6.16.1.0-JW.)
               android:theme="@style/Theme.Signal.DayNight.NoActionBar"
               android:screenOrientation="portrait"
               android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize|uiMode"
               android:launchMode="singleTask" />
+<<<<<<< HEAD
 
 =======
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| parent of 5f1eac242f (Bumped to upstream version 6.16.1.0-JW.)
+
+=======
+-->
+>>>>>>> 5f1eac242f (Bumped to upstream version 6.16.1.0-JW.)
     <activity android:name=".ratelimit.RecaptchaProofActivity"
               android:theme="@style/Theme.Signal.DayNight.NoActionBar"
               android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize|uiMode"
