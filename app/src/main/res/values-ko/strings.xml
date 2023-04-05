@@ -2185,9 +2185,19 @@
     <!-- Toggle content description for toggling camera state  -->
     <string name="WebRtcCallView__toggle_camera">카메라 토글</string>
     <!-- Toggle content description for toggling mute state  -->
+<<<<<<< HEAD
     <string name="WebRtcCallView__toggle_mute">알림 토글</string>
     <!-- Content description for additional actions menu button -->
     <string name="WebRtcCallView__additional_actions">작업 더 보기</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="WebRtcCallView__toggle_mute">Toggle mute</string>
+    <!-- Toggle content description for toggling group ring state  -->
+    <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
+=======
+    <string name="WebRtcCallView__toggle_mute">알림 토글</string>
+    <!-- Toggle content description for toggling group ring state  -->
+    <string name="WebRtcCallView__toggle_ring">벨소리 토글</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Content description for end-call button -->
     <string name="WebRtcCallView__end_call">전화 종료</string>
     <!-- Content description for toggling group ring state -->
@@ -2358,10 +2368,16 @@
         <item quantity="other">디버그 로그를 보내기까지 %1$d단계 남았습니다.</item>
     </plurals>
     <string name="RegistrationActivity_we_need_to_verify_that_youre_human">사람인지 확인하고자 합니다.</string>
+<<<<<<< HEAD
     <!-- Button label to trigger a phone call to provide the registration code, in lieu of an SMS code -->
     <string name="RegistrationActivity_voice_call">음성 통화</string>
     <!-- Dialog button to cancel the pending action and return to the previous state. -->
     <string name="RegistrationActivity_cancel">취소</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+=======
+    <!-- An error shown when the request was valid, but due to an issue with a partner vendor, the server is unable to send an SMS code -->
+    <string name="RegistrationActivity_external_service_error">Signal was unable to send an SMS code due to an external failure.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="RegistrationActivity_next">다음</string>
     <string name="RegistrationActivity_continue">확인</string>
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">내 개인 정보는 내 손에서만.\n안전하게 메시지를 보내세요.</string>
@@ -4794,17 +4810,49 @@
     <string name="AccountSettingsFragment__require_your_signal_pin">Signal에 전화번호를 다시 등록하려면 Signal PIN이 필요합니다.</string>
     <string name="AccountSettingsFragment__change_phone_number">전화번호 변경</string>
     <!-- Account setting that allows user to request and export their signal account data -->
+<<<<<<< HEAD
     <string name="AccountSettingsFragment__request_account_data">내 계정 데이터</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="AccountSettingsFragment__request_account_data">Request account data</string>
+=======
+    <string name="AccountSettingsFragment__request_account_data">계정 데이터 요청</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ExportAccountDataFragment -->
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
     <string name="ExportAccountDataFragment__your_account_data">내 계정 데이터</string>
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_explanation">Signal 계정 데이터 보고서를 내보냅니다. 이 보고서는 메시지나 미디어를 포함하지 않습니다. %1$s</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">Signal 계정 데이터 보고서를 다운로드하고 내보냅니다. 이 보고서는 메시지나 미디어를 포함하지 않습니다. %1$s</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__learn_more">자세히 알아보기</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__learn_more">Learn more</string>
+    <!-- Button action to download the report data -->
+    <string name="ExportAccountDataFragment__download_report">Download report</string>
+=======
+    <string name="ExportAccountDataFragment__learn_more">자세히 알아보기</string>
+    <!-- Button action to download the report data -->
+    <string name="ExportAccountDataFragment__download_report">보고서 다운로드</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to export the report data to another app (e.g. email) -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report">보고서 내보내기</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_report">Export report</string>
+    <!-- Button action to delete the requested account data -->
+    <string name="ExportAccountDataFragment__delete_report">Delete report</string>
+=======
+    <string name="ExportAccountDataFragment__export_report">보고서 내보내기</string>
+    <!-- Button action to delete the requested account data -->
+    <string name="ExportAccountDataFragment__delete_report">보고서 삭제</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Radio option to export the data as a text file .txt -->
     <string name="ExportAccountDataFragment__export_as_txt">TXT로 내보내기</string>
@@ -4819,11 +4867,21 @@
     <string name="ExportAccountDataFragment__cancel_action">취소</string>
 
     <!-- Acknowledgement for download failure -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__ok_action">확인</string>
     <!-- Title of dialog shown when report fails to generate -->
     <string name="ExportAccountDataFragment__report_generation_failed">보고서를 생성할 수 없습니다.</string>
     <!-- Message of dialog shown when report fails to generate asking user to check network connection -->
     <string name="ExportAccountDataFragment__check_network">연결을 확인하고 다시 시도하세요.</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__ok_action">OK</string>
+    <!-- Message shown when report download fails -->
+    <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
+=======
+    <string name="ExportAccountDataFragment__ok_action">확인</string>
+    <!-- Message shown when report download fails -->
+    <string name="ExportAccountDataFragment__report_download_failed">네트워크 오류로 인해 보고서를 다운로드할 수 없습니다. 연결을 확인하고 다시 시도하세요.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">데이터를 내보낼까요?</string>
@@ -4832,10 +4890,42 @@
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">내보내기</string>
 
+<<<<<<< HEAD
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <!-- Action to delete report in confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_action">Delete</string>
+    <!-- Title for delete report confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_confirmation">Delete report?</string>
+    <!-- Message for delete report confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_confirmation_message">This will not delete any data from your account.</string>
+
+    <!-- Shown as a snackbar letting the user know the report was deleted -->
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
+=======
+    <!-- Action to delete report in confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_action">삭제</string>
+    <!-- Title for delete report confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_confirmation">보고서를 삭제할까요?</string>
+    <!-- Message for delete report confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_confirmation_message">계정의 데이터는 삭제되지 않습니다.</string>
+
+    <!-- Shown as a snackbar letting the user know the report was deleted -->
+    <string name="ExportAccountDataFragment__delete_report_snackbar">보고서를 삭제했습니다.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Shown in a dialog with a spinner while the report is downloading -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_progress">보고서를 생성하는 중…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">보고서는 내보내기를 하는 시점에만 생성되며, 기기의 Signal에는 저장되지 않습니다.</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__download_progress">Downloading report…</string>
+    <!-- Explanation that the downloaded report will be available for 30 days before it is deleted -->
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
+=======
+    <string name="ExportAccountDataFragment__download_progress">보고서를 다운로드하는 중…</string>
+    <!-- Explanation that the downloaded report will be available for 30 days before it is deleted -->
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">보고서는 다음 30일 동안 내보낼 수 있으며, 그 후에는 자동으로 삭제됩니다.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">현재 전화번호를 새 전화번호로 바꾸려면 이 기능을 사용하세요. 이 작업은 되돌릴 수 없습니다.\n\n변경하기 전에, 새 전화번호로 SMS나 전화를 받을 수 있는지 확인하세요.</string>
@@ -6624,9 +6714,39 @@
     <!-- Popup menu label for applying monospace font style -->
     <string name="TextFormatting_monospace">고정 폭</string>
     <!-- Popup menu label for applying spoiler style -->
+<<<<<<< HEAD
     <string name="TextFormatting_spoiler">스포일러</string>
     <!-- Popup menu label for clearing applied formatting -->
     <string name="TextFormatting_clear_formatting">텍스트 서식 지우기</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="TextFormatting_spoiler">Spoiler</string>
+
+    <!-- UsernameEducationFragment -->
+    <!-- Continue button which takes the user to the add a username screen -->
+    <string name="UsernameEducationFragment__continue">계속</string>
+    <!-- Displayed as a title on the username education screen -->
+    <string name="UsernameEducationFragment__set_up_your_signal_username">Signal 사용자 이름 설정</string>
+    <!-- Displayed as body text in the username education screen -->
+    <string name="UsernameEducationFragment__usernames_are_paired_with_a_set_of_digits">Usernames are paired with a set of digits and aren\'t shared on your profile</string>
+    <!-- Displayed as body text in the username education screen -->
+    <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">Each username has a unique QR code and link you can share with friends to start a chat with you</string>
+    <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
+=======
+    <string name="TextFormatting_spoiler">스포일러</string>
+
+    <!-- UsernameEducationFragment -->
+    <!-- Continue button which takes the user to the add a username screen -->
+    <string name="UsernameEducationFragment__continue">계속</string>
+    <!-- Displayed as a title on the username education screen -->
+    <string name="UsernameEducationFragment__set_up_your_signal_username">Signal 사용자 이름 설정</string>
+    <!-- Displayed as body text in the username education screen -->
+    <string name="UsernameEducationFragment__usernames_are_paired_with_a_set_of_digits">사용자 이름은 일련번호와 짝지어 사용되며 프로필에서 공유되지 않습니다.</string>
+    <!-- Displayed as body text in the username education screen -->
+    <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">각 사용자 이름에는 친구와 공유하여 채팅을 시작할 수 있는 고유한 QR 코드와 링크가 있습니다.</string>
+    <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">\'설정 &gt; 개인 정보 보호 &gt; 전화번호 &gt; 내 번호로 나를 찾을 수 있는 사람\'에서 \'전화번호 검색\'을 꺼서 다른 사람이 나에게 연락할 때 기본적으로 사용자 이름을 사용하도록 하세요.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Username edit dialog -->
     <!-- Option to open username editor displayed as a list item in a dialog -->

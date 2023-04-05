@@ -56,8 +56,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+<<<<<<< HEAD
                 android:layout_marginEnd="16dp"
                 android:textAppearance="@style/Signal.Text.BodyMedium"
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+=======
+                android:layout_marginEnd="16dp"
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/verify_header"
