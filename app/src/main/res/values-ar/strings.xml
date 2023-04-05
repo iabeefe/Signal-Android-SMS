@@ -830,6 +830,7 @@
     </plurals>
     <plurals name="ConversationListFragment_unread_plural">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <item quantity="zero">غير مقروءة</item>
         <item quantity="one">غير مقروءة</item>
         <item quantity="two">غير مقروءة</item>
@@ -880,7 +881,55 @@
         <item quantity="few">إلغاء كتم الدردشات</item>
         <item quantity="many">إلغاء كتم الدردشات</item>
         <item quantity="other">إلغاء كتم الدردشات</item>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+        <item quantity="zero">غير مقروءة</item>
+        <item quantity="one">غير مقروء</item>
+        <item quantity="two">غير مقروءة</item>
+        <item quantity="few">غير مقروءة</item>
+        <item quantity="many">غير مقروءة</item>
+        <item quantity="other">غير مقروءة</item>
     </plurals>
+    <plurals name="ConversationListFragment_pin_plural">
+        <item quantity="zero">تثبيت</item>
+        <item quantity="one">تثبيت</item>
+        <item quantity="two">تثبيت</item>
+        <item quantity="few">تثبيت</item>
+        <item quantity="many">تثبيت</item>
+        <item quantity="other">تثبيت</item>
+    </plurals>
+    <plurals name="ConversationListFragment_unpin_plural">
+        <item quantity="zero">إلغاء التثبيت</item>
+        <item quantity="one">إلغاء التثبيت</item>
+        <item quantity="two">إلغاء التثبيت</item>
+        <item quantity="few">إلغاء التثبيت</item>
+        <item quantity="many">إلغاء التثبيت</item>
+        <item quantity="other">إلغاء التثبيت</item>
+    </plurals>
+    <plurals name="ConversationListFragment_mute_plural">
+        <item quantity="zero">كتم الدردشات</item>
+        <item quantity="one">كتم الدردشة</item>
+        <item quantity="two">كتم الدردشات</item>
+        <item quantity="few">كتم الدردشات</item>
+        <item quantity="many">كتم الدردشات</item>
+        <item quantity="other">كتم الدردشات</item>
+    </plurals>
+    <plurals name="ConversationListFragment_unmute_plural">
+        <item quantity="zero">إلغاء كتم الدردشات</item>
+        <item quantity="one">إلغاء كتم الدردشة</item>
+        <item quantity="two">إلغاء كتم الدردشات</item>
+        <item quantity="few">إلغاء كتم الدردشات</item>
+        <item quantity="many">إلغاء كتم الدردشات</item>
+        <item quantity="other">إلغاء كتم الدردشات</item>
+=======
+        <item quantity="zero">لا مقروء</item>
+        <item quantity="one">لا مقروء</item>
+        <item quantity="two">لا مقروء</item>
+        <item quantity="few">لا مقروء</item>
+        <item quantity="many">لا مقروء</item>
+        <item quantity="other">لا مقروء</item>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    </plurals>
+<<<<<<< HEAD
 =======
         <item quantity="zero">لا مقروء</item>
         <item quantity="one">لا مقروء</item>
@@ -889,6 +938,13 @@
         <item quantity="many">لا مقروء</item>
         <item quantity="other">لا مقروء</item>
     </plurals>
+    <string name="ConversationListFragment_pin">تثبيت</string>
+    <string name="ConversationListFragment_unpin">فَكّ التَّثبيت</string>
+    <string name="ConversationListFragment_mute">كتم</string>
+    <string name="ConversationListFragment_unmute">إلغاء الكتم</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+=======
     <string name="ConversationListFragment_pin">تثبيت</string>
     <string name="ConversationListFragment_unpin">فَكّ التَّثبيت</string>
     <string name="ConversationListFragment_mute">كتم</string>
@@ -2683,16 +2739,28 @@
     <string name="WebRtcCallView__toggle_camera">تبديل الكاميرا</string>
     <!-- Toggle content description for toggling mute state  -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="WebRtcCallView__toggle_mute">تبديل الكتم</string>
     <!-- Content description for additional actions menu button -->
     <string name="WebRtcCallView__additional_actions">إجراءات إضافية</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="WebRtcCallView__toggle_mute">Toggle mute</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="WebRtcCallView__toggle_mute">Toggle mute</string>
+=======
+    <string name="WebRtcCallView__toggle_mute">تبديل الكتم</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Toggle content description for toggling group ring state  -->
+<<<<<<< HEAD
     <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
 =======
     <string name="WebRtcCallView__toggle_mute">تبديل الكتم</string>
     <!-- Toggle content description for toggling group ring state  -->
+    <string name="WebRtcCallView__toggle_ring">تبديل الرنين</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
+=======
     <string name="WebRtcCallView__toggle_ring">تبديل الرنين</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Content description for end-call button -->
@@ -2941,6 +3009,7 @@
     </plurals>
     <string name="RegistrationActivity_we_need_to_verify_that_youre_human">علينا التحقق من أنك إنسان.</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Button label to trigger a phone call to provide the registration code, in lieu of an SMS code -->
     <string name="RegistrationActivity_voice_call">مكالمة صوتية</string>
     <!-- Dialog button to cancel the pending action and return to the previous state. -->
@@ -2956,6 +3025,11 @@
 =======
     <string name="RegistrationActivity_external_service_error">لم يتمكّن تطبيق Signal من إرسال رمز SMS بسبب فشل خارجي.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+=======
+    <!-- An error shown when the request was valid, but due to an issue with a partner vendor, the server is unable to send an SMS code -->
+    <string name="RegistrationActivity_external_service_error">Signal was unable to send an SMS code due to an external failure.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="RegistrationActivity_next">التالي</string>
     <string name="RegistrationActivity_continue">استمرار</string>
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">حافظ على خصوصيتك اينما كنت. كن على طبيعتك في كل رسالة.</string>
@@ -5644,6 +5718,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="AccountSettingsFragment__request_account_data">بيانات حسابك</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="AccountSettingsFragment__request_account_data">Request account data</string>
@@ -5660,11 +5735,17 @@
 =======
     <string name="AccountSettingsFragment__request_account_data">بيانات حسابك</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="AccountSettingsFragment__request_account_data">Request account data</string>
+=======
+    <string name="AccountSettingsFragment__request_account_data">طلب بيانات الحساب</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ExportAccountDataFragment -->
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
     <string name="ExportAccountDataFragment__your_account_data">بيانات حسابك</string>
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5684,12 +5765,24 @@
 =======
     <string name="ExportAccountDataFragment__export_explanation">تصدير تقرير عن بيانات حساب Signal الخاص بك. لا يتضمّن هذا التقرير أي رسائل أو وسائط. %1$s</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">تنزيل وتصدير تقرير عن بيانات حساب Signal الخاص بك. لا يتضمن هذا التقرير أي رسائل أو وسائط. %1$s</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__learn_more">معرفة المزيد</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__learn_more">Learn more</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__learn_more">Learn more</string>
+=======
+    <string name="ExportAccountDataFragment__learn_more">معرفة المزيد</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to download the report data -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_report">Download report</string>
 =======
     <string name="ExportAccountDataFragment__learn_more">معرفة المزيد</string>
@@ -5702,12 +5795,24 @@
     <string name="ExportAccountDataFragment__download_report">تنزيل التقرير</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__download_report">Download report</string>
+=======
+    <string name="ExportAccountDataFragment__download_report">تنزيل التقرير</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to export the report data to another app (e.g. email) -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report">تصدير التقرير</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_report">Export report</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_report">Export report</string>
+=======
+    <string name="ExportAccountDataFragment__export_report">تصدير التقرير</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to delete the requested account data -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__delete_report">Delete report</string>
 =======
     <string name="ExportAccountDataFragment__export_report">تصدير التقرير</string>
@@ -5720,6 +5825,11 @@
     <string name="ExportAccountDataFragment__delete_report">حذف التقرير</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__delete_report">Delete report</string>
+=======
+    <string name="ExportAccountDataFragment__delete_report">حذف التقرير</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Radio option to export the data as a text file .txt -->
     <string name="ExportAccountDataFragment__export_as_txt">تصدير بصيغة TXT</string>
@@ -5735,6 +5845,7 @@
 
     <!-- Acknowledgement for download failure -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__ok_action">موافق</string>
     <!-- Title of dialog shown when report fails to generate -->
 <<<<<<< HEAD
@@ -5743,7 +5854,13 @@
     <string name="ExportAccountDataFragment__check_network">تحقّق من اتصالك بالشبكة ثم حاول مُجددًا.</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__ok_action">OK</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__ok_action">OK</string>
+=======
+    <string name="ExportAccountDataFragment__ok_action">موافق</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Message shown when report download fails -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
 =======
     <string name="ExportAccountDataFragment__ok_action">موافق</string>
@@ -5771,12 +5888,23 @@
 =======
     <string name="ExportAccountDataFragment__check_network">تحقّق من اتصالك بالشبكة ثم حاول مُجددًا.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
+=======
+    <string name="ExportAccountDataFragment__report_download_failed">تعذّر تنزيل تقريرك بسبب خطأ في الشبكة. تحقّق من اتصالك بالشبكة ثم حاول مُجددًا.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">تصدير البيانات؟</string>
     <!-- Message for export confirmation dialog -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report_confirmation_message">لا تُشارك بيانات حساب سيجنال الخاص بك إلا مع الأشخاص أو التطبيقات التي تثق بها.</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">Only share your Signal account data with people or apps you trust.</string>
+=======
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">لا تُشارك بيانات حساب Signal الخاص بك إلا مع الأشخاص أو التطبيقات التي تثق بها.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_report_confirmation_message">Only share your Signal account data with people or apps you trust.</string>
 =======
@@ -5789,13 +5917,14 @@
 <<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Action to delete report in confirmation dialog -->
-    <string name="ExportAccountDataFragment__delete_report_action">Delete</string>
+    <string name="ExportAccountDataFragment__delete_report_action">حذف</string>
     <!-- Title for delete report confirmation dialog -->
-    <string name="ExportAccountDataFragment__delete_report_confirmation">Delete report?</string>
+    <string name="ExportAccountDataFragment__delete_report_confirmation">حذف التقرير؟</string>
     <!-- Message for delete report confirmation dialog -->
-    <string name="ExportAccountDataFragment__delete_report_confirmation_message">This will not delete any data from your account.</string>
+    <string name="ExportAccountDataFragment__delete_report_confirmation_message">لن يؤدي هذا إلى حذف أي بيانات من حسابك.</string>
 
     <!-- Shown as a snackbar letting the user know the report was deleted -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
 =======
     <!-- Action to delete report in confirmation dialog -->
@@ -5820,7 +5949,13 @@
     <string name="ExportAccountDataFragment__delete_report_snackbar">تم حذف التقرير</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
+=======
+    <string name="ExportAccountDataFragment__delete_report_snackbar">تم حذف التقرير</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Shown in a dialog with a spinner while the report is downloading -->
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5829,7 +5964,13 @@
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">يتم إنشاء تقريرك فقط في وقت التصدير ولا يتم تخزينُه بواسطة سيجنال على جهازك.</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__download_progress">Downloading report…</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__download_progress">Downloading report…</string>
+=======
+    <string name="ExportAccountDataFragment__download_progress">يجري تنزيل التقرير…</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Explanation that the downloaded report will be available for 30 days before it is deleted -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
 =======
     <string name="ExportAccountDataFragment__download_progress">يجري تنزيل التقرير…</string>
@@ -5856,6 +5997,11 @@
 =======
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">يتم إنشاء تقريرك فقط في وقت التصدير ولا يتم تخزينُه بواسطة Signal على جهازك.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
+=======
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">سيكون تقريرك جاهزًا للتصدير خلال 30 يومًا وسيتم حذفه تلقائيًا بعد ذلك.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">يُرجى استخدام هذا لاستبدال رقم هاتفك الحالي بالجديد. لن يكون بإمكانك التراجع عن هذا اﻷمر.\n\nلذا، يجب عليك، قبل الاستمرار، التأكد من أن رقم هاتفك الجديد يستطيع تلقي المكالمات والرسائل القصيرة.</string>
@@ -7807,11 +7953,17 @@
     <string name="TextFormatting_monospace">خط Monospace</string>
     <!-- Popup menu label for applying spoiler style -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="TextFormatting_spoiler">تنسيق نص سبويلر</string>
     <!-- Popup menu label for clearing applied formatting -->
     <string name="TextFormatting_clear_formatting">محو التنسيق</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="TextFormatting_spoiler">Spoiler</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="TextFormatting_spoiler">Spoiler</string>
+=======
+    <string name="TextFormatting_spoiler">تنسيق نص سبويلر</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- UsernameEducationFragment -->
     <!-- Continue button which takes the user to the add a username screen -->
@@ -7819,10 +7971,11 @@
     <!-- Displayed as a title on the username education screen -->
     <string name="UsernameEducationFragment__set_up_your_signal_username">إعداد اِسمُ المُستخدِم الخاص بك على Signal</string>
     <!-- Displayed as body text in the username education screen -->
-    <string name="UsernameEducationFragment__usernames_are_paired_with_a_set_of_digits">Usernames are paired with a set of digits and aren\'t shared on your profile</string>
+    <string name="UsernameEducationFragment__usernames_are_paired_with_a_set_of_digits">يتم إقران أسماء المُستخدمين بمجموعة من الأرقام ولا تتم مُشاركتها في حسابك الشخصي</string>
     <!-- Displayed as body text in the username education screen -->
-    <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">Each username has a unique QR code and link you can share with friends to start a chat with you</string>
+    <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">لِكل اسم مستخدم رمز مربع ورابط فريدين يُمكنك مُشاركتُهما مع أصدقائك لكي يبدؤوا الدردشة معك</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
+<<<<<<< HEAD
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
 =======
     <string name="TextFormatting_spoiler">تنسيق نص سبويلر</string>
@@ -7837,6 +7990,11 @@
     <!-- Displayed as body text in the username education screen -->
     <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">لِكل اسم مستخدم رمز مربع ورابط فريدين يُمكنك مُشاركتُهما مع أصدقائك لكي يبدؤوا الدردشة معك</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">عطّل اكتشاف رقم الهاتف ضمن الإعدادات &gt; الخصوصية &gt; رقم الهاتف &gt; من يُمكنه العثور على رقمي، لاستخدام اسم المُستخدم الخاص بك كالطريقة الأساسية التي يُمكن للآخرين استخدامُها للاتصال بك</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
+=======
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">عطّل اكتشاف رقم الهاتف ضمن الإعدادات &gt; الخصوصية &gt; رقم الهاتف &gt; من يُمكنه العثور على رقمي، لاستخدام اسم المُستخدم الخاص بك كالطريقة الأساسية التي يُمكن للآخرين استخدامُها للاتصال بك</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 

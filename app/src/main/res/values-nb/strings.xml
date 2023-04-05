@@ -2325,16 +2325,28 @@
     <string name="WebRtcCallView__toggle_camera">Slå på/av kamera</string>
     <!-- Toggle content description for toggling mute state  -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="WebRtcCallView__toggle_mute">Slå på/av lyd</string>
     <!-- Content description for additional actions menu button -->
     <string name="WebRtcCallView__additional_actions">Flere valg</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="WebRtcCallView__toggle_mute">Toggle mute</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="WebRtcCallView__toggle_mute">Toggle mute</string>
+=======
+    <string name="WebRtcCallView__toggle_mute">Slå på/av lyd</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Toggle content description for toggling group ring state  -->
+<<<<<<< HEAD
     <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
 =======
     <string name="WebRtcCallView__toggle_mute">Slå på/av lyd</string>
     <!-- Toggle content description for toggling group ring state  -->
+    <string name="WebRtcCallView__toggle_ring">Slå på/av anrop</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
+=======
     <string name="WebRtcCallView__toggle_ring">Slå på/av anrop</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Content description for end-call button -->
@@ -2543,6 +2555,7 @@
     </plurals>
     <string name="RegistrationActivity_we_need_to_verify_that_youre_human">Vi må verifisere at du er et menneske.</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Button label to trigger a phone call to provide the registration code, in lieu of an SMS code -->
     <string name="RegistrationActivity_voice_call">Taleanrop</string>
     <!-- Dialog button to cancel the pending action and return to the previous state. -->
@@ -2558,6 +2571,11 @@
 =======
     <string name="RegistrationActivity_external_service_error">Signal kunne ikke sende SMS-koden på grunn av en ekstern feil.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+=======
+    <!-- An error shown when the request was valid, but due to an issue with a partner vendor, the server is unable to send an SMS code -->
+    <string name="RegistrationActivity_external_service_error">Signal was unable to send an SMS code due to an external failure.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="RegistrationActivity_next">Neste</string>
     <string name="RegistrationActivity_continue">Fortsett</string>
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Ta personvernet med deg.\nVær deg selv i hver melding.</string>
@@ -5110,6 +5128,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="AccountSettingsFragment__request_account_data">Dine brukerdata</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="AccountSettingsFragment__request_account_data">Request account data</string>
@@ -5126,11 +5145,17 @@
 =======
     <string name="AccountSettingsFragment__request_account_data">Dine brukerdata</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="AccountSettingsFragment__request_account_data">Request account data</string>
+=======
+    <string name="AccountSettingsFragment__request_account_data">Be om brukerdata</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ExportAccountDataFragment -->
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
     <string name="ExportAccountDataFragment__your_account_data">Dine brukerdata</string>
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5150,12 +5175,24 @@
 =======
     <string name="ExportAccountDataFragment__export_explanation">Eksporter en rapport med brukerdataene dine fra Signal. Rapporten inneholder ikke meldinger og medier. %1$s</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">Last ned og eksporter en rapport med brukerdataene dine fra Signal. Rapporten inneholder ikke meldinger og medier. %1$s</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__learn_more">Les mer</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__learn_more">Learn more</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__learn_more">Learn more</string>
+=======
+    <string name="ExportAccountDataFragment__learn_more">Les mer</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to download the report data -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_report">Download report</string>
 =======
     <string name="ExportAccountDataFragment__learn_more">Les mer</string>
@@ -5168,12 +5205,24 @@
     <string name="ExportAccountDataFragment__download_report">Last ned rapport</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__download_report">Download report</string>
+=======
+    <string name="ExportAccountDataFragment__download_report">Last ned rapport</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to export the report data to another app (e.g. email) -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report">Eksporter rapport</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_report">Export report</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_report">Export report</string>
+=======
+    <string name="ExportAccountDataFragment__export_report">Eksporter rapport</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to delete the requested account data -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__delete_report">Delete report</string>
 =======
     <string name="ExportAccountDataFragment__export_report">Eksporter rapport</string>
@@ -5186,6 +5235,11 @@
     <string name="ExportAccountDataFragment__delete_report">Slett rapport</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__delete_report">Delete report</string>
+=======
+    <string name="ExportAccountDataFragment__delete_report">Slett rapport</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Radio option to export the data as a text file .txt -->
     <string name="ExportAccountDataFragment__export_as_txt">Eksporter som TXT</string>
@@ -5209,6 +5263,7 @@
     <string name="ExportAccountDataFragment__check_network">Sjekk internettilkoblingen og prøv igjen.</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Message shown when report download fails -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
 =======
     <!-- Message shown when report download fails -->
@@ -5229,6 +5284,11 @@
 =======
     <string name="ExportAccountDataFragment__check_network">Sjekk internettilkoblingen og prøv igjen.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
+=======
+    <string name="ExportAccountDataFragment__report_download_failed">Rapporten kunne ikke lastes ned på grunn av en nettverksfeil. Sjekk internettilkoblingen og prøv igjen.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">Vil du eksportere data?</string>
@@ -5241,13 +5301,14 @@
 <<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Action to delete report in confirmation dialog -->
-    <string name="ExportAccountDataFragment__delete_report_action">Delete</string>
+    <string name="ExportAccountDataFragment__delete_report_action">Slett</string>
     <!-- Title for delete report confirmation dialog -->
-    <string name="ExportAccountDataFragment__delete_report_confirmation">Delete report?</string>
+    <string name="ExportAccountDataFragment__delete_report_confirmation">Vil du slette rapporten?</string>
     <!-- Message for delete report confirmation dialog -->
-    <string name="ExportAccountDataFragment__delete_report_confirmation_message">This will not delete any data from your account.</string>
+    <string name="ExportAccountDataFragment__delete_report_confirmation_message">Dataene slettes ikke fra brukerkontoen din.</string>
 
     <!-- Shown as a snackbar letting the user know the report was deleted -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
 =======
     <!-- Action to delete report in confirmation dialog -->
@@ -5272,7 +5333,13 @@
     <string name="ExportAccountDataFragment__delete_report_snackbar">Rapporten er slettet</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
+=======
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Rapporten er slettet</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Shown in a dialog with a spinner while the report is downloading -->
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5281,7 +5348,13 @@
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Rapporten opprettes kun når den eksporteres, og den lagres ikke i Signal-appen eller på enheten din.</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__download_progress">Downloading report…</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__download_progress">Downloading report…</string>
+=======
+    <string name="ExportAccountDataFragment__download_progress">Laster ned rapporten …</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Explanation that the downloaded report will be available for 30 days before it is deleted -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
 =======
     <string name="ExportAccountDataFragment__download_progress">Laster ned rapporten …</string>
@@ -5308,6 +5381,11 @@
 =======
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Rapporten opprettes kun når den eksporteres, og den lagres ikke i Signal-appen eller på enheten din.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
+=======
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Rapporten er tilgjengelig i 30 dager før den slettes automatisk.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">Velg dette for å bytte ut det nåværende telefonnummeret ditt. Denne endringen kan ikke angres senere. Dobbeltsjekk at det nye nummeret ditt kan motta både SMS og anrop før du fortsetter.</string>
@@ -7146,10 +7224,11 @@
     <!-- Displayed as a title on the username education screen -->
     <string name="UsernameEducationFragment__set_up_your_signal_username">Velg et brukernavn på Signal</string>
     <!-- Displayed as body text in the username education screen -->
-    <string name="UsernameEducationFragment__usernames_are_paired_with_a_set_of_digits">Usernames are paired with a set of digits and aren\'t shared on your profile</string>
+    <string name="UsernameEducationFragment__usernames_are_paired_with_a_set_of_digits">Brukernavnet er knyttet til en tallrekke og deles ikke i profilen din</string>
     <!-- Displayed as body text in the username education screen -->
-    <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">Each username has a unique QR code and link you can share with friends to start a chat with you</string>
+    <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">Alle brukernavn har en unik QR-kode og lenke som du kan dele med venner slik at de kan starte en samtale med deg</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
+<<<<<<< HEAD
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
 =======
 
@@ -7163,6 +7242,11 @@
     <!-- Displayed as body text in the username education screen -->
     <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">Alle brukernavn har en unik QR-kode og lenke som du kan dele med venner slik at de kan starte en samtale med deg</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Hvis du ønsker at andre bare skal kunne finne deg etter brukernavnet ditt, går du til Innstillinger &gt; Personvern &gt; Telefonnummer &gt; Hvem kan finne meg med telefonnummer og slår av oppdagelse av telefonnummer</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
+=======
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Hvis du ønsker at andre bare skal kunne finne deg etter brukernavnet ditt, går du til Innstillinger &gt; Personvern &gt; Telefonnummer &gt; Hvem kan finne meg med telefonnummer og slår av oppdagelse av telefonnummer</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
@@ -7227,18 +7311,30 @@
     <!-- Call Log context menu -->
     <!-- Displayed as a context menu item to start a video call -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="CallContextMenu__video_call">Videosamtale</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="CallContextMenu__video_call">Videoanrop</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="CallContextMenu__video_call">Videoanrop</string>
+=======
+    <string name="CallContextMenu__video_call">Videosamtale</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Displayed as a context menu item to join an ongoing group call -->
     <string name="CallContextMenu__join_call">Bli med i samtalen</string>
     <!-- Displayed as a context menu item to return to active call -->
+<<<<<<< HEAD
     <string name="CallContextMenu__return_to_call">Gå tilbake til anropet</string>
 =======
     <string name="CallContextMenu__video_call">Videosamtale</string>
     <!-- Displayed as a context menu item to join an ongoing group call -->
     <string name="CallContextMenu__join_call">Bli med i samtalen</string>
     <!-- Displayed as a context menu item to return to active call -->
+    <string name="CallContextMenu__return_to_call">Gå tilbake til samtalen</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="CallContextMenu__return_to_call">Gå tilbake til anropet</string>
+=======
     <string name="CallContextMenu__return_to_call">Gå tilbake til samtalen</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Displayed as a context menu item to start an audio call -->
