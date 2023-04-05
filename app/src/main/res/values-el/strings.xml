@@ -799,11 +799,32 @@
     <string name="ConversationListFragment_select">Επιλέχθηκε</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ConversationListFragment_archive">Αρχείο</string>
     <string name="ConversationListFragment_unarchive">Επαναφορά</string>
     <string name="ConversationListFragment_delete">Διαγραφή</string>
     <string name="ConversationListFragment_select_all">Επιλογή όλων</string>
     <!-- Screen title shown when selecting multiple items from a list like conversation threads or call logs. -->
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <plurals name="ConversationListFragment_archive_plural">
+        <item quantity="one">Αρχειοθετήθηκε</item>
+        <item quantity="other">Αρχειοθετήθηκαν</item>
+    </plurals>
+    <plurals name="ConversationListFragment_unarchive_plural">
+        <item quantity="one">Καταργήθηκε η αρχειοθέτηση</item>
+        <item quantity="other">Καταργήθηκε η αρχειοθέτηση</item>
+    </plurals>
+    <plurals name="ConversationListFragment_delete_plural">
+        <item quantity="one">Διαγράφηκε</item>
+        <item quantity="other">Διαγράφηκαν</item>
+    </plurals>
+    <string name="ConversationListFragment_select_all">Επιλέχθηκαν όλα</string>
+=======
+    <string name="ConversationListFragment_archive">Αρχείο</string>
+    <string name="ConversationListFragment_unarchive">Επαναφορά</string>
+    <string name="ConversationListFragment_delete">Διαγραφή</string>
+    <string name="ConversationListFragment_select_all">Επιλογή όλων</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <plurals name="ConversationListFragment_archive_plural">
         <item quantity="one">Αρχειοθετήθηκε</item>
@@ -2422,6 +2443,7 @@
     <!-- Toggle content description for toggling mute state  -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="WebRtcCallView__toggle_mute">Αλλαγή σίγασης</string>
     <!-- Content description for additional actions menu button -->
     <string name="WebRtcCallView__additional_actions">Επιπλέον ενέργειες</string>
@@ -2432,12 +2454,23 @@
 =======
     <string name="WebRtcCallView__toggle_mute">Αλλαγή σίγασης</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="WebRtcCallView__toggle_mute">Toggle mute</string>
+=======
+    <string name="WebRtcCallView__toggle_mute">Αλλαγή σίγασης</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Toggle content description for toggling group ring state  -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
 =======
     <string name="WebRtcCallView__toggle_mute">Αλλαγή σίγασης</string>
     <!-- Toggle content description for toggling group ring state  -->
+    <string name="WebRtcCallView__toggle_ring">Αλλαγή κουδουνίσματος</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
+=======
     <string name="WebRtcCallView__toggle_ring">Αλλαγή κουδουνίσματος</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -2677,6 +2710,7 @@
     <string name="RegistrationActivity_we_need_to_verify_that_youre_human">Πρέπει να επιβεβαιώσουμε ότι είσαι άνθρωπος.</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Button label to trigger a phone call to provide the registration code, in lieu of an SMS code -->
     <string name="RegistrationActivity_voice_call">Βιντεοκλήση</string>
     <!-- Dialog button to cancel the pending action and return to the previous state. -->
@@ -2703,6 +2737,11 @@
 =======
     <string name="RegistrationActivity_external_service_error">Το Signal δεν μπόρεσε να στείλει κωδικό SMS λόγω εξωτερικής αποτυχίας.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+=======
+    <!-- An error shown when the request was valid, but due to an issue with a partner vendor, the server is unable to send an SMS code -->
+    <string name="RegistrationActivity_external_service_error">Signal was unable to send an SMS code due to an external failure.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="RegistrationActivity_next">Επόμενο</string>
     <string name="RegistrationActivity_continue">Συνέχεια</string>
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Πάρε την ιδιωτικότητα μαζί σου.\nΝα είσαι ο εαυτός σου σε κάθε μήνυμα.</string>
@@ -5341,6 +5380,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="AccountSettingsFragment__request_account_data">Τα δεδομένα του λογαριασμού σου</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="AccountSettingsFragment__request_account_data">Request account data</string>
@@ -5372,6 +5412,11 @@
 =======
     <string name="AccountSettingsFragment__request_account_data">Τα δεδομένα του λογαριασμού σου</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="AccountSettingsFragment__request_account_data">Request account data</string>
+=======
+    <string name="AccountSettingsFragment__request_account_data">Αίτημα για δεδομένα λογαριασμού</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ExportAccountDataFragment -->
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
@@ -5383,6 +5428,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_explanation">Κάνε εξαγωγή μιας αναφοράς των δεδομένων του λογαριασμού σου στο Signal. Αυτή η αναφορά δεν περιλαμβάνει μηνύματα ή πολυμέσα. %1$s</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
@@ -5414,9 +5460,15 @@
 =======
     <string name="ExportAccountDataFragment__export_explanation">Κάνε εξαγωγή μιας αναφοράς των δεδομένων του λογαριασμού σου στο Signal. Αυτή η αναφορά δεν περιλαμβάνει μηνύματα ή πολυμέσα. %1$s</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">Κάνε λήψη και εξαγωγή μιας αναφοράς των δεδομένων του λογαριασμού σου στο Signal. Αυτή η αναφορά δεν περιλαμβάνει μηνύματα ή πολυμέσα. %1$s</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__learn_more">Μάθε περισσότερα</string>
 <<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -5426,7 +5478,13 @@
 =======
     <string name="ExportAccountDataFragment__learn_more">Μάθε περισσότερα</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__learn_more">Learn more</string>
+=======
+    <string name="ExportAccountDataFragment__learn_more">Μάθε περισσότερα</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to download the report data -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_report">Download report</string>
 =======
@@ -5450,9 +5508,15 @@
     <string name="ExportAccountDataFragment__download_report">Λήψη αναφοράς</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__download_report">Download report</string>
+=======
+    <string name="ExportAccountDataFragment__download_report">Λήψη αναφοράς</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to export the report data to another app (e.g. email) -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report">Εξαγωγή αναφοράς</string>
 <<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -5462,7 +5526,13 @@
 =======
     <string name="ExportAccountDataFragment__export_report">Εξαγωγή αναφοράς</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_report">Export report</string>
+=======
+    <string name="ExportAccountDataFragment__export_report">Εξαγωγή αναφοράς</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to delete the requested account data -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__delete_report">Delete report</string>
 =======
@@ -5486,6 +5556,11 @@
     <string name="ExportAccountDataFragment__delete_report">Διαγραφή αναφοράς</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__delete_report">Delete report</string>
+=======
+    <string name="ExportAccountDataFragment__delete_report">Διαγραφή αναφοράς</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Radio option to export the data as a text file .txt -->
     <string name="ExportAccountDataFragment__export_as_txt">Εξαγωγή ως TXT</string>
@@ -5511,6 +5586,7 @@
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Message shown when report download fails -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
 =======
     <!-- Message shown when report download fails -->
@@ -5551,6 +5627,11 @@
 =======
     <string name="ExportAccountDataFragment__check_network">Έλεγξε τη σύνδεσή σου και δοκίμασε πάλι.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
+=======
+    <string name="ExportAccountDataFragment__report_download_failed">Δεν ήταν δυνατή η λήψη της αναφοράς σου λόγω σφάλματος δικτύου. Έλεγξε τη σύνδεσή σου και δοκίμασε πάλι.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">Εξαγωγή δεδομένων;</string>
@@ -5572,6 +5653,7 @@
 
     <!-- Shown as a snackbar letting the user know the report was deleted -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
 =======
     <!-- Action to delete report in confirmation dialog -->
@@ -5613,6 +5695,11 @@
     <string name="ExportAccountDataFragment__delete_report_snackbar">Η αναφορά διαγράφηκε</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
+=======
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Η αναφορά διαγράφηκε</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Shown in a dialog with a spinner while the report is downloading -->
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5620,6 +5707,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_progress">Δημιουργία αναφοράς…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Η αναφορά σου δημιουργείται μόνο κατά την εξαγωγή και δεν αποθηκεύεται από το Signal στη συσκευή σου.</string>
@@ -5630,7 +5718,13 @@
 =======
     <string name="ExportAccountDataFragment__download_progress">Λήψη αναφοράς…</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__download_progress">Downloading report…</string>
+=======
+    <string name="ExportAccountDataFragment__download_progress">Λήψη αναφοράς…</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Explanation that the downloaded report will be available for 30 days before it is deleted -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
 =======
@@ -5683,6 +5777,11 @@
 =======
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Η αναφορά σου δημιουργείται μόνο κατά την εξαγωγή και δεν αποθηκεύεται από το Signal στη συσκευή σου.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
+=======
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Η αναφορά σου θα είναι διαθέσιμη για εξαγωγή για 30 ημέρες και στη συνέχεια θα διαγραφεί αυτόματα.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">Με αυτό μπορείς να αλλάξεις τον τωρινό αριθμό τηλεφώνου σου σε κάποιον καινούργιο. Δεν μπορείς να αναιρέσεις αυτή την αλλαγή.\n\nΠριν συνεχίσεις, επιβεβαίωσε πως μπορείς να λάβεις SMS ή κλήσεις στο νέο αριθμό.</string>
@@ -7518,11 +7617,17 @@
     <!-- Popup menu label for applying spoiler style -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="TextFormatting_spoiler">Θόλωμα</string>
     <!-- Popup menu label for clearing applied formatting -->
     <string name="TextFormatting_clear_formatting">Διαγραφή μορφοποίησης</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="TextFormatting_spoiler">Spoiler</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="TextFormatting_spoiler">Spoiler</string>
+=======
+    <string name="TextFormatting_spoiler">Θόλωμα</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="TextFormatting_spoiler">Spoiler</string>
 =======
@@ -7540,6 +7645,7 @@
     <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">Κάθε όνομα χρήστη έχει έναν μοναδικό κωδικό και σύνδεσμο QR που μπορείς να μοιραστείς με τους φίλους σου για να ξεκινήσουν μια συνομιλία μαζί σου</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
 =======
     <string name="TextFormatting_spoiler">Θόλωμα</string>
@@ -7554,6 +7660,11 @@
     <!-- Displayed as body text in the username education screen -->
     <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">Κάθε όνομα χρήστη έχει έναν μοναδικό κωδικό και σύνδεσμο QR που μπορείς να μοιραστείς με τους φίλους σου για να ξεκινήσουν μια συνομιλία μαζί σου</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Απενεργοποίησε την επιλογή της ανακάλυψης του αριθμού τηλεφώνου στις Ρυθμίσεις &gt; Απόρρητο &gt; Αριθμός τηλεφώνου &gt; Ποιοι χρήστες μπορούν να βρουν τον αριθμό μου, για να χρησιμοποιήσεις το όνομα χρήστη σου ως τον κύριο τρόπο επικοινωνίας με άλλους</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
+=======
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Απενεργοποίησε την επιλογή της ανακάλυψης του αριθμού τηλεφώνου στις Ρυθμίσεις &gt; Απόρρητο &gt; Αριθμός τηλεφώνου &gt; Ποιοι χρήστες μπορούν να βρουν τον αριθμό μου, για να χρησιμοποιήσεις το όνομα χρήστη σου ως τον κύριο τρόπο επικοινωνίας με άλλους</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)

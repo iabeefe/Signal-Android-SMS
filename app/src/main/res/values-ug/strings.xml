@@ -2303,6 +2303,7 @@
     <!-- Toggle content description for toggling mute state  -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="WebRtcCallView__toggle_mute">ئۈنلۈك ئۈنسىز ئالماشتۇرۇش</string>
     <!-- Content description for additional actions menu button -->
     <string name="WebRtcCallView__additional_actions">قوشۇمچە مەشغۇلات</string>
@@ -2313,12 +2314,23 @@
 =======
     <string name="WebRtcCallView__toggle_mute">ئۈنلۈك ئۈنسىز ئالماشتۇرۇش</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="WebRtcCallView__toggle_mute">Toggle mute</string>
+=======
+    <string name="WebRtcCallView__toggle_mute">ئۈنلۈك ئۈنسىز ئالماشتۇرۇش</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Toggle content description for toggling group ring state  -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
 =======
     <string name="WebRtcCallView__toggle_mute">ئۈنلۈك ئۈنسىز ئالماشتۇرۇش</string>
     <!-- Toggle content description for toggling group ring state  -->
+    <string name="WebRtcCallView__toggle_ring">قوڭغۇراق ئالماشتۇرۇش</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
+=======
     <string name="WebRtcCallView__toggle_ring">قوڭغۇراق ئالماشتۇرۇش</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -2548,6 +2560,7 @@
     <string name="RegistrationActivity_we_need_to_verify_that_youre_human">سىزنىڭ ئادەم ئىكەنلىكىڭىزنى دەلىللىشىمىز كېرەك.</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Button label to trigger a phone call to provide the registration code, in lieu of an SMS code -->
     <string name="RegistrationActivity_voice_call">ئۈن چاقىرىش</string>
     <!-- Dialog button to cancel the pending action and return to the previous state. -->
@@ -2574,6 +2587,11 @@
 =======
     <string name="RegistrationActivity_external_service_error">Signal سىرتقى كاشىلا سەۋەبىدىن قىسقا ئۇچۇر ئەۋەتەلمىدى.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+=======
+    <!-- An error shown when the request was valid, but due to an issue with a partner vendor, the server is unable to send an SMS code -->
+    <string name="RegistrationActivity_external_service_error">Signal was unable to send an SMS code due to an external failure.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="RegistrationActivity_next">كېيىنكى</string>
     <string name="RegistrationActivity_continue">داۋاملاشتۇر</string>
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">شەخسىي مەخپىيەتلىكىڭىزنى ئۆزىڭىز بىلەن بىرگە ساقلاڭ.\nھەر بىر ئۇچۇردا ئۆزىڭىز بولۇڭ.</string>
@@ -5178,6 +5196,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="AccountSettingsFragment__request_account_data">ھېساباتىڭىزنىڭ سانلىق مەلۇماتلىرى</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="AccountSettingsFragment__request_account_data">Request account data</string>
@@ -5209,6 +5228,11 @@
 =======
     <string name="AccountSettingsFragment__request_account_data">ھېساباتىڭىزنىڭ سانلىق مەلۇماتلىرى</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="AccountSettingsFragment__request_account_data">Request account data</string>
+=======
+    <string name="AccountSettingsFragment__request_account_data">ھېسابات سانلىق مەلۇماتىنى تەلەپ قىلىش</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ExportAccountDataFragment -->
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
@@ -5220,6 +5244,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_explanation">Signal ھېساباتىڭىزنىڭ سانلىق مەلۇماتلىرىنى دوكلات قىلىپ چىقىرىشقا بولىدۇ. بۇ دوكلات ھېچقانداق ئۇچۇر ياكى مېدىيانى ئۆز ئىچىگە ئالمايدۇ. %1$s</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
@@ -5251,9 +5276,15 @@
 =======
     <string name="ExportAccountDataFragment__export_explanation">Signal ھېساباتىڭىزنىڭ سانلىق مەلۇماتلىرىنى دوكلات قىلىپ چىقىرىشقا بولىدۇ. بۇ دوكلات ھېچقانداق ئۇچۇر ياكى مېدىيانى ئۆز ئىچىگە ئالمايدۇ. %1$s</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">Signal ھېساباتىڭىزنىڭ سانلىق مەلۇماتلىرىنى چۈشۈرۈپ چىقىرىشقا بولىدۇ. بۇ دوكلات ھېچقانداق ئۇچۇر ياكى مېدىيانى ئۆز ئىچىگە ئالمايدۇ. %1$s</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__learn_more">تەپسىلاتى</string>
 <<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -5263,7 +5294,13 @@
 =======
     <string name="ExportAccountDataFragment__learn_more">تەپسىلاتى</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__learn_more">Learn more</string>
+=======
+    <string name="ExportAccountDataFragment__learn_more">تەپسىلاتى</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to download the report data -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_report">Download report</string>
 =======
@@ -5287,9 +5324,15 @@
     <string name="ExportAccountDataFragment__download_report">دوكلاتنى چۈشۈرۈش</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__download_report">Download report</string>
+=======
+    <string name="ExportAccountDataFragment__download_report">دوكلاتنى چۈشۈرۈش</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to export the report data to another app (e.g. email) -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report">دوكلاتنى چىقىرىش</string>
 <<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -5299,7 +5342,13 @@
 =======
     <string name="ExportAccountDataFragment__export_report">دوكلاتنى چىقىرىش</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_report">Export report</string>
+=======
+    <string name="ExportAccountDataFragment__export_report">دوكلاتنى چىقىرىش</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to delete the requested account data -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__delete_report">Delete report</string>
 =======
@@ -5323,6 +5372,11 @@
     <string name="ExportAccountDataFragment__delete_report">دوكلاتنى ئۆچۈرۈش</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__delete_report">Delete report</string>
+=======
+    <string name="ExportAccountDataFragment__delete_report">دوكلاتنى ئۆچۈرۈش</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Radio option to export the data as a text file .txt -->
     <string name="ExportAccountDataFragment__export_as_txt">TXT شەكلىدە چىقىرىش</string>
@@ -5339,6 +5393,7 @@
     <!-- Acknowledgement for download failure -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__ok_action">بولىدۇ</string>
 <<<<<<< HEAD
     <!-- Title of dialog shown when report fails to generate -->
@@ -5353,7 +5408,13 @@
 =======
     <string name="ExportAccountDataFragment__ok_action">بولىدۇ</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__ok_action">OK</string>
+=======
+    <string name="ExportAccountDataFragment__ok_action">بولىدۇ</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Message shown when report download fails -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
 =======
@@ -5402,6 +5463,11 @@
 =======
     <string name="ExportAccountDataFragment__check_network">تور ئۇلىنىشىڭىزنى تەكشۈرۈپ قايتا سىناڭ.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
+=======
+    <string name="ExportAccountDataFragment__report_download_failed">تور خاتالىقى تۈپەيلى دوكلاتىڭىزنى چۈشۈرگىلى بولمىدى. تور ئۇلىنىشىڭىزنى تەكشۈرۈپ قايتا سىناڭ.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">دوكلاتنى چىقىرامسىز؟</string>
@@ -5423,6 +5489,7 @@
 
     <!-- Shown as a snackbar letting the user know the report was deleted -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
 =======
     <!-- Action to delete report in confirmation dialog -->
@@ -5464,6 +5531,11 @@
     <string name="ExportAccountDataFragment__delete_report_snackbar">دوكلات ئۆچۈرۈلدى</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
+=======
+    <string name="ExportAccountDataFragment__delete_report_snackbar">دوكلات ئۆچۈرۈلدى</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Shown in a dialog with a spinner while the report is downloading -->
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5471,6 +5543,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_progress">دوكلات ھاسىللاۋاتىدۇ…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">دوكلاتىڭىز چىقىرىلىدىغان ۋاقىتتىلا ھاسىللىنىدىغان بولۇپ، ئۇنى Signal ئۈسكۈنىڭىزدە ساقلىمايدۇ.</string>
@@ -5481,7 +5554,13 @@
 =======
     <string name="ExportAccountDataFragment__download_progress">دوكلاتنى چۈشۈرۈۋاتىدۇ…</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__download_progress">Downloading report…</string>
+=======
+    <string name="ExportAccountDataFragment__download_progress">دوكلاتنى چۈشۈرۈۋاتىدۇ…</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Explanation that the downloaded report will be available for 30 days before it is deleted -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
 =======
@@ -5534,6 +5613,11 @@
 =======
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">دوكلاتىڭىز چىقىرىلىدىغان ۋاقىتتىلا ھاسىللىنىدىغان بولۇپ، ئۇنى Signal ئۈسكۈنىڭىزدە ساقلىمايدۇ.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
+=======
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">دوكلاتىڭىزنى 30 كۈنگىچە چىقىرىشقا بولىدۇ، ئ‍ۇنىڭدىن كېيىن ئاپتوماتىك ئۆچۈرۈلىدۇ.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">بۇنى ئىشلىتىپ ھازىرقى نومۇرڭىزنى يېڭى تېلېفون نومۇرىغا ئۆزگەرتىڭ..\n\nباشلاشتىن بۇرۇن، يېڭى نومۇرىڭىز بىلەن SMS قوبۇل قىلىپ، چاقىرىق قىلالايدىغىنىڭىزنى جەزم قىلىڭ.</string>
@@ -7338,11 +7422,17 @@
     <!-- Popup menu label for applying spoiler style -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="TextFormatting_spoiler">غۇۋا ئۇسلۇب</string>
     <!-- Popup menu label for clearing applied formatting -->
     <string name="TextFormatting_clear_formatting">فورماتلاشنى تازىلاش</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="TextFormatting_spoiler">Spoiler</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="TextFormatting_spoiler">Spoiler</string>
+=======
+    <string name="TextFormatting_spoiler">غۇۋا ئۇسلۇب</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="TextFormatting_spoiler">Spoiler</string>
 =======
@@ -7360,6 +7450,7 @@
     <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">ھەر بىر ئىشلەتكۈچى نامىنىڭ خاس QR كودى بار بولۇپ، بۇ ئۇلانمىنى دوستلىرىڭىز بىلەن ئورتاقلىشىپ پاراڭلىشىشنى باشلىيالايسىز</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
 =======
     <string name="TextFormatting_spoiler">غۇۋا ئۇسلۇب</string>
@@ -7374,6 +7465,11 @@
     <!-- Displayed as body text in the username education screen -->
     <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">ھەر بىر ئىشلەتكۈچى نامىنىڭ خاس QR كودى بار بولۇپ، بۇ ئۇلانمىنى دوستلىرىڭىز بىلەن ئورتاقلىشىپ پاراڭلىشىشنى باشلىيالايسىز</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">ئىشلەتكۈچى نامىڭىزنى باشقىلارنىڭ سىزنى تاپىدىغان ئاساسلىق ئۇسۇلى قىلىپ تەڭشەش ئۈچۈن، تەڭشەك &gt; مەخپىيەتلىك &gt; تېلېفون نومۇرى &gt; نومۇرىمنى تاپالايدىغانلار دېگەن جايدىن تېلفون نومۇرىنى بايقاش ئىقتىدارىنى ئېتىۋېتىڭ</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
+=======
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">ئىشلەتكۈچى نامىڭىزنى باشقىلارنىڭ سىزنى تاپىدىغان ئاساسلىق ئۇسۇلى قىلىپ تەڭشەش ئۈچۈن، تەڭشەك &gt; مەخپىيەتلىك &gt; تېلېفون نومۇرى &gt; نومۇرىمنى تاپالايدىغانلار دېگەن جايدىن تېلفون نومۇرىنى بايقاش ئىقتىدارىنى ئېتىۋېتىڭ</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)

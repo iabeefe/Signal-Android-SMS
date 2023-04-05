@@ -304,6 +304,7 @@ public final class EnterPhoneNumberFragment extends LoggingFragment implements R
                                       Log.i(TAG, "The server did not accept the information.", processor.getError());
                                       showErrorDialog(register.getContext(), getString(R.string.RegistrationActivity_we_need_to_verify_that_youre_human));
 <<<<<<< HEAD
+<<<<<<< HEAD
                                     } else if (processor instanceof RegistrationSessionProcessor.RegistrationSessionProcessorForVerification
                                                && ((RegistrationSessionProcessor.RegistrationSessionProcessorForVerification) processor).externalServiceFailure())
                                     {
@@ -314,6 +315,13 @@ public final class EnterPhoneNumberFragment extends LoggingFragment implements R
                                     } else if (processor instanceof RegistrationSessionProcessor.RegistrationSessionProcessorForVerification
                                                && ((RegistrationSessionProcessor.RegistrationSessionProcessorForVerification) processor).externalServiceFailure())
                                     {
+                                      Log.w(TAG, "The server reported a failure with an external service.", processor.getError());
+                                      showErrorDialog(register.getContext(), getString(R.string.RegistrationActivity_external_service_error));
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+=======
+                                    } else if (processor instanceof RegistrationSessionProcessor.RegistrationSessionProcessorForVerification
+                                               && ((RegistrationSessionProcessor.RegistrationSessionProcessorForVerification) processor).externalServiceFailure()) {
                                       Log.w(TAG, "The server reported a failure with an external service.", processor.getError());
                                       showErrorDialog(register.getContext(), getString(R.string.RegistrationActivity_external_service_error));
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)

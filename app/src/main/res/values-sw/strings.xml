@@ -2380,6 +2380,7 @@
     <!-- Toggle content description for toggling mute state  -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="WebRtcCallView__toggle_mute">Geuza kunyamazisha</string>
     <!-- Content description for additional actions menu button -->
     <string name="WebRtcCallView__additional_actions">Hatua za ziada</string>
@@ -2390,12 +2391,23 @@
 =======
     <string name="WebRtcCallView__toggle_mute">Geuza kunyamazisha</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="WebRtcCallView__toggle_mute">Toggle mute</string>
+=======
+    <string name="WebRtcCallView__toggle_mute">Geuza kunyamazisha</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Toggle content description for toggling group ring state  -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
 =======
     <string name="WebRtcCallView__toggle_mute">Geuza kunyamazisha</string>
     <!-- Toggle content description for toggling group ring state  -->
+    <string name="WebRtcCallView__toggle_ring">Geuza mlio</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
+=======
     <string name="WebRtcCallView__toggle_ring">Geuza mlio</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -2635,6 +2647,7 @@
     <string name="RegistrationActivity_we_need_to_verify_that_youre_human">Tunahitaji kuthibitisha wewe ni mtu.</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Button label to trigger a phone call to provide the registration code, in lieu of an SMS code -->
     <string name="RegistrationActivity_voice_call">Simu ya sauti</string>
     <!-- Dialog button to cancel the pending action and return to the previous state. -->
@@ -2661,6 +2674,11 @@
 =======
     <string name="RegistrationActivity_external_service_error">Signal imeshindwa kutuma kodi ya SMS kutokana na hitilafu za nje.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+=======
+    <!-- An error shown when the request was valid, but due to an issue with a partner vendor, the server is unable to send an SMS code -->
+    <string name="RegistrationActivity_external_service_error">Signal was unable to send an SMS code due to an external failure.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="RegistrationActivity_next">Ifuatayo</string>
     <string name="RegistrationActivity_continue">Endelea</string>
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Enda na faragha.\n Kuwa wewe katika kila ujumbe</string>
@@ -5287,6 +5305,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="AccountSettingsFragment__request_account_data">Data za akaunti yako</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="AccountSettingsFragment__request_account_data">Request account data</string>
@@ -5318,6 +5337,11 @@
 =======
     <string name="AccountSettingsFragment__request_account_data">Data za akaunti yako</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="AccountSettingsFragment__request_account_data">Request account data</string>
+=======
+    <string name="AccountSettingsFragment__request_account_data">Omba data za akaunti</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ExportAccountDataFragment -->
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
@@ -5329,6 +5353,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_explanation">Hamisha ripoti ya data zako za akaunti ya Signal. Ripoti hii haijumuishi jumbe au media zozote. %1$s</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
@@ -5360,9 +5385,15 @@
 =======
     <string name="ExportAccountDataFragment__export_explanation">Hamisha ripoti ya data zako za akaunti ya Signal. Ripoti hii haijumuishi jumbe au media zozote. %1$s</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">Pakua na hamisha ripoti ya akaunti yako ya data ya Signal. Ripoti hii haijumuishi jumbe au media zozote. %1$s</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__learn_more">Jifunze zaidi</string>
 <<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -5372,7 +5403,13 @@
 =======
     <string name="ExportAccountDataFragment__learn_more">Jifunze zaidi</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__learn_more">Learn more</string>
+=======
+    <string name="ExportAccountDataFragment__learn_more">Jifunze zaidi</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to download the report data -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_report">Download report</string>
 =======
@@ -5396,9 +5433,15 @@
     <string name="ExportAccountDataFragment__download_report">Pakua ripoti</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__download_report">Download report</string>
+=======
+    <string name="ExportAccountDataFragment__download_report">Pakua ripoti</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to export the report data to another app (e.g. email) -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report">Hamisha ripoti</string>
 <<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -5408,7 +5451,13 @@
 =======
     <string name="ExportAccountDataFragment__export_report">Hamisha ripoti</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_report">Export report</string>
+=======
+    <string name="ExportAccountDataFragment__export_report">Hamisha ripoti</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Button action to delete the requested account data -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__delete_report">Delete report</string>
 =======
@@ -5432,6 +5481,11 @@
     <string name="ExportAccountDataFragment__delete_report">Futa ripoti</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__delete_report">Delete report</string>
+=======
+    <string name="ExportAccountDataFragment__delete_report">Futa ripoti</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Radio option to export the data as a text file .txt -->
     <string name="ExportAccountDataFragment__export_as_txt">Hamisha kama TXT</string>
@@ -5440,6 +5494,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_as_txt_label">Faili la maandishi yaliyo rahisi-kusoma</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_as_txt_label">Easy-to-read text file</string>
@@ -5461,6 +5516,11 @@
 =======
     <string name="ExportAccountDataFragment__export_as_txt_label">Faili la maandishi yaliyo rahisi-kusoma</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_as_txt_label">Easy-to-read text file</string>
+=======
+    <string name="ExportAccountDataFragment__export_as_txt_label">Faili la Easy-to-read</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Radio option to export the data as a json (java script object notation) file .json -->
     <string name="ExportAccountDataFragment__export_as_json">Hamisha kama JSON</string>
     <!-- Label for the json file option, the account data in a machine readable file format -->
@@ -5468,6 +5528,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_as_json_label">Faili linaloweza kusomwa na mashine</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_as_json_label">Machine-readable file</string>
@@ -5489,6 +5550,11 @@
 =======
     <string name="ExportAccountDataFragment__export_as_json_label">Faili linaloweza kusomwa na mashine</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_as_json_label">Machine-readable file</string>
+=======
+    <string name="ExportAccountDataFragment__export_as_json_label">Faili la Kusomwa na Mashini</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Action to cancel (in a dialog) -->
     <string name="ExportAccountDataFragment__cancel_action">Ghairi</string>
@@ -5496,6 +5562,7 @@
     <!-- Acknowledgement for download failure -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__ok_action">Sawa</string>
 <<<<<<< HEAD
     <!-- Title of dialog shown when report fails to generate -->
@@ -5511,7 +5578,13 @@
 =======
     <string name="ExportAccountDataFragment__ok_action">Sawa</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__ok_action">OK</string>
+=======
+    <string name="ExportAccountDataFragment__ok_action">Sawa</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Message shown when report download fails -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
 =======
@@ -5571,6 +5644,11 @@
 =======
     <string name="ExportAccountDataFragment__check_network">Angalia muunganisho wako wa mtandao kisha ujaribu tena.</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
+=======
+    <string name="ExportAccountDataFragment__report_download_failed">Ripoti yako imeshindwa kupakuliwa kwa sababu ya hitilafu ya kimtandao. Angalia muunganisho wa mtandao wako kisha ujaribu tena.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">Hamisha data?</string>
@@ -5579,6 +5657,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report_confirmation_message">Shiriki data za akaunti yako ya Signal na watu au programu unazoziamini.</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_report_confirmation_message">Only share your Signal account data with people or apps you trust.</string>
@@ -5600,6 +5679,11 @@
 =======
     <string name="ExportAccountDataFragment__export_report_confirmation_message">Shiriki data za akaunti yako ya Signal na watu au programu unazoziamini.</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">Only share your Signal account data with people or apps you trust.</string>
+=======
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">Sambaza data za akaunti yako ya Signal kwa watu au programu unazoziamini.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">Hamisha</string>
 
@@ -5616,6 +5700,7 @@
 
     <!-- Shown as a snackbar letting the user know the report was deleted -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
 =======
     <!-- Action to delete report in confirmation dialog -->
@@ -5657,6 +5742,11 @@
     <string name="ExportAccountDataFragment__delete_report_snackbar">Ripoti imefutwa</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
+=======
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Ripoti imefutwa</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Shown in a dialog with a spinner while the report is downloading -->
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5664,6 +5754,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_progress">Inatengeneza ripoti…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
 <<<<<<< HEAD
@@ -5676,7 +5767,13 @@
 =======
     <string name="ExportAccountDataFragment__download_progress">Inapakua ripoti…</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__download_progress">Downloading report…</string>
+=======
+    <string name="ExportAccountDataFragment__download_progress">Inapakua ripoti…</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Explanation that the downloaded report will be available for 30 days before it is deleted -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
 =======
@@ -5739,6 +5836,11 @@
 =======
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Ripoti yako inatengenezwa muda tu inapohamishwa na haihifadhiwi na Signal kwenye kifaa chako.</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
+=======
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Ripoti yako itakuwa tayari kuhamishwa kwa siku 30 halafu itafutwa kiotomatiki.</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">Tumia hii kubadili nambari yako ya simu ya sasa hivi hadi nambari mpya. Huwezi kubatilisha mabadiliko haya.\n\\Kabla ya kuendelea, hakikisha nambari yako mpya inaweza kupokea ujumbe mfupi au simu.</string>
@@ -7574,11 +7676,17 @@
     <!-- Popup menu label for applying spoiler style -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="TextFormatting_spoiler">Muundo fiche</string>
     <!-- Popup menu label for clearing applied formatting -->
     <string name="TextFormatting_clear_formatting">Futa umbizo</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="TextFormatting_spoiler">Spoiler</string>
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="TextFormatting_spoiler">Spoiler</string>
+=======
+    <string name="TextFormatting_spoiler">Muundo fiche</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="TextFormatting_spoiler">Spoiler</string>
 =======
@@ -7596,6 +7704,7 @@
     <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">Kila jina la mtumiaji lina kodi ya kipekee ya QR na kiungo ambacho unaweza kuwashirikisha marafiki wako waanzishe gumzo nawe</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
 =======
     <string name="TextFormatting_spoiler">Muundo fiche</string>
@@ -7610,6 +7719,11 @@
     <!-- Displayed as body text in the username education screen -->
     <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">Kila jina la mtumiaji lina kodi ya kipekee ya QR na kiungo ambacho unaweza kuwashirikisha marafiki wako waanzishe gumzo nawe</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Zima kupatikana kwa nambari ya simu katika Mipangilio &gt; Faragha &gt; Nambari ya Simu &gt; Nani anaweza kupata nambari yangu, ili kutumia jina lako la mtumiaji kama njia kuu ya watu kuwasiliana nawe</string>
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
+=======
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Zima kupatikana kwa nambari ya simu katika Mipangilio &gt; Faragha &gt; Nambari ya Simu &gt; Nani anaweza kupata nambari yangu, ili kutumia jina lako la mtumiaji kama njia kuu ya watu kuwasiliana nawe</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)

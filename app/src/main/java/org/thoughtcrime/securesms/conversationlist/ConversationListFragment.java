@@ -1569,7 +1569,13 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     if (conversation.getThreadRecord().isArchived()) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       items.add(new ActionItem(R.drawable.symbol_archive_up_24, getResources().getString(R.string.ConversationListFragment_unarchive), () -> handleArchive(id, false)));
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+      items.add(new ActionItem(R.drawable.symbol_archive_android_up_24, getResources().getQuantityString(R.plurals.ConversationListFragment_unarchive_plural, 1), () -> handleArchive(id, false)));
+=======
+      items.add(new ActionItem(R.drawable.symbol_archive_android_up_24, getResources().getString(R.string.ConversationListFragment_unarchive), () -> handleArchive(id, false)));
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
       items.add(new ActionItem(R.drawable.symbol_archive_android_up_24, getResources().getQuantityString(R.plurals.ConversationListFragment_unarchive_plural, 1), () -> handleArchive(id, false)));
 =======
@@ -1583,7 +1589,13 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     } else {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       items.add(new ActionItem(R.drawable.symbol_archive_24, getResources().getString(R.string.ConversationListFragment_archive), () -> handleArchive(id, false)));
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+      items.add(new ActionItem(R.drawable.symbol_archive_android_24, getResources().getQuantityString(R.plurals.ConversationListFragment_archive_plural, 1), () -> handleArchive(id, false)));
+=======
+      items.add(new ActionItem(R.drawable.symbol_archive_android_24, getResources().getString(R.string.ConversationListFragment_archive), () -> handleArchive(id, false)));
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
       items.add(new ActionItem(R.drawable.symbol_archive_android_24, getResources().getQuantityString(R.plurals.ConversationListFragment_archive_plural, 1), () -> handleArchive(id, false)));
 =======
@@ -1691,7 +1703,13 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     if (isArchived()) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       items.add(new ActionItem(R.drawable.symbol_archive_up_24, getResources().getString(R.string.ConversationListFragment_unarchive), () -> handleArchive(selectionIds, true)));
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+      items.add(new ActionItem(R.drawable.symbol_archive_android_up_24, getResources().getQuantityString(R.plurals.ConversationListFragment_unarchive_plural, count), () -> handleArchive(selectionIds, true)));
+=======
+      items.add(new ActionItem(R.drawable.symbol_archive_android_up_24, getResources().getString(R.string.ConversationListFragment_unarchive), () -> handleArchive(selectionIds, true)));
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
       items.add(new ActionItem(R.drawable.symbol_archive_android_up_24, getResources().getQuantityString(R.plurals.ConversationListFragment_unarchive_plural, count), () -> handleArchive(selectionIds, true)));
 =======
@@ -1705,7 +1723,13 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     } else {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       items.add(new ActionItem(R.drawable.symbol_archive_24, getResources().getString(R.string.ConversationListFragment_archive), () -> handleArchive(selectionIds, true)));
+||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+      items.add(new ActionItem(R.drawable.symbol_archive_android_24, getResources().getQuantityString(R.plurals.ConversationListFragment_archive_plural, count), () -> handleArchive(selectionIds, true)));
+=======
+      items.add(new ActionItem(R.drawable.symbol_archive_android_24, getResources().getString(R.string.ConversationListFragment_archive), () -> handleArchive(selectionIds, true)));
+>>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
       items.add(new ActionItem(R.drawable.symbol_archive_android_24, getResources().getQuantityString(R.plurals.ConversationListFragment_archive_plural, count), () -> handleArchive(selectionIds, true)));
 =======
