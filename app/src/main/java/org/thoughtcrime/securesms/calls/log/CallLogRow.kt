@@ -39,6 +39,7 @@ sealed class CallLogRow {
     val date: Long,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     val groupCallState: GroupCallState,
     val children: Set<Long>,
     val searchQuery: String?,
@@ -71,6 +72,12 @@ sealed class CallLogRow {
     val children: Set<Long>,
     override val id: Id = Id.Call(children)
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    override val id: Id = Id.Call(call.messageId)
+=======
+    val groupCallState: GroupCallState,
+    override val id: Id = Id.Call(call.callId)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   ) : CallLogRow()
 
   /**
@@ -80,6 +87,7 @@ sealed class CallLogRow {
     override val id: Id = Id.ClearFilter
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   data object CreateCallLink : CallLogRow() {
@@ -100,7 +108,15 @@ sealed class CallLogRow {
   }
 
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  object CreateCallLink : CallLogRow() {
+    override val id: Id = Id.CreateCallLink
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   sealed class Id {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -160,7 +176,13 @@ sealed class CallLogRow {
 =======
     data class Call(val callId: Long) : Id()
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    data class Call(val messageId: Long) : Id()
+=======
+    data class Call(val callId: Long) : Id()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     object ClearFilter : Id()
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     data class Call(val callId: Long) : Id()
@@ -175,6 +197,54 @@ sealed class CallLogRow {
     data class Call(val children: Set<Long>) : Id()
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     object ClearFilter : Id()
+    object CreateCallLink : Id()
+  }
+
+  enum class GroupCallState {
+    /**
+     * No group call available.
+     */
+    NONE,
+
+    /**
+     * Active, but the local user is not in the call.
+     */
+    ACTIVE,
+
+    /**
+     * Active and the local user is in the call
+     */
+    LOCAL_USER_JOINED,
+
+    /**
+     * Active but the call is full.
+     */
+    FULL;
+
+    companion object {
+      fun fromDetails(groupCallUpdateDetails: GroupCallUpdateDetails?): GroupCallState {
+        if (groupCallUpdateDetails == null) {
+          return NONE
+        }
+
+        if (groupCallUpdateDetails.isCallFull) {
+          return FULL
+        }
+
+        if (groupCallUpdateDetails.inCallUuidsList.contains(Recipient.self().requireServiceId().uuid().toString())) {
+          return LOCAL_USER_JOINED
+        }
+
+        return if (groupCallUpdateDetails.inCallUuidsCount > 0) {
+          ACTIVE
+        } else {
+          NONE
+        }
+      }
+    }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
     object CreateCallLink : Id()
   }
 

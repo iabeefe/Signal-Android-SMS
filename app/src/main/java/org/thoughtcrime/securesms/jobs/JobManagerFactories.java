@@ -13,8 +13,13 @@ import org.thoughtcrime.securesms.jobmanager.impl.AutoDownloadEmojiConstraint;
 import org.thoughtcrime.securesms.jobmanager.impl.CellServiceConstraintObserver;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.jobmanager.impl.ChangeNumberConstraint;
 import org.thoughtcrime.securesms.jobmanager.impl.ChangeNumberConstraintObserver;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.jobmanager.impl.ChangeNumberConstraint;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import org.thoughtcrime.securesms.jobmanager.impl.ChangeNumberConstraint;
@@ -85,7 +90,12 @@ import org.thoughtcrime.securesms.migrations.ProfileSharingUpdateMigrationJob;
 import org.thoughtcrime.securesms.migrations.RebuildMessageSearchIndexMigrationJob;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.migrations.RecheckPaymentsMigrationJob;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.thoughtcrime.securesms.migrations.UpdateSmsJobsMigrationJob;
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.migrations.UpdateSmsJobsMigrationJob;
 =======
@@ -146,12 +156,17 @@ public final class JobManagerFactories {
       put(BoostReceiptRequestResponseJob.KEY,        new BoostReceiptRequestResponseJob.Factory());
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       put(BuildExpirationConfirmationJob.KEY,        new BuildExpirationConfirmationJob.Factory());
       put(CallLinkPeekJob.KEY,                       new CallLinkPeekJob.Factory());
       put(CallLinkUpdateSendJob.KEY,                 new CallLinkUpdateSendJob.Factory());
       put(CallLogEventSendJob.KEY,                   new CallLogEventSendJob.Factory());
       put(CallSyncEventJob.KEY,                      new CallSyncEventJob.Factory());
       put(CheckRestoreMediaLeftJob.KEY,              new CheckRestoreMediaLeftJob.Factory());
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+      put(CallSyncEventJob.KEY,                      new CallSyncEventJob.Factory());
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
       put(CallSyncEventJob.KEY,                      new CallSyncEventJob.Factory());
@@ -244,8 +259,14 @@ public final class JobManagerFactories {
       put(RefreshAttributesJob.KEY,                  new RefreshAttributesJob.Factory());
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       put(RefreshCallLinkDetailsJob.KEY,             new RefreshCallLinkDetailsJob.Factory());
       put(RefreshSvrCredentialsJob.KEY,              new RefreshSvrCredentialsJob.Factory());
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      put(RefreshKbsCredentialsJob.KEY, new RefreshKbsCredentialsJob.Factory());
+=======
+      put(RefreshKbsCredentialsJob.KEY,              new RefreshKbsCredentialsJob.Factory());
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       put(RefreshKbsCredentialsJob.KEY, new RefreshKbsCredentialsJob.Factory());
 =======
@@ -408,8 +429,13 @@ public final class JobManagerFactories {
       put(ChargingConstraint.KEY,                    new ChargingConstraint.Factory());
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       put(DataRestoreConstraint.KEY,                 new DataRestoreConstraint.Factory());
       put(DecryptionsDrainedConstraint.KEY,          new DecryptionsDrainedConstraint.Factory());
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+      put(DecryptionsDrainedConstraint.KEY,          new DecryptionsDrainedConstraint.Factory());
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
       put(DecryptionsDrainedConstraint.KEY,          new DecryptionsDrainedConstraint.Factory());
@@ -424,8 +450,13 @@ public final class JobManagerFactories {
       put(NotInCallConstraint.KEY,                   new NotInCallConstraint.Factory());
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       put(SqlCipherMigrationConstraint.KEY,          new SqlCipherMigrationConstraint.Factory(application));
       put(WifiConstraint.KEY,                        new WifiConstraint.Factory(application));
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+      put(SqlCipherMigrationConstraint.KEY,          new SqlCipherMigrationConstraint.Factory(application));
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
       put(SqlCipherMigrationConstraint.KEY,          new SqlCipherMigrationConstraint.Factory(application));

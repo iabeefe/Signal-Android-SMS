@@ -51,6 +51,7 @@ object CallPreference {
         MessageTypes.OUTGOING_AUDIO_CALL_TYPE, MessageTypes.OUTGOING_VIDEO_CALL_TYPE -> R.drawable.symbol_arrow_upright_24
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         MessageTypes.GROUP_CALL_TYPE -> when {
           call.isDisplayedAsMissedCallInUi -> R.drawable.symbol_missed_incoming_24
           call.event == CallTable.Event.GENERIC_GROUP_CALL || call.event == CallTable.Event.JOINED -> R.drawable.symbol_group_24
@@ -83,9 +84,21 @@ object CallPreference {
         }
         else -> error("Unexpected type ${call.type}")
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        else -> error("Unexpected type ${messageRecord.type}")
+=======
+        MessageTypes.GROUP_CALL_TYPE -> when {
+          call.event == CallTable.Event.MISSED -> R.drawable.symbol_missed_incoming_24
+          call.direction == CallTable.Direction.INCOMING -> R.drawable.symbol_arrow_downleft_24
+          call.direction == CallTable.Direction.OUTGOING -> R.drawable.symbol_arrow_upright_24
+          else -> throw AssertionError()
+        }
+        else -> error("Unexpected type ${call.type}")
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     private fun getCallType(call: CallTable.Call): String {
@@ -97,6 +110,13 @@ object CallPreference {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     private fun getCallType(messageRecord: MessageRecord): String {
       val id = when (messageRecord.type) {
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    private fun getCallType(messageRecord: MessageRecord): String {
+      val id = when (messageRecord.type) {
+=======
+    private fun getCallType(call: CallTable.Call): String {
+      val id = when (call.messageType) {
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     private fun getCallType(messageRecord: MessageRecord): String {
       val id = when (messageRecord.type) {
@@ -118,6 +138,7 @@ object CallPreference {
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         MessageTypes.OUTGOING_AUDIO_CALL_TYPE -> R.string.MessageRecord_outgoing_voice_call
         MessageTypes.OUTGOING_VIDEO_CALL_TYPE -> R.string.MessageRecord_outgoing_video_call
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         MessageTypes.GROUP_CALL_TYPE -> when {
@@ -146,6 +167,17 @@ object CallPreference {
         MessageTypes.GROUP_CALL_TYPE -> when {
           call.event == CallTable.Event.MISSED -> R.string.CallPreference__missed_group_call
           call.event == CallTable.Event.GENERIC_GROUP_CALL || call.event == CallTable.Event.JOINED -> R.string.CallPreference__group_call
+          call.direction == CallTable.Direction.INCOMING -> R.string.CallPreference__incoming_group_call
+          call.direction == CallTable.Direction.OUTGOING -> R.string.CallPreference__outgoing_group_call
+          else -> throw AssertionError()
+        }
+        else -> error("Unexpected type ${call.messageType}")
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        else -> error("Unexpected type ${messageRecord.type}")
+=======
+        MessageTypes.GROUP_CALL_TYPE -> when {
+          call.event == CallTable.Event.MISSED -> R.string.CallPreference__missed_group_call
           call.direction == CallTable.Direction.INCOMING -> R.string.CallPreference__incoming_group_call
           call.direction == CallTable.Direction.OUTGOING -> R.string.CallPreference__outgoing_group_call
           else -> throw AssertionError()

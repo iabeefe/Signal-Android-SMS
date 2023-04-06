@@ -67,6 +67,7 @@ class AccountValues internal constructor(store: KeyValueStore, context: Context)
     private const val KEY_PNI_LAST_RESORT_KYBER_PREKEY_ROTATION_TIME = "account.pni_last_resort_kyber_prekey_rotation_time"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     private const val KEY_USERNAME = "account.username"
     private const val KEY_USERNAME_LINK_ENTROPY = "account.username_link_entropy"
     private const val KEY_USERNAME_LINK_SERVER_ID = "account.username_link_server_id"
@@ -79,6 +80,17 @@ class AccountValues internal constructor(store: KeyValueStore, context: Context)
     private const val KEY_IS_REGISTERED = "account.is_registered"
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     @VisibleForTesting
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    @VisibleForTesting
+    const val KEY_ACCOUNT_DATA_REPORT = "account.data_report"
+
+    @VisibleForTesting
+    const val KEY_ACCOUNT_DATA_REPORT_DOWNLOAD_TIME = "account.data_report_download_time"
+
+    @VisibleForTesting
+=======
+    @VisibleForTesting
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     const val KEY_E164 = "account.e164"
 
     @VisibleForTesting
@@ -392,6 +404,7 @@ class AccountValues internal constructor(store: KeyValueStore, context: Context)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /**
    * Function for testing backup/restore
    */
@@ -404,6 +417,37 @@ class AccountValues internal constructor(store: KeyValueStore, context: Context)
     Recipient.self().live().refresh()
   }
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  val accountDataReport: String?
+    get() = getString(KEY_ACCOUNT_DATA_REPORT, null)
+
+  fun setAccountDataReport(report: String, downloadTime: Long) {
+    store.beginWrite()
+      .putString(KEY_ACCOUNT_DATA_REPORT, report)
+      .putLong(KEY_ACCOUNT_DATA_REPORT_DOWNLOAD_TIME, downloadTime)
+      .apply()
+  }
+
+  fun hasAccountDataReport(): Boolean = store.containsKey(KEY_ACCOUNT_DATA_REPORT)
+
+  fun clearOldAccountDataReport(): Boolean {
+    return if (hasAccountDataReport() && (getLong(KEY_ACCOUNT_DATA_REPORT_DOWNLOAD_TIME, 0) + 30.days.inWholeMilliseconds) < System.currentTimeMillis()) {
+      deleteAccountDataReport()
+      true
+    } else {
+      false
+    }
+  }
+
+  fun deleteAccountDataReport() {
+    store.beginWrite()
+      .remove(KEY_ACCOUNT_DATA_REPORT)
+      .remove(KEY_ACCOUNT_DATA_REPORT_DOWNLOAD_TIME)
+      .apply()
+  }
+
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   val accountDataReport: String?
     get() = getString(KEY_ACCOUNT_DATA_REPORT, null)

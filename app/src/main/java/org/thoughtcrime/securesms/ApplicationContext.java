@@ -239,8 +239,13 @@ public class ApplicationContext extends Application implements AppForegroundObse
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
                             .addNonBlocking(() -> ApplicationDependencies.getExpireStoriesManager().scheduleIfNecessary())
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                             .addNonBlocking(() -> ApplicationDependencies.getExpireStoriesManager().scheduleIfNecessary())
+                            .addPostRender(() -> ApplicationDependencies.getDeletedCallEventManager().scheduleIfNecessary())
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
                             .addPostRender(() -> ApplicationDependencies.getDeletedCallEventManager().scheduleIfNecessary())
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)

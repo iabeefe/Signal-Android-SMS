@@ -182,6 +182,28 @@ sealed class SignalAudioManager(protected val context: Context, protected val ev
     }
   }
 
+  /**
+   * This encapsulates the two ways to represent a chosen audio device.
+   * Use [desiredAudioDeviceLegacy] for API < 31
+   * Use [desiredAudioDevice31] for API 31+
+   */
+  class ChosenAudioDeviceIdentifier {
+    var desiredAudioDeviceLegacy: AudioDevice? = null
+    var desiredAudioDevice31: Int? = null
+
+    fun isLegacy(): Boolean {
+      return desiredAudioDeviceLegacy != null
+    }
+
+    constructor(device: AudioDevice) {
+      desiredAudioDeviceLegacy = device
+    }
+
+    constructor(device: Int) {
+      desiredAudioDevice31 = device
+    }
+  }
+
   interface EventListener {
     @JvmSuppressWildcards
     fun onAudioDeviceChanged(activeDevice: AudioDevice, devices: Set<AudioDevice>)

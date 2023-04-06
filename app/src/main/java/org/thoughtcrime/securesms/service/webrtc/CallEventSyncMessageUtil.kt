@@ -2,8 +2,14 @@ package org.thoughtcrime.securesms.service.webrtc
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import okio.ByteString
 import okio.ByteString.Companion.toByteString
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import com.google.protobuf.ByteString
+import org.thoughtcrime.securesms.database.model.toProtoByteString
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import com.google.protobuf.ByteString
@@ -37,6 +43,7 @@ object CallEventSyncMessageUtil {
 
   @JvmStatic
   fun createNotAcceptedSyncMessage(remotePeer: RemotePeer, timestamp: Long, isOutgoing: Boolean, isVideoCall: Boolean): CallEvent {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     return createCallEvent(
@@ -104,6 +111,47 @@ object CallEventSyncMessageUtil {
       event = event
     )
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    return createCallEvent(
+      remotePeer.id,
+      remotePeer.callId.longValue(),
+      timestamp,
+      isOutgoing,
+      isVideoCall,
+      CallEvent.Event.NOT_ACCEPTED
+    )
+  }
+
+  @JvmStatic
+  fun createDeleteCallEvent(remotePeer: RemotePeer, timestamp: Long, isOutgoing: Boolean, isVideoCall: Boolean): CallEvent {
+    return createCallEvent(
+      remotePeer.id,
+      remotePeer.callId.longValue(),
+      timestamp,
+      isOutgoing,
+      isVideoCall,
+      CallEvent.Event.DELETE
+    )
+  }
+
+  private fun createCallEvent(
+    recipientId: RecipientId,
+    callId: Long,
+    timestamp: Long,
+    isOutgoing: Boolean,
+    isVideoCall: Boolean,
+    event: CallEvent.Event
+  ): CallEvent {
+    val recipient = Recipient.resolved(recipientId)
+    val isGroupCall = recipient.isGroup
+    val conversationId: ByteString = if (isGroupCall) {
+      recipient.requireGroupId().decodedId.toProtoByteString()
+    } else {
+      recipient.requireServiceId().toByteString()
+    }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
     return createCallEvent(

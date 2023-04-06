@@ -7,7 +7,12 @@ import org.thoughtcrime.securesms.recipients.RecipientId
 import org.whispersystems.signalservice.api.messages.SignalServiceDataMessage
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.whispersystems.signalservice.internal.push.DataMessage
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos
@@ -60,6 +65,7 @@ class QuoteModel(
       }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
       fun fromProto(type: DataMessage.Quote.Type?): Type {
         return if (type == DataMessage.Quote.Type.GIFT_BADGE) {
@@ -68,6 +74,17 @@ class QuoteModel(
           NORMAL
         }
       }
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+
+      fun fromProto(type: SignalServiceProtos.DataMessage.Quote.Type): Type {
+        return if (type == SignalServiceProtos.DataMessage.Quote.Type.GIFT_BADGE) {
+          GIFT_BADGE
+        } else {
+          NORMAL
+        }
+      }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 

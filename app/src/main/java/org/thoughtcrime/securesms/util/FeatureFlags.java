@@ -120,6 +120,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
   private static final String EXPORT_ACCOUNT_DATA               = "android.exportAccountData";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   private static final String CALLS_TAB                         = "android.calls.tab";
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
@@ -150,6 +151,10 @@ public final class FeatureFlags {
   private static final String EDIT_MESSAGE_RECEIVE              = "android.editMessage.receive";
   private static final String EDIT_MESSAGE_SEND                 = "android.editMessage.send";
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  private static final String AD_HOC_CALLING                    = "android.calling.ad.hoc";
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
   /**
    * We will only store remote values for flags in this set. If you want a flag to be controllable
@@ -1310,6 +1315,7 @@ public final class FeatureFlags {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
@@ -1400,6 +1406,16 @@ public final class FeatureFlags {
   /**
 =======
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+   * Whether or not ad-hoc calling is enabled
+   */
+  public static boolean adHocCalling() {
+    return getBoolean(AD_HOC_CALLING, false);
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  /**
    * Whether or not ad-hoc calling is enabled
    */
   public static boolean adHocCalling() {

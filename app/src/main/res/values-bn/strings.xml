@@ -20,9 +20,14 @@
   <!-- Removed by excludeNonTranslatables <string name="username_support_url" translatable="false">https://support.signal.org/hc/articles/5389476324250</string> -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
   <!-- Removed by excludeNonTranslatables <string name="pending_transfer_url" translatable="false">https://support.signal.org/hc/articles/360031949872#pending</string> -->
   <!-- Removed by excludeNonTranslatables <string name="donate_faq_url" translatable="false">https://support.signal.org/hc/articles/360031949872#donate</string> -->
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
   <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
@@ -792,6 +797,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <item quantity="one">অপঠিত</item>
         <item quantity="other">অপঠিত</item>
     </plurals>
@@ -809,7 +815,15 @@
         <item quantity="one">অপঠিত</item>
         <item quantity="other">অপঠিত</item>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        <item quantity="one">পড়া হয়নি</item>
+        <item quantity="other">পড়া হয়নি</item>
+=======
+        <item quantity="one">অপঠিত</item>
+        <item quantity="other">অপঠিত</item>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     </plurals>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -892,6 +906,11 @@
     </plurals>
 =======
     <string name="ConversationListFragment_pin">পিন</string>
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="ConversationListFragment_pin">পিন</string>
+=======
+    <string name="ConversationListFragment_pin">পিন করুন</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="ConversationListFragment_unpin">আনপিন করুন</string>
     <string name="ConversationListFragment_mute">মিউট করুন</string>
     <string name="ConversationListFragment_unmute">আনমিউট করুন</string>
@@ -903,6 +922,7 @@
     <string name="ConversationListFragment_archive">আর্কাইভ করুন</string>
     <string name="ConversationListFragment_unarchive">আর্কাইভ মুক্ত</string>
     <string name="ConversationListFragment_delete">মুছে ফেলুন</string>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ConversationListFragment_select_all">সব নির্বাচন করুন</string>
     <!-- Screen title shown when selecting multiple items from a list like conversation threads or call logs. -->
@@ -963,6 +983,11 @@
 <<<<<<< HEAD
     <string name="ConversationListFragment_select_all">সবগুলো নির্বাচন করুন</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="ConversationListFragment_select_all">সবগুলো নির্বাচন করুন</string>
+=======
+    <string name="ConversationListFragment_select_all">সব নির্বাচন করুন</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="ConversationListFragment_select_all">সবগুলো নির্বাচন করুন</string>
 =======
@@ -2551,6 +2576,7 @@
     <!-- Toggle content description for toggling mute state  -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="WebRtcCallView__toggle_mute">মিউট টগল করুন</string>
     <!-- Content description for additional actions menu button -->
     <string name="WebRtcCallView__additional_actions">আরো কাজ</string>
@@ -2561,12 +2587,23 @@
 =======
     <string name="WebRtcCallView__toggle_mute">মিউট টগল করুন</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="WebRtcCallView__toggle_mute">Toggle mute</string>
+=======
+    <string name="WebRtcCallView__toggle_mute">মিউট টগল করুন</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Toggle content description for toggling group ring state  -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
 =======
     <string name="WebRtcCallView__toggle_mute">মিউট টগল করুন</string>
     <!-- Toggle content description for toggling group ring state  -->
+    <string name="WebRtcCallView__toggle_ring">রিং টগল করুন</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="WebRtcCallView__toggle_ring">Toggle ring</string>
+=======
     <string name="WebRtcCallView__toggle_ring">রিং টগল করুন</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -2691,6 +2728,19 @@
     <string name="WebRtcAudioOutputBottomSheet__speaker_icon_content_description">স্পিকারফোনকে নির্দেশকারী একটি আইকন।</string>
     <!-- A text description of the earpiece icon, used for accessibility. -->
     <string name="WebRtcAudioOutputBottomSheet__earpiece_icon_content_description">একটি ডিভাইসের ইয়ারপিসকে নির্দেশকারী একটি আইকন।</string>
+
+    <!-- Error message when the developer added a button in the wrong place. -->
+    <string name="WebRtcAudioOutputToggleButton_fragment_activity_error">A UI error occurred. Please report this error to the developers.</string>
+    <!-- Error message when the user is trying to change audio outputs but none are present. -->
+    <string name="WebRtcAudioOutputToggleButton_no_eligible_audio_i_o_detected">No eligible audio I/O detected.</string>
+    <!-- A text description of the bluetooth icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__bluetooth_icon_content_description">An icon representing a Bluetooth device.</string>
+    <!-- A text description of the headset icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__headset_icon_content_description">An icon representing a wired headset.</string>
+    <!-- A text description of the speaker icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__speaker_icon_content_description">An icon representing a speakerphone.</string>
+    <!-- A text description of the earpiece icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__earpiece_icon_content_description">An icon representing a device\'s earpiece.</string>
 
     <!-- CallParticipantsListDialog -->
     <plurals name="CallParticipantsListDialog_in_this_call">
@@ -3419,6 +3469,7 @@
     <string name="WebRtcAudioOutputToggle__bluetooth">ব্লুটুথ</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Audio output option referring to a pair of headphones that do not contain a microphone connected via a 3.5mm headphone jack -->
     <string name="WebRtcAudioOutputToggle__wired_headphones">তারযুক্ত হেডফোন</string>
     <!-- Audio output option referring to an external headset that contains a microphone connected via a 3.5mm headphone jack -->
@@ -3451,6 +3502,13 @@
 =======
     <string name="WebRtcAudioOutputToggle__wired_headset_usb">তারযুক্ত হেডসেট (ইউএসবি)</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Audio output option referring to an external headset connected via a 3.5mm headphone jack -->
+    <string name="WebRtcAudioOutputToggle__wired_headset">Wired Headset</string>
+    <!-- Audio output option referring to an external headset connected via a USB-C data cable -->
+    <string name="WebRtcAudioOutputToggle__wired_headset_usb">Wired Headset (USB)</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <string name="WebRtcCallControls_answer_call_description">কল গ্রহণ করুন</string>
     <string name="WebRtcCallControls_reject_call_description">কল প্রত্যাখ্যান করুন</string>
@@ -5474,6 +5532,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="AccountSettingsFragment__request_account_data">আপনার অ্যাকাউন্টের ডেটা</string>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="AccountSettingsFragment__request_account_data">Request account data</string>
@@ -5495,6 +5554,11 @@
 =======
     <string name="AccountSettingsFragment__request_account_data">আপনার অ্যাকাউন্টের ডেটা</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="AccountSettingsFragment__request_account_data">Request account data</string>
+=======
+    <string name="AccountSettingsFragment__request_account_data">Your account data</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- ExportAccountDataFragment -->
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
@@ -5504,6 +5568,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_explanation">আপনার Signal অ্যাকাউন্টের ডেটার একটি রিপোর্ট এক্সপোর্ট করুন। এই রিপোর্টে কোনো ম্যাসেজ বা মিডিয়া অন্তর্ভুক্ত নেই। %1$s</string>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
@@ -5525,12 +5590,18 @@
 =======
     <string name="ExportAccountDataFragment__export_explanation">আপনার Signal অ্যাকাউন্টের ডেটার একটি রিপোর্ট এক্সপোর্ট করুন। এই রিপোর্টে কোনো ম্যাসেজ বা মিডিয়া অন্তর্ভুক্ত নেই। %1$s</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">Export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__learn_more">আরো জানুন</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__learn_more">Learn more</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -5551,6 +5622,11 @@
     <!-- Button action to download the report data -->
     <string name="ExportAccountDataFragment__download_report">Download report</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <!-- Button action to download the report data -->
+    <string name="ExportAccountDataFragment__download_report">Download report</string>
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Button action to download the report data -->
     <string name="ExportAccountDataFragment__download_report">Download report</string>
@@ -5569,6 +5645,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_as_txt">TXT হিসেবে এক্সপোর্ট করুন</string>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="ExportAccountDataFragment__export_as_txt">Export as TXT</string>
@@ -5590,6 +5667,11 @@
 =======
     <string name="ExportAccountDataFragment__export_as_txt">TXT হিসেবে এক্সপোর্ট করুন</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_as_txt">Export as TXT</string>
+=======
+    <string name="ExportAccountDataFragment__export_as_txt">TXT হিসাবে এক্সপোর্ট করুন</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Label for the text file option -->
     <string name="ExportAccountDataFragment__export_as_txt_label">সহজে পড়া যায় এমন টেক্সট ফাইল</string>
     <!-- Radio option to export the data as a json (java script object notation) file .json -->
@@ -5597,6 +5679,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_as_json">JSON হিসেবে এক্সপোর্ট করুন</string>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="ExportAccountDataFragment__export_as_json">Export as JSON</string>
@@ -5618,6 +5701,11 @@
 =======
     <string name="ExportAccountDataFragment__export_as_json">JSON হিসেবে এক্সপোর্ট করুন</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_as_json">Export as JSON</string>
+=======
+    <string name="ExportAccountDataFragment__export_as_json">JSON হিসাবে এক্সপোর্ট করুন</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Label for the json file option, the account data in a machine readable file format -->
     <string name="ExportAccountDataFragment__export_as_json_label">মেশিন-পাঠযোগ্য ফাইল</string>
 
@@ -5630,6 +5718,7 @@
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__ok_action">ঠিক আছে</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Title of dialog shown when report fails to generate -->
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_generation_failed">রিপোর্ট তৈরি করা যায়নি</string>
@@ -5690,6 +5779,15 @@
 =======
     <string name="ExportAccountDataFragment__check_network">আপনার নেটওয়ার্ক সংযোগ ঠিক আছে কি না দেখুন এবং আবার চেষ্টা করুন।</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <!-- Message shown when report download fails -->
+    <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
+=======
+    <!-- Title of dialog shown when report fails to generate -->
+    <string name="ExportAccountDataFragment__report_generation_failed">Couldn\'t generate report</string>
+    <!-- Message of dialog shown when report fails to generate asking user to check network connection -->
+    <string name="ExportAccountDataFragment__check_network">Check your connection and try again.</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">ডেটা এক্সপোর্ট করতে চান?</string>
@@ -5701,6 +5799,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Action to delete report in confirmation dialog -->
     <string name="ExportAccountDataFragment__delete_report_action">মুছে ফেলুন</string>
@@ -5722,6 +5821,18 @@
     <!-- Shown as a snackbar letting the user know the report was deleted -->
     <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <!-- Action to delete report in confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_action">মুছে ফেলুন</string>
+    <!-- Title for delete report confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_confirmation">Delete report?</string>
+    <!-- Message for delete report confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_confirmation_message">This will not delete any data from your account.</string>
+
+    <!-- Shown as a snackbar letting the user know the report was deleted -->
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Report deleted</string>
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Action to delete report in confirmation dialog -->
     <string name="ExportAccountDataFragment__delete_report_action">মুছে ফেলুন</string>
@@ -5751,6 +5862,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_progress">রিপোর্ট তৈরি করা হচ্ছে…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">আপনার রিপোর্ট শুধুমাত্র এক্সপোর্ট করার সময় তৈরি হয় এবং Signal কর্তৃক আপনার ডিভাইসে সংরক্ষণ করা হয় না।</string>
@@ -5794,6 +5906,15 @@
 =======
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">আপনার রিপোর্ট শুধুমাত্র এক্সপোর্ট করার সময় তৈরি হয় এবং Signal কর্তৃক আপনার ডিভাইসে সংরক্ষণ করা হয় না।</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="ExportAccountDataFragment__download_progress">Downloading report…</string>
+    <!-- Explanation that the downloaded report will be available for 30 days before it is deleted -->
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Your report will be available for export for 30 days and will then be automatically deleted.</string>
+=======
+    <string name="ExportAccountDataFragment__download_progress">Generating report…</string>
+    <!-- Explanation that the report is only generated on export and is not saved on the device -->
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Your report is generated only at the time of export and is not stored by Signal on your device.</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">আপনার বর্তমান ফোন নম্বরটি একটি নতুন ফোন নম্বরে পরিবর্তন করতে এটি ব্যবহার করুন। আপনি এই পরিবর্তনটি পূর্বাবস্থায় ফেরাতে পারবেন না।\n\nচালিয়ে যাওয়ার আগে, নিশ্চিত করুন যে আপনার নতুন নম্বরটি SMS বা কল পেতে পারে।</string>
@@ -6259,6 +6380,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Header for section of featured stickers (location/time stickers) -->
     <string name="ScribbleStickersFragment__featured_stickers">ফিচারকৃত</string>
 
@@ -6272,6 +6394,12 @@
 =======
     <!-- Header for section of featured stickers (location/time stickers) -->
     <string name="ScribbleStickersFragment__featured_stickers">ফিচারকৃত</string>
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Header for section of featured stickers (location/time stickers) -->
+    <string name="ScribbleStickersFragment__featured_stickers">Featured</string>
 
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="MediaCountIndicatorButton__send">পাঠান</string>
@@ -7629,11 +7757,17 @@
     <!-- Popup menu label for applying spoiler style -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="TextFormatting_spoiler">স্পয়লার</string>
     <!-- Popup menu label for clearing applied formatting -->
     <string name="TextFormatting_clear_formatting">ফরম্যাটিং পরিষ্কার করুন</string>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="TextFormatting_spoiler">Spoiler</string>
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="TextFormatting_spoiler">Spoiler</string>
+=======
+    <string name="TextFormatting_spoiler">স্পয়লার</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="TextFormatting_spoiler">Spoiler</string>
 =======
@@ -7651,6 +7785,7 @@
     <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">প্রত্যেক ব্যবহারকারীর নামের একটি বিশেষ QR কোড ও লিঙ্ক থাকে এবং এটি আপনি আপনার বন্ধুদের সাথে শেয়ার করতে পারেন যাতে তাঁরা আপনার সাথে চ্যাট শুরু করতে পারেন</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
 =======
     <string name="TextFormatting_spoiler">স্পয়লার</string>
@@ -7665,6 +7800,11 @@
     <!-- Displayed as body text in the username education screen -->
     <string name="UsernameEducationFragment__each_username_has_a_unique_qr_code">প্রত্যেক ব্যবহারকারীর নামের একটি বিশেষ QR কোড ও লিঙ্ক থাকে এবং এটি আপনি আপনার বন্ধুদের সাথে শেয়ার করতে পারেন যাতে তাঁরা আপনার সাথে চ্যাট শুরু করতে পারেন</string>
     <!-- Displayed as body text in the username education screen. The string references the names of settings, so they should match our translations for those settings. -->
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">অন্যরা আপনার সাথে যোগাযোগ করার প্রাথমিক উপায় হিসেবে আপনার \'ব্যবহারকারীর নাম\' যাতে ব্যবহার করতে না পারেন, তার জন্য \'সেটিংস &gt; গোপনীয়তা &gt; ফোন নম্বর &gt; কে আমার নম্বর খুঁজে পেতে পারেন\'-এর মধ্যে থেকে ফোন নম্বর দেখতে পাওয়ার সুযোগটি বন্ধ করুন</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="UsernameEducationFragment__turn_off_phone_number_discovery">Turn off phone number discovery under Settings &gt; Privacy &gt; Phone number &gt; Who can find my number, to use your username as the primary way others can contact you</string>
+=======
     <string name="UsernameEducationFragment__turn_off_phone_number_discovery">অন্যরা আপনার সাথে যোগাযোগ করার প্রাথমিক উপায় হিসেবে আপনার \'ব্যবহারকারীর নাম\' যাতে ব্যবহার করতে না পারেন, তার জন্য \'সেটিংস &gt; গোপনীয়তা &gt; ফোন নম্বর &gt; কে আমার নম্বর খুঁজে পেতে পারেন\'-এর মধ্যে থেকে ফোন নম্বর দেখতে পাওয়ার সুযোগটি বন্ধ করুন</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -7698,6 +7838,7 @@
     <string name="CallLogAdapter__outgoing">আউটগোয়িং কল</string>
     <!-- Displayed for missed calls -->
     <string name="CallLogAdapter__missed">মিসড কল</string>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     <!-- Displayed for missed calls declined by notification profile -->
@@ -7744,6 +7885,13 @@
     <!-- Call state template when there is more than one call collapsed into a single row. D is a number > 1 and S is a call info string (like Missed) -->
     <string name="CallLogAdapter__d_s">(%1$d) %2$s</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Displayed on Group Call button if user is not in the call -->
+    <string name="CallLogAdapter__join">Join</string>
+    <!-- Displayed on Group Call button if user is in the call -->
+    <string name="CallLogAdapter__return">Return</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- Call Log context menu -->
     <!-- Displayed as a context menu item to start a video call -->
@@ -7834,6 +7982,7 @@
     <!-- Accessibility label describing the continue button on the camera screen -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="CameraControls_continue_button_accessibility_label">\'চালিয়ে যান\' বোতাম</string>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="CameraControls_continue_button_accessibility_label">Continue Button</string>
@@ -7843,6 +7992,57 @@
     <string name="CameraControls_continue_button_accessibility_label">Continue Button</string>
 =======
     <string name="CameraControls_continue_button_accessibility_label">\'চালিয়ে যান\' বোতাম</string>
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="CameraControls_continue_button_accessibility_label">Continue Button</string>
+=======
+    <string name="CameraControls_continue_button_accessibility_label">\'চালিয়ে যান\' বোতাম</string>
+
+    <!-- CallPreference -->
+    <!-- Missed group call in call info -->
+    <string name="CallPreference__missed_group_call">Missed group call</string>
+    <!-- Incoming group call in call info -->
+    <string name="CallPreference__incoming_group_call">Incoming group call</string>
+    <!-- Outgoing group call in call info -->
+    <string name="CallPreference__outgoing_group_call">Outgoing group call</string>
+
+    <!-- CreateCallLink -->
+    <!-- Call link creation item title on calls tab -->
+    <string name="CreateCallLink__create_a_call_link">Create a Call Link</string>
+    <!-- Call link creation item description on calls tab -->
+    <string name="CreateCallLink__share_a_link_for">Share a link for a Signal call</string>
+
+    <!-- CreateCallLinkBottomSheetDialogFragment -->
+    <!-- Fragment title -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__create_call_link">Create call link</string>
+    <!-- Displayed as a default name for the signal call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__signal_call">Signal call</string>
+    <!-- Displayed on a small button to allow user to instantly join call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__join">Join</string>
+    <!-- Option to open a full screen dialog to enter a call name -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__add_call_name">Add call name</string>
+    <!-- Toggle to require approval for all members before joining -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__approve_all_members">Approve all members</string>
+    <!-- Row label to share the link via Signal -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link_via_signal">Share link via Signal</string>
+    <!-- Row label to copy the link to the clipboard -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__copy_link">Copy link</string>
+    <!-- Row label to share the link with the external share sheet -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link">Share link</string>
+    <!-- Button text to dismiss the sheet and add it as an upcoming call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__done">Done</string>
+    <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Failed to open share sheet.</string>
+    <!-- Displayed when we copy the call link to the clipboard -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">Copied to clipboard</string>
+
+    <!-- EditCallLinkNameDialogFragment -->
+    <!-- App bar title for editing a call name -->
+    <string name="EditCallLinkNameDialogFragment__edit_call_name">Edit call name</string>
+    <!-- Text on button to confirm edit -->
+    <string name="EditCallLinkNameDialogFragment__save">Save</string>
+    <!-- Placeholder text on input field when editing call name -->
+    <string name="EditCallLinkNameDialogFragment__call_name">Call name</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- CallPreference -->
     <!-- Generic group call in call info -->

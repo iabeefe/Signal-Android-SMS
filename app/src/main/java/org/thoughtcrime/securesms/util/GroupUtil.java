@@ -23,8 +23,13 @@ import org.whispersystems.signalservice.api.messages.SignalServiceDataMessage;
 import org.whispersystems.signalservice.api.messages.SignalServiceGroupV2;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.whispersystems.signalservice.internal.push.Content;
 import org.whispersystems.signalservice.internal.push.GroupContextV2;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos;
@@ -74,6 +79,23 @@ public final class GroupUtil {
   }
 
 =======
+
+  public static @Nullable SignalServiceProtos.GroupContextV2 getGroupContextIfPresent(@NonNull SignalServiceProtos.Content content) {
+    if (content.hasDataMessage() && SignalServiceProtoUtil.INSTANCE.getHasGroupContext(content.getDataMessage())) {
+      return content.getDataMessage().getGroupV2();
+    } else if (content.hasSyncMessage()                 &&
+               content.getSyncMessage().hasSent() &&
+               content.getSyncMessage().getSent().hasMessage() &&
+               SignalServiceProtoUtil.INSTANCE.getHasGroupContext(content.getSyncMessage().getSent().getMessage()))
+    {
+      return content.getSyncMessage().getSent().getMessage().getGroupV2();
+    } else if (content.hasStoryMessage() && SignalServiceProtoUtil.INSTANCE.isValid(content.getStoryMessage().getGroup())) {
+      return content.getStoryMessage().getGroup();
+    } else {
+      return null;
+    }
+  }
+
 
   public static @Nullable SignalServiceProtos.GroupContextV2 getGroupContextIfPresent(@NonNull SignalServiceProtos.Content content) {
     if (content.hasDataMessage() && SignalServiceProtoUtil.INSTANCE.getHasGroupContext(content.getDataMessage())) {

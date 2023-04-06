@@ -458,6 +458,7 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
         notifyConversationListeners(threadId)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         SignalDatabase.calls.updateCallEventDeletionTimestamps()
 
         return if (syncThreadTrimDeletes && (threadDeleted || addressableMessages.isNotEmpty())) {
@@ -465,6 +466,10 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
         } else {
           null
         }
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+        SignalDatabase.calls.updateCallEventDeletionTimestamps()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
         SignalDatabase.calls.updateCallEventDeletionTimestamps()
@@ -1220,6 +1225,7 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
       drafts.clearAllDrafts()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       db.deactivateThreads()
       calls.deleteAllCalls()
       synchronized(threadIdCache) {
@@ -1231,10 +1237,19 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
       groupCallRings.deleteAll()
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      groupCallRings.deleteAll()
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       db.delete(TABLE_NAME, null, null)
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
       db.delete(TABLE_NAME, null, null)
+      calls.deleteAllCalls()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
       calls.deleteAllCalls()
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)

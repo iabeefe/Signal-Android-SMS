@@ -46,11 +46,17 @@ public class DatabaseObserver {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private static final String KEY_CALL_UPDATES      = "CallUpdates";
   private static final String KEY_CALL_LINK_UPDATES = "CallLinkUpdates";
   private static final String KEY_IN_APP_PAYMENTS   = "InAppPayments";
 
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  private static final String KEY_CALL_UPDATES          = "CallUpdates";
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
   private static final String KEY_CALL_UPDATES          = "CallUpdates";
@@ -94,6 +100,8 @@ public class DatabaseObserver {
 
   private final Set<Observer>                   callUpdateObservers;
 
+  private final Set<Observer>                   callUpdateObservers;
+
   public DatabaseObserver(Application application) {
     this.application                  = application;
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -116,9 +124,14 @@ public class DatabaseObserver {
     this.scheduledMessageObservers    = new HashMap<>();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     this.callUpdateObservers          = new HashSet<>();
     this.callLinkObservers            = new HashMap<>();
     this.inAppPaymentObservers        = new HashSet<>();
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    this.callUpdateObservers          = new HashSet<>();
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
     this.callUpdateObservers          = new HashSet<>();
@@ -230,6 +243,7 @@ public class DatabaseObserver {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   public void registerCallUpdateObserver(@NonNull Observer observer) {
     executor.execute(() -> callUpdateObservers.add(observer));
   }
@@ -244,6 +258,13 @@ public class DatabaseObserver {
     executor.execute(() -> inAppPaymentObservers.add(observer));
   }
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  public void registerCallUpdateObserver(@NonNull Observer observer) {
+    executor.execute(() -> callUpdateObservers.add(observer));
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
   public void registerCallUpdateObserver(@NonNull Observer observer) {
@@ -275,8 +296,13 @@ public class DatabaseObserver {
       unregisterMapped(conversationDeleteObservers, listener);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       callUpdateObservers.remove(listener);
       unregisterMapped(callLinkObservers, listener);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+      callUpdateObservers.remove(listener);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
       callUpdateObservers.remove(listener);
@@ -437,6 +463,7 @@ public class DatabaseObserver {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   public void notifyCallUpdateObservers() {
     runPostSuccessfulTransaction(KEY_CALL_UPDATES, () -> notifySet(callUpdateObservers));
   }
@@ -451,6 +478,13 @@ public class DatabaseObserver {
     });
   }
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  public void notifyCallUpdateObservers() {
+    runPostSuccessfulTransaction(KEY_CALL_UPDATES, () -> notifySet(callUpdateObservers));
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
   public void notifyCallUpdateObservers() {

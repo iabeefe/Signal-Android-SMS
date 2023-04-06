@@ -627,6 +627,7 @@ message SyncMessage {
       NOT_ACCEPTED   = 2;
 <<<<<<< HEAD:libsignal-service/src/main/protowire/SignalService.proto
 <<<<<<< HEAD:libsignal-service/src/main/protowire/SignalService.proto
+<<<<<<< HEAD:libsignal-service/src/main/protowire/SignalService.proto
       DELETE         = 3;
       OBSERVED       = 4;
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/proto/SignalService.proto
@@ -637,8 +638,13 @@ message SyncMessage {
 =======
       DELETE         = 3;
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/proto/SignalService.proto
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/proto/SignalService.proto
+=======
+      DELETE         = 3;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/proto/SignalService.proto
     }
 
+<<<<<<< HEAD:libsignal-service/src/main/protowire/SignalService.proto
 <<<<<<< HEAD:libsignal-service/src/main/protowire/SignalService.proto
 <<<<<<< HEAD:libsignal-service/src/main/protowire/SignalService.proto
     optional bytes     conversationId = 1;
@@ -723,6 +729,21 @@ message SyncMessage {
     repeated ConversationDelete conversationDeletes = 2;
     repeated LocalOnlyConversationDelete localOnlyConversationDeletes = 3;
     repeated AttachmentDelete attachmentDeletes = 4;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/proto/SignalService.proto
+    optional bytes     peerUuid  = 1;
+    optional uint64    id        = 2;
+    optional uint64    timestamp = 3;
+    optional Type      type      = 4;
+    optional Direction direction = 5;
+    optional Event     event     = 6;
+=======
+    optional bytes     conversationId = 1;
+    optional uint64    id             = 2;
+    optional uint64    timestamp      = 3;
+    optional Type      type           = 4;
+    optional Direction direction      = 5;
+    optional Event     event          = 6;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/proto/SignalService.proto
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/proto/SignalService.proto
     optional bytes     peerUuid  = 1;
     optional uint64    id        = 2;

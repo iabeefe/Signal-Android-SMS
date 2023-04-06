@@ -9,6 +9,7 @@ import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.messages.MessageContentProcessor
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.EarlyMessageCacheEntry
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -16,7 +17,13 @@ import org.thoughtcrime.securesms.util.EarlyMessageCacheEntry
 import org.thoughtcrime.securesms.messages.MessageContentProcessorV2
 import org.thoughtcrime.securesms.util.EarlyMessageCacheEntry
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.messages.MessageContentProcessorV2
+import org.thoughtcrime.securesms.util.EarlyMessageCacheEntry
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.whispersystems.signalservice.api.messages.SignalServiceContent
+<<<<<<< HEAD
 <<<<<<< HEAD
 import java.lang.Exception
 import java.util.Optional
@@ -24,6 +31,11 @@ import java.util.Optional
 import org.thoughtcrime.securesms.messages.MessageContentProcessorV2
 import org.thoughtcrime.securesms.util.EarlyMessageCacheEntry
 import org.whispersystems.signalservice.api.messages.SignalServiceContent
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import java.lang.Exception
+import java.util.Optional
+=======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import java.lang.Exception
@@ -65,6 +77,7 @@ class PushProcessEarlyMessagesJob private constructor(parameters: Parameters) : 
       for (id: ServiceMessageId in earlyIds) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         val earlyEntries: List<EarlyMessageCacheEntry>? = AppDependencies.earlyMessageCache.retrieve(id.sender, id.sentTimestamp).orNull()
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         val contents: Optional<List<SignalServiceContent>> = ApplicationDependencies.getEarlyMessageCache().retrieve(id.sender, id.sentTimestamp)
@@ -78,7 +91,14 @@ class PushProcessEarlyMessagesJob private constructor(parameters: Parameters) : 
         val contents: List<SignalServiceContent>? = ApplicationDependencies.getEarlyMessageCache().retrieve(id.sender, id.sentTimestamp).orNull()
         val earlyEntries: List<EarlyMessageCacheEntry>? = ApplicationDependencies.getEarlyMessageCache().retrieveV2(id.sender, id.sentTimestamp).orNull()
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        val contents: Optional<List<SignalServiceContent>> = ApplicationDependencies.getEarlyMessageCache().retrieve(id.sender, id.sentTimestamp)
+=======
+        val contents: List<SignalServiceContent>? = ApplicationDependencies.getEarlyMessageCache().retrieve(id.sender, id.sentTimestamp).orNull()
+        val earlyEntries: List<EarlyMessageCacheEntry>? = ApplicationDependencies.getEarlyMessageCache().retrieveV2(id.sender, id.sentTimestamp).orNull()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         if (earlyEntries != null) {
@@ -95,6 +115,13 @@ class PushProcessEarlyMessagesJob private constructor(parameters: Parameters) : 
         if (contents != null) {
           for (content: SignalServiceContent in contents) {
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        if (contents.isPresent) {
+          for (content: SignalServiceContent in contents.get()) {
+=======
+        if (contents != null) {
+          for (content: SignalServiceContent in contents) {
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
             Log.i(TAG, "[${id.sentTimestamp}] Processing early content for $id")
             MessageContentProcessor.create(context).processEarlyContent(MessageContentProcessor.MessageState.DECRYPTED_OK, content, null, id.sentTimestamp, -1)
 =======
@@ -103,6 +130,11 @@ class PushProcessEarlyMessagesJob private constructor(parameters: Parameters) : 
             Log.i(TAG, "[${id.sentTimestamp}] Processing early content for $id")
             MessageContentProcessor.create(context).processEarlyContent(MessageContentProcessor.MessageState.DECRYPTED_OK, content, null, id.sentTimestamp, -1)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+          }
+        } else if (earlyEntries != null) {
+          for (entry in earlyEntries) {
+            Log.i(TAG, "[${id.sentTimestamp}] Processing early V2 content for $id")
+            MessageContentProcessorV2.create(context).process(entry.envelope, entry.content, entry.metadata, entry.serverDeliveredTimestamp, processingEarlyContent = true)
           }
         } else if (earlyEntries != null) {
           for (entry in earlyEntries) {

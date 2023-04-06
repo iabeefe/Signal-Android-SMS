@@ -336,6 +336,7 @@ class SignalBluetoothManager(
       } else if (intent.action == BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED) {
 <<<<<<< HEAD:app/src/main/java/org/thoughtcrime/securesms/audio/SignalBluetoothManager.kt
 <<<<<<< HEAD:app/src/main/java/org/thoughtcrime/securesms/audio/SignalBluetoothManager.kt
+<<<<<<< HEAD:app/src/main/java/org/thoughtcrime/securesms/audio/SignalBluetoothManager.kt
         if (wasAudioStateInterrupted(intent)) {
           handler.post {
             scoConnectionAttempts = 0
@@ -364,6 +365,20 @@ class SignalBluetoothManager(
         } else {
           handler.post {
 <<<<<<< HEAD:app/src/main/java/org/thoughtcrime/securesms/audio/SignalBluetoothManager.kt
+            val connectionState: Int = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
+        val connectionState: Int = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
+        handler.post {
+          if (state != State.UNINITIALIZED) {
+=======
+        if (wasAudioStateInterrupted(intent)) {
+          handler.post {
+            scoConnectionAttempts = 0
+            updateDevice()
+          }
+        } else if (state != State.UNINITIALIZED) {
+          handler.post {
             val connectionState: Int = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
             onAudioStateChanged(connectionState, isInitialStickyBroadcast)
@@ -399,6 +414,7 @@ class SignalBluetoothManager(
 >>>>>>> a4f383c27f (Bumped to upstream version 6.17.1.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
           }
         }
+<<<<<<< HEAD:app/src/main/java/org/thoughtcrime/securesms/audio/SignalBluetoothManager.kt
 <<<<<<< HEAD:app/src/main/java/org/thoughtcrime/securesms/audio/SignalBluetoothManager.kt
 <<<<<<< HEAD:app/src/main/java/org/thoughtcrime/securesms/audio/SignalBluetoothManager.kt
       } else if (intent.action == AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED) {
@@ -409,6 +425,15 @@ class SignalBluetoothManager(
         }
       } else {
         Log.d(TAG, "Received broadcast of ${intent.action}")
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
+=======
+      } else if (intent.action == AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED) {
+        if (wasScoDisconnected(intent)) {
+          handler.post(::updateAudioDeviceState)
+        }
+      } else {
+        Log.d(TAG, "Received broadcast of ${intent.action}")
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
 =======
       } else if (intent.action == AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED) {

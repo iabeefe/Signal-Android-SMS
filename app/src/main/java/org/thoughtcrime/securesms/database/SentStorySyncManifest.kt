@@ -9,7 +9,12 @@ import org.whispersystems.signalservice.api.push.ServiceId
 import org.whispersystems.signalservice.api.push.SignalServiceAddress
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.whispersystems.signalservice.internal.push.SyncMessage
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos
@@ -95,6 +100,7 @@ data class SentStorySyncManifest(
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     fun fromRecipientsSet(recipients: List<SyncMessage.Sent.StoryMessageRecipient>): SentStorySyncManifest {
       val entries = recipients.toSet().filter { it.destinationServiceId != null }.map { recipient ->
@@ -107,6 +113,21 @@ data class SentStorySyncManifest(
 
       return SentStorySyncManifest(entries)
     }
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+
+    fun fromRecipientsSet(recipients: List<SignalServiceProtos.SyncMessage.Sent.StoryMessageRecipient>): SentStorySyncManifest {
+      val entries = recipients.toSet().map { recipient ->
+        Entry(
+          recipientId = RecipientId.from(ServiceId.parseOrThrow(recipient.destinationUuid)),
+          allowedToReply = recipient.isAllowedToReply,
+          distributionLists = recipient.distributionListIdsList.map { DistributionId.from(it) }
+        )
+      }
+
+      return SentStorySyncManifest(entries)
+    }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 

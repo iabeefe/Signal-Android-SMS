@@ -10,6 +10,7 @@ import android.os.ResultReceiver;
 import androidx.annotation.AnyThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.annimon.stream.Stream;
 
@@ -43,9 +44,14 @@ import org.thoughtcrime.securesms.database.CallLinkTable;
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.crypto.UnidentifiedAccessUtil;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.database.GroupTable;
 =======
 import org.thoughtcrime.securesms.crypto.UnidentifiedAccessUtil;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.thoughtcrime.securesms.database.GroupTable;
+=======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.database.GroupTable;
@@ -483,12 +489,20 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
           if (threadId != null) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (onWillUpdateCallFromPeek != null) {
               onWillUpdateCallFromPeek.accept(peekInfo);
             }
 
             SignalDatabase.calls()
                           .updateGroupCallFromPeek(threadId,
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+            SignalDatabase.messages()
+                          .updatePreviousGroupCall(threadId,
+=======
+            SignalDatabase.calls()
+                          .updateGroupCallFromPeek(threadId,
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
             SignalDatabase.messages()
                           .updatePreviousGroupCall(threadId,
@@ -1027,7 +1041,13 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
     CallTable.Call call = SignalDatabase.calls()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                                         .updateOneToOneCall(remotePeer.getCallId().longValue(), missedEvent);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+                                        .updateCall(remotePeer.getCallId().longValue(), CallTable.Event.MISSED);
+=======
+                                        .updateOneToOneCall(remotePeer.getCallId().longValue(), CallTable.Event.MISSED);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
                                         .updateCall(remotePeer.getCallId().longValue(), CallTable.Event.MISSED);
 =======
@@ -1045,7 +1065,13 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
       SignalDatabase.calls()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     .insertOneToOneCall(remotePeer.getCallId().longValue(), timestamp, remotePeer.getId(), type, CallTable.Direction.INCOMING, missedEvent);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+                    .insertCall(remotePeer.getCallId().longValue(), timestamp, remotePeer.getId(), type, CallTable.Direction.INCOMING, CallTable.Event.MISSED);
+=======
+                    .insertOneToOneCall(remotePeer.getCallId().longValue(), timestamp, remotePeer.getId(), type, CallTable.Direction.INCOMING, CallTable.Event.MISSED);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
                     .insertCall(remotePeer.getCallId().longValue(), timestamp, remotePeer.getId(), type, CallTable.Direction.INCOMING, CallTable.Event.MISSED);
 =======
@@ -1148,6 +1174,7 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   public void sendGroupCallUpdateMessage(@NonNull Recipient recipient, @Nullable String groupCallEraId, final @Nullable CallId callId, boolean isIncoming, boolean isJoinEvent) {
     Log.i(TAG, "sendGroupCallUpdateMessage id: " + recipient.getId() + " era: " + groupCallEraId + " isIncoming: " + isIncoming + " isJoinEvent: " + isJoinEvent);
 
@@ -1205,6 +1232,28 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
 
       chain.enqueue();
     });
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  public void sendGroupCallUpdateMessage(@NonNull Recipient recipient, @Nullable String groupCallEraId) {
+    SignalExecutors.BOUNDED.execute(() -> ApplicationDependencies.getJobManager().add(GroupCallUpdateSendJob.create(recipient.getId(), groupCallEraId)));
+=======
+  public void sendGroupCallUpdateMessage(@NonNull Recipient recipient, @Nullable String groupCallEraId, boolean isIncoming, boolean isJoinEvent) {
+    SignalExecutors.BOUNDED.execute(() -> {
+      GroupCallUpdateSendJob updateSendJob = GroupCallUpdateSendJob.create(recipient.getId(), groupCallEraId);
+      JobManager.Chain       chain         = ApplicationDependencies.getJobManager().startChain(updateSendJob);
+
+      if (isJoinEvent && groupCallEraId != null) {
+        chain.then(CallSyncEventJob.createForJoin(
+            recipient.getId(),
+            CallId.fromEra(groupCallEraId).longValue(),
+            isIncoming
+        ));
+      } else if (isJoinEvent) {
+        Log.w(TAG, "Can't send join event sync message without an era id.");
+      }
+
+      chain.enqueue();
+    });
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   public void sendGroupCallUpdateMessage(@NonNull Recipient recipient, @Nullable String groupCallEraId) {
     SignalExecutors.BOUNDED.execute(() -> ApplicationDependencies.getJobManager().add(GroupCallUpdateSendJob.create(recipient.getId(), groupCallEraId)));

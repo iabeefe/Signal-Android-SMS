@@ -40,6 +40,7 @@ import org.signal.core.ui.Rows
 import org.signal.core.ui.Scaffolds
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.signal.core.ui.Texts
 import org.signal.core.util.concurrent.LifecycleDisposable
 import org.signal.core.util.logging.Log
@@ -53,12 +54,18 @@ import org.signal.core.util.logging.Log
 =======
 import org.signal.core.ui.Texts
 import org.signal.core.util.concurrent.LifecycleDisposable
+import org.signal.core.util.logging.Log
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.signal.core.ui.Texts
 import org.signal.core.util.logging.Log
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.compose.ComposeFragment
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.CommunicationActions
 import org.thoughtcrime.securesms.util.SpanUtil
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -69,6 +76,12 @@ import org.thoughtcrime.securesms.util.SpanUtil
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import org.thoughtcrime.securesms.util.CommunicationActions
+import org.thoughtcrime.securesms.util.SpanUtil
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.util.CommunicationActions
+import org.thoughtcrime.securesms.util.LifecycleDisposable
 import org.thoughtcrime.securesms.util.SpanUtil
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 

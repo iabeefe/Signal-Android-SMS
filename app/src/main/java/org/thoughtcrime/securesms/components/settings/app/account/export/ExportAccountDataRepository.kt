@@ -10,9 +10,14 @@ import org.thoughtcrime.securesms.dependencies.AppDependencies
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 =======
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.thoughtcrime.securesms.keyvalue.SignalStore
+=======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.keyvalue.SignalStore

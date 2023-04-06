@@ -96,6 +96,7 @@ ktlint {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 def canonicalVersionCode = 1232
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -676,6 +677,13 @@ def canonicalVersionName = "6.16.1.0-JW-JK"
 def canonicalVersionCode = 1238
 def canonicalVersionName = "6.16.2.0-JW-JK"
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+def canonicalVersionCode = 1238
+def canonicalVersionName = "6.16.2.0-JW-JK"
+=======
+def canonicalVersionCode = 1239
+def canonicalVersionName = "6.17.0.0-JW-JK"
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
 def postFixSize = 100
 def abiPostFix = ['universal'   : 0,
@@ -841,6 +849,7 @@ android {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         buildConfigField "long", "BUILD_TIMESTAMP", "1000L" // JW: fixed time for reproducible builds, is not used anyway
         buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
 ||||||| parent of 66c339aa35 (Added extra options)
@@ -863,6 +872,12 @@ android {
 =======
         // JW: change back to old code that works without having Git in the path and by downloading the source as zip, timestamp is not used anyway
         buildConfigField "long", "BUILD_TIMESTAMP", System.currentTimeMillis() + "L"
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        // JW: change back to old code that works without having Git in the path and by downloading the source as zip, timestamp is not used anyway
+        buildConfigField "long", "BUILD_TIMESTAMP", System.currentTimeMillis() + "L"
+=======
+        buildConfigField "long", "BUILD_TIMESTAMP", "1000L" // JW: fixed time for reproducible builds, is not used anyway
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
 >>>>>>> 775ec008cc (Added extra options)
 ||||||| parent of 6d8fef5835 (Added extra options)
@@ -1478,8 +1493,13 @@ dependencies {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     implementation 'net.lingala.zip4j:zip4j:2.11.5' // JW: added
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    implementation 'net.lingala.zip4j:zip4j:2.11.5' // JW: added
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     implementation libs.androidx.core.ktx
 =======
     implementation 'net.lingala.zip4j:zip4j:2.11.5' // JW: added
@@ -1607,7 +1627,6 @@ dependencies {
 
     coreLibraryDesugaring libs.android.tools.desugar
 
-    implementation 'net.lingala.zip4j:zip4j:2.11.5' // JW: added
     implementation (libs.androidx.appcompat) {
         version {
             strictly '1.6.1'

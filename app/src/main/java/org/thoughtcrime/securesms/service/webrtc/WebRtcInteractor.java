@@ -89,8 +89,16 @@ public class WebRtcInteractor {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   void sendGroupCallMessage(@NonNull Recipient recipient, @Nullable String groupCallEraId, @Nullable CallId callId, boolean isIncoming, boolean isJoinEvent) {
     signalCallManager.sendGroupCallUpdateMessage(recipient, groupCallEraId, callId, isIncoming, isJoinEvent);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  void sendGroupCallMessage(@NonNull Recipient recipient, @Nullable String groupCallEraId) {
+    signalCallManager.sendGroupCallUpdateMessage(recipient, groupCallEraId);
+=======
+  void sendGroupCallMessage(@NonNull Recipient recipient, @Nullable String groupCallEraId, boolean isIncoming, boolean isJoinEvent) {
+    signalCallManager.sendGroupCallUpdateMessage(recipient, groupCallEraId, isIncoming, isJoinEvent);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   void sendGroupCallMessage(@NonNull Recipient recipient, @Nullable String groupCallEraId) {
     signalCallManager.sendGroupCallUpdateMessage(recipient, groupCallEraId);

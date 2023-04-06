@@ -16,8 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import androidx.compose.material3.TopAppBarDefaults
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import androidx.compose.material3.TopAppBarDefaults
@@ -89,6 +94,7 @@ object Scaffolds {
               )
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
           }
 =======
         TopAppBar(
@@ -108,6 +114,15 @@ object Scaffolds {
                 contentDescription = navigationContentDescription
               )
             }
+          },
+          scrollBehavior = scrollBehavior,
+          colors = TopAppBarDefaults.smallTopAppBarColors(
+            scrolledContainerColor = SignalTheme.colors.colorSurface2
+          )
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+          }
+=======
           },
           scrollBehavior = scrollBehavior,
           colors = TopAppBarDefaults.smallTopAppBarColors(

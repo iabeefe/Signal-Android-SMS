@@ -118,6 +118,7 @@ class CallLogContextMenu(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       val intent = when {
         peer.isCallLink -> CallLinkDetailsActivity.createIntent(fragment.requireContext(), peer.requireCallLinkRoomId())
         else -> ConversationSettingsActivity.forCall(fragment.requireContext(), peer, messageIds)
@@ -142,6 +143,11 @@ class CallLogContextMenu(
 =======
       val intent = ConversationSettingsActivity.forCall(fragment.requireContext(), call.peer, longArrayOf(call.record.messageId!!))
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      val intent = ConversationSettingsActivity.forCall(fragment.requireContext(), call.peer, longArrayOf(call.call.messageId))
+=======
+      val intent = ConversationSettingsActivity.forCall(fragment.requireContext(), call.peer, longArrayOf(call.call.messageId!!))
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       fragment.startActivity(intent)
     }
   }

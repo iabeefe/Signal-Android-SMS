@@ -59,8 +59,16 @@ class MessageProcessingPerformanceTest {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     mockkObject(MessageContentProcessor)
     every { MessageContentProcessor.create(harness.application) } returns TimingMessageContentProcessor(harness.application)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    mockkStatic(MessageContentProcessor::class)
+    every { MessageContentProcessor.create(harness.application) } returns TimingMessageContentProcessor(harness.application)
+=======
+    mockkObject(MessageContentProcessorV2)
+    every { MessageContentProcessorV2.create(harness.application) } returns TimingMessageContentProcessorV2(harness.application)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     mockkStatic(MessageContentProcessor::class)
     every { MessageContentProcessor.create(harness.application) } returns TimingMessageContentProcessor(harness.application)
@@ -80,6 +88,7 @@ class MessageProcessingPerformanceTest {
   @After
   fun after() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     unmockkStatic(SealedSenderAccessUtil::class)
     unmockkStatic(MessageContentProcessor::class)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -93,6 +102,13 @@ class MessageProcessingPerformanceTest {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     unmockkStatic(MessageContentProcessor::class)
 =======
+    unmockkStatic(MessageContentProcessorV2::class)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    unmockkStatic(UnidentifiedAccessUtil::class)
+    unmockkStatic(MessageContentProcessor::class)
+=======
+    unmockkStatic(UnidentifiedAccessUtil::class)
     unmockkStatic(MessageContentProcessorV2::class)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }

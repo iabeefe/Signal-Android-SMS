@@ -98,6 +98,7 @@ class CallLogRepository(
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       AppDependencies.databaseObserver.registerConversationListObserver(databaseObserver)
       AppDependencies.databaseObserver.registerCallUpdateObserver(databaseObserver)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -112,11 +113,24 @@ class CallLogRepository(
 
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      val messageObserver = DatabaseObserver.MessageObserver {
+        refresh()
+      }
+
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       ApplicationDependencies.getDatabaseObserver().registerConversationListObserver(databaseObserver)
+<<<<<<< HEAD
 <<<<<<< HEAD
       ApplicationDependencies.getDatabaseObserver().registerMessageUpdateObserver(messageObserver)
 =======
       ApplicationDependencies.getDatabaseObserver().registerConversationListObserver(databaseObserver)
+      ApplicationDependencies.getDatabaseObserver().registerCallUpdateObserver(databaseObserver)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      ApplicationDependencies.getDatabaseObserver().registerMessageUpdateObserver(messageObserver)
+=======
       ApplicationDependencies.getDatabaseObserver().registerCallUpdateObserver(databaseObserver)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -131,9 +145,14 @@ class CallLogRepository(
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         ApplicationDependencies.getDatabaseObserver().unregisterObserver(databaseObserver)
 <<<<<<< HEAD
+<<<<<<< HEAD
         ApplicationDependencies.getDatabaseObserver().unregisterObserver(messageObserver)
 =======
         ApplicationDependencies.getDatabaseObserver().unregisterObserver(databaseObserver)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        ApplicationDependencies.getDatabaseObserver().unregisterObserver(messageObserver)
+=======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         ApplicationDependencies.getDatabaseObserver().unregisterObserver(messageObserver)
@@ -148,6 +167,7 @@ class CallLogRepository(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     selectedCallRowIds: Set<Long>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     selectedMessageIds: Set<Long>
@@ -169,8 +189,14 @@ class CallLogRepository(
 =======
     selectedCallRowIds: Set<Long>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    selectedMessageIds: Set<Long>
+=======
+    selectedCallIds: Set<Long>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   ): Completable {
     return Completable.fromAction {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -189,6 +215,11 @@ class CallLogRepository(
 =======
       SignalDatabase.calls.deleteCallEvents(selectedCallRowIds)
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      SignalDatabase.messages.deleteCallUpdates(selectedMessageIds)
+=======
+      SignalDatabase.calls.deleteCallEvents(selectedCallIds)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     }.observeOn(Schedulers.io())
 =======
       SignalDatabase.calls.deleteCallEvents(selectedCallIds)
@@ -202,6 +233,7 @@ class CallLogRepository(
   }
 
   fun deleteAllCallLogsExcept(
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -228,8 +260,14 @@ class CallLogRepository(
 =======
     selectedCallRowIds: Set<Long>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    selectedMessageIds: Set<Long>
+=======
+    selectedCallIds: Set<Long>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   ): Completable {
     return Completable.fromAction {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -315,6 +353,11 @@ class CallLogRepository(
 =======
       SignalDatabase.calls.deleteAllCallEventsExcept(selectedCallRowIds)
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      SignalDatabase.messages.deleteAllCallUpdatesExcept(selectedMessageIds)
+=======
+      SignalDatabase.calls.deleteAllCallEventsExcept(selectedCallIds)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     }.observeOn(Schedulers.io())
 =======
       SignalDatabase.calls.deleteAllCallEventsExcept(selectedCallIds)

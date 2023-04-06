@@ -1388,6 +1388,7 @@ public class MessageContentProcessor {
       }
     } else {
 <<<<<<< HEAD
+<<<<<<< HEAD
       SignalDatabase.calls().insertOneToOneCall(callId, timestamp, recipientId, type, direction, event);
     }
   }
@@ -1522,6 +1523,80 @@ public class MessageContentProcessor {
           warn("Unsupported event type " + event + ". Ignoring. timestamp: " + timestamp + " type: " + type + " direction: " + direction + " event: " + event + " hasPeer: " + callEvent.hasConversationId());
       }
     } else {
+      switch (event) {
+        case DELETE:
+          SignalDatabase.calls().insertDeletedGroupCallFromSyncEvent(callEvent.getId(), recipientId, direction, timestamp);
+          break;
+        case ACCEPTED:
+          SignalDatabase.calls().insertAcceptedGroupCall(callEvent.getId(), recipientId, direction, timestamp);
+          break;
+        case NOT_ACCEPTED:
+        default:
+          warn("Unsupported event type " + event + ". Ignoring. timestamp: " + timestamp + " type: " + type + " direction: " + direction + " event: " + event + " hasPeer: " + callEvent.hasConversationId());
+      }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      SignalDatabase.calls().insertCall(callId, timestamp, recipientId, type, direction, event);
+=======
+      SignalDatabase.calls().insertOneToOneCall(callId, timestamp, recipientId, type, direction, event);
+    }
+  }
+
+  private void handleSynchronizeGroupOrAdHocCallEvent(@NonNull SyncMessage.CallEvent callEvent, long envelopeTimestamp)
+      throws BadGroupIdException
+  {
+    if (!callEvent.hasId()) {
+      log(envelopeTimestamp, "Synchronize group/ad-hoc call event missing call id, ignoring.");
+      return;
+    }
+
+    if (!FeatureFlags.adHocCalling() && callEvent.getType() == SyncMessage.CallEvent.Type.AD_HOC_CALL) {
+      log(envelopeTimestamp, "Ad-Hoc calling is not currently supported by this client, ignoring.");
+      return;
+    }
+
+    long                callId    = callEvent.getId();
+    long                timestamp = callEvent.getTimestamp();
+    CallTable.Type      type      = CallTable.Type.from(callEvent.getType());
+    CallTable.Direction direction = CallTable.Direction.from(callEvent.getDirection());
+    CallTable.Event     event     = CallTable.Event.from(callEvent.getEvent());
+
+    if (timestamp == 0 || type == null || direction == null || event == null || !callEvent.hasConversationId()) {
+      warn(envelopeTimestamp, "Group/Ad-hoc call event sync message is not valid, ignoring. timestamp: " + timestamp + " type: " + type + " direction: " + direction + " event: " + event + " hasPeer: " + callEvent.hasConversationId());
+      return;
+    }
+
+    CallTable.Call call = SignalDatabase.calls().getCallById(callId);
+    if (call != null) {
+      if (call.getType() != type) {
+        warn(envelopeTimestamp, "Group/Ad-hoc call event type mismatch, ignoring. timestamp: " + timestamp + " type: " + type + " direction: " + direction + " event: " + event + " hasPeer: " + callEvent.hasConversationId());
+        return;
+      }
+
+      switch (event) {
+        case DELETE:
+          SignalDatabase.calls().deleteGroupCall(call);
+          break;
+        case ACCEPTED:
+          if (call.getTimestamp() < callEvent.getTimestamp()) {
+            SignalDatabase.calls().setTimestamp(call.getCallId(), callEvent.getTimestamp());
+          }
+
+          if (callEvent.getDirection() == SyncMessage.CallEvent.Direction.INCOMING) {
+            SignalDatabase.calls().acceptIncomingGroupCall(call);
+          } else {
+            warn(envelopeTimestamp, "Invalid direction OUTGOING for event ACCEPTED");
+          }
+
+          break;
+        case NOT_ACCEPTED:
+        default:
+          warn("Unsupported event type " + event + ". Ignoring. timestamp: " + timestamp + " type: " + type + " direction: " + direction + " event: " + event + " hasPeer: " + callEvent.hasConversationId());
+      }
+    } else {
+      GroupId     groupId     = GroupId.push(callEvent.getConversationId().toByteArray());
+      RecipientId recipientId = Recipient.externalGroupExact(groupId).getId();
+
       switch (event) {
         case DELETE:
           SignalDatabase.calls().insertDeletedGroupCallFromSyncEvent(callEvent.getId(), recipientId, direction, timestamp);

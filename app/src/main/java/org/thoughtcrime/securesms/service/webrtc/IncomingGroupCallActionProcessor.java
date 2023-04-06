@@ -63,6 +63,7 @@ public final class IncomingGroupCallActionProcessor extends DeviceAwareActionPro
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (SignalDatabase.calls().isRingCancelled(ringId, remotePeerGroup.getId()) && !updateForCurrentRingId) {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     if (SignalDatabase.groupCallRings().isCancelled(ringId)) {
@@ -84,6 +85,11 @@ public final class IncomingGroupCallActionProcessor extends DeviceAwareActionPro
 =======
     if (SignalDatabase.calls().isRingCancelled(ringId, remotePeerGroup.getId())) {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    if (SignalDatabase.groupCallRings().isCancelled(ringId)) {
+=======
+    if (SignalDatabase.calls().isRingCancelled(ringId)) {
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       try {
         Log.i(TAG, "Ignoring incoming ring request for already cancelled ring: " + ringId);
         webRtcInteractor.getCallManager().cancelGroupRing(groupId.getDecodedId(), ringId, null);
@@ -135,6 +141,7 @@ public final class IncomingGroupCallActionProcessor extends DeviceAwareActionPro
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     Recipient ringerRecipient = Recipient.externalPush(sender);
     SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(
         ringId,
@@ -143,6 +150,18 @@ public final class IncomingGroupCallActionProcessor extends DeviceAwareActionPro
         System.currentTimeMillis(),
         ringUpdate
     );
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    SignalDatabase.groupCallRings().insertGroupRing(ringId, System.currentTimeMillis(), ringUpdate);
+=======
+    Recipient ringerRecipient = Recipient.externalPush(ServiceId.from(sender));
+    SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(
+        ringId,
+        remotePeerGroup.getId(),
+        ringerRecipient.getId(),
+        System.currentTimeMillis(),
+        ringUpdate
+    );
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     SignalDatabase.groupCallRings().insertGroupRing(ringId, System.currentTimeMillis(), ringUpdate);
 =======

@@ -11,8 +11,14 @@ import org.whispersystems.signalservice.api.messages.SignalServiceAttachmentPoin
 import org.whispersystems.signalservice.api.messages.shared.SharedContact;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.whispersystems.signalservice.api.util.AttachmentPointerUtil;
 import org.whispersystems.signalservice.internal.push.DataMessage;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.whispersystems.signalservice.api.util.AttachmentPointerUtil;
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import org.whispersystems.signalservice.api.util.AttachmentPointerUtil;
@@ -140,6 +146,7 @@ public class ContactModelMapper {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   public static Contact remoteToLocal(@NonNull DataMessage.Contact contact) {
     DataMessage.Contact.Name contactName = contact.name != null ? contact.name : new DataMessage.Contact.Name();
     Name name = new Name(contactName.displayName,
@@ -200,6 +207,60 @@ public class ContactModelMapper {
     if (type == null) return Phone.Type.CUSTOM;
 
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  public static Contact remoteToLocal(@NonNull SignalServiceProtos.DataMessage.Contact contact) {
+    Name name = new Name(contact.getName().getDisplayName(),
+                         contact.getName().getGivenName(),
+                         contact.getName().getFamilyName(),
+                         contact.getName().getPrefix(),
+                         contact.getName().getSuffix(),
+                         contact.getName().getMiddleName());
+
+    List<Phone> phoneNumbers = new ArrayList<>(contact.getNumberCount());
+    for (SignalServiceProtos.DataMessage.Contact.Phone phone : contact.getNumberList()) {
+      phoneNumbers.add(new Phone(phone.getValue(),
+                                 remoteToLocalType(phone.getType()),
+                                 phone.getLabel()));
+    }
+
+    List<Email> emails = new ArrayList<>(contact.getEmailCount());
+    for (SignalServiceProtos.DataMessage.Contact.Email email : contact.getEmailList()) {
+      emails.add(new Email(email.getValue(),
+                           remoteToLocalType(email.getType()),
+                           email.getLabel()));
+    }
+
+    List<PostalAddress> postalAddresses = new ArrayList<>(contact.getAddressCount());
+    for (SignalServiceProtos.DataMessage.Contact.PostalAddress postalAddress : contact.getAddressList()) {
+      postalAddresses.add(new PostalAddress(remoteToLocalType(postalAddress.getType()),
+                                            postalAddress.getLabel(),
+                                            postalAddress.getStreet(),
+                                            postalAddress.getPobox(),
+                                            postalAddress.getNeighborhood(),
+                                            postalAddress.getCity(),
+                                            postalAddress.getRegion(),
+                                            postalAddress.getPostcode(),
+                                            postalAddress.getCountry()));
+    }
+
+    Avatar avatar = null;
+    if (contact.hasAvatar()) {
+      try {
+        SignalServiceAttachmentPointer attachmentPointer = AttachmentPointerUtil.createSignalAttachmentPointer(contact.getAvatar().getAvatar());
+        Attachment                     attachment        = PointerAttachment.forPointer(Optional.of(attachmentPointer.asPointer())).get();
+        boolean                        isProfile         = contact.getAvatar().getIsProfile();
+
+        avatar = new Avatar(null, attachment, isProfile);
+      } catch (InvalidMessageStructureException e) {
+        Log.w(TAG, "Unable to create avatar for contact", e);
+      }
+    }
+
+    return new Contact(name, contact.getOrganization(), phoneNumbers, emails, postalAddresses, avatar);
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
   public static Contact remoteToLocal(@NonNull SignalServiceProtos.DataMessage.Contact contact) {
@@ -353,6 +414,15 @@ public class ContactModelMapper {
     }
   }
 
+  private static Phone.Type remoteToLocalType(SignalServiceProtos.DataMessage.Contact.Phone.Type type) {
+    switch (type) {
+      case HOME:   return Phone.Type.HOME;
+      case MOBILE: return Phone.Type.MOBILE;
+      case WORK:   return Phone.Type.WORK;
+      default:     return Phone.Type.CUSTOM;
+    }
+  }
+
   private static Email.Type remoteToLocalType(SharedContact.Email.Type type) {
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     switch (type) {
@@ -409,8 +479,25 @@ public class ContactModelMapper {
     }
   }
 
+  private static Email.Type remoteToLocalType(SignalServiceProtos.DataMessage.Contact.Email.Type type) {
+    switch (type) {
+      case HOME:   return Email.Type.HOME;
+      case MOBILE: return Email.Type.MOBILE;
+      case WORK:   return Email.Type.WORK;
+      default:     return Email.Type.CUSTOM;
+    }
+  }
+
   private static PostalAddress.Type remoteToLocalType(SharedContact.PostalAddress.Type type) {
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    switch (type) {
+      case HOME:   return PostalAddress.Type.HOME;
+      case WORK:   return PostalAddress.Type.WORK;
+      default:     return PostalAddress.Type.CUSTOM;
+    }
+  }
+
+  private static PostalAddress.Type remoteToLocalType(SignalServiceProtos.DataMessage.Contact.PostalAddress.Type type) {
     switch (type) {
       case HOME:   return PostalAddress.Type.HOME;
       case WORK:   return PostalAddress.Type.WORK;

@@ -3,7 +3,12 @@ package org.thoughtcrime.securesms.calls.log
 import org.signal.paging.PagedDataSource
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.RemoteConfig
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.util.FeatureFlags
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import org.thoughtcrime.securesms.util.FeatureFlags
@@ -22,7 +27,12 @@ class CallLogPagedDataSource(
   private val hasFilter = filter == CallLogFilter.MISSED
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private val hasCallLinkRow = RemoteConfig.adHocCalling && filter == CallLogFilter.ALL && query.isNullOrEmpty()
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  private val hasCallLinkRow = FeatureFlags.adHocCalling() && filter == CallLogFilter.ALL && query.isNullOrEmpty()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
   private val hasCallLinkRow = FeatureFlags.adHocCalling() && filter == CallLogFilter.ALL && query.isNullOrEmpty()
@@ -34,8 +44,14 @@ class CallLogPagedDataSource(
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private var callEventsCount = 0
   private var callLinksCount = 0
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  var callsCount = 0
+=======
+  private var callsCount = 0
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   var callsCount = 0
 =======
@@ -55,9 +71,15 @@ class CallLogPagedDataSource(
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     callsCount = repository.getCallsCount(query, filter)
 <<<<<<< HEAD
+<<<<<<< HEAD
     return callsCount + (if (hasFilter) 1 else 0)
 =======
     callsCount = repository.getCallsCount(query, filter)
+    return callsCount + hasFilter.toInt() + hasCallLinkRow.toInt()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    return callsCount + (if (hasFilter) 1 else 0)
+=======
     return callsCount + hasFilter.toInt() + hasCallLinkRow.toInt()
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)

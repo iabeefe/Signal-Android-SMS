@@ -116,6 +116,10 @@ public abstract class GroupId implements DatabaseId {
     return push(bytes.toByteArray());
   }
 
+  public static GroupId.Push push(ByteString bytes) throws BadGroupIdException {
+    return push(bytes.toByteArray());
+  }
+
   public static GroupId.Push push(byte[] bytes) throws BadGroupIdException {
     return bytes.length == V2_BYTE_LENGTH ? v2(bytes) : v1(bytes);
   }
