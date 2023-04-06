@@ -122,8 +122,14 @@ class SignalActivityRule(private val othersCount: Int = 4, private val createGro
     RegistrationUtil.maybeMarkRegistrationComplete()
     SignalDatabase.recipients.setProfileName(Recipient.self().id, ProfileName.fromParts("Tester", "McTesterson"))
 
+<<<<<<< HEAD
     SignalStore.settings.isMessageNotificationsEnabled = false
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    SignalStore.settings().isMessageNotificationsEnabled = false
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     return Recipient.self()
   }
 

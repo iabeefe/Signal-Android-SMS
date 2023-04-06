@@ -176,8 +176,15 @@ public class GroupCallUpdateSendJob extends BaseJob {
                                                                                              false);
 
     if (includesSelf) {
+<<<<<<< HEAD
       results.add(AppDependencies.getSignalServiceMessageSender().sendSyncMessage(dataMessage));
       syncTimestamp = dataMessage.getTimestamp();
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      results.add(ApplicationDependencies.getSignalServiceMessageSender().sendSyncMessage(dataMessage));
+=======
+      results.add(ApplicationDependencies.getSignalServiceMessageSender().sendSyncMessage(dataMessage));
+      syncTimestamp = dataMessage.getTimestamp();
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     }
 
     return GroupSendJobHelper.getCompletedSends(destinations, results).completed;

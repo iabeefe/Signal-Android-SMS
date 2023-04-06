@@ -106,6 +106,17 @@ public final class FeatureFlags {
   private static final String PAYPAL_RECURRING_DONATIONS        = "android.recurringPayPalDonations.3";
   private static final String TEXT_FORMATTING                   = "android.textFormatting";
   private static final String ANY_ADDRESS_PORTS_KILL_SWITCH     = "android.calling.fieldTrial.anyAddressPortsKillSwitch";
+<<<<<<< HEAD
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  private static final String CALLS_TAB                         = "android.calls.tab";
+  private static final String TEXT_FORMATTING_SPOILER_SEND      = "android.textFormatting.spoilerSend";
+  private static final String EXPORT_ACCOUNT_DATA               = "android.exportAccountData";
+=======
+  private static final String CALLS_TAB                         = "android.calls.tab";
+  private static final String TEXT_FORMATTING_SPOILER_SEND      = "android.textFormatting.spoilerSend";
+  private static final String EXPORT_ACCOUNT_DATA               = "android.exportAccountData";
+  private static final String AD_HOC_CALLING                    = "android.calling.ad.hoc";
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
   /**
    * We will only store remote values for flags in this set. If you want a flag to be controllable
@@ -167,7 +178,8 @@ public final class FeatureFlags {
 
   @VisibleForTesting
   static final Set<String> NOT_REMOTE_CAPABLE = SetUtil.newHashSet(
-      PHONE_NUMBER_PRIVACY
+      PHONE_NUMBER_PRIVACY,
+      AD_HOC_CALLING
   );
 
   /**
@@ -610,6 +622,45 @@ public final class FeatureFlags {
     return getBoolean(ANY_ADDRESS_PORTS_KILL_SWITCH, false);
   }
 
+<<<<<<< HEAD
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  /**
+   * Whether or not the calls tab is enabled
+   */
+  public static boolean callsTab() {
+    return getBoolean(CALLS_TAB, false);
+  }
+
+  /**
+   * Whether or not the ability to export account data is enabled
+   */
+  public static boolean exportAccountData() {
+    return getBoolean(EXPORT_ACCOUNT_DATA, false);
+  }
+
+=======
+  /**
+   * Whether or not the calls tab is enabled
+   */
+  public static boolean callsTab() {
+    return getBoolean(CALLS_TAB, false);
+  }
+
+  /**
+   * Whether or not the ability to export account data is enabled
+   */
+  public static boolean exportAccountData() {
+    return getBoolean(EXPORT_ACCOUNT_DATA, false);
+  }
+
+  /**
+   * Whether or not ad-hoc calling is enabled
+   */
+  public static boolean adHocCalling() {
+    return getBoolean(AD_HOC_CALLING, false);
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   /** Only for rendering debug info. */
   public static synchronized @NonNull Map<String, Object> getMemoryValues() {
     return new TreeMap<>(REMOTE_VALUES);

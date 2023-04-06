@@ -49,6 +49,7 @@
             app:destination="@id/createCallLinkBottomSheet" />
     </fragment>
 
+<<<<<<< HEAD
     <dialog
         android:id="@+id/createCallLinkBottomSheet"
         android:name="org.thoughtcrime.securesms.calls.links.create.CreateCallLinkBottomSheetDialogFragment"
@@ -73,4 +74,12 @@
 
     </dialog>
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <dialog
+        android:id="@+id/createCallLinkBottomSheet"
+        android:name="org.thoughtcrime.securesms.calls.links.CreateCallLinkBottomSheetDialogFragment"
+        android:label="create_call_link_bottom_sheet" />
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 </navigation>

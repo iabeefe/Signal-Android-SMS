@@ -14,8 +14,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+<<<<<<< HEAD
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import androidx.compose.material3.TopAppBarDefaults
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +56,7 @@ object Scaffolds {
     Scaffold(
       snackbarHost = snackbarHost,
       topBar = {
+<<<<<<< HEAD
         DefaultTopAppBar(
           title = title,
           titleContent = titleContent,
@@ -59,6 +65,49 @@ object Scaffolds {
           navigationContentDescription = navigationContentDescription,
           actions = actions,
           scrollBehavior = scrollBehavior
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        TopAppBar(
+          title = {
+            Text(
+              text = title,
+              style = MaterialTheme.typography.titleLarge
+            )
+          },
+          navigationIcon = {
+            IconButton(
+              onClick = onNavigationClick,
+              Modifier.padding(end = 16.dp)
+            ) {
+              Icon(
+                painter = navigationIconPainter,
+                contentDescription = navigationContentDescription
+              )
+            }
+          }
+=======
+        TopAppBar(
+          title = {
+            Text(
+              text = title,
+              style = MaterialTheme.typography.titleLarge
+            )
+          },
+          navigationIcon = {
+            IconButton(
+              onClick = onNavigationClick,
+              Modifier.padding(end = 16.dp)
+            ) {
+              Icon(
+                painter = navigationIconPainter,
+                contentDescription = navigationContentDescription
+              )
+            }
+          },
+          scrollBehavior = scrollBehavior,
+          colors = TopAppBarDefaults.smallTopAppBarColors(
+            scrolledContainerColor = SignalTheme.colors.colorSurface2
+          )
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         )
       },
       modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

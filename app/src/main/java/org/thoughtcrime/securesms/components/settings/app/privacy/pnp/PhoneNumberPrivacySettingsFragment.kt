@@ -1,7 +1,12 @@
 package org.thoughtcrime.securesms.components.settings.app.privacy.pnp
 
+<<<<<<< HEAD
 import android.content.res.Configuration
 import android.os.Bundle
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import android.os.Bundle
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -33,7 +38,16 @@ import org.signal.core.ui.Texts
 import org.signal.core.ui.theme.SignalTheme
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.compose.ComposeFragment
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.compose.StatusBarColorNestedScrollConnection
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues.PhoneNumberListingMode
+import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues.PhoneNumberSharingMode
+=======
+import org.thoughtcrime.securesms.compose.StatusBarColorNestedScrollConnection
+import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues.PhoneNumberListingMode
+import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues.PhoneNumberSharingMode
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
 class PhoneNumberPrivacySettingsFragment : ComposeFragment() {
 
@@ -56,6 +70,7 @@ class PhoneNumberPrivacySettingsFragment : ComposeFragment() {
     val snackbarHostState = remember { SnackbarHostState() }
     val snackbarMessage = stringResource(id = R.string.PhoneNumberPrivacySettingsFragment__to_change_this_setting)
 
+<<<<<<< HEAD
     Screen(
       state = state,
       snackbarHostState = snackbarHostState,
@@ -72,6 +87,32 @@ class PhoneNumberPrivacySettingsFragment : ComposeFragment() {
             snackbarHostState.showSnackbar(
               message = snackbarMessage,
               duration = SnackbarDuration.Short
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    Scaffolds.Settings(
+      title = stringResource(id = R.string.preferences_app_protection__phone_number),
+      onNavigationClick = onNavigationClick,
+      navigationIconPainter = painterResource(id = R.drawable.ic_arrow_left_24),
+      navigationContentDescription = stringResource(id = R.string.Material3SearchToolbar__close)
+    ) { contentPadding ->
+      Box(modifier = Modifier.padding(contentPadding)) {
+        LazyColumn {
+          item {
+            Texts.SectionHeader(
+              text = stringResource(id = R.string.PhoneNumberPrivacySettingsFragment__who_can_see_my_number)
+=======
+    Scaffolds.Settings(
+      title = stringResource(id = R.string.preferences_app_protection__phone_number),
+      onNavigationClick = onNavigationClick,
+      navigationIconPainter = painterResource(id = R.drawable.ic_arrow_left_24),
+      navigationContentDescription = stringResource(id = R.string.Material3SearchToolbar__close),
+      modifier = Modifier.nestedScroll(statusBarNestedScrollConnection)
+    ) { contentPadding ->
+      Box(modifier = Modifier.padding(contentPadding)) {
+        LazyColumn {
+          item {
+            Texts.SectionHeader(
+              text = stringResource(id = R.string.PhoneNumberPrivacySettingsFragment__who_can_see_my_number)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
             )
           }
         }

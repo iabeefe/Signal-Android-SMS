@@ -66,28 +66,68 @@ class CallLogRepository(
         refresh()
       }
 
+<<<<<<< HEAD
       AppDependencies.databaseObserver.registerConversationListObserver(databaseObserver)
       AppDependencies.databaseObserver.registerCallUpdateObserver(databaseObserver)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      val messageObserver = DatabaseObserver.MessageObserver {
+        refresh()
+      }
+
+      ApplicationDependencies.getDatabaseObserver().registerConversationListObserver(databaseObserver)
+      ApplicationDependencies.getDatabaseObserver().registerMessageUpdateObserver(messageObserver)
+=======
+      ApplicationDependencies.getDatabaseObserver().registerConversationListObserver(databaseObserver)
+      ApplicationDependencies.getDatabaseObserver().registerCallUpdateObserver(databaseObserver)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
       emitter.setCancellable {
+<<<<<<< HEAD
         AppDependencies.databaseObserver.unregisterObserver(databaseObserver)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        ApplicationDependencies.getDatabaseObserver().unregisterObserver(databaseObserver)
+        ApplicationDependencies.getDatabaseObserver().unregisterObserver(messageObserver)
+=======
+        ApplicationDependencies.getDatabaseObserver().unregisterObserver(databaseObserver)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       }
     }
   }
 
   fun deleteSelectedCallLogs(
+<<<<<<< HEAD
     selectedCallRowIds: Set<Long>
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    selectedMessageIds: Set<Long>
+=======
+    selectedCallIds: Set<Long>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   ): Completable {
     return Completable.fromAction {
+<<<<<<< HEAD
       SignalDatabase.calls.deleteNonAdHocCallEvents(selectedCallRowIds)
     }.subscribeOn(Schedulers.io())
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      SignalDatabase.messages.deleteCallUpdates(selectedMessageIds)
+    }.observeOn(Schedulers.io())
+=======
+      SignalDatabase.calls.deleteCallEvents(selectedCallIds)
+    }.observeOn(Schedulers.io())
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   fun deleteAllCallLogsExcept(
+<<<<<<< HEAD
     selectedCallRowIds: Set<Long>,
     missedOnly: Boolean
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    selectedMessageIds: Set<Long>
+=======
+    selectedCallIds: Set<Long>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   ): Completable {
     return Completable.fromAction {
+<<<<<<< HEAD
       SignalDatabase.calls.deleteAllNonAdHocCallEventsExcept(selectedCallRowIds, missedOnly)
     }.subscribeOn(Schedulers.io())
   }
@@ -157,5 +197,12 @@ class CallLogRepository(
     }.doOnDispose {
       SignalDatabase.calls.updateAdHocCallEventDeletionTimestamps()
     }
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      SignalDatabase.messages.deleteAllCallUpdatesExcept(selectedMessageIds)
+    }.observeOn(Schedulers.io())
+=======
+      SignalDatabase.calls.deleteAllCallEventsExcept(selectedCallIds)
+    }.observeOn(Schedulers.io())
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 }

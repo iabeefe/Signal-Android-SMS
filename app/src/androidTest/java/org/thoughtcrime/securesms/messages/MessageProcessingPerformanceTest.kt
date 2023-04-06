@@ -8,7 +8,6 @@ import io.mockk.unmockkStatic
 import okio.ByteString
 import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,7 +36,7 @@ import android.util.Log as AndroidLog
 /**
  * Sends N messages from Bob to Alice to track performance of Alice's processing of messages.
  */
-@Ignore("Ignore test in normal testing as it's a performance test with no assertions")
+// @Ignore("Ignore test in normal testing as it's a performance test with no assertions")
 @RunWith(AndroidJUnit4::class)
 class MessageProcessingPerformanceTest {
 
@@ -58,14 +57,30 @@ class MessageProcessingPerformanceTest {
     mockkStatic(SealedSenderAccessUtil::class)
     every { SealedSenderAccessUtil.getCertificateValidator() } returns FakeClientHelpers.noOpCertificateValidator
 
+<<<<<<< HEAD
     mockkObject(MessageContentProcessor)
     every { MessageContentProcessor.create(harness.application) } returns TimingMessageContentProcessor(harness.application)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    mockkStatic(MessageContentProcessor::class)
+    every { MessageContentProcessor.create(harness.application) } returns TimingMessageContentProcessor(harness.application)
+=======
+    mockkObject(MessageContentProcessorV2)
+    every { MessageContentProcessorV2.create(harness.application) } returns TimingMessageContentProcessorV2(harness.application)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   @After
   fun after() {
+<<<<<<< HEAD
     unmockkStatic(SealedSenderAccessUtil::class)
     unmockkStatic(MessageContentProcessor::class)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    unmockkStatic(UnidentifiedAccessUtil::class)
+    unmockkStatic(MessageContentProcessor::class)
+=======
+    unmockkStatic(UnidentifiedAccessUtil::class)
+    unmockkStatic(MessageContentProcessorV2::class)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   @Test
@@ -106,7 +121,7 @@ class MessageProcessingPerformanceTest {
     // Wait until they've all been fully decrypted + processed
     harness
       .inMemoryLogger
-      .getLockForUntil(TimingMessageContentProcessor.endTagPredicate(lastTimestamp))
+      .getLockForUntil(TimingMessageContentProcessorV2.endTagPredicate(lastTimestamp))
       .awaitFor(1.minutes)
 
     harness.inMemoryLogger.flush()
@@ -125,7 +140,7 @@ class MessageProcessingPerformanceTest {
 
     // Calculate MessageContentProcessor
 
-    val takeLast: List<Entry> = entries.filter { it.tag == TimingMessageContentProcessor.TAG }.drop(2)
+    val takeLast: List<Entry> = entries.filter { it.tag == TimingMessageContentProcessorV2.TAG }.drop(2)
     val iterator = takeLast.iterator()
     var processCount = 0L
     var processDuration = 0L
@@ -141,7 +156,7 @@ class MessageProcessingPerformanceTest {
     // Calculate messages per second from "retrieving" first message post session initialization to processing last message
 
     val start = entries.first { it.message == "Retrieved envelope! $firstTimestamp" }
-    val end = entries.first { it.message == TimingMessageContentProcessor.endTag(lastTimestamp) }
+    val end = entries.first { it.message == TimingMessageContentProcessorV2.endTag(lastTimestamp) }
 
     val duration = (end.timestamp - start.timestamp).toFloat() / 1000f
     val messagePerSecond = messageCount.toFloat() / duration
@@ -156,7 +171,7 @@ class MessageProcessingPerformanceTest {
 
     val aliceProcessFirstMessageLatch = harness
       .inMemoryLogger
-      .getLockForUntil(TimingMessageContentProcessor.endTagPredicate(firstPreKeyMessageTimestamp))
+      .getLockForUntil(TimingMessageContentProcessorV2.endTagPredicate(firstPreKeyMessageTimestamp))
 
     Thread { aliceClient.process(encryptedEnvelope, System.currentTimeMillis()) }.start()
     aliceProcessFirstMessageLatch.awaitFor(15.seconds)

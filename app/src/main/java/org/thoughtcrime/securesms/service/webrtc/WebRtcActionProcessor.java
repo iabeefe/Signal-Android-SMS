@@ -5,6 +5,7 @@ import android.os.ResultReceiver;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.annimon.stream.Stream;
 
@@ -56,7 +57,12 @@ import org.whispersystems.signalservice.api.messages.calls.HangupMessage;
 import org.whispersystems.signalservice.api.messages.calls.IceUpdateMessage;
 import org.whispersystems.signalservice.api.messages.calls.OfferMessage;
 import org.whispersystems.signalservice.api.messages.calls.SignalServiceCallMessage;
+<<<<<<< HEAD
 import org.whispersystems.signalservice.api.push.ServiceId.ACI;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.whispersystems.signalservice.api.push.ServiceId;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
 import java.util.Collection;
 import java.util.List;
@@ -852,7 +858,13 @@ public abstract class WebRtcActionProcessor {
     Recipient recipient = currentState.getCallInfoState().getCallRecipient();
 
     if (recipient != null && currentState.getCallInfoState().getGroupCallState().isConnected()) {
+<<<<<<< HEAD
       webRtcInteractor.sendGroupCallMessage(recipient, WebRtcUtil.getGroupCallEraId(groupCall), null, false, false);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      webRtcInteractor.sendGroupCallMessage(recipient, WebRtcUtil.getGroupCallEraId(groupCall));
+=======
+      webRtcInteractor.sendGroupCallMessage(recipient, WebRtcUtil.getGroupCallEraId(groupCall), false, false);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     }
 
     currentState = currentState.builder()

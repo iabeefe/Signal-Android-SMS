@@ -157,9 +157,18 @@ public class GroupConnectedActionProcessor extends GroupActionProcessor {
       return currentState;
     }
 
+<<<<<<< HEAD
     boolean remoteUserRangTheCall = currentState.getCallSetupState(RemotePeer.GROUP_CALL_ID).getRingerRecipient() != Recipient.self();
     String  eraId                 = WebRtcUtil.getGroupCallEraId(groupCall);
     webRtcInteractor.sendGroupCallMessage(currentState.getCallInfoState().getCallRecipient(), eraId, null, remoteUserRangTheCall, true);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    String eraId = WebRtcUtil.getGroupCallEraId(groupCall);
+    webRtcInteractor.sendGroupCallMessage(currentState.getCallInfoState().getCallRecipient(), eraId);
+=======
+    boolean remoteUserRangTheCall = currentState.getCallSetupState(RemotePeer.GROUP_CALL_ID).getRingerRecipient() != Recipient.self();
+    String  eraId                 = WebRtcUtil.getGroupCallEraId(groupCall);
+    webRtcInteractor.sendGroupCallMessage(currentState.getCallInfoState().getCallRecipient(), eraId, remoteUserRangTheCall, true);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     List<UUID> members = new ArrayList<>(peekInfo.getJoinedMembers());
     if (!members.contains(SignalStore.account().requireAci().getRawUuid())) {
@@ -186,7 +195,13 @@ public class GroupConnectedActionProcessor extends GroupActionProcessor {
     }
 
     String eraId = WebRtcUtil.getGroupCallEraId(groupCall);
+<<<<<<< HEAD
     webRtcInteractor.sendGroupCallMessage(currentState.getCallInfoState().getCallRecipient(), eraId, null, false, false);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    webRtcInteractor.sendGroupCallMessage(currentState.getCallInfoState().getCallRecipient(), eraId);
+=======
+    webRtcInteractor.sendGroupCallMessage(currentState.getCallInfoState().getCallRecipient(), eraId, false, false);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     List<UUID> members = Stream.of(currentState.getCallInfoState().getRemoteCallParticipants()).map(p -> p.getRecipient().requireServiceId().getRawUuid()).toList();
     webRtcInteractor.updateGroupCallUpdateMessage(currentState.getCallInfoState().getCallRecipient().getId(), eraId, members, false);

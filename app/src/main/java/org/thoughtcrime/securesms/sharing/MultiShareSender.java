@@ -105,6 +105,7 @@ public final class MultiShareSender {
     for (ContactSearchKey.RecipientSearchKey recipientSearchKey : multiShareArgs.getRecipientSearchKeys()) {
       Recipient recipient = Recipient.resolved(recipientSearchKey.getRecipientId());
 
+<<<<<<< HEAD
       long            threadId           = SignalDatabase.threads().getOrCreateThreadIdFor(recipient);
       List<Mention>   mentions           = getValidMentionsForRecipient(recipient, multiShareArgs.getMentions());
       MessageSendType sendType           = MessageSendType.SignalMessageSendType.INSTANCE;
@@ -114,6 +115,26 @@ public final class MultiShareSender {
       SlideDeck       slideDeck          = new SlideDeck(primarySlideDeck);
 
       boolean needsSplit = message != null &&
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      long            threadId       = SignalDatabase.threads().getOrCreateThreadIdFor(recipient);
+      List<Mention>   mentions       = getValidMentionsForRecipient(recipient, multiShareArgs.getMentions());
+      MessageSendType sendType       = resolveTransportOption(context, recipient);
+      boolean         forceSms       = recipient.isForceSmsSelection() && sendType.usesSmsTransport();
+      int             subscriptionId = sendType.getSimSubscriptionIdOr(-1);
+      long            expiresIn      = TimeUnit.SECONDS.toMillis(recipient.getExpiresInSeconds());
+      boolean needsSplit = !sendType.usesSmsTransport() &&
+                           message != null &&
+=======
+      long            threadId       = SignalDatabase.threads().getOrCreateThreadIdFor(recipient);
+      List<Mention>   mentions       = getValidMentionsForRecipient(recipient, multiShareArgs.getMentions());
+      MessageSendType sendType       = resolveTransportOption(context, recipient);
+      boolean         forceSms       = recipient.isForceSmsSelection() && sendType.usesSmsTransport();
+      int             subscriptionId = sendType.getSimSubscriptionIdOr(-1);
+      long            expiresIn      = TimeUnit.SECONDS.toMillis(recipient.getExpiresInSeconds());
+      List<Contact>   contacts       = multiShareArgs.getSharedContacts();
+      boolean needsSplit = !sendType.usesSmsTransport() &&
+                           message != null &&
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
                            message.length() > sendType.calculateCharacters(message).maxPrimaryMessageSize;
       boolean hasMmsMedia = !multiShareArgs.getMedia().isEmpty() ||
                             (multiShareArgs.getDataUri() != null && multiShareArgs.getDataUri() != Uri.EMPTY) ||

@@ -50,11 +50,16 @@ object Dialogs {
   ) {
     androidx.compose.material3.AlertDialog(
       onDismissRequest = onDismiss,
+<<<<<<< HEAD
       title = if (title == null) {
         null
       } else {
         { Text(text = title) }
       },
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+      title = if (title == null) null else { { Text(text = title) } },
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       text = { Text(text = message) },
       confirmButton = {
         TextButton(onClick = {

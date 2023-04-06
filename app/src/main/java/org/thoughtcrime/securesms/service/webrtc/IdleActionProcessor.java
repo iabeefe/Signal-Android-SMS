@@ -110,7 +110,13 @@ public class IdleActionProcessor extends WebRtcActionProcessor {
     if (ringUpdate != CallManager.RingUpdate.REQUESTED) {
       SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(ringId, remotePeerGroup.getId(), sender, System.currentTimeMillis(), ringUpdate);
       return currentState;
+<<<<<<< HEAD
     } else if (SignalDatabase.calls().isRingCancelled(ringId, remotePeerGroup.getId())) {
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    } else if (SignalDatabase.groupCallRings().isCancelled(ringId)) {
+=======
+    } else if (SignalDatabase.calls().isRingCancelled(ringId)) {
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       try {
         Log.i(TAG, "Incoming ring request for already cancelled ring: " + ringId);
         webRtcInteractor.getCallManager().cancelGroupRing(groupId.getDecodedId(), ringId, null);
@@ -124,7 +130,13 @@ public class IdleActionProcessor extends WebRtcActionProcessor {
     if (activeProfile != null && !(activeProfile.isRecipientAllowed(remotePeerGroup.getId()) || activeProfile.getAllowAllCalls())) {
       try {
         Log.i(TAG, "Incoming ring request for profile restricted recipient");
+<<<<<<< HEAD
         SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(ringId, remotePeerGroup.getId(), sender, System.currentTimeMillis(), CallManager.RingUpdate.EXPIRED_REQUEST, true);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        SignalDatabase.groupCallRings().insertOrUpdateGroupRing(ringId, System.currentTimeMillis(), CallManager.RingUpdate.EXPIRED_REQUEST);
+=======
+        SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(ringId, remotePeerGroup.getId(), sender, System.currentTimeMillis(), CallManager.RingUpdate.EXPIRED_REQUEST);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         webRtcInteractor.getCallManager().cancelGroupRing(groupId.getDecodedId(), ringId, CallManager.RingCancelReason.DeclinedByUser);
       } catch (CallException e) {
         Log.w(TAG, "Error while trying to cancel ring: " + ringId, e);
@@ -141,7 +153,13 @@ public class IdleActionProcessor extends WebRtcActionProcessor {
   protected @NonNull WebRtcServiceState handleReceivedGroupCallPeekForRingingCheck(@NonNull WebRtcServiceState currentState, @NonNull GroupCallRingCheckInfo info, @NonNull PeekInfo peekInfo) {
     Log.i(tag, "handleReceivedGroupCallPeekForRingingCheck(): recipient: " + info.getRecipientId() + " ring: " + info.getRingId());
 
+<<<<<<< HEAD
     if (SignalDatabase.calls().isRingCancelled(info.getRingId(), info.getRecipientId())) {
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    if (SignalDatabase.groupCallRings().isCancelled(info.getRingId())) {
+=======
+    if (SignalDatabase.calls().isRingCancelled(info.getRingId())) {
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       try {
         Log.i(TAG, "Ring was cancelled while getting peek info ring: " + info.getRingId());
         webRtcInteractor.getCallManager().cancelGroupRing(info.getGroupId().getDecodedId(), info.getRingId(), null);
@@ -153,11 +171,23 @@ public class IdleActionProcessor extends WebRtcActionProcessor {
 
     if (peekInfo.getDeviceCount() == 0) {
       Log.i(TAG, "No one in the group call, mark as expired and do not ring");
+<<<<<<< HEAD
       SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(info.getRingId(), info.getRecipientId(), info.getRingerAci(), System.currentTimeMillis(), CallManager.RingUpdate.EXPIRED_REQUEST);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      SignalDatabase.groupCallRings().insertOrUpdateGroupRing(info.getRingId(), System.currentTimeMillis(), CallManager.RingUpdate.EXPIRED_REQUEST);
+=======
+      SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(info.getRingId(), info.getRecipientId(), info.getRingerUuid(), System.currentTimeMillis(), CallManager.RingUpdate.EXPIRED_REQUEST);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       return currentState;
     } else if (peekInfo.getJoinedMembers().contains(Recipient.self().requireServiceId().getRawUuid())) {
       Log.i(TAG, "We are already in the call, mark accepted on another device and do not ring");
+<<<<<<< HEAD
       SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(info.getRingId(), info.getRecipientId(), info.getRingerAci(), System.currentTimeMillis(), CallManager.RingUpdate.ACCEPTED_ON_ANOTHER_DEVICE);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      SignalDatabase.groupCallRings().insertOrUpdateGroupRing(info.getRingId(), System.currentTimeMillis(), CallManager.RingUpdate.ACCEPTED_ON_ANOTHER_DEVICE);
+=======
+      SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(info.getRingId(), info.getRecipientId(), info.getRingerUuid(), System.currentTimeMillis(), CallManager.RingUpdate.ACCEPTED_ON_ANOTHER_DEVICE);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       return currentState;
     }
 

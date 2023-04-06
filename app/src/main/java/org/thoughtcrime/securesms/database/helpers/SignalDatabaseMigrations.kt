@@ -41,6 +41,7 @@ import org.thoughtcrime.securesms.database.helpers.migration.V178_ReportingToken
 import org.thoughtcrime.securesms.database.helpers.migration.V179_CleanupDanglingMessageSendLogMigration
 import org.thoughtcrime.securesms.database.helpers.migration.V180_RecipientNicknameMigration
 import org.thoughtcrime.securesms.database.helpers.migration.V181_ThreadTableForeignKeyCleanup
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.database.helpers.migration.V182_CallTableMigration
 import org.thoughtcrime.securesms.database.helpers.migration.V183_CallLinkTableMigration
 import org.thoughtcrime.securesms.database.helpers.migration.V184_CallLinkReplaceIndexMigration
@@ -109,6 +110,10 @@ import org.thoughtcrime.securesms.database.helpers.migration.V247_ClearUploadTim
 import org.thoughtcrime.securesms.database.helpers.migration.V250_ClearUploadTimestampV2
 import org.thoughtcrime.securesms.database.helpers.migration.V251_ArchiveTransferStateIndex
 import org.thoughtcrime.securesms.database.helpers.migration.V252_AttachmentOffloadRestoredAtColumn
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.database.helpers.migration.V182_CallTableMigration
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
 /**
  * Contains all of the database migrations for [SignalDatabase]. Broken into a separate file for cleanliness.
@@ -117,6 +122,7 @@ object SignalDatabaseMigrations {
 
   val TAG: String = Log.tag(SignalDatabaseMigrations.javaClass)
 
+<<<<<<< HEAD
   private val migrations: List<Pair<Int, SignalDatabaseMigration>> = listOf(
     149 to V149_LegacyMigrations,
     150 to V150_UrgentMslFlagMigration,
@@ -224,6 +230,11 @@ object SignalDatabaseMigrations {
   )
 
   const val DATABASE_VERSION = 252
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  const val DATABASE_VERSION = 181
+=======
+  const val DATABASE_VERSION = 182
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
   @JvmStatic
   fun migrate(context: Application, db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -264,7 +275,269 @@ object SignalDatabaseMigrations {
       }
     }
 
+<<<<<<< HEAD
     db.setForeignKeyConstraintsEnabled(initialForeignKeyState)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    if (oldVersion < 150) {
+      V150_UrgentMslFlagMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 151) {
+      V151_MyStoryMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 152) {
+      V152_StoryGroupTypesMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 153) {
+      V153_MyStoryMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 154) {
+      V154_PniSignaturesMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 155) {
+      V155_SmsExporterMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 156) {
+      V156_RecipientUnregisteredTimestampMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 157) {
+      V157_RecipeintHiddenMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 158) {
+      V158_GroupsLastForceUpdateTimestampMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 159) {
+      V159_ThreadUnreadSelfMentionCount.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 160) {
+      V160_SmsMmsExportedIndexMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 161) {
+      V161_StorySendMessageIdIndex.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 162) {
+      V162_ThreadUnreadSelfMentionCountFixup.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 163) {
+      V163_RemoteMegaphoneSnoozeSupportMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 164) {
+      V164_ThreadDatabaseReadIndexMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 165) {
+      V165_MmsMessageBoxPaymentTransactionIndexMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 166) {
+      V166_ThreadAndMessageForeignKeys.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 167) {
+      V167_RecreateReactionTriggers.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 168) {
+      V168_SingleMessageTableMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 169) {
+      V169_EmojiSearchIndexRank.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 170) {
+      V170_CallTableMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 171) {
+      V171_ThreadForeignKeyFix.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 172) {
+      V172_GroupMembershipMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 173) {
+      V173_ScheduledMessagesMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 174) {
+      V174_ReactionForeignKeyMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 175) {
+      V175_FixFullTextSearchLink.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 176) {
+      V176_AddScheduledDateToQuoteIndex.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 177) {
+      V177_MessageSendLogTableCleanupMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 178) {
+      V178_ReportingTokenColumnMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 179) {
+      V179_CleanupDanglingMessageSendLogMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 180) {
+      V180_RecipientNicknameMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 181) {
+      V181_ThreadTableForeignKeyCleanup.migrate(context, db, oldVersion, newVersion)
+    }
+=======
+    if (oldVersion < 150) {
+      V150_UrgentMslFlagMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 151) {
+      V151_MyStoryMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 152) {
+      V152_StoryGroupTypesMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 153) {
+      V153_MyStoryMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 154) {
+      V154_PniSignaturesMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 155) {
+      V155_SmsExporterMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 156) {
+      V156_RecipientUnregisteredTimestampMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 157) {
+      V157_RecipeintHiddenMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 158) {
+      V158_GroupsLastForceUpdateTimestampMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 159) {
+      V159_ThreadUnreadSelfMentionCount.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 160) {
+      V160_SmsMmsExportedIndexMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 161) {
+      V161_StorySendMessageIdIndex.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 162) {
+      V162_ThreadUnreadSelfMentionCountFixup.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 163) {
+      V163_RemoteMegaphoneSnoozeSupportMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 164) {
+      V164_ThreadDatabaseReadIndexMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 165) {
+      V165_MmsMessageBoxPaymentTransactionIndexMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 166) {
+      V166_ThreadAndMessageForeignKeys.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 167) {
+      V167_RecreateReactionTriggers.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 168) {
+      V168_SingleMessageTableMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 169) {
+      V169_EmojiSearchIndexRank.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 170) {
+      V170_CallTableMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 171) {
+      V171_ThreadForeignKeyFix.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 172) {
+      V172_GroupMembershipMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 173) {
+      V173_ScheduledMessagesMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 174) {
+      V174_ReactionForeignKeyMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 175) {
+      V175_FixFullTextSearchLink.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 176) {
+      V176_AddScheduledDateToQuoteIndex.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 177) {
+      V177_MessageSendLogTableCleanupMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 178) {
+      V178_ReportingTokenColumnMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 179) {
+      V179_CleanupDanglingMessageSendLogMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 180) {
+      V180_RecipientNicknameMigration.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 181) {
+      V181_ThreadTableForeignKeyCleanup.migrate(context, db, oldVersion, newVersion)
+    }
+
+    if (oldVersion < 182) {
+      V182_CallTableMigration.migrate(context, db, oldVersion, newVersion)
+    }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   @JvmStatic

@@ -7,7 +7,12 @@ import org.whispersystems.signalservice.api.messages.SignalServiceStoryMessageRe
 import org.whispersystems.signalservice.api.push.DistributionId
 import org.whispersystems.signalservice.api.push.ServiceId
 import org.whispersystems.signalservice.api.push.SignalServiceAddress
+<<<<<<< HEAD
 import org.whispersystems.signalservice.internal.push.SyncMessage
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
 /**
  * Represents a list of, or update to a list of, who can access a story through what
@@ -83,6 +88,7 @@ data class SentStorySyncManifest(
 
       return SentStorySyncManifest(entries)
     }
+<<<<<<< HEAD
 
     fun fromRecipientsSet(recipients: List<SyncMessage.Sent.StoryMessageRecipient>): SentStorySyncManifest {
       val entries = recipients.toSet().filter { it.destinationServiceId != null }.map { recipient ->
@@ -95,5 +101,20 @@ data class SentStorySyncManifest(
 
       return SentStorySyncManifest(entries)
     }
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+
+    fun fromRecipientsSet(recipients: List<SignalServiceProtos.SyncMessage.Sent.StoryMessageRecipient>): SentStorySyncManifest {
+      val entries = recipients.toSet().map { recipient ->
+        Entry(
+          recipientId = RecipientId.from(ServiceId.parseOrThrow(recipient.destinationUuid)),
+          allowedToReply = recipient.isAllowedToReply,
+          distributionLists = recipient.distributionListIdsList.map { DistributionId.from(it) }
+        )
+      }
+
+      return SentStorySyncManifest(entries)
+    }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 }

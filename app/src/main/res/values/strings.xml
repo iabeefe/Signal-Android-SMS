@@ -19,9 +19,14 @@
     <string name="sms_export_url" translatable="false">https://support.signal.org/hc/articles/360007321171</string>
     <string name="signal_me_username_url" translatable="false">https://signal.me/#u/%1$s</string>
     <string name="username_support_url" translatable="false">https://support.signal.org/hc/articles/5389476324250</string>
+<<<<<<< HEAD
     <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string>
     <string name="pending_transfer_url" translatable="false">https://support.signal.org/hc/articles/360031949872#pending</string>
     <string name="donate_faq_url" translatable="false">https://support.signal.org/hc/articles/360031949872#donate</string>
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -2357,6 +2362,19 @@
     <!-- Displays the name of a contact. The first placeholder is the name the user has assigned to that contact, the second name is the name the contact assigned to themselves -->
     <string name="AboutSheet__user_set_display_name_and_profile_name">%1$s (%2$s)</string>
 
+    <!-- Error message when the developer added a button in the wrong place. -->
+    <string name="WebRtcAudioOutputToggleButton_fragment_activity_error">A UI error occurred. Please report this error to the developers.</string>
+    <!-- Error message when the user is trying to change audio outputs but none are present. -->
+    <string name="WebRtcAudioOutputToggleButton_no_eligible_audio_i_o_detected">No eligible audio I/O detected.</string>
+    <!-- A text description of the bluetooth icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__bluetooth_icon_content_description">An icon representing a Bluetooth device.</string>
+    <!-- A text description of the headset icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__headset_icon_content_description">An icon representing a wired headset.</string>
+    <!-- A text description of the speaker icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__speaker_icon_content_description">An icon representing a speakerphone.</string>
+    <!-- A text description of the earpiece icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__earpiece_icon_content_description">An icon representing a device\'s earpiece.</string>
+
     <!-- CallParticipantsListDialog -->
     <plurals name="CallParticipantsListDialog_in_this_call">
         <item quantity="one">In this call (%1$d)</item>
@@ -2980,12 +2998,20 @@
     <string name="WebRtcAudioOutputToggle__speaker">Speaker</string>
     <!-- Audio output option referring to an external audio device connected via wireless Bluetooth -->
     <string name="WebRtcAudioOutputToggle__bluetooth">Bluetooth</string>
+<<<<<<< HEAD
     <!-- Audio output option referring to a pair of headphones that do not contain a microphone connected via a 3.5mm headphone jack -->
     <string name="WebRtcAudioOutputToggle__wired_headphones">Wired Headphones</string>
     <!-- Audio output option referring to an external headset that contains a microphone connected via a 3.5mm headphone jack -->
     <string name="WebRtcAudioOutputToggle__wired_headset">Wired Headset</string>
     <!-- Audio output option referring to an external headset connected via a USB-C data cable -->
     <string name="WebRtcAudioOutputToggle__wired_headset_usb">Wired Headset (USB)</string>
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Audio output option referring to an external headset connected via a 3.5mm headphone jack -->
+    <string name="WebRtcAudioOutputToggle__wired_headset">Wired Headset</string>
+    <!-- Audio output option referring to an external headset connected via a USB-C data cable -->
+    <string name="WebRtcAudioOutputToggle__wired_headset_usb">Wired Headset (USB)</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <string name="WebRtcCallControls_answer_call_description">Answer call</string>
     <string name="WebRtcCallControls_reject_call_description">Reject call</string>
@@ -6813,6 +6839,7 @@
     <string name="CallLogAdapter__outgoing">Outgoing</string>
     <!-- Displayed for missed calls -->
     <string name="CallLogAdapter__missed">Missed</string>
+<<<<<<< HEAD
     <!-- Displayed for missed calls declined by notification profile -->
     <string name="CallLogAdapter__missed_notification_profile">Missed while notification profile on</string>
     <!-- Displayed on Group Call button if user is not in the call -->
@@ -6827,6 +6854,13 @@
     <string name="CallLogAdapter__start_a_video_call">Start a video call</string>
     <!-- Accessibility description for the voice call button -->
     <string name="CallLogAdapter__start_a_voice_call">Start a voice call</string>
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Displayed on Group Call button if user is not in the call -->
+    <string name="CallLogAdapter__join">Join</string>
+    <!-- Displayed on Group Call button if user is in the call -->
+    <string name="CallLogAdapter__return">Return</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- Call Log context menu -->
     <!-- Displayed as a context menu item to start a video call -->
@@ -6917,6 +6951,7 @@
     <!-- Accessibility label describing the continue button on the camera screen -->
     <string name="CameraControls_continue_button_accessibility_label">Continue Button</string>
 
+<<<<<<< HEAD
     <!-- CallPreference -->
     <!-- Generic group call in call info -->
     <string name="CallPreference__group_call">Group call</string>
@@ -7516,5 +7551,54 @@
 
     <!-- Accessible content description for the reminder view, describing the icon in the view. -->
     <string name="ReminderView_icon_content_description">Reminder icon</string>
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- CallPreference -->
+    <!-- Missed group call in call info -->
+    <string name="CallPreference__missed_group_call">Missed group call</string>
+    <!-- Incoming group call in call info -->
+    <string name="CallPreference__incoming_group_call">Incoming group call</string>
+    <!-- Outgoing group call in call info -->
+    <string name="CallPreference__outgoing_group_call">Outgoing group call</string>
+
+    <!-- CreateCallLink -->
+    <!-- Call link creation item title on calls tab -->
+    <string name="CreateCallLink__create_a_call_link">Create a Call Link</string>
+    <!-- Call link creation item description on calls tab -->
+    <string name="CreateCallLink__share_a_link_for">Share a link for a Signal call</string>
+
+    <!-- CreateCallLinkBottomSheetDialogFragment -->
+    <!-- Fragment title -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__create_call_link">Create call link</string>
+    <!-- Displayed as a default name for the signal call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__signal_call">Signal call</string>
+    <!-- Displayed on a small button to allow user to instantly join call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__join">Join</string>
+    <!-- Option to open a full screen dialog to enter a call name -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__add_call_name">Add call name</string>
+    <!-- Toggle to require approval for all members before joining -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__approve_all_members">Approve all members</string>
+    <!-- Row label to share the link via Signal -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link_via_signal">Share link via Signal</string>
+    <!-- Row label to copy the link to the clipboard -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__copy_link">Copy link</string>
+    <!-- Row label to share the link with the external share sheet -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link">Share link</string>
+    <!-- Button text to dismiss the sheet and add it as an upcoming call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__done">Done</string>
+    <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Failed to open share sheet.</string>
+    <!-- Displayed when we copy the call link to the clipboard -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">Copied to clipboard</string>
+
+    <!-- EditCallLinkNameDialogFragment -->
+    <!-- App bar title for editing a call name -->
+    <string name="EditCallLinkNameDialogFragment__edit_call_name">Edit call name</string>
+    <!-- Text on button to confirm edit -->
+    <string name="EditCallLinkNameDialogFragment__save">Save</string>
+    <!-- Placeholder text on input field when editing call name -->
+    <string name="EditCallLinkNameDialogFragment__call_name">Call name</string>
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- EOF -->
 </resources>

@@ -22,7 +22,14 @@ import org.thoughtcrime.securesms.mediasend.Media
 import org.thoughtcrime.securesms.mms.PartAuthority
 import org.thoughtcrime.securesms.sharing.MultiShareArgs
 import org.thoughtcrime.securesms.stories.Stories
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.hasSharedContact
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.thoughtcrime.securesms.util.MediaUtil
+=======
+import org.thoughtcrime.securesms.util.MediaUtil
+import org.thoughtcrime.securesms.util.hasSharedContact
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import java.util.Optional
 import java.util.function.Consumer
 

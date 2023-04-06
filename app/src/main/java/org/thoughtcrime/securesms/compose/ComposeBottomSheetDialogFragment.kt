@@ -41,4 +41,58 @@ abstract class ComposeBottomSheetDialogFragment : FixedRoundedCornerBottomSheetD
 
   @Composable
   abstract fun SheetContent()
+<<<<<<< HEAD
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+
+  /**
+   * BottomSheet Handle, according to our design specs.
+   * This can be placed in a column with the other page content like so:
+   *
+   * ```
+   * Column(modifier = Modifier
+   *   .fillMaxWidth()
+   *   .wrapContentSize(Alignment.Center)
+   * ) {
+   *   Handle()
+   *   Text("Hello!")
+   * }
+   * ```
+   */
+  @Composable
+  protected fun Handle() {
+    Box(
+      modifier = Modifier
+        .size(width = 48.dp, height = 22.dp)
+        .padding(vertical = 10.dp)
+        .clip(RoundedCornerShape(1000.dp))
+        .background(MaterialTheme.colorScheme.outline)
+    )
+  }
+=======
+
+  /**
+   * BottomSheet Handle, according to our design specs.
+   * This can be placed in a column with the other page content like so:
+   *
+   * ```
+   * Column(modifier = Modifier
+   *   .fillMaxWidth()
+   *   .wrapContentSize(Alignment.Center)
+   * ) {
+   *   Handle()
+   *   Text("Hello!")
+   * }
+   * ```
+   */
+  @Composable
+  protected fun Handle(modifier: Modifier = Modifier) {
+    Box(
+      modifier = modifier
+        .size(width = 48.dp, height = 22.dp)
+        .padding(vertical = 10.dp)
+        .clip(RoundedCornerShape(1000.dp))
+        .background(MaterialTheme.colorScheme.outline)
+    )
+  }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 }

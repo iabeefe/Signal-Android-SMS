@@ -21,6 +21,7 @@ import org.thoughtcrime.securesms.jobs.ForegroundServiceUtil
 import org.thoughtcrime.securesms.jobs.ForegroundServiceUtil.startWhenCapable
 import org.thoughtcrime.securesms.jobs.PushProcessMessageErrorJob
 import org.thoughtcrime.securesms.jobs.PushProcessMessageJob
+import org.thoughtcrime.securesms.jobs.PushProcessMessageJobV2
 import org.thoughtcrime.securesms.jobs.UnableToStartException
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.messages.MessageDecryptor.FollowUpOperation
@@ -29,14 +30,40 @@ import org.thoughtcrime.securesms.notifications.NotificationChannels
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.util.AlarmSleepTimer
 import org.thoughtcrime.securesms.util.AppForegroundObserver
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.SignalLocalMetrics
 import org.thoughtcrime.securesms.util.asChain
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.thoughtcrime.securesms.util.Util
+import org.whispersystems.signalservice.api.messages.SignalServiceContent
+import org.whispersystems.signalservice.api.messages.SignalServiceMetadata
+=======
+import org.thoughtcrime.securesms.util.Util
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.whispersystems.signalservice.api.push.ServiceId
+<<<<<<< HEAD
 import org.whispersystems.signalservice.api.util.SleepTimer
 import org.whispersystems.signalservice.api.util.UptimeSleepTimer
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.whispersystems.signalservice.api.push.SignalServiceAddress
+import org.whispersystems.signalservice.api.util.UuidUtil
+=======
+import org.whispersystems.signalservice.api.util.UuidUtil
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.whispersystems.signalservice.api.websocket.WebSocketConnectionState
 import org.whispersystems.signalservice.api.websocket.WebSocketUnavailableException
+<<<<<<< HEAD
 import org.whispersystems.signalservice.internal.push.Envelope
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos
+import org.whispersystems.signalservice.internal.serialize.SignalServiceAddressProtobufSerializer
+import org.whispersystems.signalservice.internal.serialize.SignalServiceMetadataProtobufSerializer
+import org.whispersystems.signalservice.internal.serialize.protos.SignalServiceContentProto
+import java.util.*
+=======
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos
+import java.util.*
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
@@ -295,10 +322,22 @@ class IncomingMessageObserver(private val context: Application) {
     SignalLocalMetrics.MessageLatency.onMessageReceived(envelope.serverTimestamp!!, serverDeliveredTimestamp, envelope.urgent!!)
     when (result) {
       is MessageDecryptor.Result.Success -> {
+<<<<<<< HEAD
         val job = PushProcessMessageJob.processOrDefer(messageContentProcessor, result, localReceiveMetric)
         if (job != null) {
           return result.followUpOperations + FollowUpOperation { job.asChain() }
         }
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        PushProcessMessageJob(
+          result.toMessageState(),
+          result.toSignalServiceContent(),
+          null,
+          -1,
+          result.envelope.timestamp
+        )
+=======
+        PushProcessMessageJobV2(result.envelope, result.content, result.metadata, result.serverDeliveredTimestamp)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       }
       is MessageDecryptor.Result.Error -> {
         return result.followUpOperations + FollowUpOperation {
@@ -345,8 +384,39 @@ class IncomingMessageObserver(private val context: Application) {
     }
   }
 
+<<<<<<< HEAD
   private fun MessageDecryptor.ErrorMetadata.toExceptionMetadata(): ExceptionMetadata {
     return ExceptionMetadata(
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  private fun MessageDecryptor.Result.Success.toSignalServiceContent(): SignalServiceContent {
+    val localAddress = SignalServiceAddress(this.metadata.destinationServiceId, Optional.ofNullable(SignalStore.account().e164))
+    val metadata = SignalServiceMetadata(
+      SignalServiceAddress(this.metadata.sourceServiceId, Optional.ofNullable(this.metadata.sourceE164)),
+      this.metadata.sourceDeviceId,
+      this.envelope.timestamp,
+      this.envelope.serverTimestamp,
+      this.serverDeliveredTimestamp,
+      this.metadata.sealedSender,
+      this.envelope.serverGuid,
+      Optional.ofNullable(this.metadata.groupId),
+      this.metadata.destinationServiceId.toString()
+    )
+
+    val contentProto = SignalServiceContentProto.newBuilder()
+      .setLocalAddress(SignalServiceAddressProtobufSerializer.toProtobuf(localAddress))
+      .setMetadata(SignalServiceMetadataProtobufSerializer.toProtobuf(metadata))
+      .setContent(content)
+      .build()
+
+    return SignalServiceContent.createFromProto(contentProto)!!
+  }
+
+  private fun MessageDecryptor.ErrorMetadata.toExceptionMetadata(): MessageContentProcessor.ExceptionMetadata {
+    return MessageContentProcessor.ExceptionMetadata(
+=======
+  private fun MessageDecryptor.ErrorMetadata.toExceptionMetadata(): MessageContentProcessor.ExceptionMetadata {
+    return MessageContentProcessor.ExceptionMetadata(
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       this.sender,
       this.senderDevice,
       this.groupId

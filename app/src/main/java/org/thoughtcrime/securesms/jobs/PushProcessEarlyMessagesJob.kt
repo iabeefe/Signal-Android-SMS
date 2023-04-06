@@ -7,7 +7,17 @@ import org.thoughtcrime.securesms.database.model.ServiceMessageId
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.messages.MessageContentProcessor
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.EarlyMessageCacheEntry
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.whispersystems.signalservice.api.messages.SignalServiceContent
+import java.lang.Exception
+import java.util.Optional
+=======
+import org.thoughtcrime.securesms.messages.MessageContentProcessorV2
+import org.thoughtcrime.securesms.util.EarlyMessageCacheEntry
+import org.whispersystems.signalservice.api.messages.SignalServiceContent
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
 /**
  * A job that should be enqueued whenever we process a message that we think has arrived "early" (see [org.thoughtcrime.securesms.util.EarlyMessageCache]).
@@ -41,12 +51,36 @@ class PushProcessEarlyMessagesJob private constructor(parameters: Parameters) : 
       Log.i(TAG, "There are ${earlyIds.size} items in the early message cache with matches.")
 
       for (id: ServiceMessageId in earlyIds) {
+<<<<<<< HEAD
         val earlyEntries: List<EarlyMessageCacheEntry>? = AppDependencies.earlyMessageCache.retrieve(id.sender, id.sentTimestamp).orNull()
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        val contents: Optional<List<SignalServiceContent>> = ApplicationDependencies.getEarlyMessageCache().retrieve(id.sender, id.sentTimestamp)
+=======
+        val contents: List<SignalServiceContent>? = ApplicationDependencies.getEarlyMessageCache().retrieve(id.sender, id.sentTimestamp).orNull()
+        val earlyEntries: List<EarlyMessageCacheEntry>? = ApplicationDependencies.getEarlyMessageCache().retrieveV2(id.sender, id.sentTimestamp).orNull()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
+<<<<<<< HEAD
         if (earlyEntries != null) {
           for (entry in earlyEntries) {
             Log.i(TAG, "[${id.sentTimestamp}] Processing early V2 content for $id")
             MessageContentProcessor.create(context).process(entry.envelope, entry.content, entry.metadata, entry.serverDeliveredTimestamp, processingEarlyContent = true)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        if (contents.isPresent) {
+          for (content: SignalServiceContent in contents.get()) {
+            Log.i(TAG, "[${id.sentTimestamp}] Processing early content for $id")
+            MessageContentProcessor.create(context).processEarlyContent(MessageContentProcessor.MessageState.DECRYPTED_OK, content, null, id.sentTimestamp, -1)
+=======
+        if (contents != null) {
+          for (content: SignalServiceContent in contents) {
+            Log.i(TAG, "[${id.sentTimestamp}] Processing early content for $id")
+            MessageContentProcessor.create(context).processEarlyContent(MessageContentProcessor.MessageState.DECRYPTED_OK, content, null, id.sentTimestamp, -1)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+          }
+        } else if (earlyEntries != null) {
+          for (entry in earlyEntries) {
+            Log.i(TAG, "[${id.sentTimestamp}] Processing early V2 content for $id")
+            MessageContentProcessorV2.create(context).process(entry.envelope, entry.content, entry.metadata, entry.serverDeliveredTimestamp, processingEarlyContent = true)
           }
         } else {
           Log.w(TAG, "[${id.sentTimestamp}] Saw $id in the cache, but when we went to retrieve it, it was already gone.")

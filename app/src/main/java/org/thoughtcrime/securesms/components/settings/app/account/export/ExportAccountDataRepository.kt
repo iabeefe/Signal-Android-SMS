@@ -5,7 +5,14 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.dependencies.AppDependencies
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+import org.thoughtcrime.securesms.keyvalue.SignalStore
+=======
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.providers.BlobProvider
 import org.thoughtcrime.securesms.util.JsonUtils
 import org.whispersystems.signalservice.api.SignalServiceAccountManager

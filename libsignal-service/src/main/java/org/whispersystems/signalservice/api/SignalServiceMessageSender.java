@@ -316,6 +316,7 @@ public class SignalServiceMessageSender {
    * Send a story using sender key. Note: This is not just for group stories -- it's for any story. Just following the naming convention of making sender key
    * method named "sendGroup*"
    */
+<<<<<<< HEAD:libsignal-service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
   public List<SendMessageResult> sendGroupStory(DistributionId distributionId,
                                                 Optional<byte[]> groupId,
                                                 List<SignalServiceAddress> recipients,
@@ -326,12 +327,36 @@ public class SignalServiceMessageSender {
                                                 long timestamp,
                                                 Set<SignalServiceStoryMessageRecipient> manifest,
                                                 PartialSendBatchCompleteListener partialListener)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
+  public List<SendMessageResult> sendGroupStory(DistributionId                          distributionId,
+                                                Optional<byte[]>                        groupId,
+                                                List<SignalServiceAddress>              recipients,
+                                                List<UnidentifiedAccess>                unidentifiedAccess,
+                                                boolean                                 isRecipientUpdate,
+                                                SignalServiceStoryMessage               message,
+                                                long                                    timestamp,
+                                                Set<SignalServiceStoryMessageRecipient> manifest)
+=======
+  public List<SendMessageResult> sendGroupStory(DistributionId                          distributionId,
+                                                Optional<byte[]>                        groupId,
+                                                List<SignalServiceAddress>              recipients,
+                                                List<UnidentifiedAccess>                unidentifiedAccess,
+                                                boolean                                 isRecipientUpdate,
+                                                SignalServiceStoryMessage               message,
+                                                long                                    timestamp,
+                                                Set<SignalServiceStoryMessageRecipient> manifest,
+                                                PartialSendBatchCompleteListener        partialListener)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
       throws IOException, UntrustedIdentityException, InvalidKeyException, NoSessionException, InvalidRegistrationIdException
   {
     Log.d(TAG, "[" + timestamp + "] Sending a story.");
 
     Content                  content            = createStoryContent(message);
     List<SendMessageResult>  sendMessageResults = sendGroupMessage(distributionId, recipients, unidentifiedAccess, groupSendEndorsements, timestamp, content, ContentHint.IMPLICIT, groupId, false, SenderKeyGroupEvents.EMPTY, false, true);
+
+    if (partialListener != null) {
+      partialListener.onPartialSendComplete(sendMessageResults);
+    }
 
     if (partialListener != null) {
       partialListener.onPartialSendComplete(sendMessageResults);
@@ -383,14 +408,22 @@ public class SignalServiceMessageSender {
   public List<SendMessageResult> sendCallMessage(DistributionId distributionId,
                                                  List<SignalServiceAddress> recipients,
                                                  List<UnidentifiedAccess> unidentifiedAccess,
+<<<<<<< HEAD:libsignal-service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
                                                  @Nullable GroupSendEndorsements groupSendEndorsements,
                                                  SignalServiceCallMessage message,
                                                  PartialSendBatchCompleteListener partialListener)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
+                                                 SignalServiceCallMessage message)
+=======
+                                                 SignalServiceCallMessage message,
+                                                 PartialSendBatchCompleteListener partialListener)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
       throws IOException, UntrustedIdentityException, InvalidKeyException, NoSessionException, InvalidRegistrationIdException
   {
     Log.d(TAG, "[" + message.getTimestamp().get() + "] Sending a call message (sender key).");
 
     Content content = createCallContent(message);
+<<<<<<< HEAD:libsignal-service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
 
     List<SendMessageResult> results = sendGroupMessage(distributionId, recipients, unidentifiedAccess, groupSendEndorsements, message.getTimestamp().get(), content, ContentHint.IMPLICIT, message.getGroupId(), false, SenderKeyGroupEvents.EMPTY, message.isUrgent(), false);
 
@@ -399,6 +432,18 @@ public class SignalServiceMessageSender {
     }
 
     return results;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
+    return sendGroupMessage(distributionId, recipients, unidentifiedAccess, message.getTimestamp().get(), content, ContentHint.IMPLICIT, message.getGroupId(), false, SenderKeyGroupEvents.EMPTY, message.isUrgent(), false);
+=======
+
+    List<SendMessageResult> results = sendGroupMessage(distributionId, recipients, unidentifiedAccess, message.getTimestamp().get(), content, ContentHint.IMPLICIT, message.getGroupId(), false, SenderKeyGroupEvents.EMPTY, message.isUrgent(), false);
+
+    if (partialListener != null) {
+      partialListener.onPartialSendComplete(results);
+    }
+
+    return results;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
   }
 
   /**
@@ -544,16 +589,27 @@ public class SignalServiceMessageSender {
 
     EnvelopeContent              envelopeContent = EnvelopeContent.encrypted(content, contentHint, groupId);
 
+<<<<<<< HEAD:libsignal-service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
     if (address.getServiceId().equals(localAddress.getServiceId())) {
       sealedSenderAccess = SealedSenderAccess.NONE;
     }
 
     return sendMessage(address, sealedSenderAccess, timestamp, envelopeContent, false, null, null, urgent, false);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
+    return sendMessage(address, access, timestamp, envelopeContent, false, null, urgent, false);
+=======
+    if (address.getServiceId().equals(localAddress.getServiceId())) {
+      access = Optional.empty();
+    }
+
+    return sendMessage(address, access, timestamp, envelopeContent, false, null, urgent, false);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
   }
 
   /**
    * Sends a {@link SignalServiceDataMessage} to a group using sender keys.
    */
+<<<<<<< HEAD:libsignal-service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
   public List<SendMessageResult> sendGroupDataMessage(DistributionId distributionId,
                                                       List<SignalServiceAddress> recipients,
                                                       List<UnidentifiedAccess> unidentifiedAccess,
@@ -566,6 +622,28 @@ public class SignalServiceMessageSender {
                                                       boolean isForStory,
                                                       SignalServiceEditMessage editMessage,
                                                       PartialSendBatchCompleteListener partialListener)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
+  public List<SendMessageResult> sendGroupDataMessage(DistributionId             distributionId,
+                                                      List<SignalServiceAddress> recipients,
+                                                      List<UnidentifiedAccess>   unidentifiedAccess,
+                                                      boolean                    isRecipientUpdate,
+                                                      ContentHint                contentHint,
+                                                      SignalServiceDataMessage   message,
+                                                      SenderKeyGroupEvents       sendEvents,
+                                                      boolean                    urgent,
+                                                      boolean                    isForStory)
+=======
+  public List<SendMessageResult> sendGroupDataMessage(DistributionId                   distributionId,
+                                                      List<SignalServiceAddress>       recipients,
+                                                      List<UnidentifiedAccess>         unidentifiedAccess,
+                                                      boolean                          isRecipientUpdate,
+                                                      ContentHint                      contentHint,
+                                                      SignalServiceDataMessage         message,
+                                                      SenderKeyGroupEvents             sendEvents,
+                                                      boolean                          urgent,
+                                                      boolean                          isForStory,
+                                                      PartialSendBatchCompleteListener partialListener)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):libsignal/service/src/main/java/org/whispersystems/signalservice/api/SignalServiceMessageSender.java
       throws IOException, UntrustedIdentityException, NoSessionException, InvalidKeyException, InvalidRegistrationIdException
   {
     Log.d(TAG, "[" + message.getTimestamp() + "] Sending a group " + (editMessage != null ? "edit data message" : "data message") + " to " + recipients.size() + " recipients using DistributionId " + distributionId);
@@ -580,6 +658,10 @@ public class SignalServiceMessageSender {
 
     Optional<byte[]>        groupId = message.getGroupId();
     List<SendMessageResult> results = sendGroupMessage(distributionId, recipients, unidentifiedAccess, groupSendEndorsements, message.getTimestamp(), content, contentHint, groupId, false, sendEvents, urgent, isForStory);
+
+    if (partialListener != null) {
+      partialListener.onPartialSendComplete(results);
+    }
 
     if (partialListener != null) {
       partialListener.onPartialSendComplete(results);

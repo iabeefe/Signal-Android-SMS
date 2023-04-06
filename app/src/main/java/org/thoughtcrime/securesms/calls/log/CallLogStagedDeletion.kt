@@ -24,12 +24,25 @@ class CallLogStagedDeletion(
     }
 
     isCommitted = true
+<<<<<<< HEAD
     val callRowIds = stateSnapshot.selected()
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    val messageIds = stateSnapshot.selected()
+=======
+    val callIds = stateSnapshot.selected()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       .filterIsInstance<CallLogRow.Id.Call>()
+<<<<<<< HEAD
       .map { it.children }
       .flatten()
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      .map { it.messageId }
+=======
+      .map { it.callId }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       .toSet()
 
+<<<<<<< HEAD
     val callLinkIds = stateSnapshot.selected()
       .filterIsInstance<CallLogRow.Id.CallLink>()
       .map { it.roomId }
@@ -50,6 +63,17 @@ class CallLogStagedDeletion(
         )
       }
       else -> error("Unhandled state $stateSnapshot $filter")
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    if (stateSnapshot.isExclusionary()) {
+      repository.deleteAllCallLogsExcept(messageIds).subscribe()
+    } else {
+      repository.deleteSelectedCallLogs(messageIds).subscribe()
+=======
+    if (stateSnapshot.isExclusionary()) {
+      repository.deleteAllCallLogsExcept(callIds).subscribe()
+    } else {
+      repository.deleteSelectedCallLogs(callIds).subscribe()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     }
   }
 }

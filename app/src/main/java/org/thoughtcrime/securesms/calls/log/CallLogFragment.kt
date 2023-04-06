@@ -19,9 +19,16 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+<<<<<<< HEAD
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import androidx.recyclerview.widget.LinearLayoutManager
+=======
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -56,7 +63,12 @@ import org.thoughtcrime.securesms.conversationlist.chatfilter.ConversationListFi
 import org.thoughtcrime.securesms.conversationlist.chatfilter.FilterLerp
 import org.thoughtcrime.securesms.conversationlist.chatfilter.FilterPullState
 import org.thoughtcrime.securesms.databinding.CallLogFragmentBinding
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.dependencies.AppDependencies
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.main.Material3OnScrollHelperBinder
 import org.thoughtcrime.securesms.main.SearchBinder
 import org.thoughtcrime.securesms.recipients.Recipient
@@ -219,8 +231,13 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
   override fun onResume() {
     super.onResume()
     initializeSearchAction()
+<<<<<<< HEAD
     AppDependencies.deletedCallEventManager.scheduleIfNecessary()
     viewModel.markAllCallEventsRead()
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    ApplicationDependencies.getDeletedCallEventManager().scheduleIfNecessary()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   private fun onTimestampTick() {
@@ -354,15 +371,27 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
     findNavController().navigate(R.id.createCallLinkBottomSheet)
   }
 
+  override fun onCreateACallLinkClicked() {
+    findNavController().navigate(R.id.createCallLinkBottomSheet)
+  }
+
   override fun onCallClicked(callLogRow: CallLogRow.Call) {
     if (viewModel.selectionStateSnapshot.isNotEmpty(binding.recycler.adapter!!.itemCount)) {
       viewModel.toggleSelected(callLogRow.id)
+<<<<<<< HEAD
     } else if (!callLogRow.peer.isCallLink) {
       val intent = ConversationSettingsActivity.forCall(
         requireContext(),
         callLogRow.peer,
         (callLogRow.id as CallLogRow.Id.Call).children.toLongArray()
       )
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    } else {
+      val intent = ConversationSettingsActivity.forCall(requireContext(), callLogRow.peer, longArrayOf(callLogRow.call.messageId))
+=======
+    } else {
+      val intent = ConversationSettingsActivity.forCall(requireContext(), callLogRow.peer, longArrayOf(callLogRow.call.messageId!!))
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       startActivity(intent)
     } else {
       startActivity(CallLinkDetailsActivity.createIntent(requireContext(), callLogRow.peer.requireCallLinkRoomId()))

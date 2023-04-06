@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import org.signal.ringrtc.CallId;
 import org.signal.ringrtc.CallManager;
@@ -86,8 +87,16 @@ public class WebRtcInteractor {
     signalCallManager.sendCallMessage(remotePeer, callMessage);
   }
 
+<<<<<<< HEAD
   void sendGroupCallMessage(@NonNull Recipient recipient, @Nullable String groupCallEraId, @Nullable CallId callId, boolean isIncoming, boolean isJoinEvent) {
     signalCallManager.sendGroupCallUpdateMessage(recipient, groupCallEraId, callId, isIncoming, isJoinEvent);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  void sendGroupCallMessage(@NonNull Recipient recipient, @Nullable String groupCallEraId) {
+    signalCallManager.sendGroupCallUpdateMessage(recipient, groupCallEraId);
+=======
+  void sendGroupCallMessage(@NonNull Recipient recipient, @Nullable String groupCallEraId, boolean isIncoming, boolean isJoinEvent) {
+    signalCallManager.sendGroupCallUpdateMessage(recipient, groupCallEraId, isIncoming, isJoinEvent);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   void updateGroupCallUpdateMessage(@NonNull RecipientId groupId, @Nullable String groupCallEraId, @NonNull Collection<UUID> joinedMembers, boolean isCallFull) {

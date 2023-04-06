@@ -446,6 +446,7 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
         setLastScrolled(threadId, 0)
         val threadDeleted = update(threadId = threadId, unarchive = false, syncThreadDelete = syncThreadTrimDeletes)
         notifyConversationListeners(threadId)
+<<<<<<< HEAD
         SignalDatabase.calls.updateCallEventDeletionTimestamps()
 
         return if (syncThreadTrimDeletes && (threadDeleted || addressableMessages.isNotEmpty())) {
@@ -453,6 +454,10 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
         } else {
           null
         }
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+        SignalDatabase.calls.updateCallEventDeletionTimestamps()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       } else {
         Log.i(TAG, "Trimming deleted no messages thread: $threadId")
       }
@@ -1198,11 +1203,19 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
       messageLog.deleteAll()
       messages.deleteAllThreads()
       drafts.clearAllDrafts()
+<<<<<<< HEAD
       db.deactivateThreads()
       calls.deleteAllCalls()
       synchronized(threadIdCache) {
         threadIdCache.clear()
       }
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      groupCallRings.deleteAll()
+      db.delete(TABLE_NAME, null, null)
+=======
+      db.delete(TABLE_NAME, null, null)
+      calls.deleteAllCalls()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     }
 
     notifyConversationListListeners()

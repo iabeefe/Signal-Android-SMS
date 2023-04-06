@@ -21,8 +21,13 @@ import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.whispersystems.signalservice.api.messages.SignalServiceDataMessage;
 import org.whispersystems.signalservice.api.messages.SignalServiceGroupV2;
+<<<<<<< HEAD
 import org.whispersystems.signalservice.internal.push.Content;
 import org.whispersystems.signalservice.internal.push.GroupContextV2;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
 import java.io.IOException;
 import java.util.List;
@@ -50,6 +55,49 @@ public final class GroupUtil {
     }
   }
 
+<<<<<<< HEAD
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  /**
+   * Result may be a v1 or v2 GroupId.
+   */
+  public static @NonNull Optional<GroupId> idFromGroupContext(@NonNull Optional<SignalServiceGroupV2> groupContext) {
+    if (groupContext.isPresent()) {
+      return Optional.of(GroupId.v2(groupContext.get().getMasterKey()));
+    } else {
+      return Optional.empty();
+    }
+  }
+
+=======
+
+  public static @Nullable SignalServiceProtos.GroupContextV2 getGroupContextIfPresent(@NonNull SignalServiceProtos.Content content) {
+    if (content.hasDataMessage() && SignalServiceProtoUtil.INSTANCE.getHasGroupContext(content.getDataMessage())) {
+      return content.getDataMessage().getGroupV2();
+    } else if (content.hasSyncMessage()                 &&
+               content.getSyncMessage().hasSent() &&
+               content.getSyncMessage().getSent().hasMessage() &&
+               SignalServiceProtoUtil.INSTANCE.getHasGroupContext(content.getSyncMessage().getSent().getMessage()))
+    {
+      return content.getSyncMessage().getSent().getMessage().getGroupV2();
+    } else if (content.hasStoryMessage() && SignalServiceProtoUtil.INSTANCE.isValid(content.getStoryMessage().getGroup())) {
+      return content.getStoryMessage().getGroup();
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * Result may be a v1 or v2 GroupId.
+   */
+  public static @NonNull Optional<GroupId> idFromGroupContext(@NonNull Optional<SignalServiceGroupV2> groupContext) {
+    if (groupContext.isPresent()) {
+      return Optional.of(GroupId.v2(groupContext.get().getMasterKey()));
+    } else {
+      return Optional.empty();
+    }
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   public static @NonNull GroupMasterKey requireMasterKey(@NonNull byte[] masterKey) {
     try {
       return new GroupMasterKey(masterKey);

@@ -23,6 +23,7 @@ import org.thoughtcrime.securesms.stories.Stories;
 import org.thoughtcrime.securesms.util.MediaUtil;
 import org.thoughtcrime.securesms.util.ParcelUtil;
 import org.thoughtcrime.securesms.util.Util;
+import org.whispersystems.signalservice.api.messages.shared.SharedContact;
 
 import java.io.IOException;
 import java.util.ArrayList;

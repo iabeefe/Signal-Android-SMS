@@ -26,18 +26,47 @@ import org.thoughtcrime.securesms.database.MessageTable.InsertResult;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.model.GroupRecord;
 import org.thoughtcrime.securesms.database.model.IdentityRecord;
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.mms.IncomingMessage;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
+=======
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.mms.MmsException;
 import org.thoughtcrime.securesms.mms.OutgoingMessage;
 import org.thoughtcrime.securesms.notifications.v2.ConversationId;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
+<<<<<<< HEAD
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+import org.thoughtcrime.securesms.sms.IncomingIdentityDefaultMessage;
+import org.thoughtcrime.securesms.sms.IncomingIdentityUpdateMessage;
+import org.thoughtcrime.securesms.sms.IncomingIdentityVerifiedMessage;
+import org.thoughtcrime.securesms.sms.IncomingTextMessage;
+import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
+import org.thoughtcrime.securesms.util.concurrent.SettableFuture;
+import org.signal.core.util.concurrent.SimpleTask;
+=======
+import org.thoughtcrime.securesms.sms.IncomingIdentityDefaultMessage;
+import org.thoughtcrime.securesms.sms.IncomingIdentityUpdateMessage;
+import org.thoughtcrime.securesms.sms.IncomingIdentityVerifiedMessage;
+import org.thoughtcrime.securesms.sms.IncomingTextMessage;
+import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
+import org.thoughtcrime.securesms.util.concurrent.SettableFuture;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.whispersystems.signalservice.api.SignalSessionLock;
 import org.whispersystems.signalservice.api.messages.multidevice.VerifiedMessage;
 import org.whispersystems.signalservice.api.push.ServiceId;
 import org.whispersystems.signalservice.api.push.SignalServiceAddress;
+<<<<<<< HEAD
 import org.whispersystems.signalservice.internal.push.Verified;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
 import java.util.List;
 import java.util.Optional;
@@ -183,6 +212,7 @@ public final class IdentityUtil {
     }
   }
 
+<<<<<<< HEAD
   public static void processVerifiedMessage(Context context, Verified verified) throws InvalidKeyException {
     SignalServiceAddress          destination = new SignalServiceAddress(ServiceId.parseOrThrow(verified.destinationAci));
     IdentityKey                   identityKey = new IdentityKey(verified.identityKey.toByteArray(), 0);
@@ -205,6 +235,31 @@ public final class IdentityUtil {
     processVerifiedMessage(context, new VerifiedMessage(destination, identityKey, state, System.currentTimeMillis()));
   }
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  public static void processVerifiedMessage(Context context, SignalServiceProtos.Verified verified) throws InvalidKeyException {
+    SignalServiceAddress          destination = new SignalServiceAddress(ServiceId.parseOrThrow(verified.getDestinationUuid()));
+    IdentityKey                   identityKey = new IdentityKey(verified.getIdentityKey().toByteArray(), 0);
+    VerifiedMessage.VerifiedState state;
+
+    switch (verified.getState()) {
+      case DEFAULT:
+        state = VerifiedMessage.VerifiedState.DEFAULT;
+        break;
+      case VERIFIED:
+        state = VerifiedMessage.VerifiedState.VERIFIED;
+        break;
+      case UNVERIFIED:
+        state = VerifiedMessage.VerifiedState.UNVERIFIED;
+        break;
+      default:
+        throw new IllegalArgumentException();
+    }
+
+    processVerifiedMessage(context, new VerifiedMessage(destination, identityKey, state, System.currentTimeMillis()));
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   public static void processVerifiedMessage(Context context, VerifiedMessage verifiedMessage) {
     try(SignalSessionLock.Lock unused = ReentrantSessionLock.INSTANCE.acquire()) {
       SignalIdentityKeyStore   identityStore  = AppDependencies.getProtocolStore().aci().identities();

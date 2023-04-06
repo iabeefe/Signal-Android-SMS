@@ -673,19 +673,41 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
   }
 
   private void handleSetAudioHandset() {
+<<<<<<< HEAD
     AppDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.EARPIECE));
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    ApplicationDependencies.getSignalCallManager().selectAudioDevice(SignalAudioManager.AudioDevice.EARPIECE);
+=======
+    ApplicationDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.EARPIECE));
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   private void handleSetAudioSpeaker() {
+<<<<<<< HEAD
     AppDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.SPEAKER_PHONE));
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    ApplicationDependencies.getSignalCallManager().selectAudioDevice(SignalAudioManager.AudioDevice.SPEAKER_PHONE);
+=======
+    ApplicationDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.SPEAKER_PHONE));
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   private void handleSetAudioBluetooth() {
+<<<<<<< HEAD
     AppDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.BLUETOOTH));
   }
 
   private void handleSetAudioWiredHeadset() {
     AppDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.WIRED_HEADSET));
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    ApplicationDependencies.getSignalCallManager().selectAudioDevice(SignalAudioManager.AudioDevice.BLUETOOTH);
+=======
+    ApplicationDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.BLUETOOTH));
+  }
+
+  private void handleSetAudioWiredHeadset() {
+    ApplicationDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.WIRED_HEADSET));
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   private void handleSetMuteAudio(boolean enabled) {
@@ -1111,6 +1133,7 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
       }
     }
 
+<<<<<<< HEAD
     @RequiresApi(31)
     @Override
     public void onAudioOutputChanged31(@NonNull WebRtcAudioDevice audioOutput) {
@@ -1118,6 +1141,15 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
       AppDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(audioOutput.getDeviceId()));
     }
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    @RequiresApi(31)
+    @Override
+    public void onAudioOutputChanged31(@NonNull int audioDeviceInfo) {
+      ApplicationDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(audioDeviceInfo));
+    }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     @Override
     public void onVideoChanged(boolean isVideoEnabled) {
       handleSetMuteVideo(!isVideoEnabled);
@@ -1189,6 +1221,7 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
         callStateUpdatePopupWindow.onCallStateUpdate(CallControlsChange.RINGING_DISABLED);
       }
     }
+<<<<<<< HEAD
 
     @Override
     public void onCallInfoClicked() {
@@ -1231,6 +1264,19 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     public void onLaunchRecipientSheet(@NonNull Recipient pendingRecipient) {
       CallLinkIncomingRequestSheet.show(getSupportFragmentManager(), pendingRecipient.getId());
     }
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+
+    @Override
+    public void onCallInfoClicked() {
+      CallParticipantsListDialog.show(getSupportFragmentManager());
+    }
+
+    @Override
+    public void onNavigateUpClicked() {
+      onBackPressed();
+    }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   private class WindowLayoutInfoConsumer implements Consumer<WindowLayoutInfo> {

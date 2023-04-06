@@ -38,11 +38,20 @@ class ConversationSettingsRepository(
   private val groupManagementRepository: GroupManagementRepository = GroupManagementRepository(context)
 ) {
 
+<<<<<<< HEAD
   fun getCallEvents(callRowIds: LongArray): Single<List<Pair<CallTable.Call, MessageRecord>>> {
     return if (callRowIds.isEmpty()) {
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  fun getCallEvents(callMessageIds: LongArray): Single<List<MessageRecord>> {
+    return if (callMessageIds.isEmpty()) {
+=======
+  fun getCallEvents(callMessageIds: LongArray): Single<List<Pair<CallTable.Call, MessageRecord>>> {
+    return if (callMessageIds.isEmpty()) {
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       Single.just(emptyList())
     } else {
       Single.fromCallable {
+<<<<<<< HEAD
         val callMap = SignalDatabase.calls.getCallsByRowIds(callRowIds.toList())
         val messageIds = callMap.values.mapNotNull { it.messageId }
         SignalDatabase.messages.getMessages(messageIds).iterator().asSequence()
@@ -50,6 +59,15 @@ class ConversationSettingsRepository(
           .map { callMap[it.id]!! to it }
           .sortedByDescending { it.first.timestamp }
           .toList()
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        SignalDatabase.messages.getMessages(callMessageIds.toList()).iterator().asSequence().toList()
+=======
+        val callMap = SignalDatabase.calls.getCalls(callMessageIds.toList())
+        SignalDatabase.messages.getMessages(callMessageIds.toList()).iterator().asSequence()
+          .filter { callMap.containsKey(it.id) }
+          .map { callMap[it.id]!! to it }
+          .toList()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       }
     }
   }

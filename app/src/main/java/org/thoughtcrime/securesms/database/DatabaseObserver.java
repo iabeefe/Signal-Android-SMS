@@ -44,10 +44,18 @@ public class DatabaseObserver {
   private static final String KEY_SCHEDULED_MESSAGES    = "ScheduledMessages";
   private static final String KEY_CONVERSATION_DELETES  = "ConversationDeletes";
 
+<<<<<<< HEAD
   private static final String KEY_CALL_UPDATES      = "CallUpdates";
   private static final String KEY_CALL_LINK_UPDATES = "CallLinkUpdates";
   private static final String KEY_IN_APP_PAYMENTS   = "InAppPayments";
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  private final Application application;
+=======
+  private static final String KEY_CALL_UPDATES          = "CallUpdates";
+
+  private final Application application;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   private final Executor    executor;
 
   private final Set<Observer>                      conversationListObservers;
@@ -70,7 +78,17 @@ public class DatabaseObserver {
   private final Map<CallLinkRoomId, Set<Observer>> callLinkObservers;
   private final Set<InAppPaymentObserver>          inAppPaymentObservers;
 
+<<<<<<< HEAD
   public DatabaseObserver() {
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  public DatabaseObserver(Application application) {
+    this.application                  = application;
+=======
+  private final Set<Observer>                   callUpdateObservers;
+
+  public DatabaseObserver(Application application) {
+    this.application                  = application;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     this.executor                     = new SerialExecutor(SignalExecutors.BOUNDED);
     this.conversationListObservers    = new HashSet<>();
     this.conversationObservers        = new HashMap<>();
@@ -88,9 +106,14 @@ public class DatabaseObserver {
     this.notificationProfileObservers = new HashSet<>();
     this.storyObservers               = new HashMap<>();
     this.scheduledMessageObservers    = new HashMap<>();
+<<<<<<< HEAD
     this.callUpdateObservers          = new HashSet<>();
     this.callLinkObservers            = new HashMap<>();
     this.inAppPaymentObservers        = new HashSet<>();
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    this.callUpdateObservers          = new HashSet<>();
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   public void registerConversationListObserver(@NonNull Observer listener) {
@@ -192,6 +215,7 @@ public class DatabaseObserver {
     });
   }
 
+<<<<<<< HEAD
   public void registerCallUpdateObserver(@NonNull Observer observer) {
     executor.execute(() -> callUpdateObservers.add(observer));
   }
@@ -206,6 +230,13 @@ public class DatabaseObserver {
     executor.execute(() -> inAppPaymentObservers.add(observer));
   }
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  public void registerCallUpdateObserver(@NonNull Observer observer) {
+    executor.execute(() -> callUpdateObservers.add(observer));
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   public void unregisterObserver(@NonNull Observer listener) {
     executor.execute(() -> {
       conversationListObservers.remove(listener);
@@ -221,8 +252,13 @@ public class DatabaseObserver {
       unregisterMapped(storyObservers, listener);
       unregisterMapped(scheduledMessageObservers, listener);
       unregisterMapped(conversationDeleteObservers, listener);
+<<<<<<< HEAD
       callUpdateObservers.remove(listener);
       unregisterMapped(callLinkObservers, listener);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+      callUpdateObservers.remove(listener);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     });
   }
 
@@ -373,6 +409,7 @@ public class DatabaseObserver {
     });
   }
 
+<<<<<<< HEAD
   public void notifyCallUpdateObservers() {
     runPostSuccessfulTransaction(KEY_CALL_UPDATES, () -> notifySet(callUpdateObservers));
   }
@@ -387,6 +424,13 @@ public class DatabaseObserver {
     });
   }
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  public void notifyCallUpdateObservers() {
+    runPostSuccessfulTransaction(KEY_CALL_UPDATES, () -> notifySet(callUpdateObservers));
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   private void runPostSuccessfulTransaction(@NonNull String dedupeKey, @NonNull Runnable runnable) {
     SignalDatabase.runPostSuccessfulTransaction(dedupeKey, () -> {
       executor.execute(runnable);

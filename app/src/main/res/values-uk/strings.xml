@@ -18,9 +18,14 @@
   <!-- Removed by excludeNonTranslatables <string name="sms_export_url" translatable="false">https://support.signal.org/hc/articles/360007321171</string> -->
   <!-- Removed by excludeNonTranslatables <string name="signal_me_username_url" translatable="false">https://signal.me/#u/%1$s</string> -->
   <!-- Removed by excludeNonTranslatables <string name="username_support_url" translatable="false">https://support.signal.org/hc/articles/5389476324250</string> -->
+<<<<<<< HEAD
   <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
   <!-- Removed by excludeNonTranslatables <string name="pending_transfer_url" translatable="false">https://support.signal.org/hc/articles/360031949872#pending</string> -->
   <!-- Removed by excludeNonTranslatables <string name="donate_faq_url" translatable="false">https://support.signal.org/hc/articles/360031949872#donate</string> -->
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <string name="yes">Так</string>
     <string name="no">Ні</string>
@@ -2557,6 +2562,19 @@
     <!-- Displays the name of a contact. The first placeholder is the name the user has assigned to that contact, the second name is the name the contact assigned to themselves -->
     <string name="AboutSheet__user_set_display_name_and_profile_name">%1$s (%2$s)</string>
 
+    <!-- Error message when the developer added a button in the wrong place. -->
+    <string name="WebRtcAudioOutputToggleButton_fragment_activity_error">A UI error occurred. Please report this error to the developers.</string>
+    <!-- Error message when the user is trying to change audio outputs but none are present. -->
+    <string name="WebRtcAudioOutputToggleButton_no_eligible_audio_i_o_detected">No eligible audio I/O detected.</string>
+    <!-- A text description of the bluetooth icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__bluetooth_icon_content_description">An icon representing a Bluetooth device.</string>
+    <!-- A text description of the headset icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__headset_icon_content_description">An icon representing a wired headset.</string>
+    <!-- A text description of the speaker icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__speaker_icon_content_description">An icon representing a speakerphone.</string>
+    <!-- A text description of the earpiece icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__earpiece_icon_content_description">An icon representing a device\'s earpiece.</string>
+
     <!-- CallParticipantsListDialog -->
     <plurals name="CallParticipantsListDialog_in_this_call">
         <item quantity="one">У цьому виклику (%1$d)</item>
@@ -3196,12 +3214,20 @@
     <string name="WebRtcAudioOutputToggle__speaker">Динамік</string>
     <!-- Audio output option referring to an external audio device connected via wireless Bluetooth -->
     <string name="WebRtcAudioOutputToggle__bluetooth">Bluetooth</string>
+<<<<<<< HEAD
     <!-- Audio output option referring to a pair of headphones that do not contain a microphone connected via a 3.5mm headphone jack -->
     <string name="WebRtcAudioOutputToggle__wired_headphones">Дротові навушники</string>
     <!-- Audio output option referring to an external headset that contains a microphone connected via a 3.5mm headphone jack -->
     <string name="WebRtcAudioOutputToggle__wired_headset">Дротова гарнітура</string>
     <!-- Audio output option referring to an external headset connected via a USB-C data cable -->
     <string name="WebRtcAudioOutputToggle__wired_headset_usb">Дротова гарнітура (USB)</string>
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Audio output option referring to an external headset connected via a 3.5mm headphone jack -->
+    <string name="WebRtcAudioOutputToggle__wired_headset">Wired Headset</string>
+    <!-- Audio output option referring to an external headset connected via a USB-C data cable -->
+    <string name="WebRtcAudioOutputToggle__wired_headset_usb">Wired Headset (USB)</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <string name="WebRtcCallControls_answer_call_description">Відповісти на виклик</string>
     <string name="WebRtcCallControls_reject_call_description">Відхилити виклик</string>
@@ -5200,12 +5226,18 @@
     <string name="AccountSettingsFragment__change_phone_number">Змінити номер телефону</string>
     <!-- Account setting that allows user to request and export their signal account data -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="AccountSettingsFragment__request_account_data">Облікові дані</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="AccountSettingsFragment__request_account_data">Request account data</string>
 =======
     <string name="AccountSettingsFragment__request_account_data">Запит на дані акаунту</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="AccountSettingsFragment__request_account_data">Запит на дані акаунту</string>
+=======
+    <string name="AccountSettingsFragment__request_account_data">Your account data</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- ExportAccountDataFragment -->
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
@@ -5218,12 +5250,18 @@
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_explanation">Експортуйте файл зі своїми обліковими даними користувача Signal. Облікові дані не включають повідомлення та медіафайли. %1$s</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
 =======
     <string name="ExportAccountDataFragment__export_explanation">Завантажте й експортуйте звіт даних свого акаунту Signal. Звіт не містить повідомлень і медіафайлів. %1$s</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">Завантажте й експортуйте звіт даних свого акаунту Signal. Звіт не містить повідомлень і медіафайлів. %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">Export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__learn_more">Подробиці</string>
@@ -5233,9 +5271,15 @@
     <string name="ExportAccountDataFragment__download_report">Download report</string>
 =======
     <string name="ExportAccountDataFragment__learn_more">Подробиці</string>
+<<<<<<< HEAD
     <!-- Button action to download the report data -->
     <string name="ExportAccountDataFragment__download_report">Завантажити звіт</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <!-- Button action to download the report data -->
+    <string name="ExportAccountDataFragment__download_report">Завантажити звіт</string>
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Button action to export the report data to another app (e.g. email) -->
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report">Експортувати файл</string>
@@ -5245,9 +5289,15 @@
     <string name="ExportAccountDataFragment__delete_report">Delete report</string>
 =======
     <string name="ExportAccountDataFragment__export_report">Експортувати звіт</string>
+<<<<<<< HEAD
     <!-- Button action to delete the requested account data -->
     <string name="ExportAccountDataFragment__delete_report">Видалити звіт</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <!-- Button action to delete the requested account data -->
+    <string name="ExportAccountDataFragment__delete_report">Видалити звіт</string>
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- Radio option to export the data as a text file .txt -->
 <<<<<<< HEAD
@@ -5292,9 +5342,19 @@
     <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
 =======
     <string name="ExportAccountDataFragment__ok_action">Добре</string>
+<<<<<<< HEAD
     <!-- Message shown when report download fails -->
     <string name="ExportAccountDataFragment__report_download_failed">Не вдалося завантажити звіт через помилку мережі. Перевірте підключення до мережі і спробуйте знову.</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <!-- Message shown when report download fails -->
+    <string name="ExportAccountDataFragment__report_download_failed">Не вдалося завантажити звіт через помилку мережі. Перевірте підключення до мережі і спробуйте знову.</string>
+=======
+    <!-- Title of dialog shown when report fails to generate -->
+    <string name="ExportAccountDataFragment__report_generation_failed">Couldn\'t generate report</string>
+    <!-- Message of dialog shown when report fails to generate asking user to check network connection -->
+    <string name="ExportAccountDataFragment__check_network">Check your connection and try again.</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">Експортувати дані?</string>
@@ -5315,6 +5375,7 @@
     <string name="ExportAccountDataFragment__export_report_action">Експорт</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <!-- Action to delete report in confirmation dialog -->
@@ -5337,7 +5398,20 @@
     <!-- Shown as a snackbar letting the user know the report was deleted -->
     <string name="ExportAccountDataFragment__delete_report_snackbar">Звіт видалено</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <!-- Action to delete report in confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_action">Видалити</string>
+    <!-- Title for delete report confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_confirmation">Видалити звіт?</string>
+    <!-- Message for delete report confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_confirmation_message">Ця дія не видалить дані з вашого акаунту.</string>
+
+    <!-- Shown as a snackbar letting the user know the report was deleted -->
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Звіт видалено</string>
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Shown in a dialog with a spinner while the report is downloading -->
+<<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_progress">Створюємо звіт…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
@@ -5351,6 +5425,15 @@
     <!-- Explanation that the downloaded report will be available for 30 days before it is deleted -->
     <string name="ExportAccountDataFragment__report_deletion_disclaimer">Звіт буде доступний для експорту протягом 30 днів, а потім він автоматично видалиться.</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="ExportAccountDataFragment__download_progress">Завантажуємо звіт…</string>
+    <!-- Explanation that the downloaded report will be available for 30 days before it is deleted -->
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Звіт буде доступний для експорту протягом 30 днів, а потім він автоматично видалиться.</string>
+=======
+    <string name="ExportAccountDataFragment__download_progress">Generating report…</string>
+    <!-- Explanation that the report is only generated on export and is not saved on the device -->
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Your report is generated only at the time of export and is not stored by Signal on your device.</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">Тут можна змінити поточний номер телефону на новий. Така зміна буде незворотна.\n\nЗапевніться, що можете отримувати SMS-повідомлення або дзвінки на новий номер, і продовжуйте.</string>
@@ -5842,9 +5925,16 @@
     <string name="ImageEditorHud__toggle_between_marker_and_highlighter">Перемкнутись між маркером та маркером для виділення тексту</string>
     <string name="ImageEditorHud__toggle_between_text_styles">Перемкнутись між стилями тексту</string>
 
+<<<<<<< HEAD
     <!-- Header for section of featured stickers (location/time stickers) -->
     <string name="ScribbleStickersFragment__featured_stickers">Обрані</string>
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Header for section of featured stickers (location/time stickers) -->
+    <string name="ScribbleStickersFragment__featured_stickers">Featured</string>
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="MediaCountIndicatorButton__send">Надіслати</string>
 
     <string name="MediaReviewSelectedItem__tap_to_remove">Натисніть для вилучення</string>
@@ -7299,6 +7389,7 @@
     <string name="CallLogAdapter__outgoing">Вихідний</string>
     <!-- Displayed for missed calls -->
     <string name="CallLogAdapter__missed">Пропущений</string>
+<<<<<<< HEAD
     <!-- Displayed for missed calls declined by notification profile -->
     <string name="CallLogAdapter__missed_notification_profile">Пропущено під час увімкненого профілю сповіщень</string>
     <!-- Displayed on Group Call button if user is not in the call -->
@@ -7313,6 +7404,13 @@
     <string name="CallLogAdapter__start_a_video_call">Почати відеовиклик</string>
     <!-- Accessibility description for the voice call button -->
     <string name="CallLogAdapter__start_a_voice_call">Почати аудіовиклик</string>
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Displayed on Group Call button if user is not in the call -->
+    <string name="CallLogAdapter__join">Join</string>
+    <!-- Displayed on Group Call button if user is in the call -->
+    <string name="CallLogAdapter__return">Return</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- Call Log context menu -->
     <!-- Displayed as a context menu item to start a video call -->
@@ -7409,6 +7507,7 @@
     <!-- Accessibility label describing the continue button on the camera screen -->
     <string name="CameraControls_continue_button_accessibility_label">Кнопка «Продовжити»</string>
 
+<<<<<<< HEAD
     <!-- CallPreference -->
     <!-- Generic group call in call info -->
     <string name="CallPreference__group_call">Груповий виклик</string>
@@ -8022,5 +8121,54 @@
 
     <!-- Accessible content description for the reminder view, describing the icon in the view. -->
     <string name="ReminderView_icon_content_description">Значок нагадування</string>
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- CallPreference -->
+    <!-- Missed group call in call info -->
+    <string name="CallPreference__missed_group_call">Missed group call</string>
+    <!-- Incoming group call in call info -->
+    <string name="CallPreference__incoming_group_call">Incoming group call</string>
+    <!-- Outgoing group call in call info -->
+    <string name="CallPreference__outgoing_group_call">Outgoing group call</string>
+
+    <!-- CreateCallLink -->
+    <!-- Call link creation item title on calls tab -->
+    <string name="CreateCallLink__create_a_call_link">Create a Call Link</string>
+    <!-- Call link creation item description on calls tab -->
+    <string name="CreateCallLink__share_a_link_for">Share a link for a Signal call</string>
+
+    <!-- CreateCallLinkBottomSheetDialogFragment -->
+    <!-- Fragment title -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__create_call_link">Create call link</string>
+    <!-- Displayed as a default name for the signal call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__signal_call">Signal call</string>
+    <!-- Displayed on a small button to allow user to instantly join call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__join">Join</string>
+    <!-- Option to open a full screen dialog to enter a call name -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__add_call_name">Add call name</string>
+    <!-- Toggle to require approval for all members before joining -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__approve_all_members">Approve all members</string>
+    <!-- Row label to share the link via Signal -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link_via_signal">Share link via Signal</string>
+    <!-- Row label to copy the link to the clipboard -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__copy_link">Copy link</string>
+    <!-- Row label to share the link with the external share sheet -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link">Share link</string>
+    <!-- Button text to dismiss the sheet and add it as an upcoming call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__done">Done</string>
+    <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Failed to open share sheet.</string>
+    <!-- Displayed when we copy the call link to the clipboard -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">Copied to clipboard</string>
+
+    <!-- EditCallLinkNameDialogFragment -->
+    <!-- App bar title for editing a call name -->
+    <string name="EditCallLinkNameDialogFragment__edit_call_name">Edit call name</string>
+    <!-- Text on button to confirm edit -->
+    <string name="EditCallLinkNameDialogFragment__save">Save</string>
+    <!-- Placeholder text on input field when editing call name -->
+    <string name="EditCallLinkNameDialogFragment__call_name">Call name</string>
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- EOF -->
 </resources>
