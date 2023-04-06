@@ -173,6 +173,7 @@ public class MediaUtil {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   private static String safeMimeTypeOverride(String originalType, String overrideType) {
     if (MimeTypeMap.getSingleton().hasMimeType(overrideType)) {
       return overrideType;
@@ -190,6 +191,28 @@ public class MediaUtil {
     return mimeType;
   }
 
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  private static String safeMimeTypeOverride(String originalType, String overrideType) {
+    if (MimeTypeMap.getSingleton().hasMimeType(overrideType)) {
+      return overrideType;
+    }
+    return originalType;
+  }
+
+  public static @Nullable String overrideMimeTypeWithExtension(@Nullable String mimeType, @Nullable String fileExtension) {
+    if (fileExtension == null) {
+      return mimeType;
+    }
+    switch (fileExtension.toLowerCase()) {
+      case "m4a":
+        return safeMimeTypeOverride(mimeType, AUDIO_MP4);
+      default:
+        return mimeType;
+    }
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
   private static String safeMimeTypeOverride(String originalType, String overrideType) {

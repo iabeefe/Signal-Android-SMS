@@ -183,6 +183,7 @@ public final class WebRtcControls {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   boolean displayAudioToggle() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || enableHeadsetInAudioToggle());
 =======
   boolean displayAudioToggle() {
@@ -199,6 +200,11 @@ public final class WebRtcControls {
 =======
     return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || isBluetoothHeadsetAvailableForAudioToggle() || isWiredHeadsetAvailableForAudioToggle());
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || enableHeadsetInAudioToggle());
+=======
+    return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || enableBluetoothHeadsetInAudioToggle());
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   public boolean displayCameraToggle() {
@@ -219,6 +225,7 @@ public final class WebRtcControls {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   public boolean isEarpieceAvailableForAudioToggle() {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   boolean enableHandsetInAudioToggle() {
@@ -230,9 +237,15 @@ public final class WebRtcControls {
 =======
   boolean isEarpieceAvailableForAudioToggle() {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  boolean enableHandsetInAudioToggle() {
+=======
+  boolean enableEarpieceInAudioToggle() {
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     return !isLocalVideoEnabled;
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   public boolean isBluetoothHeadsetAvailableForAudioToggle() {
@@ -259,6 +272,11 @@ public final class WebRtcControls {
   boolean isFadeOutEnabled() {
 =======
   boolean isWiredHeadsetAvailableForAudioToggle() {
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  boolean enableHeadsetInAudioToggle() {
+=======
+  boolean enableBluetoothHeadsetInAudioToggle() {
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     return availableDevices.contains(SignalAudioManager.AudioDevice.BLUETOOTH);
   }
 

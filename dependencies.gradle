@@ -12,7 +12,13 @@ dependencyResolutionManagement {
             version('androidx-window', '1.0.0')
             version('exoplayer', '2.18.1')
             version('glide', '4.13.2')
+<<<<<<< HEAD
             version('kotlin', '1.8.10')
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+            version('kotlin', '1.6.21')
+=======
+            version('kotlin', '1.7.20')
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
             version('libsignal-client', '0.22.0')
             version('mp4parser', '1.9.39')
             version('android-gradle-plugin', '7.4.1')

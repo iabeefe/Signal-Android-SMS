@@ -223,8 +223,13 @@ public class ApplicationContext extends Application implements AppForegroundObse
                             .addPostRender(() -> AppDependencies.getDeletedCallEventManager().scheduleIfNecessary())
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
                             .addNonBlocking(() -> ApplicationDependencies.getExpireStoriesManager().scheduleIfNecessary())
+<<<<<<< HEAD
 =======
                             .addNonBlocking(() -> ApplicationDependencies.getExpireStoriesManager().scheduleIfNecessary())
+                            .addPostRender(() -> ApplicationDependencies.getDeletedCallEventManager().scheduleIfNecessary())
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
                             .addPostRender(() -> ApplicationDependencies.getDeletedCallEventManager().scheduleIfNecessary())
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
                             .addPostRender(() -> RateLimitUtil.retryAllRateLimitedMessages(this))
@@ -252,7 +257,6 @@ public class ApplicationContext extends Application implements AppForegroundObse
                             .addPostRender(() -> GroupSendEndorsementInternalNotifier.init())
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
                             .addPostRender(() -> ApplicationDependencies.getExoPlayerPool().getPoolStats().getMaxUnreserved())
-                            .addPostRender(() -> SignalDatabase.groupCallRings().removeOldRings())
                             .addPostRender(() -> ApplicationDependencies.getRecipientCache().warmUp())
 =======
                             .addPostRender(() -> ApplicationDependencies.getExoPlayerPool().getPoolStats().getMaxUnreserved())

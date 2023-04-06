@@ -151,10 +151,22 @@ class AvatarPickerFragment : Fragment(R.layout.avatar_picker_fragment) {
       }
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     setFragmentResultListener(PhotoEditorFragment.REQUEST_KEY_EDIT) { _, bundle ->
+<<<<<<< HEAD
       val photo = AvatarBundler.extractPhoto(bundle)
       viewModel.onAvatarEditCompleted(photo)
 =======
     setFragmentResultListener(PhotoEditorFragment.REQUEST_KEY_EDIT) { _, bundle ->
+    }
+
+    photoEditorLauncher = registerForActivityResult(PhotoEditorActivity.Contract()) { photo ->
+      if (photo != null) {
+        viewModel.onAvatarEditCompleted(photo)
+      }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      val photo = AvatarBundler.extractPhoto(bundle)
+      viewModel.onAvatarEditCompleted(photo)
+=======
     }
 
     photoEditorLauncher = registerForActivityResult(PhotoEditorActivity.Contract()) { photo ->

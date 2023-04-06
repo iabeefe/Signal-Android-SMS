@@ -543,6 +543,7 @@ public class SignalServiceMessageSender {
   /**
    * Sends a {@link SignalServiceDataMessage} to a group using sender keys.
    */
+<<<<<<< HEAD
   public List<SendMessageResult> sendGroupDataMessage(DistributionId distributionId,
                                                       List<SignalServiceAddress> recipients,
                                                       List<UnidentifiedAccess> unidentifiedAccess,
@@ -554,6 +555,28 @@ public class SignalServiceMessageSender {
                                                       boolean isForStory,
                                                       SignalServiceEditMessage editMessage,
                                                       PartialSendBatchCompleteListener partialListener)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  public List<SendMessageResult> sendGroupDataMessage(DistributionId             distributionId,
+                                                      List<SignalServiceAddress> recipients,
+                                                      List<UnidentifiedAccess>   unidentifiedAccess,
+                                                      boolean                    isRecipientUpdate,
+                                                      ContentHint                contentHint,
+                                                      SignalServiceDataMessage   message,
+                                                      SenderKeyGroupEvents       sendEvents,
+                                                      boolean                    urgent,
+                                                      boolean                    isForStory)
+=======
+  public List<SendMessageResult> sendGroupDataMessage(DistributionId                   distributionId,
+                                                      List<SignalServiceAddress>       recipients,
+                                                      List<UnidentifiedAccess>         unidentifiedAccess,
+                                                      boolean                          isRecipientUpdate,
+                                                      ContentHint                      contentHint,
+                                                      SignalServiceDataMessage         message,
+                                                      SenderKeyGroupEvents             sendEvents,
+                                                      boolean                          urgent,
+                                                      boolean                          isForStory,
+                                                      PartialSendBatchCompleteListener partialListener)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       throws IOException, UntrustedIdentityException, NoSessionException, InvalidKeyException, InvalidRegistrationIdException
   {
     Log.d(TAG, "[" + message.getTimestamp() + "] Sending a group " + (editMessage != null ? "edit data message" : "data message") + " to " + recipients.size() + " recipients using DistributionId " + distributionId);

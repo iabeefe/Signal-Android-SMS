@@ -26,6 +26,7 @@ class CallLogStagedDeletion(
     isCommitted = true
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     val callRowIds = stateSnapshot.selected()
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     val messageIds = stateSnapshot.selected()
@@ -37,7 +38,13 @@ class CallLogStagedDeletion(
 =======
     val callRowIds = stateSnapshot.selected()
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    val messageIds = stateSnapshot.selected()
+=======
+    val callIds = stateSnapshot.selected()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       .filterIsInstance<CallLogRow.Id.Call>()
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       .map { it.children }
@@ -53,6 +60,11 @@ class CallLogStagedDeletion(
       .map { it.children }
       .flatten()
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      .map { it.messageId }
+=======
+      .map { it.callId }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       .toSet()
 
 <<<<<<< HEAD
@@ -78,8 +90,9 @@ class CallLogStagedDeletion(
       else -> error("Unhandled state $stateSnapshot $filter")
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     if (stateSnapshot.isExclusionary()) {
-      repository.deleteAllCallLogsExcept(messageIds).subscribe()
+      repository.deleteAllCallLogsExcept(callIds).subscribe()
     } else {
+<<<<<<< HEAD
       repository.deleteSelectedCallLogs(messageIds).subscribe()
 =======
     if (stateSnapshot.isExclusionary()) {
@@ -93,6 +106,11 @@ class CallLogStagedDeletion(
 =======
       repository.deleteSelectedCallLogs(callRowIds).subscribe()
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      repository.deleteSelectedCallLogs(messageIds).subscribe()
+=======
+      repository.deleteSelectedCallLogs(callIds).subscribe()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     }
   }
 }

@@ -1,8 +1,13 @@
 package org.thoughtcrime.securesms.components.settings.app.privacy.pnp
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.content.res.Configuration
 import android.os.Bundle
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import android.os.Bundle
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import android.os.Bundle
@@ -39,8 +44,13 @@ import org.signal.core.ui.theme.SignalTheme
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.compose.ComposeFragment
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.compose.StatusBarColorNestedScrollConnection
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.compose.StatusBarColorNestedScrollConnection
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues.PhoneNumberListingMode
 import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues.PhoneNumberSharingMode
 =======
@@ -92,7 +102,8 @@ class PhoneNumberPrivacySettingsFragment : ComposeFragment() {
       title = stringResource(id = R.string.preferences_app_protection__phone_number),
       onNavigationClick = onNavigationClick,
       navigationIconPainter = painterResource(id = R.drawable.ic_arrow_left_24),
-      navigationContentDescription = stringResource(id = R.string.Material3SearchToolbar__close)
+      navigationContentDescription = stringResource(id = R.string.Material3SearchToolbar__close),
+      modifier = Modifier.nestedScroll(statusBarNestedScrollConnection)
     ) { contentPadding ->
       Box(modifier = Modifier.padding(contentPadding)) {
         LazyColumn {

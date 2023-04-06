@@ -26,8 +26,13 @@ import org.thoughtcrime.securesms.stories.Stories
 import org.thoughtcrime.securesms.util.hasSharedContact
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.util.MediaUtil
+<<<<<<< HEAD
 =======
 import org.thoughtcrime.securesms.util.MediaUtil
+import org.thoughtcrime.securesms.util.hasSharedContact
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
 import org.thoughtcrime.securesms.util.hasSharedContact
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import java.util.Optional

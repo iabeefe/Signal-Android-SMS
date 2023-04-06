@@ -19,9 +19,14 @@
   <!-- Removed by excludeNonTranslatables <string name="signal_me_username_url" translatable="false">https://signal.me/#u/%1$s</string> -->
   <!-- Removed by excludeNonTranslatables <string name="username_support_url" translatable="false">https://support.signal.org/hc/articles/5389476324250</string> -->
 <<<<<<< HEAD
+<<<<<<< HEAD
   <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
   <!-- Removed by excludeNonTranslatables <string name="pending_transfer_url" translatable="false">https://support.signal.org/hc/articles/360031949872#pending</string> -->
   <!-- Removed by excludeNonTranslatables <string name="donate_faq_url" translatable="false">https://support.signal.org/hc/articles/360031949872#donate</string> -->
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
   <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
@@ -2492,6 +2497,19 @@
     <!-- A text description of the earpiece icon, used for accessibility. -->
     <string name="WebRtcAudioOutputBottomSheet__earpiece_icon_content_description">L’icône de l’écouteur d’un appareil.</string>
 
+    <!-- Error message when the developer added a button in the wrong place. -->
+    <string name="WebRtcAudioOutputToggleButton_fragment_activity_error">A UI error occurred. Please report this error to the developers.</string>
+    <!-- Error message when the user is trying to change audio outputs but none are present. -->
+    <string name="WebRtcAudioOutputToggleButton_no_eligible_audio_i_o_detected">No eligible audio I/O detected.</string>
+    <!-- A text description of the bluetooth icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__bluetooth_icon_content_description">An icon representing a Bluetooth device.</string>
+    <!-- A text description of the headset icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__headset_icon_content_description">An icon representing a wired headset.</string>
+    <!-- A text description of the speaker icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__speaker_icon_content_description">An icon representing a speakerphone.</string>
+    <!-- A text description of the earpiece icon, used for accessibility. -->
+    <string name="WebRtcAudioOutputBottomSheet__earpiece_icon_content_description">An icon representing a device\'s earpiece.</string>
+
     <!-- CallParticipantsListDialog -->
     <plurals name="CallParticipantsListDialog_in_this_call">
         <item quantity="one">Participant (%1$d)</item>
@@ -3160,14 +3178,24 @@
 
     <!-- WebRtcAudioOutputToggle -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Label for a dialog asking the user to switch the audio output device during a call -->
     <string name="WebRtcAudioOutputToggle__audio_output">Sortie audio</string>
     <!-- Audio output option referring to the earpiece built into the phone -->
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Label for a dialog asking the user to switch the audio output device during a call -->
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="WebRtcAudioOutputToggle__audio_output">Sortie son</string>
+<<<<<<< HEAD
 =======
     <!-- Label for a dialog asking the user to switch the audio output device during a call -->
     <string name="WebRtcAudioOutputToggle__audio_output">Sortie son</string>
+    <!-- Audio output option referring to the earpiece built into the phone -->
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
     <!-- Audio output option referring to the earpiece built into the phone -->
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="WebRtcAudioOutputToggle__phone_earpiece">Écouteur de téléphone</string>
@@ -3175,6 +3203,7 @@
     <string name="WebRtcAudioOutputToggle__speaker">Haut-parleur</string>
     <!-- Audio output option referring to an external audio device connected via wireless Bluetooth -->
     <string name="WebRtcAudioOutputToggle__bluetooth">Bluetooth</string>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <!-- Audio output option referring to a pair of headphones that do not contain a microphone connected via a 3.5mm headphone jack -->
     <string name="WebRtcAudioOutputToggle__wired_headphones">Écouteurs filaires</string>
@@ -3195,6 +3224,13 @@
 =======
     <string name="WebRtcAudioOutputToggle__wired_headset_usb">Casque filaire (USB)</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Audio output option referring to an external headset connected via a 3.5mm headphone jack -->
+    <string name="WebRtcAudioOutputToggle__wired_headset">Wired Headset</string>
+    <!-- Audio output option referring to an external headset connected via a USB-C data cable -->
+    <string name="WebRtcAudioOutputToggle__wired_headset_usb">Wired Headset (USB)</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <string name="WebRtcCallControls_answer_call_description">Répondre à l’appel</string>
     <string name="WebRtcCallControls_reject_call_description">Refuser l’appel</string>
@@ -5180,6 +5216,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="AccountSettingsFragment__request_account_data">Données du compte</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="AccountSettingsFragment__request_account_data">Request account data</string>
@@ -5206,6 +5243,11 @@
 =======
     <string name="AccountSettingsFragment__request_account_data">Demander les données du compte</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="AccountSettingsFragment__request_account_data">Demander les données du compte</string>
+=======
+    <string name="AccountSettingsFragment__request_account_data">Your account data</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- ExportAccountDataFragment -->
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
@@ -5233,6 +5275,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_explanation">Exporter un rapport contenant les données de votre compte Signal. Ce rapport ne contient aucun message ni contenu multimédia. %1$s</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
@@ -5254,10 +5297,16 @@
 =======
     <string name="ExportAccountDataFragment__export_explanation">Télécharger et exporter un rapport contenant les données de votre compte Signal. Ce rapport ne contient aucun message ou contenu multimédia. %1$s</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">Télécharger et exporter un rapport contenant les données de votre compte Signal. Ce rapport ne contient aucun message ou contenu multimédia. %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">Export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
 <<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__learn_more">En savoir plus</string>
+<<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__learn_more">Learn more</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -5284,10 +5333,16 @@
 =======
     <string name="ExportAccountDataFragment__download_report">Télécharger le rapport</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <!-- Button action to download the report data -->
+    <string name="ExportAccountDataFragment__download_report">Télécharger le rapport</string>
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Button action to export the report data to another app (e.g. email) -->
 <<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report">Exporter le rapport</string>
+<<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_report">Export report</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -5314,6 +5369,11 @@
 =======
     <string name="ExportAccountDataFragment__delete_report">Supprimer le rapport</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <!-- Button action to delete the requested account data -->
+    <string name="ExportAccountDataFragment__delete_report">Supprimer le rapport</string>
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- Radio option to export the data as a text file .txt -->
     <string name="ExportAccountDataFragment__export_as_txt">Exporter en tant que fichier TXT</string>
@@ -5329,6 +5389,7 @@
 
     <!-- Acknowledgement for download failure -->
     <string name="ExportAccountDataFragment__ok_action">OK</string>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     <!-- Title of dialog shown when report fails to generate -->
@@ -5363,6 +5424,15 @@
 =======
     <string name="ExportAccountDataFragment__report_download_failed">Votre rapport n’a pas pu être téléchargé à cause d’une erreur de réseau. Vérifiez votre connexion et réessayez.</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <!-- Message shown when report download fails -->
+    <string name="ExportAccountDataFragment__report_download_failed">Votre rapport n’a pas pu être téléchargé à cause d’une erreur de réseau. Vérifiez votre connexion et réessayez.</string>
+=======
+    <!-- Title of dialog shown when report fails to generate -->
+    <string name="ExportAccountDataFragment__report_generation_failed">Couldn\'t generate report</string>
+    <!-- Message of dialog shown when report fails to generate asking user to check network connection -->
+    <string name="ExportAccountDataFragment__check_network">Check your connection and try again.</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">Exporter les données ?</string>
@@ -5371,6 +5441,7 @@
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">Exporter</string>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
@@ -5412,7 +5483,20 @@
 =======
     <string name="ExportAccountDataFragment__delete_report_snackbar">Rapport supprimé</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <!-- Action to delete report in confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_action">Supprimer</string>
+    <!-- Title for delete report confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_confirmation">Supprimer le rapport ?</string>
+    <!-- Message for delete report confirmation dialog -->
+    <string name="ExportAccountDataFragment__delete_report_confirmation_message">Cette action ne supprimera aucune donnée de votre compte.</string>
+
+    <!-- Shown as a snackbar letting the user know the report was deleted -->
+    <string name="ExportAccountDataFragment__delete_report_snackbar">Rapport supprimé</string>
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- Shown in a dialog with a spinner while the report is downloading -->
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5466,6 +5550,15 @@
 =======
     <string name="ExportAccountDataFragment__report_deletion_disclaimer">Vous pourrez télécharger votre rapport pendant 30 jours avant qu’il soit supprimé automatiquement.</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <string name="ExportAccountDataFragment__download_progress">Rapport en cours de téléchargement…</string>
+    <!-- Explanation that the downloaded report will be available for 30 days before it is deleted -->
+    <string name="ExportAccountDataFragment__report_deletion_disclaimer">Vous pourrez télécharger votre rapport pendant 30 jours avant qu’il soit supprimé automatiquement.</string>
+=======
+    <string name="ExportAccountDataFragment__download_progress">Generating report…</string>
+    <!-- Explanation that the report is only generated on export and is not saved on the device -->
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Your report is generated only at the time of export and is not stored by Signal on your device.</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">Utilisez cette fonction pour changer votre numéro de téléphone actuel pour un nouveau. Vous ne pouvez pas annuler ce changement.\nAvant de continuer, assurez-vous que votre nouveau numéro puisse recevoir des SMS ou des appels.</string>
@@ -5930,6 +6023,7 @@
     <string name="ImageEditorHud__toggle_between_text_styles">Basculer entre les styles de texte</string>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Header for section of featured stickers (location/time stickers) -->
     <string name="ScribbleStickersFragment__featured_stickers">À la une</string>
 
@@ -5937,6 +6031,12 @@
 =======
     <!-- Header for section of featured stickers (location/time stickers) -->
     <string name="ScribbleStickersFragment__featured_stickers">À la une</string>
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Header for section of featured stickers (location/time stickers) -->
+    <string name="ScribbleStickersFragment__featured_stickers">Featured</string>
 
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="MediaCountIndicatorButton__send">Envoyer</string>
@@ -7364,6 +7464,7 @@
     <!-- Displayed for missed calls -->
     <string name="CallLogAdapter__missed">Manqué</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Displayed for missed calls declined by notification profile -->
     <string name="CallLogAdapter__missed_notification_profile">Appel manqué lorsque le profil de notification était activé</string>
     <!-- Displayed on Group Call button if user is not in the call -->
@@ -7393,6 +7494,13 @@
     <!-- Call state template when there is more than one call collapsed into a single row. D is a number > 1 and S is a call info string (like Missed) -->
     <string name="CallLogAdapter__d_s">(%1$d) %2$s</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- Displayed on Group Call button if user is not in the call -->
+    <string name="CallLogAdapter__join">Join</string>
+    <!-- Displayed on Group Call button if user is in the call -->
+    <string name="CallLogAdapter__return">Return</string>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     <!-- Call Log context menu -->
     <!-- Displayed as a context menu item to start a video call -->
@@ -7483,6 +7591,7 @@
     <!-- Accessibility label describing the continue button on the camera screen -->
     <string name="CameraControls_continue_button_accessibility_label">Bouton Poursuivre</string>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     <!-- CallPreference -->
     <!-- Generic group call in call info -->
@@ -8149,5 +8258,54 @@
     <string name="EditMessageHistoryDialog_title">Historique des modifications</string>
 
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    <!-- CallPreference -->
+    <!-- Missed group call in call info -->
+    <string name="CallPreference__missed_group_call">Missed group call</string>
+    <!-- Incoming group call in call info -->
+    <string name="CallPreference__incoming_group_call">Incoming group call</string>
+    <!-- Outgoing group call in call info -->
+    <string name="CallPreference__outgoing_group_call">Outgoing group call</string>
+
+    <!-- CreateCallLink -->
+    <!-- Call link creation item title on calls tab -->
+    <string name="CreateCallLink__create_a_call_link">Create a Call Link</string>
+    <!-- Call link creation item description on calls tab -->
+    <string name="CreateCallLink__share_a_link_for">Share a link for a Signal call</string>
+
+    <!-- CreateCallLinkBottomSheetDialogFragment -->
+    <!-- Fragment title -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__create_call_link">Create call link</string>
+    <!-- Displayed as a default name for the signal call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__signal_call">Signal call</string>
+    <!-- Displayed on a small button to allow user to instantly join call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__join">Join</string>
+    <!-- Option to open a full screen dialog to enter a call name -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__add_call_name">Add call name</string>
+    <!-- Toggle to require approval for all members before joining -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__approve_all_members">Approve all members</string>
+    <!-- Row label to share the link via Signal -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link_via_signal">Share link via Signal</string>
+    <!-- Row label to copy the link to the clipboard -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__copy_link">Copy link</string>
+    <!-- Row label to share the link with the external share sheet -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link">Share link</string>
+    <!-- Button text to dismiss the sheet and add it as an upcoming call -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__done">Done</string>
+    <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Failed to open share sheet.</string>
+    <!-- Displayed when we copy the call link to the clipboard -->
+    <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">Copied to clipboard</string>
+
+    <!-- EditCallLinkNameDialogFragment -->
+    <!-- App bar title for editing a call name -->
+    <string name="EditCallLinkNameDialogFragment__edit_call_name">Edit call name</string>
+    <!-- Text on button to confirm edit -->
+    <string name="EditCallLinkNameDialogFragment__save">Save</string>
+    <!-- Placeholder text on input field when editing call name -->
+    <string name="EditCallLinkNameDialogFragment__call_name">Call name</string>
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- EOF -->
 </resources>

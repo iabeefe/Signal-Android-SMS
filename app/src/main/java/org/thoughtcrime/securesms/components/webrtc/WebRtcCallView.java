@@ -15,8 +15,13 @@ import android.graphics.Point;
 import android.os.Build;
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import android.graphics.Rect;
+<<<<<<< HEAD
 =======
 import android.graphics.Rect;
+import android.os.Build;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
 import android.os.Build;
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import android.util.AttributeSet;
@@ -33,8 +38,13 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.appcompat.content.res.AppCompatResources;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import androidx.appcompat.widget.Toolbar;
 import androidx.compose.ui.platform.ComposeView;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import androidx.appcompat.widget.Toolbar;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import androidx.appcompat.widget.Toolbar;
@@ -132,9 +142,15 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
   private Guideline                     callScreenTopFoldGuideline;
   private AvatarImageView               largeHeaderAvatar;
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   private ConstraintSet                 largeHeaderConstraints;
   private ConstraintSet                 smallHeaderConstraints;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  private ConstraintSet                 largeHeaderConstraints;
+  private ConstraintSet                 smallHeaderConstraints;
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   private Guideline                     statusBarGuideline;
   private Guideline                     navigationBarGuideline;
 =======
@@ -143,6 +159,7 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   private int                           navBarBottomInset;
   private View                          fullScreenShade;
+<<<<<<< HEAD
 <<<<<<< HEAD
   private Toolbar                       collapsedToolbar;
   private Toolbar                       headerToolbar;
@@ -155,6 +172,11 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
   private MaterialButton                allowAccessButton;
   private Guideline                     callParticipantsOverflowGuideline;
   private View                          callControlsSheet;
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  private Toolbar                       collapsedToolbar;
+  private Toolbar                       headerToolbar;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
   private Toolbar                       collapsedToolbar;
@@ -266,21 +288,20 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
     footerGradient                = findViewById(R.id.call_screen_footer_gradient);
     startCallControls             = findViewById(R.id.call_screen_start_call_controls);
     callParticipantsPager         = findViewById(R.id.call_screen_participants_pager);
-    callParticipantsRecycler      = findViewById(R.id.call_screen_participants_recycler);
-    toolbar                       = findViewById(R.id.call_screen_header);
-    startCall                     = findViewById(R.id.call_screen_start_call_start_call);
+    callParticipantsRecycler = findViewById(R.id.call_screen_participants_recycler);
+    largeHeader              = findViewById(R.id.call_screen_header);
+    startCall                = findViewById(R.id.call_screen_start_call_start_call);
     errorButton                   = findViewById(R.id.call_screen_error_cancel);
     groupCallSpeakerHint          = new Stub<>(findViewById(R.id.call_screen_group_call_speaker_hint));
     groupCallFullStub             = new Stub<>(findViewById(R.id.group_call_call_full_view));
     showParticipantsGuideline     = findViewById(R.id.call_screen_show_participants_guideline);
     topFoldGuideline              = findViewById(R.id.fold_top_guideline);
     callScreenTopFoldGuideline    = findViewById(R.id.fold_top_call_screen_guideline);
-    foldParticipantCountWrapper   = findViewById(R.id.fold_show_participants_menu_counter_wrapper);
-    foldParticipantCount          = findViewById(R.id.fold_show_participants_menu_counter);
     largeHeaderAvatar             = findViewById(R.id.call_screen_header_avatar);
     statusBarGuideline            = findViewById(R.id.call_screen_status_bar_guideline);
     navigationBarGuideline        = findViewById(R.id.call_screen_navigation_bar_guideline);
     fullScreenShade               = findViewById(R.id.call_screen_full_shade);
+<<<<<<< HEAD
 =======
     audioToggle                   = findViewById(R.id.call_screen_speaker_toggle);
     videoToggle                   = findViewById(R.id.call_screen_video_toggle);
@@ -322,6 +343,11 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
     collapsedToolbar              = findViewById(R.id.webrtc_call_view_toolbar_text);
     headerToolbar                 = findViewById(R.id.webrtc_call_view_toolbar_no_text);
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    collapsedToolbar              = findViewById(R.id.webrtc_call_view_toolbar_text);
+    headerToolbar                 = findViewById(R.id.webrtc_call_view_toolbar_no_text);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
     View decline      = findViewById(R.id.call_screen_decline_call);
     View answerLabel  = findViewById(R.id.call_screen_answer_call_label);
@@ -351,9 +377,15 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
       }
     });
 
+<<<<<<< HEAD
     topViews.add(collapsedToolbar);
     topViews.add(headerToolbar);
     topViews.add(largeHeader);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    topViews.add(toolbar);
+=======
+    topViews.add(largeHeader);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     topViews.add(topGradient);
 
     incomingCallViews.add(answer);
@@ -384,6 +416,7 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
     adjustableMarginsSet.add(videoToggle);
     adjustableMarginsSet.add(audioToggle);
 
+<<<<<<< HEAD
     audioToggle.setOnAudioOutputChangedListener(outputMode -> {
       runIfNonNull(controlsListener, listener -> listener.onAudioOutputChanged(outputMode));
     });
@@ -393,6 +426,22 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
     adjustableMarginsSet.add(videoToggle);
     adjustableMarginsSet.add(audioToggle);
 
+
+    if (Build.VERSION.SDK_INT >= 31) {
+      audioToggle.setOnAudioOutputChangedListener31(deviceId -> {
+        runIfNonNull(controlsListener, listener -> listener.onAudioOutputChanged31(deviceId));
+      });
+    } else {
+      audioToggle.setOnAudioOutputChangedListenerLegacy(outputMode -> {
+        runIfNonNull(controlsListener, listener -> listener.onAudioOutputChanged(outputMode));
+      });
+    }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    audioToggle.setOnAudioOutputChangedListener(outputMode -> {
+      runIfNonNull(controlsListener, listener -> listener.onAudioOutputChanged(outputMode));
+    });
+=======
 
     if (Build.VERSION.SDK_INT >= 31) {
       audioToggle.setOnAudioOutputChangedListener31(deviceId -> {
@@ -478,6 +527,7 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
     });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     collapsedToolbar.setNavigationOnClickListener(unused -> {
       if (controlsListener != null) {
         controlsListener.onNavigateUpClicked();
@@ -493,6 +543,39 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
       return false;
     });
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    collapsedToolbar.setNavigationOnClickListener(unused -> {
+      if (controlsListener != null) {
+        controlsListener.onNavigateUpClicked();
+      }
+    });
+
+    collapsedToolbar.setOnMenuItemClickListener(item -> {
+      if (item.getItemId() == R.id.action_info && controlsListener != null) {
+        controlsListener.onCallInfoClicked();
+        return true;
+      }
+
+      return false;
+    });
+
+    headerToolbar.setNavigationOnClickListener(unused -> {
+      if (controlsListener != null) {
+        controlsListener.onNavigateUpClicked();
+      }
+    });
+
+    headerToolbar.setOnMenuItemClickListener(item -> {
+      if (item.getItemId() == R.id.action_info && controlsListener != null) {
+        controlsListener.onCallInfoClicked();
+        return true;
+      }
+
+      return false;
+    });
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     rotatableControls.add(hangup);
     rotatableControls.add(answer);
     rotatableControls.add(answerWithoutVideo);
@@ -503,12 +586,6 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
     rotatableControls.add(decline);
     rotatableControls.add(smallLocalAudioIndicator);
     rotatableControls.add(ringToggle);
-
-    largeHeaderConstraints = new ConstraintSet();
-    largeHeaderConstraints.clone(getContext(), R.layout.webrtc_call_view_header_large);
-
-    smallHeaderConstraints = new ConstraintSet();
-    smallHeaderConstraints.clone(getContext(), R.layout.webrtc_call_view_header_small);
   }
 =======
     collapsedToolbar.setNavigationOnClickListener(unused -> {
@@ -630,9 +707,9 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       if (controls.adjustForFold()) {
         pictureInPictureGestureHelper.clearVerticalBoundaries();
-        pictureInPictureGestureHelper.setTopVerticalBoundary(toolbar.getTop());
+        pictureInPictureGestureHelper.setTopVerticalBoundary(largeHeader.getTop());
       } else {
-        pictureInPictureGestureHelper.setTopVerticalBoundary(toolbar.getBottom());
+        pictureInPictureGestureHelper.setTopVerticalBoundary(largeHeader.getBottom());
         pictureInPictureGestureHelper.setBottomVerticalBoundary(videoToggle.getTop());
       }
 =======
@@ -713,10 +790,11 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 
     if (state.getGroupCallState().isNotIdle()) {
       if (state.getCallState() == WebRtcViewModel.State.CALL_PRE_JOIN) {
-        status.setText(state.getPreJoinGroupDescription(getContext()));
+        setStatus(state.getPreJoinGroupDescription(getContext()));
       } else if (state.getCallState() == WebRtcViewModel.State.CALL_CONNECTED && state.isInOutgoingRingingMode()) {
-        status.setText(state.getOutgoingRingingGroupDescription(getContext()));
+        setStatus(state.getOutgoingRingingGroupDescription(getContext()));
       } else if (state.getGroupCallState().isRinging()) {
+<<<<<<< HEAD
         status.setText(state.getIncomingRingingGroupDescription(getContext()));
 =======
     if (state.getFocusedParticipant() != CallParticipant.EMPTY && state.getAllRemoteParticipants().size() > 1) {
@@ -731,10 +809,16 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
       } else if (state.getGroupCallState().isRinging()) {
         setStatus(state.getIncomingRingingGroupDescription(getContext()));
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        status.setText(state.getIncomingRingingGroupDescription(getContext()));
+=======
+        setStatus(state.getIncomingRingingGroupDescription(getContext()));
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       }
     }
 
     if (state.getGroupCallState().isNotIdle()) {
+<<<<<<< HEAD
 <<<<<<< HEAD
       if (state.getCallState() == WebRtcViewModel.State.CALL_PRE_JOIN) {
         if (callParticipantsViewState.isStartedFromCallLink()) {
@@ -766,12 +850,29 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       String  text    = state.getParticipantCount()
                              .mapToObj(String::valueOf).orElse("\u2014");
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      String  text    = state.getParticipantCount()
+                             .mapToObj(String::valueOf).orElse("\u2014");
+=======
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       boolean enabled = state.getParticipantCount().isPresent();
+<<<<<<< HEAD
 
       foldParticipantCount.setText(text);
       foldParticipantCount.setEnabled(enabled);
 =======
       boolean enabled = state.getParticipantCount().isPresent();
+      collapsedToolbar.getMenu().getItem(0).setVisible(enabled);
+      headerToolbar.getMenu().getItem(0).setVisible(enabled);
+    } else {
+      collapsedToolbar.getMenu().getItem(0).setVisible(false);
+      headerToolbar.getMenu().getItem(0).setVisible(false);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+
+      foldParticipantCount.setText(text);
+      foldParticipantCount.setEnabled(enabled);
+=======
       collapsedToolbar.getMenu().getItem(0).setVisible(enabled);
       headerToolbar.getMenu().getItem(0).setVisible(enabled);
     } else {
@@ -894,6 +995,7 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   public void setStatus(@Nullable String status) {
     ThreadUtil.assertMainThread();
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -901,7 +1003,13 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 =======
   public void setStatus(@Nullable String status) {
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  public void setStatus(@NonNull String status) {
+=======
+  public void setStatus(@Nullable String status) {
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     this.status.setText(status);
+<<<<<<< HEAD
 <<<<<<< HEAD
     try {
       // Toolbar's subtitle view sometimes already has a parent somehow,
@@ -916,6 +1024,14 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 
   private void setStatus(@StringRes int statusRes) {
     setStatus(getContext().getString(statusRes));
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    collapsedToolbar.setSubtitle(status);
+  }
+
+  private void setStatus(@StringRes int statusRes) {
+    setStatus(getContext().getString(statusRes));
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
     collapsedToolbar.setSubtitle(status);
@@ -956,10 +1072,16 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
         break;
       case CONNECTED_AND_JOINING:
 <<<<<<< HEAD
+<<<<<<< HEAD
         setStatus(R.string.WebRtcCallView__joining);
         break;
       case CONNECTED_AND_PENDING:
         setStatus(R.string.WebRtcCallView__waiting_to_be_let_in);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        status.setText(R.string.WebRtcCallView__joining);
+=======
+        setStatus(R.string.WebRtcCallView__joining);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         status.setText(R.string.WebRtcCallView__joining);
 =======
@@ -1042,6 +1164,7 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       audioToggle.updateAudioOutputState(webRtcControls.getAudioOutput());
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       audioToggle.setControlAvailability(webRtcControls.enableHandsetInAudioToggle(),
@@ -1052,6 +1175,13 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
                                          webRtcControls.isBluetoothHeadsetAvailableForAudioToggle(),
                                          webRtcControls.isWiredHeadsetAvailableForAudioToggle());
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      audioToggle.setControlAvailability(webRtcControls.enableHandsetInAudioToggle(),
+                                         webRtcControls.enableHeadsetInAudioToggle());
+=======
+      audioToggle.setControlAvailability(webRtcControls.enableEarpieceInAudioToggle(),
+                                         webRtcControls.enableBluetoothHeadsetInAudioToggle());
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
       audioToggle.setAudioOutput(webRtcControls.getAudioOutput(), false);
 =======
@@ -1172,9 +1302,15 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 
   private void toggleControls() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     controlsListener.toggleControls();
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     if (controls.isFadeOutEnabled() && toolbar.getVisibility() == VISIBLE) {
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    if (controls.isFadeOutEnabled() && toolbar.getVisibility() == VISIBLE) {
+=======
+    if (controls.isFadeOutEnabled() && largeHeader.getVisibility() == VISIBLE) {
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       fadeOutControls();
     } else {
       fadeInControls();
@@ -1234,6 +1370,7 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
     if (showSmallHeader) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       collapsedToolbar.setEnabled(true);
       collapsedToolbar.setAlpha(1);
       headerToolbar.setEnabled(false);
@@ -1260,7 +1397,16 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
       largeHeader.setEnabled(false);
       largeHeader.setAlpha(0);
 >>>>>>> a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      smallHeaderConstraints.setVisibility(incomingRingStatus.getId(), visibleViewSet.contains(incomingRingStatus) ? View.VISIBLE : View.GONE);
+      smallHeaderConstraints.applyTo(toolbar);
+=======
+      collapsedToolbar.setVisibility(View.VISIBLE);
+      headerToolbar.setVisibility(View.GONE);
+      largeHeader.setVisibility(View.GONE);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     } else {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       collapsedToolbar.setEnabled(false);
@@ -1289,6 +1435,14 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
       largeHeader.setEnabled(true);
       largeHeader.setAlpha(1);
 >>>>>>> a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      largeHeaderConstraints.setVisibility(incomingRingStatus.getId(), visibleViewSet.contains(incomingRingStatus) ? View.VISIBLE : View.GONE);
+      largeHeaderConstraints.applyTo(toolbar);
+=======
+      collapsedToolbar.setVisibility(View.GONE);
+      headerToolbar.setVisibility(View.VISIBLE);
+      largeHeader.setVisibility(View.VISIBLE);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     }
   }
 
@@ -1324,6 +1478,7 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
+<<<<<<< HEAD
   private boolean showParticipantsList() {
     controlsListener.onShowParticipantsList();
     return true;
@@ -1332,6 +1487,14 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 =======
   }
 
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  private boolean showParticipantsList() {
+    controlsListener.onShowParticipantsList();
+    return true;
+  }
+
+=======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   public void switchToSpeakerView() {
     if (pagerAdapter.getItemCount() > 0) {
@@ -1355,8 +1518,14 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
     void onCancelStartCall();
     void onAudioOutputChanged(@NonNull WebRtcAudioOutput audioOutput);
 <<<<<<< HEAD
+<<<<<<< HEAD
     @RequiresApi(31)
     void onAudioOutputChanged31(@NonNull WebRtcAudioDevice audioOutput);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    @RequiresApi(31)
+    void onAudioOutputChanged31(@NonNull int audioOutputAddress);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
     @RequiresApi(31)
@@ -1374,10 +1543,16 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
     void onLocalPictureInPictureClicked();
     void onRingGroupChanged(boolean ringGroup, boolean ringingAllowed);
 <<<<<<< HEAD
+<<<<<<< HEAD
     void onCallInfoClicked();
     void onNavigateUpClicked();
     void toggleControls();
     void onAudioPermissionsRequested(Runnable onGranted);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    void onCallInfoClicked();
+    void onNavigateUpClicked();
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
     void onCallInfoClicked();

@@ -20,7 +20,14 @@ import java.util.Set;
 public final class EarlyMessageCache {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   private final LRUCache<ServiceMessageId, List<EarlyMessageCacheEntry>> cache = new LRUCache<>(100);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  private final LRUCache<ServiceMessageId, List<SignalServiceContent>> cache = new LRUCache<>(100);
+=======
+  private final LRUCache<ServiceMessageId, List<SignalServiceContent>>   cache   = new LRUCache<>(100);
+  private final LRUCache<ServiceMessageId, List<EarlyMessageCacheEntry>> cacheV2 = new LRUCache<>(100);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   private final LRUCache<ServiceMessageId, List<SignalServiceContent>> cache = new LRUCache<>(100);
 =======
@@ -46,6 +53,22 @@ public final class EarlyMessageCache {
     envelopeList.add(cacheEntry);
 
     cache.put(messageId, envelopeList);
+  }
+
+  public synchronized void store(@NonNull RecipientId targetSender,
+                                 long targetSentTimestamp,
+                                 @NonNull EarlyMessageCacheEntry cacheEntry)
+  {
+    ServiceMessageId             messageId    = new ServiceMessageId(targetSender, targetSentTimestamp);
+    List<EarlyMessageCacheEntry> envelopeList = cacheV2.get(messageId);
+
+    if (envelopeList == null) {
+      envelopeList = new LinkedList<>();
+    }
+
+    envelopeList.add(cacheEntry);
+
+    cacheV2.put(messageId, envelopeList);
   }
 
   public synchronized void store(@NonNull RecipientId targetSender,

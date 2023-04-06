@@ -8,6 +8,7 @@
                 android:left="4dp"
                 android:right="4dp"
 <<<<<<< HEAD
+<<<<<<< HEAD
                 android:drawable="@drawable/webrtc_call_screen_circle_checked" />
             <item android:bottom="14dp" android:drawable="@drawable/symbol_mic_fill_white_24" android:left="14dp" android:right="14dp" android:top="14dp" />
         </layer-list>
@@ -24,10 +25,25 @@
         </layer-list>
     </item>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+                android:drawable="@drawable/webrtc_call_screen_circle_checked" />
+            <item android:bottom="14dp" android:drawable="@drawable/symbol_mic_fill_24" android:left="14dp" android:right="14dp" android:top="14dp" />
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item
+                android:bottom="4dp"
+                android:top="4dp"
+                android:left="4dp"
+                android:right="4dp"
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
                 android:drawable="@drawable/webrtc_call_screen_circle_unchecked" />
             <item android:bottom="14dp" android:drawable="@drawable/symbol_mic_slash_fill_24" android:left="14dp" android:right="14dp" android:top="14dp" />
         </layer-list>
     </item>
+<<<<<<< HEAD
     <item>
         <layer-list>
             <item
@@ -55,5 +71,19 @@
             <item android:bottom="14dp" android:drawable="@drawable/symbol_mic_slash_fill_24" android:left="14dp" android:right="14dp" android:top="14dp" />
         </layer-list>
     </item>
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    <item>
+        <layer-list>
+            <item
+                android:bottom="4dp"
+                android:top="4dp"
+                android:left="4dp"
+                android:right="4dp"
+                android:drawable="@drawable/webrtc_call_screen_circle_checked" />
+            <item android:bottom="14dp" android:drawable="@drawable/symbol_mic_fill_white_24" android:left="14dp" android:right="14dp" android:top="14dp" />
+        </layer-list>
+    </item>
+=======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 </selector>

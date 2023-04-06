@@ -51,11 +51,16 @@ object Dialogs {
     androidx.compose.material3.AlertDialog(
       onDismissRequest = onDismiss,
 <<<<<<< HEAD
+<<<<<<< HEAD
       title = if (title == null) {
         null
       } else {
         { Text(text = title) }
       },
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+      title = if (title == null) null else { { Text(text = title) } },
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
       title = if (title == null) null else { { Text(text = title) } },

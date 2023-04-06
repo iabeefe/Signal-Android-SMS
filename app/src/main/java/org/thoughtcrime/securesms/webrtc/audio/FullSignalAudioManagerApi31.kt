@@ -176,6 +176,7 @@ class FullSignalAudioManagerApi31(context: Context, eventListener: EventListener
 
     val availableCommunicationDevices: List<AudioDeviceInfo> = androidAudioManager.availableCommunicationDevices
 <<<<<<< HEAD
+<<<<<<< HEAD
     var candidate: AudioDeviceInfo? = userSelectedAudioDevice
     if (candidate != null && candidate.id != 0) {
       val result = androidAudioManager.setCommunicationDevice(candidate)
@@ -214,7 +215,33 @@ class FullSignalAudioManagerApi31(context: Context, eventListener: EventListener
 =======
       eventListener?.onAudioDeviceChanged(AudioDeviceMapping.fromPlatformType(userSelectedAudioDevice!!.type), availableCommunicationDevices.map { AudioDeviceMapping.fromPlatformType(it.type) }.toSet())
 >>>>>>> a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    availableCommunicationDevices.forEach { Log.d(TAG, "Detected communication device of type: ${it.type}") }
+    val hasBluetoothHeadset = isBluetoothHeadsetConnected()
+    hasWiredHeadset = availableCommunicationDevices.any { AudioDeviceMapping.fromPlatformType(it.type) == AudioDevice.WIRED_HEADSET }
+    Log.i(
+      TAG,
+      "updateAudioDeviceState(): " +
+        "wired: $hasWiredHeadset " +
+        "bt: $hasBluetoothHeadset " +
+        "available: $availableCommunicationDevices " +
+        "selected: $selectedAudioDevice " +
+        "userSelected: $userSelectedAudioDevice"
+    )
+    val audioDevices: MutableSet<AudioDevice> = mutableSetOf(AudioDevice.SPEAKER_PHONE)
+
+    if (hasBluetoothHeadset) {
+      audioDevices += AudioDevice.BLUETOOTH
+    }
+
+    if (hasWiredHeadset) {
+      audioDevices += AudioDevice.WIRED_HEADSET
+=======
+    if (userSelectedAudioDevice != null) {
+      androidAudioManager.communicationDevice = userSelectedAudioDevice
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     } else {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       val searchOrder: List<AudioDevice> = listOf(AudioDevice.BLUETOOTH, AudioDevice.WIRED_HEADSET, defaultAudioDevice, AudioDevice.EARPIECE, AudioDevice.SPEAKER_PHONE, AudioDevice.NONE).distinct()
@@ -306,6 +333,74 @@ class FullSignalAudioManagerApi31(context: Context, eventListener: EventListener
           Log.e(TAG, "Tried to switch audio devices but could not find suitable device in list of types: ${availableCommunicationDevices.map { it.type }.joinToString()}")
           androidAudioManager.clearCommunicationDevice()
         }
+        else -> {
+          Log.d(TAG, "Switching to new device of type ${candidate.type} from ${currentAudioDevice?.type}")
+          androidAudioManager.communicationDevice = candidate
+          eventListener?.onAudioDeviceChanged(AudioDeviceMapping.fromPlatformType(candidate.type), availableCommunicationDevices.map { AudioDeviceMapping.fromPlatformType(it.type) }.toSet())
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      autoSwitchToWiredHeadset = true
+      if (androidAudioManager.hasEarpiece(context)) {
+        audioDevices += AudioDevice.EARPIECE
+      }
+    }
+
+    if (!hasBluetoothHeadset && userSelectedAudioDevice == AudioDevice.BLUETOOTH) {
+      userSelectedAudioDevice = AudioDevice.NONE
+    }
+
+    if (hasWiredHeadset && autoSwitchToWiredHeadset) {
+      userSelectedAudioDevice = AudioDevice.WIRED_HEADSET
+      autoSwitchToWiredHeadset = false
+    }
+
+    if (!hasWiredHeadset && userSelectedAudioDevice == AudioDevice.WIRED_HEADSET) {
+      userSelectedAudioDevice = AudioDevice.NONE
+    }
+
+    if (!autoSwitchToBluetooth && !hasBluetoothHeadset) {
+      autoSwitchToBluetooth = true
+    }
+
+    if (autoSwitchToBluetooth && hasBluetoothHeadset) {
+      userSelectedAudioDevice = AudioDevice.BLUETOOTH
+      autoSwitchToBluetooth = false
+    }
+
+    val deviceToSet: AudioDevice = when {
+      audioDevices.contains(userSelectedAudioDevice) -> userSelectedAudioDevice
+      audioDevices.contains(defaultAudioDevice) -> defaultAudioDevice
+      else -> AudioDevice.SPEAKER_PHONE
+    }
+
+    if (deviceToSet != currentAudioDevice) {
+      try {
+        val chosenDevice: AudioDeviceInfo = availableCommunicationDevices.first { AudioDeviceMapping.getEquivalentPlatformTypes(deviceToSet).contains(it.type) }
+        val result = androidAudioManager.setCommunicationDevice(chosenDevice)
+        if (result) {
+          Log.i(TAG, "Set active device to ID ${chosenDevice.id}, type ${chosenDevice.type}")
+          currentAudioDevice = deviceToSet
+          eventListener?.onAudioDeviceChanged(currentAudioDevice, availableCommunicationDevices.map { AudioDeviceMapping.fromPlatformType(it.type) }.toSet())
+        } else {
+          Log.w(TAG, "Setting device $chosenDevice failed.")
+=======
+      val excludedDevices = emptyList<String>() // TODO: pull this from somewhere. Preferences?
+      val autoSelectableDevices = availableCommunicationDevices.filterNot { excludedDevices.contains(it.address) }
+      var candidate: AudioDeviceInfo? = null
+      val searchOrder: List<AudioDevice> = listOf(defaultAudioDevice) + AudioDeviceMapping.orderOfPreference.filterNot { it == defaultAudioDevice }
+      for (deviceType in searchOrder) {
+        candidate = autoSelectableDevices.find { AudioDeviceMapping.fromPlatformType(it.type) == deviceType }
+        if (candidate != null) {
+          break
+        }
+      }
+
+      when (candidate) {
+        null -> {
+          Log.e(TAG, "Tried to switch audio devices but could not find suitable device in list of types: ${autoSelectableDevices.map { it.type }.joinToString()}")
+          androidAudioManager.clearCommunicationDevice()
+        }
+        currentAudioDevice -> Log.d(TAG, "Request to switch to existing audio device ignored.")
         else -> {
           Log.d(TAG, "Switching to new device of type ${candidate.type} from ${currentAudioDevice?.type}")
           androidAudioManager.communicationDevice = candidate

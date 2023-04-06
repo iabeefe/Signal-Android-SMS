@@ -422,10 +422,35 @@ public final class GroupSendUtil {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         List<SignalServiceAddress> targets = senderKeyTargets.stream().map(r -> recipients.getAddress(r.getId())).collect(Collectors.toList());
         List<UnidentifiedAccess>   access  = senderKeyTargets.stream().map(r -> recipients.requireAccess(r.getId())).collect(Collectors.toList());
+<<<<<<< HEAD
         List<SendMessageResult>    results = sendOperation.sendWithSenderKey(messageSender, distributionId, targets, access, isRecipientUpdate);
 =======
         List<SignalServiceAddress> targets = senderKeyTargets.stream().map(r -> recipients.getAddress(r.getId())).collect(Collectors.toList());
         List<UnidentifiedAccess>   access  = senderKeyTargets.stream().map(r -> recipients.requireAccess(r.getId())).collect(Collectors.toList());
+
+        final MessageSendLogTables messageLogDatabase  = SignalDatabase.messageLog();
+        final AtomicLong           entryId             = new AtomicLong(-1);
+        final boolean              includeInMessageLog = sendOperation.shouldIncludeInMessageLog();
+
+        List<SendMessageResult> results = sendOperation.sendWithSenderKey(messageSender, distributionId, targets, access, isRecipientUpdate, partialResults -> {
+          if (!includeInMessageLog) {
+            return;
+          }
+
+          synchronized (entryId) {
+            if (entryId.get() == -1) {
+              entryId.set(messageLogDatabase.insertIfPossible(sendOperation.getSentTimestamp(), senderKeyTargets, partialResults, sendOperation.getContentHint(), sendOperation.getRelatedMessageId(), sendOperation.isUrgent()));
+            } else {
+              for (SendMessageResult result : partialResults) {
+                entryId.set(messageLogDatabase.addRecipientToExistingEntryIfPossible(entryId.get(), recipients.requireRecipientId(result.getAddress()), sendOperation.getSentTimestamp(), result, sendOperation.getContentHint(), sendOperation.getRelatedMessageId(), sendOperation.isUrgent()));
+              }
+            }
+          }
+        });
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        List<SendMessageResult>    results = sendOperation.sendWithSenderKey(messageSender, distributionId, targets, access, isRecipientUpdate);
+=======
 
         final MessageSendLogTables messageLogDatabase  = SignalDatabase.messageLog();
         final AtomicLong           entryId             = new AtomicLong(-1);
@@ -503,9 +528,19 @@ public final class GroupSendUtil {
       boolean                    recipientUpdate       = isRecipientUpdate || allResults.size() > 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (useGroupSendEndorsements) {
         Instant           expiration        = Instant.ofEpochMilli(groupSendEndorsementExpiration);
         GroupSecretParams groupSecretParams = GroupSecretParams.deriveFromMasterKey(groupRecord.get().requireV2GroupProperties().getGroupMasterKey());
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      final MessageSendLogTables messageLogDatabase = SignalDatabase.messageLog();
+      final AtomicLong           entryId            = new AtomicLong(-1);
+      final boolean                includeInMessageLog = sendOperation.shouldIncludeInMessageLog();
+=======
+      final MessageSendLogTables messageLogDatabase  = SignalDatabase.messageLog();
+      final AtomicLong           entryId             = new AtomicLong(-1);
+      final boolean              includeInMessageLog = sendOperation.shouldIncludeInMessageLog();
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       final MessageSendLogTables messageLogDatabase = SignalDatabase.messageLog();
       final AtomicLong           entryId            = new AtomicLong(-1);
@@ -596,9 +631,16 @@ public final class GroupSendUtil {
                                                        @NonNull List<SignalServiceAddress> targets,
                                                        @NonNull List<UnidentifiedAccess> access,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                        @Nullable GroupSendEndorsements groupSendEndorsements,
                                                        boolean isRecipientUpdate,
                                                        @Nullable PartialSendBatchCompleteListener partialListener)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+                                                       boolean isRecipientUpdate)
+=======
+                                                       boolean isRecipientUpdate,
+                                                       @Nullable PartialSendBatchCompleteListener partialListener)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
                                                        boolean isRecipientUpdate)
 =======
@@ -660,6 +702,7 @@ public final class GroupSendUtil {
                                                               @NonNull List<SignalServiceAddress> targets,
                                                               @NonNull List<UnidentifiedAccess> access,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                               @Nullable GroupSendEndorsements groupSendEndorsements,
                                                               boolean isRecipientUpdate,
                                                               @Nullable PartialSendBatchCompleteListener partialListener)
@@ -669,9 +712,16 @@ public final class GroupSendUtil {
                                                               boolean isRecipientUpdate,
                                                               @Nullable PartialSendBatchCompleteListener partialListener)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+                                                              boolean isRecipientUpdate)
+=======
+                                                              boolean isRecipientUpdate,
+                                                              @Nullable PartialSendBatchCompleteListener partialListener)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         throws NoSessionException, UntrustedIdentityException, InvalidKeyException, IOException, InvalidRegistrationIdException
     {
       SenderKeyGroupEvents listener = relatedMessageId != null ? new SenderKeyMetricEventListener(relatedMessageId.getId()) : SenderKeyGroupEvents.EMPTY;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       return messageSender.sendGroupDataMessage(distributionId, targets, access, groupSendEndorsements, isRecipientUpdate, contentHint, message, listener, urgent, isForStory, editMessage, partialListener);
@@ -685,6 +735,11 @@ public final class GroupSendUtil {
 =======
       return messageSender.sendGroupDataMessage(distributionId, targets, access, isRecipientUpdate, contentHint, message, listener, urgent, isForStory, editMessage, partialListener);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      return messageSender.sendGroupDataMessage(distributionId, targets, access, isRecipientUpdate, contentHint, message, listener, urgent, isForStory);
+=======
+      return messageSender.sendGroupDataMessage(distributionId, targets, access, isRecipientUpdate, contentHint, message, listener, urgent, isForStory, partialListener);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     }
 
     @Override
@@ -787,9 +842,16 @@ public final class GroupSendUtil {
                                                               @NonNull List<SignalServiceAddress> targets,
                                                               @NonNull List<UnidentifiedAccess> access,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                               @Nullable GroupSendEndorsements groupSendEndorsements,
                                                               boolean isRecipientUpdate,
                                                               @Nullable PartialSendBatchCompleteListener partialListener)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+                                                              boolean isRecipientUpdate)
+=======
+                                                              boolean isRecipientUpdate,
+                                                              @Nullable PartialSendBatchCompleteListener partialListener)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
                                                               boolean isRecipientUpdate)
 =======
@@ -809,9 +871,21 @@ public final class GroupSendUtil {
       return results;
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       messageSender.sendGroupTyping(distributionId, targets, access, message);
+<<<<<<< HEAD
       return targets.stream().map(a -> SendMessageResult.success(a, Collections.emptyList(), true, false, -1, Optional.empty())).collect(Collectors.toList());
 =======
       messageSender.sendGroupTyping(distributionId, targets, access, message);
+      List<SendMessageResult> results = targets.stream().map(a -> SendMessageResult.success(a, Collections.emptyList(), true, false, -1, Optional.empty())).collect(Collectors.toList());
+
+      if (partialListener != null) {
+        partialListener.onPartialSendComplete(results);
+      }
+
+      return results;
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      return targets.stream().map(a -> SendMessageResult.success(a, Collections.emptyList(), true, false, -1, Optional.empty())).collect(Collectors.toList());
+=======
       List<SendMessageResult> results = targets.stream().map(a -> SendMessageResult.success(a, Collections.emptyList(), true, false, -1, Optional.empty())).collect(Collectors.toList());
 
       if (partialListener != null) {
@@ -876,6 +950,7 @@ public final class GroupSendUtil {
                                                               @NonNull List<SignalServiceAddress> targets,
                                                               @NonNull List<UnidentifiedAccess> access,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                               @Nullable GroupSendEndorsements groupSendEndorsements,
                                                               boolean isRecipientUpdate,
                                                               @Nullable PartialSendBatchCompleteListener partialSendListener)
@@ -885,10 +960,22 @@ public final class GroupSendUtil {
                                                               boolean isRecipientUpdate,
                                                               @Nullable PartialSendBatchCompleteListener partialSendListener)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+                                                              boolean isRecipientUpdate)
+=======
+                                                              boolean isRecipientUpdate,
+                                                              @Nullable PartialSendBatchCompleteListener partialSendListener)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         throws NoSessionException, UntrustedIdentityException, InvalidKeyException, IOException, InvalidRegistrationIdException
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       return messageSender.sendCallMessage(distributionId, targets, access, groupSendEndorsements, message, partialSendListener);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      return messageSender.sendCallMessage(distributionId, targets, access, message);
+=======
+      return messageSender.sendCallMessage(distributionId, targets, access, message, partialSendListener);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       return messageSender.sendCallMessage(distributionId, targets, access, message);
 =======
@@ -962,6 +1049,7 @@ public final class GroupSendUtil {
                                                               @NonNull List<SignalServiceAddress> targets,
                                                               @NonNull List<UnidentifiedAccess> access,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                               @Nullable GroupSendEndorsements groupSendEndorsements,
                                                               boolean isRecipientUpdate,
                                                               @Nullable PartialSendBatchCompleteListener partialListener)
@@ -971,10 +1059,22 @@ public final class GroupSendUtil {
                                                               boolean isRecipientUpdate,
                                                               @Nullable PartialSendBatchCompleteListener partialListener)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+                                                              boolean isRecipientUpdate)
+=======
+                                                              boolean isRecipientUpdate,
+                                                              @Nullable PartialSendBatchCompleteListener partialListener)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         throws NoSessionException, UntrustedIdentityException, InvalidKeyException, IOException, InvalidRegistrationIdException
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       return messageSender.sendGroupStory(distributionId, Optional.ofNullable(groupId).map(GroupId::getDecodedId), targets, access, groupSendEndorsements, isRecipientUpdate, message, getSentTimestamp(), manifest, partialListener);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      return messageSender.sendGroupStory(distributionId, Optional.ofNullable(groupId).map(GroupId::getDecodedId), targets, access, isRecipientUpdate, message, getSentTimestamp(), manifest);
+=======
+      return messageSender.sendGroupStory(distributionId, Optional.ofNullable(groupId).map(GroupId::getDecodedId), targets, access, isRecipientUpdate, message, getSentTimestamp(), manifest, partialListener);
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       return messageSender.sendGroupStory(distributionId, Optional.ofNullable(groupId).map(GroupId::getDecodedId), targets, access, isRecipientUpdate, message, getSentTimestamp(), manifest);
 =======

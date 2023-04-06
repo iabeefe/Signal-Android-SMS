@@ -2,7 +2,12 @@ package org.thoughtcrime.securesms.calls.log
 
 import org.signal.paging.PagedDataSource
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.RemoteConfig
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.util.FeatureFlags
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import org.thoughtcrime.securesms.util.FeatureFlags
@@ -16,15 +21,26 @@ class CallLogPagedDataSource(
 
   private val hasFilter = filter == CallLogFilter.MISSED
 <<<<<<< HEAD
+<<<<<<< HEAD
   private val hasCallLinkRow = RemoteConfig.adHocCalling && filter == CallLogFilter.ALL && query.isNullOrEmpty()
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  private val hasCallLinkRow = FeatureFlags.adHocCalling() && filter == CallLogFilter.ALL && query.isNullOrEmpty()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
   private val hasCallLinkRow = FeatureFlags.adHocCalling() && filter == CallLogFilter.ALL && query.isNullOrEmpty()
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   private var callEventsCount = 0
   private var callLinksCount = 0
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  var callsCount = 0
+=======
+  private var callsCount = 0
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   var callsCount = 0
 =======
@@ -38,9 +54,15 @@ class CallLogPagedDataSource(
     return callEventsCount + callLinksCount + hasFilter.toInt() + hasCallLinkRow.toInt()
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     callsCount = repository.getCallsCount(query, filter)
+<<<<<<< HEAD
     return callsCount + (if (hasFilter) 1 else 0)
 =======
     callsCount = repository.getCallsCount(query, filter)
+    return callsCount + hasFilter.toInt() + hasCallLinkRow.toInt()
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    return callsCount + (if (hasFilter) 1 else 0)
+=======
     return callsCount + hasFilter.toInt() + hasCallLinkRow.toInt()
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
@@ -52,7 +74,14 @@ class CallLogPagedDataSource(
       return callLogRows
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   override fun load(start: Int, length: Int, cancellationSignal: PagedDataSource.CancellationSignal): MutableList<CallLogRow> {
-    val calls: MutableList<CallLogRow> = repository.getCalls(query, filter, start, length).toMutableList()
+    val calls = mutableListOf<CallLogRow>()
+    val callLimit = length - hasCallLinkRow.toInt()
+
+    if (start == 0 && length >= 1 && hasCallLinkRow) {
+      calls.add(CallLogRow.CreateCallLink)
+    }
+
+    calls.addAll(repository.getCalls(query, filter, start, callLimit).toMutableList())
 
     if (calls.size < length && hasFilter) {
       calls.add(CallLogRow.ClearFilter)

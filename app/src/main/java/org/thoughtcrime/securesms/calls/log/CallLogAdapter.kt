@@ -62,6 +62,7 @@ class CallLogAdapter(
       )
     )
 <<<<<<< HEAD
+<<<<<<< HEAD
     registerFactory(
       CreateCallLinkModel::class.java,
       BindingFactory(
@@ -81,6 +82,16 @@ class CallLogAdapter(
 
   fun onTimestampTick() {
     notifyItemRangeChanged(0, itemCount, PAYLOAD_TIMESTAMP)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+    registerFactory(
+      CreateCallLinkModel::class.java,
+      BindingFactory(
+        creator = { CreateCallLinkViewHolder(it, callbacks::onCreateACallLinkClicked) },
+        inflater = CallLogCreateCallLinkItemBinding::inflate
+      )
+    )
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
     registerFactory(
@@ -197,6 +208,7 @@ class CallLogAdapter(
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   private class CreateCallLinkModel : MappingModel<CreateCallLinkModel> {
     override fun areItemsTheSame(newItem: CreateCallLinkModel): Boolean = true
 
@@ -287,6 +299,15 @@ class CallLogAdapter(
   }
 
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+  private class CreateCallLinkModel : MappingModel<CreateCallLinkModel> {
+    override fun areItemsTheSame(newItem: CreateCallLinkModel): Boolean = true
+
+    override fun areContentsTheSame(newItem: CreateCallLinkModel): Boolean = true
+  }
+
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   private class CallModelViewHolder(
     binding: CallLogAdapterItemBinding,
     private val onCallClicked: (CallLogRow.Call) -> Unit,
@@ -323,12 +344,12 @@ class CallLogAdapter(
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       val event = model.call.call.event
       val direction = model.call.call.direction
-      val type = model.call.call.type
 
       binding.callRecipientAvatar.setAvatar(GlideApp.with(binding.callRecipientAvatar), model.call.peer, true)
       binding.callRecipientBadge.setBadgeFromRecipient(model.call.peer)
       binding.callRecipientName.text = model.call.peer.getDisplayName(context)
       presentCallInfo(event, direction, model.call.date)
+<<<<<<< HEAD
       presentCallType(type, model.call.peer)
 =======
       val event = model.call.call.event
@@ -344,6 +365,11 @@ class CallLogAdapter(
       binding.callRecipientBadge.setBadgeFromRecipient(model.call.peer)
       binding.callRecipientName.text = model.call.peer.getDisplayName(context)
       presentCallInfo(model.call, model.call.date)
+      presentCallType(model)
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+      presentCallType(type, model.call.peer)
+=======
       presentCallType(model)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     }
@@ -411,6 +437,7 @@ class CallLogAdapter(
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     private fun presentCallType(model: CallModel) {
       when (model.call.record.type) {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -426,8 +453,16 @@ class CallLogAdapter(
 =======
       when (model.call.record.type) {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+    private fun presentCallType(callType: CallTable.Type, peer: Recipient) {
+      when (callType) {
+=======
+    private fun presentCallType(model: CallModel) {
+      when (model.call.call.type) {
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         CallTable.Type.AUDIO_CALL -> {
           binding.callType.setImageResource(R.drawable.symbol_phone_24)
+<<<<<<< HEAD
 <<<<<<< HEAD
           binding.callType.contentDescription = context.getString(R.string.CallLogAdapter__start_a_voice_call)
           binding.callType.setOnClickListener { onStartAudioCallClicked(model.call.peer) }
@@ -440,10 +475,18 @@ class CallLogAdapter(
           binding.callType.visible = true
           binding.groupCallButton.visible = false
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+          binding.callType.setOnClickListener { onStartAudioCallClicked(peer) }
+=======
+          binding.callType.setOnClickListener { onStartAudioCallClicked(model.call.peer) }
+          binding.callType.visible = true
+          binding.groupCallButton.visible = false
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         }
 
         CallTable.Type.VIDEO_CALL -> {
           binding.callType.setImageResource(R.drawable.symbol_video_24)
+<<<<<<< HEAD
 <<<<<<< HEAD
           binding.callType.contentDescription = context.getString(R.string.CallLogAdapter__start_a_video_call)
           binding.callType.setOnClickListener { onStartVideoCallClicked(model.call.peer, true) }
@@ -499,6 +542,38 @@ class CallLogAdapter(
               )
             }
           }
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+          binding.callType.setOnClickListener { onStartVideoCallClicked(peer) }
+=======
+          binding.callType.setOnClickListener { onStartVideoCallClicked(model.call.peer) }
+          binding.callType.visible = true
+          binding.groupCallButton.visible = false
+        }
+
+        CallTable.Type.GROUP_CALL, CallTable.Type.AD_HOC_CALL -> {
+          binding.callType.setImageResource(R.drawable.symbol_video_24)
+          binding.callType.setOnClickListener { onStartVideoCallClicked(model.call.peer) }
+          binding.groupCallButton.setOnClickListener { onStartVideoCallClicked(model.call.peer) }
+
+          when (model.call.groupCallState) {
+            CallLogRow.GroupCallState.NONE, CallLogRow.GroupCallState.FULL -> {
+              binding.callType.visible = true
+              binding.groupCallButton.visible = false
+            }
+            CallLogRow.GroupCallState.ACTIVE, CallLogRow.GroupCallState.LOCAL_USER_JOINED -> {
+              binding.callType.visible = false
+              binding.groupCallButton.visible = true
+
+              binding.groupCallButton.setText(
+                if (model.call.groupCallState == CallLogRow.GroupCallState.LOCAL_USER_JOINED) {
+                  R.string.CallLogAdapter__return
+                } else {
+                  R.string.CallLogAdapter__join
+                }
+              )
+            }
+          }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
           binding.callType.setOnClickListener { onStartVideoCallClicked(peer) }
 =======

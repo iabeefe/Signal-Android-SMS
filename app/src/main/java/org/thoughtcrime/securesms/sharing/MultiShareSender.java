@@ -122,6 +122,7 @@ public final class MultiShareSender {
       boolean         forceSms       = recipient.isForceSmsSelection() && sendType.usesSmsTransport();
       int             subscriptionId = sendType.getSimSubscriptionIdOr(-1);
       long            expiresIn      = TimeUnit.SECONDS.toMillis(recipient.getExpiresInSeconds());
+      List<Contact>   contacts       = multiShareArgs.getSharedContacts();
       boolean needsSplit = !sendType.usesSmsTransport() &&
                            message != null &&
 =======

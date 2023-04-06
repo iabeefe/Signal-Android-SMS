@@ -1310,10 +1310,22 @@
             android:theme="@style/TextSecure.DarkNoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             android:launchMode="singleTop"
+<<<<<<< HEAD
             android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"/>
 =======
         <activity android:name=".mediasend.v2.MediaSelectionActivity"
             android:theme="@style/TextSecure.DarkNoActionBar"
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+            android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"/>
+
+        <activity android:name=".conversation.mutiselect.forward.MultiselectForwardActivity"
+            android:theme="@style/Signal.DayNight.NoActionBar"
+=======
+            android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize|uiMode"/>
+
+        <activity android:name=".conversation.mutiselect.forward.MultiselectForwardActivity"
+            android:theme="@style/Signal.DayNight.NoActionBar"
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             android:launchMode="singleTop"
             android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize|uiMode"/>
@@ -1487,6 +1499,13 @@
               android:theme="@style/TextSecure.DarkNoActionBar"
               android:windowSoftInputMode="stateHidden"
               android:exported="false"/>
+
+    <activity
+              android:name=".avatar.photo.PhotoEditorActivity"
+              android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize|uiMode"
+              android:label="@string/AndroidManifest__media_preview"
+              android:theme="@style/TextSecure.DarkNoActionBar"
+              android:windowSoftInputMode="stateHidden" />
 
     <activity
               android:name=".avatar.photo.PhotoEditorActivity"

@@ -8,7 +8,6 @@ import org.signal.core.util.logging.Log;
 <<<<<<< HEAD
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
-import org.thoughtcrime.securesms.events.ReminderUpdateEvent;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 =======
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
@@ -45,6 +44,7 @@ public final class SignalWebSocketHealthMonitor implements HealthMonitor {
   private static final long KEEP_ALIVE_SEND_CADENCE = TimeUnit.SECONDS.toMillis(OkHttpWebSocketConnection.KEEPALIVE_FREQUENCY_SECONDS);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /**
    * This is the amount of time we will wait for a response to the keep alive before we consider the websockets dead.
    * It is required that this value be less than {@link SignalWebSocketHealthMonitor#KEEP_ALIVE_SEND_CADENCE}
@@ -52,6 +52,11 @@ public final class SignalWebSocketHealthMonitor implements HealthMonitor {
   private static final long KEEP_ALIVE_TIMEOUT = TimeUnit.SECONDS.toMillis(20);
 
   private final Executor executor = Executors.newSingleThreadExecutor();
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+  private final Executor executor = ThreadUtil.trace(Executors.newSingleThreadExecutor());
+=======
+  private final Executor executor = Executors.newSingleThreadExecutor();
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   private final Executor executor = ThreadUtil.trace(Executors.newSingleThreadExecutor());
 =======
@@ -100,15 +105,27 @@ public final class SignalWebSocketHealthMonitor implements HealthMonitor {
       switch (connectionState) {
         case CONNECTED:
 <<<<<<< HEAD
+<<<<<<< HEAD
           if (isIdentified) {
             TextSecurePreferences.setUnauthorizedReceived(context, false);
             break;
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
           TextSecurePreferences.setUnauthorizedReceived(context, false);
           break;
-        case AUTHENTICATION_FAILED:
-          TextSecurePreferences.setUnauthorizedReceived(context, true);
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+          TextSecurePreferences.setUnauthorizedReceived(context, false);
           break;
+=======
+          if (isIdentified) {
+            TextSecurePreferences.setUnauthorizedReceived(context, false);
+            break;
+          }
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        case AUTHENTICATION_FAILED:
+          if (isIdentified) {
+            TextSecurePreferences.setUnauthorizedReceived(context, true);
+            break;
+          }
         case FAILED:
           if (SignalStore.proxy().isProxyEnabled()) {
             Log.w(TAG, "Encountered an error while we had a proxy set! Terminating the connection to prevent retry spam.");

@@ -5,8 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 <<<<<<< HEAD
+<<<<<<< HEAD
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import androidx.compose.foundation.layout.Spacer
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import androidx.compose.foundation.layout.Spacer
@@ -28,15 +33,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import androidx.compose.ui.Alignment
+<<<<<<< HEAD
 =======
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import androidx.compose.ui.Alignment.Companion.CenterVertically
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import androidx.compose.ui.Modifier
+<<<<<<< HEAD
 <<<<<<< HEAD
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+import androidx.compose.ui.graphics.vector.ImageVector
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -88,6 +103,7 @@ object Rows {
       modifier = modifier
         .fillMaxWidth()
 <<<<<<< HEAD
+<<<<<<< HEAD
         .padding(defaultPadding()),
       verticalAlignment = CenterVertically
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -95,6 +111,14 @@ object Rows {
           horizontal = dimensionResource(id = R.dimen.core_ui__gutter),
           vertical = 16.dp
         ),
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+        .padding(
+          horizontal = dimensionResource(id = R.dimen.core_ui__gutter),
+          vertical = 16.dp
+        ),
+=======
+        .padding(defaultPadding()),
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       verticalAlignment = Alignment.CenterVertically
 =======
         .padding(defaultPadding()),
@@ -344,6 +368,7 @@ private fun RadioRowPreview() {
   }
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 @SignalPreview
 @Composable
@@ -391,6 +416,34 @@ private fun TextAndLabelPreview() {
     }
   }
 }
+||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+=======
+
+@Preview
+@Composable
+private fun ToggleRowPreview() {
+  SignalTheme(isDarkMode = false) {
+    var checked by remember { mutableStateOf(false) }
+
+    Rows.ToggleRow(
+      checked = checked,
+      text = "ToggleRow",
+      onCheckChanged = {
+        checked = it
+      }
+    )
+  }
+}
+
+@Preview
+@Composable
+private fun TextRowPreview() {
+  SignalTheme(isDarkMode = false) {
+    Rows.TextRow(text = "TextRow")
+    Rows.TextRow(text = "TextRow")
+  }
+}
+>>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 
