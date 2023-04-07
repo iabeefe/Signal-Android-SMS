@@ -361,8 +361,9 @@ class SignalBluetoothManager(
             scoConnectionAttempts = 0
             updateDevice()
           }
-        } else if (state != State.UNINITIALIZED) {
+        } else {
           handler.post {
+<<<<<<< HEAD:app/src/main/java/org/thoughtcrime/securesms/audio/SignalBluetoothManager.kt
             val connectionState: Int = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
             onAudioStateChanged(connectionState, isInitialStickyBroadcast)
@@ -378,6 +379,15 @@ class SignalBluetoothManager(
             val connectionState: Int = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
             onAudioStateChanged(connectionState, isInitialStickyBroadcast)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
+||||||| parent of a4f383c27f (Bumped to upstream version 6.17.1.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
+            val connectionState: Int = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
+            onAudioStateChanged(connectionState, isInitialStickyBroadcast)
+=======
+            if (state != State.UNINITIALIZED) {
+              val connectionState: Int = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
+              onAudioStateChanged(connectionState, isInitialStickyBroadcast)
+            }
+>>>>>>> a4f383c27f (Bumped to upstream version 6.17.1.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
 ||||||| parent of a4f383c27f (Bumped to upstream version 6.17.1.0-JW.):app/src/main/java/org/thoughtcrime/securesms/webrtc/audio/SignalBluetoothManager.kt
             val connectionState: Int = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
             onAudioStateChanged(connectionState, isInitialStickyBroadcast)
