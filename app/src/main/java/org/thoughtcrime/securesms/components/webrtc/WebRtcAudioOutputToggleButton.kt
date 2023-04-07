@@ -381,7 +381,12 @@ class WebRtcAudioOutputToggleButton @JvmOverloads constructor(context: Context, 
   }
 
   private fun hidePicker() {
-    picker?.dismiss()
+    try {
+      picker?.dismiss()
+    } catch (e: IllegalStateException) {
+      Log.w(TAG, "Picker is not attached to a window.")
+    }
+
     picker = null
   }
 

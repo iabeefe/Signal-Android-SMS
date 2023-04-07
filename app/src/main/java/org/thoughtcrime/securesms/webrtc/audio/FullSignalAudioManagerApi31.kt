@@ -208,7 +208,12 @@ class FullSignalAudioManagerApi31(context: Context, eventListener: EventListener
 =======
     if (userSelectedAudioDevice != null) {
       androidAudioManager.communicationDevice = userSelectedAudioDevice
+<<<<<<< HEAD
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
+=======
+      eventListener?.onAudioDeviceChanged(AudioDeviceMapping.fromPlatformType(userSelectedAudioDevice!!.type), availableCommunicationDevices.map { AudioDeviceMapping.fromPlatformType(it.type) }.toSet())
+>>>>>>> a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
     } else {
 <<<<<<< HEAD
       val searchOrder: List<AudioDevice> = listOf(AudioDevice.BLUETOOTH, AudioDevice.WIRED_HEADSET, defaultAudioDevice, AudioDevice.EARPIECE, AudioDevice.SPEAKER_PHONE, AudioDevice.NONE).distinct()
