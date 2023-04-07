@@ -311,6 +311,7 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
     startCallControls             = findViewById(R.id.call_screen_start_call_controls);
     callParticipantsPager         = findViewById(R.id.call_screen_participants_pager);
 <<<<<<< HEAD
+<<<<<<< HEAD
     callParticipantsRecycler      = findViewById(R.id.call_screen_participants_recycler);
     largeHeader                   = findViewById(R.id.call_screen_header);
     startCall                     = findViewById(R.id.call_screen_start_call_start_call);
@@ -363,6 +364,15 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
     callParticipantsRecycler      = findViewById(R.id.call_screen_participants_recycler);
     largeHeader                   = findViewById(R.id.call_screen_header);
     startCall                     = findViewById(R.id.call_screen_start_call_start_call);
+||||||| parent of a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
+    callParticipantsRecycler = findViewById(R.id.call_screen_participants_recycler);
+    largeHeader              = findViewById(R.id.call_screen_header);
+    startCall                = findViewById(R.id.call_screen_start_call_start_call);
+=======
+    callParticipantsRecycler      = findViewById(R.id.call_screen_participants_recycler);
+    largeHeader                   = findViewById(R.id.call_screen_header);
+    startCall                     = findViewById(R.id.call_screen_start_call_start_call);
+>>>>>>> a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
     errorButton                   = findViewById(R.id.call_screen_error_cancel);
     groupCallSpeakerHint          = new Stub<>(findViewById(R.id.call_screen_group_call_speaker_hint));
     groupCallFullStub             = new Stub<>(findViewById(R.id.group_call_call_full_view));
@@ -418,8 +428,14 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     topViews.add(collapsedToolbar);
     topViews.add(headerToolbar);
+||||||| parent of a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
+=======
+    topViews.add(collapsedToolbar);
+    topViews.add(headerToolbar);
+>>>>>>> a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
 ||||||| parent of a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
 =======
     topViews.add(collapsedToolbar);
@@ -1548,6 +1564,7 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       collapsedToolbar.setEnabled(true);
       collapsedToolbar.setAlpha(1);
       headerToolbar.setEnabled(false);
@@ -1602,12 +1619,25 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
       headerToolbar.setVisibility(View.GONE);
       largeHeader.setVisibility(View.GONE);
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
+      collapsedToolbar.setVisibility(View.VISIBLE);
+      headerToolbar.setVisibility(View.GONE);
+      largeHeader.setVisibility(View.GONE);
+=======
+      collapsedToolbar.setEnabled(true);
+      collapsedToolbar.setAlpha(1);
+      headerToolbar.setEnabled(false);
+      headerToolbar.setAlpha(0);
+      largeHeader.setEnabled(false);
+      largeHeader.setAlpha(0);
+>>>>>>> a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
     } else {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       collapsedToolbar.setEnabled(false);
       collapsedToolbar.setAlpha(0);
       headerToolbar.setEnabled(true);
@@ -1662,6 +1692,18 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
       headerToolbar.setVisibility(View.VISIBLE);
       largeHeader.setVisibility(View.VISIBLE);
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
+      collapsedToolbar.setVisibility(View.GONE);
+      headerToolbar.setVisibility(View.VISIBLE);
+      largeHeader.setVisibility(View.VISIBLE);
+=======
+      collapsedToolbar.setEnabled(false);
+      collapsedToolbar.setAlpha(0);
+      headerToolbar.setEnabled(true);
+      headerToolbar.setAlpha(1);
+      largeHeader.setEnabled(true);
+      largeHeader.setAlpha(1);
+>>>>>>> a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
     }
   }
 
