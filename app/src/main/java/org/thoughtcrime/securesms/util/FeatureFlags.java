@@ -111,6 +111,7 @@ public final class FeatureFlags {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   private static final String CALLS_TAB                         = "android.calls.tab";
   private static final String TEXT_FORMATTING_SPOILER_SEND      = "android.textFormatting.spoilerSend";
+<<<<<<< HEAD
   private static final String EXPORT_ACCOUNT_DATA               = "android.exportAccountData";
 <<<<<<< HEAD
 =======
@@ -121,6 +122,10 @@ public final class FeatureFlags {
   private static final String CALLS_TAB                         = "android.calls.tab.2";
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
   private static final String TEXT_FORMATTING_SPOILER_SEND      = "android.textFormatting.spoilerSend";
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  private static final String EXPORT_ACCOUNT_DATA               = "android.exportAccountData";
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   private static final String AD_HOC_CALLING                    = "android.calling.ad.hoc";
 <<<<<<< HEAD
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -194,6 +199,7 @@ public final class FeatureFlags {
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       ANY_ADDRESS_PORTS_KILL_SWITCH,
       CALLS_TAB,
+<<<<<<< HEAD
       TEXT_FORMATTING_SPOILER_SEND,
       EXPORT_ACCOUNT_DATA
 =======
@@ -209,6 +215,12 @@ public final class FeatureFlags {
       EDIT_MESSAGE_RECEIVE,
       EDIT_MESSAGE_SEND
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      TEXT_FORMATTING_SPOILER_SEND,
+      EXPORT_ACCOUNT_DATA
+=======
+      TEXT_FORMATTING_SPOILER_SEND
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   );
 
   @VisibleForTesting
@@ -876,6 +888,7 @@ public final class FeatureFlags {
   }
 
   /**
+<<<<<<< HEAD
    * Whether or not the ability to export account data is enabled
    */
   public static boolean exportAccountData() {
@@ -963,6 +976,16 @@ public final class FeatureFlags {
   }
 
   /**
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+   * Whether or not the ability to export account data is enabled
+   */
+  public static boolean exportAccountData() {
+    return getBoolean(EXPORT_ACCOUNT_DATA, false);
+  }
+
+  /**
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
    * Whether or not ad-hoc calling is enabled
    */
   public static boolean adHocCalling() {

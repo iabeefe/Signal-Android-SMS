@@ -3,8 +3,15 @@ package org.thoughtcrime.securesms
 import android.content.ContentValues
 import android.os.Build
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.signal.core.util.logging.AndroidLogger
 import org.signal.core.util.logging.Log
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import leakcanary.LeakCanary
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -37,7 +44,12 @@ import org.thoughtcrime.securesms.logging.PersistentLogger
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.util.AppSignatureUtil
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.RemoteConfig
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import shark.AndroidReferenceMatchers
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import shark.AndroidReferenceMatchers
 =======

@@ -24,9 +24,14 @@ import org.thoughtcrime.securesms.database.model.StoryViewState;
 <<<<<<< HEAD
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.thoughtcrime.securesms.mms.GlideRequests;
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.recipients.LiveRecipient;
 =======
 import org.thoughtcrime.securesms.mms.GlideRequests;
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import org.thoughtcrime.securesms.recipients.LiveRecipient;
+=======
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.util.ContextUtil;
@@ -102,16 +107,30 @@ public class ConversationTitleView extends ConstraintLayout {
     isSelf = recipient.isSelf();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.getExpiresInSeconds()));
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   public void showExpiring(@NonNull LiveRecipient recipient) {
     isSelf = recipient.get().isSelf();
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  public void showExpiring(@NonNull LiveRecipient recipient) {
+    isSelf = recipient.get().isSelf();
+=======
+  public void showExpiring(@NonNull Recipient recipient) {
+    isSelf = recipient.isSelf();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
+<<<<<<< HEAD
     expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.get().getExpiresInSeconds()));
 =======
   public void showExpiring(@NonNull Recipient recipient) {
     isSelf = recipient.isSelf();
 
+    expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.getExpiresInSeconds()));
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.get().getExpiresInSeconds()));
+=======
     expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.getExpiresInSeconds()));
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     expirationBadgeContainer.setVisibility(View.VISIBLE);

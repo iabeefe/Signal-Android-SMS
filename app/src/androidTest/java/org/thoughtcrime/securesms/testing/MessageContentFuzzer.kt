@@ -663,7 +663,6 @@ object MessageContentFuzzer {
 package org.thoughtcrime.securesms.testing
 
 import com.google.protobuf.ByteString
-import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.database.model.toProtoByteString
 import org.thoughtcrime.securesms.messages.TestMessage
 import org.thoughtcrime.securesms.recipients.Recipient
@@ -678,13 +677,11 @@ import org.whispersystems.signalservice.internal.push.SignalServiceProtos.Envelo
 import java.util.UUID
 import kotlin.random.Random
 import kotlin.random.nextInt
-import kotlin.reflect.KClass
-import kotlin.reflect.KFunction
-import kotlin.reflect.full.declaredFunctions
-import kotlin.reflect.full.functions
-import kotlin.reflect.jvm.jvmErasure
 import kotlin.time.Duration.Companion.days
 
+/**
+ * Random but deterministic fuzzer for create various message content protos.
+ */
 object MessageContentFuzzer {
 
   private val mediaTypes = listOf("image/png", "image/jpeg", "image/heic", "image/heif", "image/avif", "image/webp", "image/gif", "audio/aac", "audio/*", "video/mp4", "video/*", "text/x-vcard", "text/x-signal-plain", "application/x-signal-view-once", "*/*", "application/octet-stream")
@@ -692,6 +689,9 @@ object MessageContentFuzzer {
 
   private val random = Random(1)
 
+  /**
+   * Create an [Envelope].
+   */
   fun envelope(timestamp: Long): Envelope {
     return Envelope.newBuilder()
       .setTimestamp(timestamp)
@@ -700,6 +700,25 @@ object MessageContentFuzzer {
       .build()
   }
 
+  /**
+   * Create metadata to match an [Envelope].
+   */
+  fun envelopeMetadata(source: RecipientId, destination: RecipientId): EnvelopeMetadata {
+    return EnvelopeMetadata(
+      sourceServiceId = Recipient.resolved(source).requireServiceId(),
+      sourceE164 = null,
+      sourceDeviceId = 1,
+      sealedSender = true,
+      groupId = null,
+      destinationServiceId = Recipient.resolved(destination).requireServiceId()
+    )
+  }
+
+  /**
+   * Create a random text message that will contain a body but may also contain
+   * - An expire timer value
+   * - Bold style body ranges
+   */
   fun fuzzTextMessage(): Content {
     return Content.newBuilder()
       .setDataMessage(
@@ -724,6 +743,13 @@ object MessageContentFuzzer {
       .build()
   }
 
+  /**
+   * Create a random media message that may be:
+   * - A text body
+   * - A text body with a quote that references an existing message
+   * - A text body with a quote that references a non existing message
+   * - A message with 0-2 attachment pointers and may contain a text body
+   */
   fun fuzzMediaMessageWithBody(quoteAble: List<TestMessage> = emptyList()): Content {
     return Content.newBuilder()
       .setDataMessage(
@@ -767,6 +793,10 @@ object MessageContentFuzzer {
       .build()
   }
 
+  /**
+   * Creates a random media message that contains no traditional media content. It may be:
+   * - A reaction to a prior message
+   */
   fun fuzzMediaMessageNoContent(previousMessages: List<TestMessage> = emptyList()): Content {
     return Content.newBuilder()
       .setDataMessage(
@@ -787,6 +817,10 @@ object MessageContentFuzzer {
       ).build()
   }
 
+  /**
+   * Create a random media message that can never contain a text body. It may be:
+   * - A sticker
+   */
   fun fuzzMediaMessageNoText(previousMessages: List<TestMessage> = emptyList()): Content {
     return Content.newBuilder()
       .setDataMessage(
@@ -806,6 +840,9 @@ object MessageContentFuzzer {
       ).build()
   }
 
+  /**
+   * Generate a random [String].
+   */
   fun string(length: Int = 10, allowNullString: Boolean = false): String {
     var string = ""
 
@@ -819,12 +856,18 @@ object MessageContentFuzzer {
     return string
   }
 
+  /**
+   * Generate a random [ByteString].
+   */
   fun byteString(length: Int = 512): ByteString {
-    return random.nextBytes(512).toProtoByteString()
+    return random.nextBytes(length).toProtoByteString()
   }
 
-  fun attachmentPointer(): SignalServiceProtos.AttachmentPointer {
-    return SignalServiceProtos.AttachmentPointer.newBuilder().run {
+  /**
+   * Generate a random [AttachmentPointer].
+   */
+  fun attachmentPointer(): AttachmentPointer {
+    return AttachmentPointer.newBuilder().run {
       cdnKey = string()
       contentType = mediaTypes.random(random)
       key = byteString()
@@ -844,40 +887,11 @@ object MessageContentFuzzer {
     }
   }
 
+  /**
+   * Creates a server delivered timestamp that is always later than the envelope and server "received" timestamp.
+   */
   fun fuzzServerDeliveredTimestamp(envelopeTimestamp: Long): Long {
     return envelopeTimestamp + 10
-  }
-
-  fun fuzzMetadata(source: RecipientId, destination: RecipientId): EnvelopeMetadata {
-    return EnvelopeMetadata(
-      sourceServiceId = Recipient.resolved(source).requireServiceId(),
-      sourceE164 = null,
-      sourceDeviceId = 1,
-      sealedSender = true,
-      groupId = null,
-      destinationServiceId = Recipient.resolved(destination).requireServiceId()
-    )
-  }
-
-  fun <T : Any> fuzzProto(protoClazz: KClass<T>) {
-    val newBuilder: Any = protoClazz.declaredFunctions.first { it.name == "newBuilder" }.call()!!
-
-    val setters: List<KFunction<*>> = newBuilder::class.functions.filter { it.name.startsWith("set") && !it.name.contains("Bytes") }
-
-    for (setter in setters) {
-      val type = setter.parameters[1].type.jvmErasure
-      when {
-        type == String::class -> setter.call(newBuilder, string())
-        type == Int::class -> setter.call(newBuilder, random.nextInt())
-        type == Long::class -> setter.call(newBuilder, random.nextLong())
-        type == AttachmentPointer::class -> setter.call(newBuilder, attachmentPointer())
-        type == Boolean::class -> setter.call(newBuilder, random.nextBoolean())
-//        type.superclasses.contains(EnumLite::class) ->
-        else -> Log.e("CODY", "WHAT!?!?!?! ${setter.parameters[1].type.jvmErasure}")
-      }
-    }
-
-    Log.e("CODY", newBuilder::class.functions.first { it.name == "build" }.call(newBuilder).toString())
   }
 }
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)

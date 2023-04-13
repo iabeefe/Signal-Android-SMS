@@ -195,19 +195,33 @@ public final class LocalBackupJobApi29 extends BaseJob {
           valid = false;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         return new OperationResult.Success(valid);
       } catch (SecurityException | IOException e) {
         Log.w(TAG, "Unable to find backup file", e);
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       } catch (IOException e) {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      } catch (IOException e) {
+=======
+      } catch (SecurityException | IOException e) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         attempts++;
+<<<<<<< HEAD
         Log.w(TAG, "Unable to find backup file, attempt: " + attempts + "/" + MAX_STORAGE_ATTEMPTS);
       } catch (SecurityException e) {
         Log.w(TAG, "Getting security exception when attempting to read file, aborting", e);
 =======
       } catch (SecurityException | IOException e) {
         attempts++;
+        Log.w(TAG, "Unable to find backup file, attempt: " + attempts + "/" + MAX_STORAGE_ATTEMPTS, e);
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        Log.w(TAG, "Unable to find backup file, attempt: " + attempts + "/" + MAX_STORAGE_ATTEMPTS);
+      } catch (SecurityException e) {
+        Log.w(TAG, "Getting security exception when attempting to read file, aborting", e);
+=======
         Log.w(TAG, "Unable to find backup file, attempt: " + attempts + "/" + MAX_STORAGE_ATTEMPTS, e);
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       }

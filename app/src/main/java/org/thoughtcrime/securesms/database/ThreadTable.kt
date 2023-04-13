@@ -1906,9 +1906,14 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
     val threadRecipient = getRecipientForThreadId(record.threadId)
     val messageRequestAccepted = RecipientUtil.isMessageRequestAccepted(record.threadId, threadRecipient)
 <<<<<<< HEAD
+<<<<<<< HEAD
     val isHidden = threadRecipient?.isHidden ?: false
     val authorId = record.fromRecipient.id
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+    val isHidden = threadRecipient?.isHidden ?: false
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     val individualRecipientId = record.individualRecipient.id
 =======
     val isHidden = threadRecipient?.isHidden ?: false
@@ -1947,6 +1952,7 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
       } else {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         return Extra.forMessageRequest(authorId, isHidden)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         return Extra.forMessageRequest(individualRecipientId)
@@ -1958,6 +1964,11 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
 =======
         return Extra.forMessageRequest(authorId, isHidden)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        return Extra.forMessageRequest(individualRecipientId)
+=======
+        return Extra.forMessageRequest(individualRecipientId, isHidden)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       }
     }
 

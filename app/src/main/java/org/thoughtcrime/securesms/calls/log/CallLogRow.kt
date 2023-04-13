@@ -62,8 +62,15 @@ sealed class CallLogRow {
     override val id: Id = Id.Call(call.messageId)
 =======
     val groupCallState: GroupCallState,
+<<<<<<< HEAD
     override val id: Id = Id.Call(call.callId)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    override val id: Id = Id.Call(call.callId)
+=======
+    val children: Set<Long>,
+    override val id: Id = Id.Call(children)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   ) : CallLogRow()
 
   /**
@@ -94,6 +101,7 @@ sealed class CallLogRow {
 
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   sealed class Id {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -156,6 +164,11 @@ sealed class CallLogRow {
 <<<<<<< HEAD
 =======
     data class Call(val callId: Long) : Id()
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    data class Call(val callId: Long) : Id()
+=======
+    data class Call(val children: Set<Long>) : Id()
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     data class Call(val callId: Long) : Id()
 =======

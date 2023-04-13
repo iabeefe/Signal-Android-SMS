@@ -199,6 +199,7 @@ public class RecipientUtil {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   @WorkerThread
   public static Recipient.HiddenState getRecipientHiddenState(long threadId) {
     if (threadId < 0) {
@@ -231,6 +232,25 @@ public class RecipientUtil {
     return threadRecipient.isHidden();
   }
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+  @WorkerThread
+  public static boolean isRecipientHidden(long threadId) {
+    if (threadId < 0) {
+      return false;
+    }
+
+    ThreadTable threadTable     = SignalDatabase.threads();
+    Recipient   threadRecipient = threadTable.getRecipientForThreadId(threadId);
+
+    if (threadRecipient == null) {
+      return false;
+    }
+
+    return threadRecipient.isHidden();
+  }
+
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
   @WorkerThread
@@ -320,7 +340,14 @@ public class RecipientUtil {
            threadRecipient.isSystemContact()  ||
            !threadRecipient.isRegistered()    ||
 <<<<<<< HEAD
+<<<<<<< HEAD
            threadRecipient.isHidden();
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+           threadRecipient.isForceSmsSelection();
+=======
+           threadRecipient.isForceSmsSelection() ||
+           threadRecipient.isHidden();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
            threadRecipient.isForceSmsSelection();
 =======
@@ -379,10 +406,22 @@ public class RecipientUtil {
            threadRecipient.isSystemContact() ||
            !threadRecipient.isRegistered() ||
 <<<<<<< HEAD
+<<<<<<< HEAD
            (!threadRecipient.isHidden() && (
                hasSentMessageInThread(threadId) ||
                noSecureMessagesAndNoCallsInThread(threadId))
            );
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+           hasSentMessageInThread(threadId) ||
+           noSecureMessagesAndNoCallsInThread(threadId) ||
+           isPreMessageRequestThread(threadId);
+=======
+           (!threadRecipient.isHidden() && (
+               hasSentMessageInThread(threadId) ||
+               noSecureMessagesAndNoCallsInThread(threadId) ||
+               isPreMessageRequestThread(threadId))
+           );
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
            hasSentMessageInThread(threadId) ||
            noSecureMessagesAndNoCallsInThread(threadId) ||

@@ -25,6 +25,7 @@ import org.signal.core.util.insertInto
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
 import org.signal.core.util.delete
+import org.signal.core.util.flatten
 import org.signal.core.util.insertInto
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 import org.signal.core.util.logging.Log
@@ -32,7 +33,12 @@ import org.signal.core.util.readToList
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.signal.core.util.readToMap
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+import org.signal.core.util.readToMap
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
 import org.signal.core.util.readToMap
@@ -106,6 +112,7 @@ import org.whispersystems.signalservice.api.push.ServiceId
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.SyncMessage.CallEvent
 import java.util.UUID
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
@@ -115,6 +122,10 @@ import java.util.concurrent.TimeUnit
 =======
 import java.util.UUID
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+import java.util.concurrent.TimeUnit
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
 /**
  * Contains details for each 1:1 call.
@@ -144,6 +155,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
     private const val CALL_ID = "call_id"
     private const val MESSAGE_ID = "message_id"
     private const val PEER = "peer"
+    private const val CALL_LINK = "call_link"
     private const val TYPE = "type"
     private const val DIRECTION = "direction"
     private const val EVENT = "event"
@@ -203,6 +215,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
         $ID INTEGER PRIMARY KEY,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $CALL_ID INTEGER NOT NULL,
         $MESSAGE_ID INTEGER DEFAULT NULL REFERENCES ${MessageTable.TABLE_NAME} (${MessageTable.ID}) ON DELETE SET NULL,
         $PEER INTEGER NOT NULL REFERENCES ${RecipientTable.TABLE_NAME} (${RecipientTable.ID}) ON DELETE CASCADE,
@@ -218,8 +231,14 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
 =======
         $CALL_ID INTEGER NOT NULL,
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        $CALL_ID INTEGER NOT NULL UNIQUE,
+=======
+        $CALL_ID INTEGER NOT NULL,
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         $MESSAGE_ID INTEGER DEFAULT NULL REFERENCES ${MessageTable.TABLE_NAME} (${MessageTable.ID}) ON DELETE SET NULL,
         $PEER INTEGER DEFAULT NULL REFERENCES ${RecipientTable.TABLE_NAME} (${RecipientTable.ID}) ON DELETE CASCADE,
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -233,6 +252,10 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
         $MESSAGE_ID INTEGER DEFAULT NULL REFERENCES ${MessageTable.TABLE_NAME} (${MessageTable.ID}) ON DELETE SET NULL,
         $PEER INTEGER DEFAULT NULL REFERENCES ${RecipientTable.TABLE_NAME} (${RecipientTable.ID}) ON DELETE CASCADE,
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+        $CALL_LINK INTEGER DEFAULT NULL REFERENCES ${CallLinkTable.TABLE_NAME} (${CallLinkTable.ID}) ON DELETE CASCADE,
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         $TYPE INTEGER NOT NULL,
         $DIRECTION INTEGER NOT NULL,
 <<<<<<< HEAD
@@ -267,8 +290,16 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
         $EVENT INTEGER NOT NULL,
         $TIMESTAMP INTEGER NOT NULL,
         $RINGER INTEGER DEFAULT NULL,
+<<<<<<< HEAD
         $DELETION_TIMESTAMP INTEGER DEFAULT 0
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        $DELETION_TIMESTAMP INTEGER DEFAULT 0
+=======
+        $DELETION_TIMESTAMP INTEGER DEFAULT 0,
+        UNIQUE ($CALL_ID, $PEER, $CALL_LINK) ON CONFLICT FAIL,
+        CHECK (($PEER IS NULL AND $CALL_LINK IS NOT NULL) OR ($PEER IS NOT NULL AND $CALL_LINK IS NULL))
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       )
     """
 
@@ -448,9 +479,17 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   fun getCallById(callId: Long, recipientId: RecipientId): Call? {
     val query = getCallSelectionQuery(callId, recipientId)
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  fun getCallById(callId: Long): Call? {
+=======
+  fun getCallById(callId: Long, conversationId: CallConversationId): Call? {
+    val query = getCallSelectionQuery(callId, conversationId)
+
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   fun getCallById(callId: Long): Call? {
 =======
@@ -486,6 +525,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
         .readToMap { c -> c.requireLong(MESSAGE_ID) to Call.deserialize(c) }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     return maps.flatten()
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -493,6 +533,32 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
 =======
 
     return maps.flatten()
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    return calls
+=======
+
+    return maps.flatten()
+  }
+
+  /**
+   * @param callRowIds The CallTable.ID collection to query
+   *
+   * @return a map of raw MessageId -> Call
+   */
+  fun getCallsByRowIds(callRowIds: Collection<Long>): Map<Long, Call> {
+    val queries = SqlUtil.buildCollectionQuery(ID, callRowIds)
+
+    val maps = queries.map { query ->
+      readableDatabase
+        .select()
+        .from(TABLE_NAME)
+        .where("$EVENT != ${Event.serialize(Event.DELETE)} AND ${query.where}", query.whereArgs)
+        .run()
+        .readToMap { c -> c.requireLong(MESSAGE_ID) to Call.deserialize(c) }
+    }
+
+    return maps.flatten()
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   }
 
 <<<<<<< HEAD
@@ -733,7 +799,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
       }
 
       val callId = CallId.fromEra(peekGroupCallEraId).longValue()
-      val call = getCallById(callId)
+      val call = getCallById(callId, CallConversationId.Peer(groupRecipientId))
       val messageId: MessageId = if (call != null) {
         if (call.event == Event.DELETE) {
           Log.d(TAG, "Dropping group call update for deleted call.")
@@ -784,8 +850,9 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
     groupRecipientId: RecipientId,
     timestamp: Long
   ) {
+    val conversationId = CallConversationId.Peer(groupRecipientId)
     if (messageId != null) {
-      val call = getCallById(callId)
+      val call = getCallById(callId, conversationId)
       if (call == null) {
         val direction = if (sender == Recipient.self().id) Direction.OUTGOING else Direction.INCOMING
 
@@ -806,7 +873,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
         Log.d(TAG, "Inserted new call event from group call update message. Call Id: $callId")
       } else {
         if (timestamp < call.timestamp) {
-          setTimestamp(callId, timestamp)
+          setTimestamp(callId, conversationId, timestamp)
           Log.d(TAG, "Updated call event timestamp for call id $callId")
         }
 
@@ -857,8 +924,8 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
     handleGroupRingState(ringId, groupRecipientId, ringerRecipient.id, dateReceived, ringState)
   }
 
-  fun isRingCancelled(ringId: Long): Boolean {
-    val call = getCallById(ringId) ?: return false
+  fun isRingCancelled(ringId: Long, groupRecipientId: RecipientId): Boolean {
+    val call = getCallById(ringId, CallConversationId.Peer(groupRecipientId)) ?: return false
     return call.event != Event.RINGING
   }
 
@@ -871,7 +938,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
   ) {
     Log.d(TAG, "Processing group ring state update for $ringId in state $ringState")
 
-    val call = getCallById(ringId)
+    val call = getCallById(ringId, CallConversationId.Peer(groupRecipientId))
     if (call != null) {
       if (call.event == Event.DELETE) {
         Log.d(TAG, "Ignoring ring request for $ringId since its event has been deleted.")
@@ -1008,9 +1075,9 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
     Log.d(TAG, "Inserted a new group ring event for $callId with event $event")
   }
 
-  fun setTimestamp(callId: Long, timestamp: Long) {
+  fun setTimestamp(callId: Long, conversationId: CallConversationId, timestamp: Long) {
     writableDatabase.withinTransaction { db ->
-      val call = getCallById(callId)
+      val call = getCallById(callId, conversationId)
       if (call == null || call.event == Event.DELETE) {
         Log.d(TAG, "Refusing to update deleted call event.")
         return@withinTransaction
@@ -1038,14 +1105,14 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
       .run()
   }
 
-  fun deleteCallEvents(callIds: Set<Long>) {
-    val messageIds = getMessageIds(callIds)
+  fun deleteCallEvents(callRowIds: Set<Long>) {
+    val messageIds = getMessageIds(callRowIds)
     SignalDatabase.messages.deleteCallUpdates(messageIds)
     updateCallEventDeletionTimestamps()
   }
 
-  fun deleteAllCallEventsExcept(callIds: Set<Long>) {
-    val messageIds = getMessageIds(callIds)
+  fun deleteAllCallEventsExcept(callRowIds: Set<Long>) {
+    val messageIds = getMessageIds(callRowIds)
     SignalDatabase.messages.deleteAllCallUpdatesExcept(messageIds)
     updateCallEventDeletionTimestamps()
   }
@@ -1058,10 +1125,17 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
       .run()
   }
 
-  private fun getMessageIds(callIds: Set<Long>): Set<Long> {
+  private fun getCallSelectionQuery(callId: Long, conversationId: CallConversationId): SqlUtil.Query {
+    return when (conversationId) {
+      is CallConversationId.CallLink -> SqlUtil.Query("$CALL_ID = ? AND $CALL_LINK = ?", SqlUtil.buildArgs(callId, conversationId.callLinkId))
+      is CallConversationId.Peer -> SqlUtil.Query("$CALL_ID = ? AND $PEER = ?", SqlUtil.buildArgs(callId, conversationId.recipientId))
+    }
+  }
+
+  private fun getMessageIds(callRowIds: Set<Long>): Set<Long> {
     val queries = SqlUtil.buildCollectionQuery(
-      CALL_ID,
-      callIds,
+      ID,
+      callRowIds,
       "$MESSAGE_ID NOT NULL AND"
     )
 
@@ -1080,7 +1154,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
 
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   private fun getCallsCursor(isCount: Boolean, offset: Int, limit: Int, searchTerm: String?, filter: CallLogFilter): Cursor {
-    val filterClause = when (filter) {
+    val filterClause: SqlUtil.Query = when (filter) {
       CallLogFilter.ALL -> SqlUtil.buildQuery("$EVENT != ${Event.serialize(Event.DELETE)}")
       CallLogFilter.MISSED -> SqlUtil.buildQuery("$EVENT == ${Event.serialize(Event.MISSED)}")
 =======
@@ -1133,6 +1207,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
       result
     }
 
+<<<<<<< HEAD
     CallSyncEventJob.enqueueDeleteSyncEvents(toSync)
     ApplicationDependencies.getDeletedCallEventManager().scheduleIfNecessary()
     ApplicationDependencies.getDatabaseObserver().notifyCallUpdateObservers()
@@ -2626,6 +2701,11 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
 =======
     val queryClause: SqlUtil.Query = if (!searchTerm.isNullOrEmpty()) {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    val queryClause = if (!searchTerm.isNullOrEmpty()) {
+=======
+    val queryClause: SqlUtil.Query = if (!searchTerm.isNullOrEmpty()) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       val glob = SqlUtil.buildCaseInsensitiveGlobPattern(searchTerm)
       val selection =
         """
@@ -2653,6 +2733,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
       SqlUtil.buildQuery("")
     }
 
+<<<<<<< HEAD
     val whereClause = filterClause and queryClause
     val where = if (whereClause.where.isNotEmpty()) {
       "WHERE ${whereClause.where}"
@@ -2665,12 +2746,23 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
     }
 
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    val whereClause = filterClause and queryClause
+    val where = if (whereClause.where.isNotEmpty()) {
+      "WHERE ${whereClause.where}"
+    } else {
+      ""
+    }
+
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     val offsetLimit = if (limit > 0) {
       "LIMIT $offset,$limit"
     } else {
       ""
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     val projection = if (isCount) {
       "COUNT(*) OVER() as count,"
@@ -2709,8 +2801,18 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
     }
 
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+    val projection = if (isCount) {
+      "COUNT(*),"
+    } else {
+      "p.$ID, $TIMESTAMP, $EVENT, $DIRECTION, $PEER, p.$TYPE, $CALL_ID, $MESSAGE_ID, $RINGER, children, ${MessageTable.DATE_RECEIVED}, ${MessageTable.BODY},"
+    }
+
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     //language=sql
     val statement = """
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       SELECT $projection
@@ -2862,7 +2964,63 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
           ORDER BY
             $TIMESTAMP DESC
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      SELECT
+      ${if (isCount) "COUNT(*)," else "$TABLE_NAME.*, ${MessageTable.DATE_RECEIVED}, ${MessageTable.BODY},"}
+      LOWER(
+        COALESCE(
+          NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.SYSTEM_JOINED_NAME}, ''),
+          NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.SYSTEM_GIVEN_NAME}, ''),
+          NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.PROFILE_JOINED_NAME}, ''),
+          NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.PROFILE_GIVEN_NAME}, ''),
+          NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.USERNAME}, '')
+=======
+      SELECT $projection
+        LOWER(
+          COALESCE(
+            NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.SYSTEM_JOINED_NAME}, ''),
+            NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.SYSTEM_GIVEN_NAME}, ''),
+            NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.PROFILE_JOINED_NAME}, ''),
+            NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.PROFILE_GIVEN_NAME}, ''),
+            NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.USERNAME}, '')
+          )
+        ) AS sort_name
+      FROM (
+        WITH cte AS (
+          SELECT
+            $ID, $TIMESTAMP, $EVENT, $DIRECTION, $PEER, $TYPE, $CALL_ID, $MESSAGE_ID, $RINGER,
+            (
+              SELECT
+                $ID
+              FROM
+                $TABLE_NAME
+              WHERE
+                $TABLE_NAME.$DIRECTION = c.$DIRECTION
+                AND $TABLE_NAME.$PEER = c.$PEER
+                AND $TABLE_NAME.$TIMESTAMP - $TIME_WINDOW <= c.$TIMESTAMP
+                AND $TABLE_NAME.$TIMESTAMP >= c.$TIMESTAMP
+              ORDER BY
+                $TIMESTAMP DESC
+            ) as parent,
+            (
+              SELECT
+                group_concat($ID)
+              FROM
+                $TABLE_NAME
+              WHERE
+                $TABLE_NAME.$DIRECTION = c.$DIRECTION
+                AND $TABLE_NAME.$PEER = c.$PEER
+                AND c.$TIMESTAMP - $TIME_WINDOW <= $TABLE_NAME.$TIMESTAMP
+                AND c.$TIMESTAMP >= $TABLE_NAME.$TIMESTAMP
+            ) as children
+          FROM
+            $TABLE_NAME c
+          WHERE ${filterClause.where}
+          ORDER BY
+            $TIMESTAMP DESC
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         )
+<<<<<<< HEAD
 <<<<<<< HEAD
         SELECT
           *,
@@ -2912,9 +3070,34 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
       LEFT JOIN ${GroupTable.TABLE_NAME} ON ${GroupTable.TABLE_NAME}.${GroupTable.RECIPIENT_ID} = ${RecipientTable.TABLE_NAME}.${RecipientTable.ID}
       WHERE true_parent = p.$ID ${if (queryClause.where.isNotEmpty()) "AND ${queryClause.where}" else ""}
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      ) AS sort_name
+      FROM $TABLE_NAME
+      INNER JOIN ${RecipientTable.TABLE_NAME} ON ${RecipientTable.TABLE_NAME}.${RecipientTable.ID} = $TABLE_NAME.$PEER
+      INNER JOIN ${MessageTable.TABLE_NAME} ON ${MessageTable.TABLE_NAME}.${MessageTable.ID} = $TABLE_NAME.$MESSAGE_ID
+      $where
+      ORDER BY ${MessageTable.TABLE_NAME}.${MessageTable.DATE_RECEIVED} DESC
+=======
+        SELECT
+          *,
+          CASE
+            WHEN LAG (parent, 1, 0) OVER (
+              ORDER BY
+                $TIMESTAMP DESC
+            ) != parent THEN $ID
+            ELSE parent
+          END true_parent
+        FROM
+          cte
+      ) p
+      INNER JOIN ${RecipientTable.TABLE_NAME} ON ${RecipientTable.TABLE_NAME}.${RecipientTable.ID} = $PEER
+      INNER JOIN ${MessageTable.TABLE_NAME} ON ${MessageTable.TABLE_NAME}.${MessageTable.ID} = $MESSAGE_ID
+      WHERE true_parent = p.$ID ${if (queryClause.where.isNotEmpty()) "AND ${queryClause.where}" else ""}
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       $offsetLimit
     """
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     return readableDatabase.query(
       statement,
@@ -2957,6 +3140,14 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
       queryClause.whereArgs
     )
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    return readableDatabase.query(statement, whereClause.whereArgs)
+=======
+    return readableDatabase.query(
+      statement,
+      queryClause.whereArgs
+    )
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   }
 
   fun getCallsCount(searchTerm: String?, filter: CallLogFilter): Int {
@@ -2970,6 +3161,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
   }
 
   fun getCalls(offset: Int, limit: Int, searchTerm: String?, filter: CallLogFilter): List<CallLogRow.Call> {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     return getCallsCursor(false, offset, limit, searchTerm, filter).readToList { cursor ->
@@ -3003,7 +3195,15 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     return getCallsCursor(false, offset, limit, searchTerm, filter).readToList {
       val call = Call.deserialize(it)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    return getCallsCursor(false, offset, limit, searchTerm, filter).readToList {
+      val call = Call.deserialize(it)
+=======
+    return getCallsCursor(false, offset, limit, searchTerm, filter).readToList { cursor ->
+      val call = Call.deserialize(cursor)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       val recipient = Recipient.resolved(call.peer)
+<<<<<<< HEAD
       val date = it.requireLong(MessageTable.DATE_RECEIVED)
 <<<<<<< HEAD
 =======
@@ -3043,9 +3243,17 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
       val groupCallDetails = GroupCallUpdateDetailsUtil.parse(it.requireString(MessageTable.BODY))
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      val date = it.requireLong(MessageTable.DATE_RECEIVED)
+      val groupCallDetails = GroupCallUpdateDetailsUtil.parse(it.requireString(MessageTable.BODY))
+=======
+      val date = cursor.requireLong(MessageTable.DATE_RECEIVED)
+      val groupCallDetails = GroupCallUpdateDetailsUtil.parse(cursor.requireString(MessageTable.BODY))
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       CallLogRow.Call(
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         record = call,
@@ -3058,6 +3266,11 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
         canUserBeginCall = canUserBeginCall
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
         call = call,
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        call = call,
+=======
+        record = call,
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         peer = recipient,
 <<<<<<< HEAD
         date = date
@@ -3095,8 +3308,18 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
         date = date
 =======
         date = date,
+<<<<<<< HEAD
         groupCallState = CallLogRow.GroupCallState.fromDetails(groupCallDetails)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        groupCallState = CallLogRow.GroupCallState.fromDetails(groupCallDetails)
+=======
+        groupCallState = CallLogRow.GroupCallState.fromDetails(groupCallDetails),
+        children = cursor.requireNonNullString("children")
+          .split(',')
+          .map { it.toLong() }
+          .toSet()
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       )
     }
   }
@@ -3305,6 +3528,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   enum class ReadState(private val code: Int) {
     UNREAD(0),
     READ(1);
@@ -3320,6 +3544,14 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
     }
   }
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+  sealed interface CallConversationId {
+    data class Peer(val recipientId: RecipientId) : CallConversationId
+    data class CallLink(val callLinkId: Int) : CallConversationId
+  }
+
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
   sealed interface CallConversationId {

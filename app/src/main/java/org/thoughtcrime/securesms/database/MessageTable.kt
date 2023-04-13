@@ -1824,7 +1824,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         .run()
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       if (!silent) {
-        threads.update(threadId, true)
+        ThreadUpdateJob.enqueue(threadId)
         TrimThreadJob.enqueueAsync(threadId)
       }
 =======

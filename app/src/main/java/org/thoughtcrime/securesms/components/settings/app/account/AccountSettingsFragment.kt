@@ -33,9 +33,14 @@ import org.thoughtcrime.securesms.lock.v2.PinKeyboardType
 import org.thoughtcrime.securesms.lock.v2.SvrConstants
 import org.thoughtcrime.securesms.pin.RegistrationLockV2Dialog
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.registration.ui.RegistrationActivity
 import org.thoughtcrime.securesms.util.PlayStoreUtil
 import org.thoughtcrime.securesms.util.ServiceUtil
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import org.thoughtcrime.securesms.util.FeatureFlags
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.thoughtcrime.securesms.util.FeatureFlags
 =======
@@ -137,6 +142,7 @@ class AccountSettingsFragment : DSLSettingsFragment(R.string.AccountSettingsFrag
       )
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       clickPref(
         title = DSLSettingsText.from(R.string.AccountSettingsFragment__request_account_data),
         isEnabled = state.isDeprecatedOrUnregistered(),
@@ -178,6 +184,23 @@ class AccountSettingsFragment : DSLSettingsFragment(R.string.AccountSettingsFrag
           }
         )
       }
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      if (FeatureFlags.exportAccountData()) {
+        clickPref(
+          title = DSLSettingsText.from(R.string.AccountSettingsFragment__request_account_data),
+          onClick = {
+            Navigation.findNavController(requireView()).safeNavigate(R.id.action_accountSettingsFragment_to_exportAccountFragment)
+          }
+        )
+      }
+=======
+      clickPref(
+        title = DSLSettingsText.from(R.string.AccountSettingsFragment__request_account_data),
+        onClick = {
+          Navigation.findNavController(requireView()).safeNavigate(R.id.action_accountSettingsFragment_to_exportAccountFragment)
+        }
+      )
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       if (FeatureFlags.exportAccountData()) {
         clickPref(

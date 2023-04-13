@@ -22,7 +22,12 @@
         android:textColor="@color/conversation_item_sent_text_primary_color"
         android:textColorLink="@color/conversation_item_sent_text_primary_color"
 <<<<<<< HEAD
+<<<<<<< HEAD
         app:emoji_renderSpoilers="true"
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        android:textIsSelectable="true"
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         android:textIsSelectable="true"
 =======

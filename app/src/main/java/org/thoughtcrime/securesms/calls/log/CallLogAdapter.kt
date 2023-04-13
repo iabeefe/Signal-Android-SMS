@@ -338,6 +338,7 @@ class CallLogAdapter(
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       presentRecipientDetails(model.call.peer, model.call.searchQuery)
       presentCallInfo(model.call, model.call.date)
       presentCallType(model)
@@ -345,9 +346,16 @@ class CallLogAdapter(
       val event = model.call.call.event
       val direction = model.call.call.direction
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      val event = model.call.call.event
+      val direction = model.call.call.direction
+
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       binding.callRecipientAvatar.setAvatar(GlideApp.with(binding.callRecipientAvatar), model.call.peer, true)
       binding.callRecipientBadge.setBadgeFromRecipient(model.call.peer)
       binding.callRecipientName.text = model.call.peer.getDisplayName(context)
+<<<<<<< HEAD
       presentCallInfo(event, direction, model.call.date)
 <<<<<<< HEAD
       presentCallType(type, model.call.peer)
@@ -365,6 +373,11 @@ class CallLogAdapter(
       binding.callRecipientBadge.setBadgeFromRecipient(model.call.peer)
       binding.callRecipientName.text = model.call.peer.getDisplayName(context)
       presentCallInfo(model.call, model.call.date)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      presentCallInfo(event, direction, model.call.date)
+=======
+      presentCallInfo(model.call, model.call.date)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       presentCallType(model)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -374,6 +387,7 @@ class CallLogAdapter(
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     private fun presentRecipientDetails(recipient: Recipient, searchQuery: String?) {
       binding.callRecipientAvatar.setAvatar(Glide.with(binding.callRecipientAvatar), recipient, true)
@@ -399,6 +413,12 @@ class CallLogAdapter(
     private fun presentCallInfo(call: CallLogRow.Call, date: Long) {
       val callState = context.getString(getCallStateStringRes(call.record))
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    private fun presentCallInfo(event: CallTable.Event, direction: CallTable.Direction, date: Long) {
+=======
+    private fun presentCallInfo(call: CallLogRow.Call, date: Long) {
+      val callState = context.getString(getCallStateStringRes(call.record))
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       binding.callInfo.text = context.getString(
         R.string.CallLogAdapter__s_dot_s,
         if (call.children.size > 1) {
@@ -416,7 +436,13 @@ class CallLogAdapter(
       val color = ContextCompat.getColor(
         context,
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (call.record.isDisplayedAsMissedCallInUi) {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        if (event == CallTable.Event.MISSED) {
+=======
+        if (call.record.event == CallTable.Event.MISSED) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         if (event == CallTable.Event.MISSED) {
 =======
@@ -458,8 +484,14 @@ class CallLogAdapter(
       when (callType) {
 =======
     private fun presentCallType(model: CallModel) {
+<<<<<<< HEAD
       when (model.call.call.type) {
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      when (model.call.call.type) {
+=======
+      when (model.call.record.type) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         CallTable.Type.AUDIO_CALL -> {
           binding.callType.setImageResource(R.drawable.symbol_phone_24)
 <<<<<<< HEAD
@@ -612,6 +644,7 @@ class CallLogAdapter(
 
     @DrawableRes
 <<<<<<< HEAD
+<<<<<<< HEAD
     private fun getCallStateDrawableRes(call: CallTable.Call): Int {
       return when (call.messageType) {
         MessageTypes.MISSED_VIDEO_CALL_TYPE, MessageTypes.MISSED_AUDIO_CALL_TYPE -> R.drawable.symbol_missed_incoming_compact_16
@@ -652,10 +685,36 @@ class CallLogAdapter(
         }
         else -> error("Unexpected type ${call.type}")
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    private fun getCallStateDrawableRes(callEvent: CallTable.Event, callDirection: CallTable.Direction): Int {
+      if (callEvent == CallTable.Event.MISSED) {
+        return R.drawable.symbol_missed_incoming_compact_16
+      }
+
+      return if (callDirection == CallTable.Direction.INCOMING) {
+        R.drawable.symbol_arrow_downleft_compact_16
+      } else {
+        R.drawable.symbol_arrow_upright_compact_16
+=======
+    private fun getCallStateDrawableRes(call: CallTable.Call): Int {
+      return when (call.messageType) {
+        MessageTypes.MISSED_VIDEO_CALL_TYPE, MessageTypes.MISSED_AUDIO_CALL_TYPE -> R.drawable.symbol_missed_incoming_compact_16
+        MessageTypes.INCOMING_AUDIO_CALL_TYPE, MessageTypes.INCOMING_VIDEO_CALL_TYPE -> R.drawable.symbol_arrow_downleft_compact_16
+        MessageTypes.OUTGOING_AUDIO_CALL_TYPE, MessageTypes.OUTGOING_VIDEO_CALL_TYPE -> R.drawable.symbol_arrow_upright_compact_16
+        MessageTypes.GROUP_CALL_TYPE -> when {
+          call.event == CallTable.Event.MISSED -> R.drawable.symbol_missed_incoming_24
+          call.event == CallTable.Event.GENERIC_GROUP_CALL || call.event == CallTable.Event.JOINED -> R.drawable.symbol_group_compact_16
+          call.direction == CallTable.Direction.INCOMING -> R.drawable.symbol_arrow_downleft_compact_16
+          call.direction == CallTable.Direction.OUTGOING -> R.drawable.symbol_arrow_upright_compact_16
+          else -> throw AssertionError()
+        }
+        else -> error("Unexpected type ${call.type}")
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       }
     }
 
     @StringRes
+<<<<<<< HEAD
 <<<<<<< HEAD
     private fun getCallStateStringRes(call: CallTable.Call): Int {
       return when (call.messageType) {
@@ -694,6 +753,34 @@ class CallLogAdapter(
         MessageTypes.OUTGOING_VIDEO_CALL_TYPE -> R.string.CallLogAdapter__outgoing
         MessageTypes.GROUP_CALL_TYPE -> when {
           call.event == CallTable.Event.MISSED -> R.string.CallLogAdapter__missed
+          call.event == CallTable.Event.GENERIC_GROUP_CALL || call.event == CallTable.Event.JOINED -> R.string.CallPreference__group_call
+          call.direction == CallTable.Direction.INCOMING -> R.string.CallLogAdapter__incoming
+          call.direction == CallTable.Direction.OUTGOING -> R.string.CallLogAdapter__outgoing
+          else -> throw AssertionError()
+        }
+        else -> error("Unexpected type ${call.messageType}")
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    private fun getCallStateStringRes(callEvent: CallTable.Event, callDirection: CallTable.Direction): Int {
+      if (callEvent == CallTable.Event.MISSED) {
+        return R.string.CallLogAdapter__missed
+      }
+
+      return if (callDirection == CallTable.Direction.INCOMING) {
+        R.string.CallLogAdapter__incoming
+      } else {
+        R.string.CallLogAdapter__outgoing
+=======
+    private fun getCallStateStringRes(call: CallTable.Call): Int {
+      return when (call.messageType) {
+        MessageTypes.MISSED_VIDEO_CALL_TYPE -> R.string.CallLogAdapter__missed
+        MessageTypes.MISSED_AUDIO_CALL_TYPE -> R.string.CallLogAdapter__missed
+        MessageTypes.INCOMING_AUDIO_CALL_TYPE -> R.string.CallLogAdapter__incoming
+        MessageTypes.INCOMING_VIDEO_CALL_TYPE -> R.string.CallLogAdapter__incoming
+        MessageTypes.OUTGOING_AUDIO_CALL_TYPE -> R.string.CallLogAdapter__outgoing
+        MessageTypes.OUTGOING_VIDEO_CALL_TYPE -> R.string.CallLogAdapter__outgoing
+        MessageTypes.GROUP_CALL_TYPE -> when {
+          call.event == CallTable.Event.MISSED -> R.string.CallPreference__missed_group_call
           call.event == CallTable.Event.GENERIC_GROUP_CALL || call.event == CallTable.Event.JOINED -> R.string.CallPreference__group_call
           call.direction == CallTable.Direction.INCOMING -> R.string.CallLogAdapter__incoming
           call.direction == CallTable.Direction.OUTGOING -> R.string.CallLogAdapter__outgoing

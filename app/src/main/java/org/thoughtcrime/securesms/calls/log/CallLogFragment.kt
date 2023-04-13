@@ -573,6 +573,7 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     } else {
 <<<<<<< HEAD
+<<<<<<< HEAD
       val intent = ConversationSettingsActivity.forCall(requireContext(), callLogRow.peer, longArrayOf(callLogRow.call.messageId))
 =======
     } else {
@@ -589,6 +590,11 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
 =======
       val intent = ConversationSettingsActivity.forCall(requireContext(), callLogRow.peer, longArrayOf(callLogRow.call.messageId!!))
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      val intent = ConversationSettingsActivity.forCall(requireContext(), callLogRow.peer, longArrayOf(callLogRow.call.messageId!!))
+=======
+      val intent = ConversationSettingsActivity.forCall(requireContext(), callLogRow.peer, (callLogRow.id as CallLogRow.Id.Call).children.toLongArray())
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       startActivity(intent)
     } else {
       startActivity(CallLinkDetailsActivity.createIntent(requireContext(), callLogRow.peer.requireCallLinkRoomId()))

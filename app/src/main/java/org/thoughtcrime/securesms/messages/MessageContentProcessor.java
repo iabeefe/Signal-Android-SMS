@@ -1057,19 +1057,6 @@ public class MessageContentProcessor {
     return new MessageId(targetMessage.getId());
   }
 
-  // JW: add a reaction to a message. Thanks ClauZ for the implementation
-  private void setMessageReaction(@NonNull SignalServiceDataMessage message, @Nullable MessageRecord targetMessage, String reaction) {
-    if (targetMessage != null) {
-      String reactionEmoji = EmojiUtil.getCanonicalRepresentation(reaction);
-
-      MessageId      targetMessageId = new MessageId(targetMessage.getId());
-      ReactionRecord reactionRecord  = new ReactionRecord(reactionEmoji, Recipient.self().getId(), message.getTimestamp(), System.currentTimeMillis());
-
-      SignalDatabase.reactions().addReaction(targetMessageId, reactionRecord);
-      ApplicationDependencies.getMessageNotifier().updateNotification(context, ConversationId.fromMessageRecord(targetMessage), false);
-    }
-  }
-
   private @Nullable MessageId handleRemoteDelete(@NonNull SignalServiceContent content, @NonNull SignalServiceDataMessage message, @NonNull Recipient senderRecipient, boolean processingEarlyContent) {
     log(content.getTimestamp(), "Remote delete for message " + message.getRemoteDelete().get().getTargetSentTimestamp());
 
@@ -1077,6 +1064,7 @@ public class MessageContentProcessor {
 
     MessageRecord targetMessage = SignalDatabase.messages().getMessageFor(delete.getTargetSentTimestamp(), senderRecipient.getId());
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1106,6 +1094,12 @@ public class MessageContentProcessor {
     // JW: set a reaction to indicate the message was attempted to be remote deleted. Sender is myself, emoji is an exclamation.
     if (TextSecurePreferences.isIgnoreRemoteDelete(context)) { setMessageReaction(message, targetMessage, "\u2757"); return null; }
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    // JW: set a reaction to indicate the message was attempted to be remote deleted. Sender is myself, emoji is an exclamation.
+    if (TextSecurePreferences.isIgnoreRemoteDelete(context)) { setMessageReaction(message, targetMessage, "\u2757"); return null; }
+
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     if (targetMessage != null && RemoteDeleteUtil.isValidReceive(targetMessage, senderRecipient, content.getServerReceivedTimestamp())) {
 >>>>>>> 66c339aa35 (Added extra options)
       MessageTable db = targetMessage.isMms() ? SignalDatabase.messages() : SignalDatabase.messages();
@@ -1449,7 +1443,11 @@ public class MessageContentProcessor {
       return;
     }
 
-    CallTable.Call call = SignalDatabase.calls().getCallById(callId);
+    GroupId                      groupId            = GroupId.push(callEvent.getConversationId().toByteArray());
+    RecipientId                  recipientId        = Recipient.externalGroupExact(groupId).getId();
+    CallTable.CallConversationId callConversationId = new CallTable.CallConversationId.Peer(recipientId);
+
+    CallTable.Call call = SignalDatabase.calls().getCallById(callId, callConversationId);
     if (call != null) {
       if (call.getType() != type) {
         warn(envelopeTimestamp, "Group/Ad-hoc call event type mismatch, ignoring. timestamp: " + timestamp + " type: " + type + " direction: " + direction + " event: " + event + " hasPeer: " + callEvent.hasConversationId());
@@ -1462,7 +1460,7 @@ public class MessageContentProcessor {
           break;
         case ACCEPTED:
           if (call.getTimestamp() < callEvent.getTimestamp()) {
-            SignalDatabase.calls().setTimestamp(call.getCallId(), callEvent.getTimestamp());
+            SignalDatabase.calls().setTimestamp(call.getCallId(), callConversationId, callEvent.getTimestamp());
           }
 
           if (callEvent.getDirection() == SyncMessage.CallEvent.Direction.INCOMING) {
@@ -1477,9 +1475,6 @@ public class MessageContentProcessor {
           warn("Unsupported event type " + event + ". Ignoring. timestamp: " + timestamp + " type: " + type + " direction: " + direction + " event: " + event + " hasPeer: " + callEvent.hasConversationId());
       }
     } else {
-      GroupId     groupId     = GroupId.push(callEvent.getConversationId().toByteArray());
-      RecipientId recipientId = Recipient.externalGroupExact(groupId).getId();
-
       switch (event) {
         case DELETE:
           SignalDatabase.calls().insertDeletedGroupCallFromSyncEvent(callEvent.getId(), recipientId, direction, timestamp);
@@ -1698,7 +1693,6 @@ public class MessageContentProcessor {
   }
 
   private void handleSynchronizeViewOnceOpenMessage(@NonNull SignalServiceContent content, @NonNull ViewOnceOpenMessage openMessage, long envelopeTimestamp, boolean processingEarlyContent) {
-    if (TextSecurePreferences.isKeepViewOnceMessages(context)) return; // JW
     log(envelopeTimestamp, "Handling a view-once open for message: " + openMessage.getTimestamp());
 
     RecipientId   author    = Recipient.externalPush(openMessage.getSender()).getId();
@@ -2164,7 +2158,6 @@ public class MessageContentProcessor {
     MessageTable database = SignalDatabase.messages();
     database.beginTransaction();
 
-    boolean viewOnce = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.isViewOnce(); // JW
     try {
       Optional<QuoteModel>        quote          = getValidatedQuote(message.getQuote());
       Optional<List<Contact>>     sharedContacts = getContacts(message.getSharedContacts());
@@ -2185,7 +2178,7 @@ public class MessageContentProcessor {
                                                                    -1,
                                                                    TimeUnit.SECONDS.toMillis(message.getExpiresInSeconds()),
                                                                    false,
-                                                                   viewOnce, // JW
+                                                                   message.isViewOnce(),
                                                                    content.isNeedsReceipt(),
                                                                    message.getBody(),
                                                                    message.getGroupContext(),
@@ -2230,12 +2223,7 @@ public class MessageContentProcessor {
       ApplicationDependencies.getMessageNotifier().updateNotification(context, ConversationId.forConversation(insertResult.get().getThreadId()));
       TrimThreadJob.enqueueAsync(insertResult.get().getThreadId());
 
-      // JW: add a [1] reaction to indicate the message was viewOnce.
-      if (TextSecurePreferences.isKeepViewOnceMessages(context) && message.isViewOnce()) {
-        MessageRecord targetMessage = SignalDatabase.messages().getMessageFor(message.getTimestamp(), senderRecipient.getId());
-        setMessageReaction(message, targetMessage, "\u0031\uFE0F\u20E3");
-      }
-      if (viewOnce) { // JW
+      if (message.isViewOnce()) {
         ApplicationDependencies.getViewOnceMessageManager().scheduleIfNecessary();
       }
 
@@ -2559,6 +2547,7 @@ public class MessageContentProcessor {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
 ||||||| parent of 775ec008cc (Added extra options)
     boolean                     viewOnce        = message.getDataMessage().get().isViewOnce();
@@ -2587,6 +2576,11 @@ public class MessageContentProcessor {
 =======
     boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
 >>>>>>> 246bbae757 (Added extra options)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
+=======
+    boolean                     viewOnce        = message.getDataMessage().get().isViewOnce();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     BodyRangeList               bodyRanges      = getBodyRangeList(message.getDataMessage().get().getBodyRanges());
 =======
     boolean                     viewOnce        = TextSecurePreferences.isKeepViewOnceMessages(context) ? false : message.getDataMessage().get().isViewOnce(); // JW
