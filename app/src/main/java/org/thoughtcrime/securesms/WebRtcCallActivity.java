@@ -152,6 +152,7 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
   private ThrottledDebouncer               requestNewSizesThrottle;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private PictureInPictureParams.Builder   pipBuilderParams;
   private LifecycleDisposable              lifecycleDisposable;
   private long                             lastCallLinkDisconnectDialogShowTime;
@@ -162,6 +163,10 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
   private Disposable                       ephemeralStateDisposable = Disposable.empty();
   private CallPermissionsDialogController  callPermissionsDialogController = new CallPermissionsDialogController();
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+  private PictureInPictureParams.Builder   pipBuilderParams;
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
   private PictureInPictureParams.Builder   pipBuilderParams;
@@ -207,8 +212,13 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     initializeViewModel(isLandscapeEnabled);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     initializeViewModel(isLandscapeEnabled);
+    initializePictureInPictureParams();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
     initializePictureInPictureParams();
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -397,6 +407,7 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   private boolean enterPipModeIfPossible() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (viewModel.canEnterPipMode() && isSystemPipEnabledAndAvailable()) {
       PictureInPictureParams params = new PictureInPictureParams.Builder()
           .setAspectRatio(new Rational(9, 16))
@@ -429,7 +440,21 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
           Log.w(TAG, "Device lied to us about supporting PiP.", e);
           return false;
         }
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    if (viewModel.canEnterPipMode() && isSystemPipEnabledAndAvailable()) {
+      PictureInPictureParams params = new PictureInPictureParams.Builder()
+          .setAspectRatio(new Rational(9, 16))
+          .build();
+      enterPictureInPictureMode(params);
+      CallParticipantsListDialog.dismiss(getSupportFragmentManager());
+=======
+    if (isSystemPipEnabledAndAvailable()) {
+      if (viewModel.canEnterPipMode()) {
+        enterPictureInPictureMode(pipBuilderParams.build());
+        CallParticipantsListDialog.dismiss(getSupportFragmentManager());
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
+<<<<<<< HEAD
         CallParticipantsListDialog.dismiss(getSupportFragmentManager());
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
@@ -453,6 +478,15 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
       if (Build.VERSION.SDK_INT >= 31) {
         pipBuilderParams.setAutoEnterEnabled(false);
       }
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      return true;
+=======
+        return true;
+      }
+      if (Build.VERSION.SDK_INT >= 31) {
+        pipBuilderParams.setAutoEnterEnabled(false);
+      }
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       return true;
 =======
@@ -683,6 +717,19 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     if (event instanceof WebRtcCallViewModel.Event.StartCall) {
       startCall(((WebRtcCallViewModel.Event.StartCall) event).isVideoCall());
 =======
+  private void initializePictureInPictureParams() {
+    if (isSystemPipEnabledAndAvailable()) {
+      pipBuilderParams = new PictureInPictureParams.Builder();
+      pipBuilderParams.setAspectRatio(new Rational(9, 16));
+      if (Build.VERSION.SDK_INT >= 31) {
+        pipBuilderParams.setAutoEnterEnabled(true);
+      }
+      if (Build.VERSION.SDK_INT >= 26) {
+        setPictureInPictureParams(pipBuilderParams.build());
+      }
+    }
+  }
+
   private void initializePictureInPictureParams() {
     if (isSystemPipEnabledAndAvailable()) {
       pipBuilderParams = new PictureInPictureParams.Builder();

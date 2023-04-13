@@ -28,6 +28,7 @@ import org.signal.core.util.concurrent.LifecycleDisposable
 import org.thoughtcrime.securesms.R
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.messagerequests.MessageRequestState
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.thoughtcrime.securesms.conversation.ConversationGroupViewModel.GroupActiveState
@@ -37,13 +38,23 @@ import org.thoughtcrime.securesms.conversation.ConversationGroupViewModel.GroupA
 import org.thoughtcrime.securesms.conversation.ui.groupcall.GroupCallViewModel
 =======
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import org.thoughtcrime.securesms.conversation.ConversationGroupViewModel.GroupActiveState
+import org.thoughtcrime.securesms.conversation.ui.groupcall.GroupCallViewModel
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.thoughtcrime.securesms.database.ThreadTable
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+<<<<<<< HEAD
 <<<<<<< HEAD
 import org.thoughtcrime.securesms.recipients.LiveRecipient
 =======
 import org.thoughtcrime.securesms.database.ThreadTable
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import org.thoughtcrime.securesms.recipients.LiveRecipient
+=======
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.thoughtcrime.securesms.recipients.LiveRecipient
@@ -64,6 +75,7 @@ internal object ConversationOptionsMenu {
   class Provider(
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     private val callback: Callback,
     private val lifecycleDisposable: LifecycleDisposable,
     var afterFirstRenderMode: Boolean = false
@@ -79,12 +91,24 @@ internal object ConversationOptionsMenu {
 =======
     private val callback: Callback,
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    private val dependencies: Dependencies,
+    private val optionsMenuProviderCallback: Callback,
+=======
+    private val callback: Callback,
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     private val lifecycleDisposable: LifecycleDisposable
+<<<<<<< HEAD
 <<<<<<< HEAD
   ) : MenuProvider, Dependencies by dependencies {
 =======
     private val callback: Callback,
     private val lifecycleDisposable: LifecycleDisposable
+  ) : MenuProvider {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  ) : MenuProvider, Dependencies by dependencies {
+=======
   ) : MenuProvider {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -142,6 +166,7 @@ internal object ConversationOptionsMenu {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       menu.clear()
@@ -212,6 +237,11 @@ internal object ConversationOptionsMenu {
 =======
       if (isPushAvailable) {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      if (viewModel.isPushAvailable) {
+=======
+      if (isPushAvailable) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         if (recipient!!.expiresInSeconds > 0) {
 =======
       if (isPushAvailable) {
@@ -231,8 +261,16 @@ internal object ConversationOptionsMenu {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (!recipient.isGroup) {
         if (isPushAvailable) {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      if (isSingleConversation()) {
+        if (viewModel.isPushAvailable) {
+=======
+      if (recipient?.isGroup == false) {
+        if (isPushAvailable) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       if (isSingleConversation()) {
         if (viewModel.isPushAvailable) {
@@ -274,7 +312,13 @@ internal object ConversationOptionsMenu {
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       } else if (recipient.isGroup) {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      } else if (isGroupConversation()) {
+=======
+      } else if (recipient?.isGroup == true) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       } else if (isGroupConversation()) {
 =======
@@ -292,6 +336,12 @@ internal object ConversationOptionsMenu {
           }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+          showGroupCallingTooltip()
+=======
+          callback.showGroupCallingTooltip()
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
           showGroupCallingTooltip()
 =======
@@ -306,8 +356,14 @@ internal object ConversationOptionsMenu {
         menuInflater.inflate(R.menu.conversation_group_options, menu)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         if (!isPushGroupConversation()) {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        if (!isPushGroupConversation()) {
+=======
+        if (!recipient.isPushGroup) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         if (!isPushGroupConversation()) {
 =======
@@ -337,6 +393,7 @@ internal object ConversationOptionsMenu {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (!recipient.isGroup && !isPushAvailable && !recipient.isReleaseNotes) {
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       if (isInMessageRequest() && !recipient!!.isBlocked) {
@@ -345,9 +402,15 @@ internal object ConversationOptionsMenu {
 =======
       if (isInMessageRequest && !recipient!!.isBlocked) {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      if (isInMessageRequest() && !recipient!!.isBlocked) {
+=======
+      if (isInMessageRequest && !recipient!!.isBlocked) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         hideMenuItem(menu, R.id.menu_conversation_settings)
       }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
       if (isSingleConversation() && !viewModel.isPushAvailable && !recipient!!.isReleaseNotes) {
 =======
@@ -362,9 +425,15 @@ internal object ConversationOptionsMenu {
 =======
       if (recipient?.isGroup == false && !isPushAvailable && !recipient.isReleaseNotes) {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      if (isSingleConversation() && !viewModel.isPushAvailable && !recipient!!.isReleaseNotes) {
+=======
+      if (recipient?.isGroup == false && !isPushAvailable && !recipient.isReleaseNotes) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         menuInflater.inflate(R.menu.conversation_insecure, menu)
       }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       if (recipient.isMuted) menuInflater.inflate(R.menu.conversation_muted, menu) else menuInflater.inflate(R.menu.conversation_unmuted, menu)
@@ -378,10 +447,21 @@ internal object ConversationOptionsMenu {
 =======
       if (recipient?.isMuted == true) menuInflater.inflate(R.menu.conversation_muted, menu) else menuInflater.inflate(R.menu.conversation_unmuted, menu)
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      if (recipient != null && recipient.isMuted) menuInflater.inflate(R.menu.conversation_muted, menu) else menuInflater.inflate(R.menu.conversation_unmuted, menu)
+=======
+      if (recipient?.isMuted == true) menuInflater.inflate(R.menu.conversation_muted, menu) else menuInflater.inflate(R.menu.conversation_unmuted, menu)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (!recipient.isGroup && recipient.contactUri == null && !recipient.isReleaseNotes && !recipient.isSelf && recipient.hasE164 && recipient.shouldShowE164) {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      if (isSingleConversation() && getRecipient()!!.contactUri == null && !recipient!!.isReleaseNotes && !recipient.isSelf && recipient.hasE164()) {
+=======
+      if (recipient?.isGroup == false && recipient.contactUri == null && !recipient.isReleaseNotes && !recipient.isSelf && recipient.hasE164()) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       if (isSingleConversation() && getRecipient()!!.contactUri == null && !recipient!!.isReleaseNotes && !recipient.isSelf && recipient.hasE164()) {
 =======
@@ -401,9 +481,15 @@ internal object ConversationOptionsMenu {
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       if (recipient != null && recipient.isSelf) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (viewModel.isPushAvailable) {
 =======
       if (recipient != null && recipient.isSelf) {
+        if (isPushAvailable) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        if (viewModel.isPushAvailable) {
+=======
         if (isPushAvailable) {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -419,8 +505,16 @@ internal object ConversationOptionsMenu {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (recipient.isBlocked) {
         if (isPushAvailable) {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      if (recipient != null && recipient.isBlocked) {
+        if (viewModel.isPushAvailable) {
+=======
+      if (recipient?.isBlocked == true) {
+        if (isPushAvailable) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       if (recipient != null && recipient.isBlocked) {
         if (viewModel.isPushAvailable) {
@@ -445,7 +539,13 @@ internal object ConversationOptionsMenu {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (recipient.isReleaseNotes) {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      if (recipient != null && recipient.isReleaseNotes) {
+=======
+      if (recipient?.isReleaseNotes == true) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       if (recipient != null && recipient.isReleaseNotes) {
 =======
@@ -466,7 +566,13 @@ internal object ConversationOptionsMenu {
         hideMenuItem(menu, R.id.menu_conversation_settings)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       } else if (recipient.isGroup) {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      } else if (isGroupConversation()) {
+=======
+      } else if (recipient?.isGroup == true) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       } else if (isGroupConversation()) {
 =======
@@ -496,6 +602,7 @@ internal object ConversationOptionsMenu {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       callback.onOptionsMenuCreated(menu)
     }
 
@@ -515,10 +622,16 @@ internal object ConversationOptionsMenu {
 =======
       callback.onOptionsMenuCreated(menu)
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      optionsMenuProviderCallback.onOptionsMenuCreated(menu)
+=======
+      callback.onOptionsMenuCreated(menu)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
       when (menuItem.itemId) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         R.id.menu_call_secure -> callback.handleDial()
@@ -630,6 +743,47 @@ internal object ConversationOptionsMenu {
         R.id.menu_create_bubble -> callback.handleCreateBubble()
         R.id.home -> callback.handleGoHome()
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        R.id.menu_call_secure -> optionsMenuProviderCallback.handleDial(getRecipient(), true)
+        R.id.menu_video_secure -> optionsMenuProviderCallback.handleVideo(getRecipient())
+        R.id.menu_call_insecure -> optionsMenuProviderCallback.handleDial(getRecipient(), false)
+        R.id.menu_view_media -> optionsMenuProviderCallback.handleViewMedia()
+        R.id.menu_add_shortcut -> optionsMenuProviderCallback.handleAddShortcut()
+        R.id.menu_search -> optionsMenuProviderCallback.handleSearch()
+        R.id.menu_add_to_contacts -> optionsMenuProviderCallback.handleAddToContacts()
+        R.id.menu_group_recipients -> optionsMenuProviderCallback.handleDisplayGroupRecipients()
+        R.id.menu_distribution_broadcast -> optionsMenuProviderCallback.handleDistributionBroadcastEnabled(menuItem)
+        R.id.menu_distribution_conversation -> optionsMenuProviderCallback.handleDistributionConversationEnabled(menuItem)
+        R.id.menu_group_settings -> optionsMenuProviderCallback.handleManageGroup()
+        R.id.menu_leave -> optionsMenuProviderCallback.handleLeavePushGroup()
+        R.id.menu_invite -> optionsMenuProviderCallback.handleInviteLink()
+        R.id.menu_mute_notifications -> optionsMenuProviderCallback.handleMuteNotifications()
+        R.id.menu_unmute_notifications -> optionsMenuProviderCallback.handleUnmuteNotifications()
+        R.id.menu_conversation_settings -> optionsMenuProviderCallback.handleConversationSettings()
+        R.id.menu_expiring_messages_off, R.id.menu_expiring_messages -> optionsMenuProviderCallback.handleSelectMessageExpiration()
+        R.id.menu_create_bubble -> optionsMenuProviderCallback.handleCreateBubble()
+        R.id.home -> optionsMenuProviderCallback.handleGoHome()
+=======
+        R.id.menu_call_secure -> callback.handleDial(true)
+        R.id.menu_video_secure -> callback.handleVideo()
+        R.id.menu_call_insecure -> callback.handleDial(false)
+        R.id.menu_view_media -> callback.handleViewMedia()
+        R.id.menu_add_shortcut -> callback.handleAddShortcut()
+        R.id.menu_search -> callback.handleSearch()
+        R.id.menu_add_to_contacts -> callback.handleAddToContacts()
+        R.id.menu_group_recipients -> callback.handleDisplayGroupRecipients()
+        R.id.menu_distribution_broadcast -> callback.handleDistributionBroadcastEnabled(menuItem)
+        R.id.menu_distribution_conversation -> callback.handleDistributionConversationEnabled(menuItem)
+        R.id.menu_group_settings -> callback.handleManageGroup()
+        R.id.menu_leave -> callback.handleLeavePushGroup()
+        R.id.menu_invite -> callback.handleInviteLink()
+        R.id.menu_mute_notifications -> callback.handleMuteNotifications()
+        R.id.menu_unmute_notifications -> callback.handleUnmuteNotifications()
+        R.id.menu_conversation_settings -> callback.handleConversationSettings()
+        R.id.menu_expiring_messages_off, R.id.menu_expiring_messages -> callback.handleSelectMessageExpiration()
+        R.id.menu_create_bubble -> callback.handleCreateBubble()
+        R.id.home -> callback.handleGoHome()
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         else -> return false
       }
 
@@ -641,6 +795,7 @@ internal object ConversationOptionsMenu {
         menu.findItem(menuItem).isVisible = false
       }
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -665,11 +820,21 @@ internal object ConversationOptionsMenu {
     private fun isPushGroupConversation(): Boolean = getRecipient()?.isPushGroup == true
 =======
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+
+    private fun isSingleConversation(): Boolean = getRecipient()?.isGroup == false
+
+    private fun isGroupConversation(): Boolean = getRecipient()?.isGroup == true
+
+    private fun isPushGroupConversation(): Boolean = getRecipient()?.isPushGroup == true
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   }
 
   /**
    * Data snapshot for building out menu state.
    */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   data class Snapshot(
@@ -741,11 +906,40 @@ internal object ConversationOptionsMenu {
     val isInBubble: Boolean
   )
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  interface Dependencies {
+    val liveRecipient: LiveRecipient?
+    val viewModel: ConversationViewModel
+    val groupViewModel: ConversationGroupViewModel
+    val groupCallViewModel: GroupCallViewModel?
+    val titleView: ConversationTitleView
+    val distributionType: Int
+    val threadId: Long
+    fun isInMessageRequest(): Boolean
+    fun showGroupCallingTooltip()
+    fun isInBubble(): Boolean
+  }
+=======
+  data class Snapshot(
+    val recipient: Recipient?,
+    val isPushAvailable: Boolean,
+    val canShowAsBubble: Observable<Boolean>,
+    val isActiveGroup: Boolean,
+    val isActiveV2Group: Boolean,
+    val isInActiveGroup: Boolean,
+    val hasActiveGroupCall: Boolean,
+    val distributionType: Int,
+    val threadId: Long,
+    val isInMessageRequest: Boolean,
+    val isInBubble: Boolean
+  )
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
   /**
    * Callbacks abstraction for the converstaion options menu
    */
   interface Callback {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     fun getSnapshot(): Snapshot
@@ -761,12 +955,25 @@ internal object ConversationOptionsMenu {
     fun getSnapshot(): Snapshot
 
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+    fun getSnapshot(): Snapshot
+
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     fun onOptionsMenuCreated(menu: Menu)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     fun handleVideo()
     fun handleDial()
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    fun handleVideo(recipient: Recipient?)
+    fun handleDial(recipient: Recipient?, isSecure: Boolean)
+=======
+    fun handleVideo()
+    fun handleDial(isSecure: Boolean)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     fun handleVideo(recipient: Recipient?)
     fun handleDial(recipient: Recipient?, isSecure: Boolean)
@@ -797,6 +1004,7 @@ internal object ConversationOptionsMenu {
     fun handleGoHome()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     fun showExpiring(recipient: Recipient)
     fun clearExpiring()
     fun handleFormatText(@IdRes id: Int)
@@ -805,6 +1013,12 @@ internal object ConversationOptionsMenu {
     fun handleReportSpam()
     fun handleMessageRequestAccept()
     fun handleDeleteConversation()
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+    fun showExpiring(recipient: Recipient)
+    fun clearExpiring()
+    fun showGroupCallingTooltip()
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
     fun showExpiring(recipient: Recipient)

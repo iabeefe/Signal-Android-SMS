@@ -159,6 +159,7 @@ inline fun <T> Cursor.readToList(predicate: (T) -> Boolean = { true }, mapper: (
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 @JvmOverloads
 inline fun <K, V> Cursor.readToMap(predicate: (Pair<K, V>) -> Boolean = { true }, mapper: (Cursor) -> Pair<K, V>): Map<K, V> {
   return readToList(predicate, mapper).associate { it }
@@ -181,6 +182,14 @@ inline fun <K, V> Cursor.groupBy(mapper: (Cursor) -> Pair<K, V>): Map<K, List<V>
   return map
 }
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+@JvmOverloads
+inline fun <K, V> Cursor.readToMap(predicate: (Pair<K, V>) -> Boolean = { true }, mapper: (Cursor) -> Pair<K, V>): Map<K, V> {
+  return readToList(predicate, mapper).associate { it }
+}
+
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
 @JvmOverloads

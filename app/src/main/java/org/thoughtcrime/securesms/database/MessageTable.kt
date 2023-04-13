@@ -4284,9 +4284,25 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (messageId < 0) {
       Log.w(TAG, "Failed to insert media message (${retrieved.sentTimeMillis}, ${retrieved.from}, ThreadId::$threadId})! Likely a duplicate.")
       return Optional.empty()
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    val isNotStoryGroupReply = retrieved.parentStoryId == null || !retrieved.parentStoryId.isGroupReply()
+
+    if (!MessageTypes.isPaymentsActivated(mailbox) && !MessageTypes.isPaymentsRequestToActivate(mailbox) && !MessageTypes.isExpirationTimerUpdate(mailbox) && !retrieved.storyType.isStory && isNotStoryGroupReply) {
+      val incrementUnreadMentions = retrieved.mentions.isNotEmpty() && retrieved.mentions.any { it.recipientId == Recipient.self().id }
+      threads.incrementUnread(threadId, 1, if (incrementUnreadMentions) 1 else 0)
+      threads.update(threadId, true)
+=======
+    val isNotStoryGroupReply = retrieved.parentStoryId == null || !retrieved.parentStoryId.isGroupReply()
+
+    if (!MessageTypes.isPaymentsActivated(mailbox) && !MessageTypes.isPaymentsRequestToActivate(mailbox) && !MessageTypes.isExpirationTimerUpdate(mailbox) && !retrieved.storyType.isStory && isNotStoryGroupReply) {
+      val incrementUnreadMentions = retrieved.mentions.isNotEmpty() && retrieved.mentions.any { it.recipientId == Recipient.self().id }
+      threads.incrementUnread(threadId, 1, if (incrementUnreadMentions) 1 else 0)
+      ThreadUpdateJob.enqueue(threadId)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     }
 
     if (editedMessage != null) {

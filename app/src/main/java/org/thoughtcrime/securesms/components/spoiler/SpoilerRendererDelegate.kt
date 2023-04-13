@@ -7,9 +7,15 @@ import android.text.Layout
 import android.text.Spanned
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+import android.view.View
+import android.view.View.OnAttachStateChangeListener
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
 import android.view.View
@@ -46,9 +52,14 @@ class SpoilerRendererDelegate @JvmOverloads constructor(
   private val single: SpoilerRenderer
   private val multi: SpoilerRenderer
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   private val single: SpoilerRenderer
   private val multi: SpoilerRenderer
+  private val spoilerDrawable: SpoilerDrawable
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
   private val spoilerDrawable: SpoilerDrawable
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -60,6 +71,7 @@ class SpoilerRendererDelegate @JvmOverloads constructor(
 <<<<<<< HEAD
   private var canAnimate = false
 
+<<<<<<< HEAD
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
 <<<<<<< HEAD
@@ -68,6 +80,12 @@ class SpoilerRendererDelegate @JvmOverloads constructor(
 
 =======
 
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  private var spoilerDrawablePool = mutableMapOf<Annotation, List<SpoilerDrawable>>()
+  private var nextSpoilerDrawablePool = mutableMapOf<Annotation, List<SpoilerDrawable>>()
+
+=======
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   private var spoilerDrawablePool = mutableMapOf<Annotation, List<SpoilerDrawable>>()
@@ -113,6 +131,7 @@ class SpoilerRendererDelegate @JvmOverloads constructor(
     textColor = view.textColors.defaultColor
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     spoilerDrawable = SpoilerDrawable(textColor)
     renderer = SpoilerRenderer(
       spoilerDrawable = spoilerDrawable,
@@ -138,6 +157,17 @@ class SpoilerRendererDelegate @JvmOverloads constructor(
         })
       }
     })
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+    spoilerDrawable = SpoilerDrawable(textColor)
+    single = SingleLineSpoilerRenderer(spoilerDrawable)
+    multi = MultiLineSpoilerRenderer(spoilerDrawable)
+
+    view.addOnAttachStateChangeListener(object : OnAttachStateChangeListener {
+      override fun onViewDetachedFromWindow(v: View) = stopAnimating()
+      override fun onViewAttachedToWindow(v: View) = Unit
+    })
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
     spoilerDrawable = SpoilerDrawable(textColor)
@@ -206,6 +236,7 @@ class SpoilerRendererDelegate @JvmOverloads constructor(
       val renderer: SpoilerRenderer = if (measurements.startLine == measurements.endLine) single else multi
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       renderer.draw(canvas, layout, measurements.startLine, measurements.endLine, measurements.startOffset, measurements.endOffset, drawables)
       nextSpoilerDrawablePool[annotation] = drawables
 =======
@@ -219,9 +250,16 @@ class SpoilerRendererDelegate @JvmOverloads constructor(
 =======
       renderer.draw(canvas, layout, measurements.startLine, measurements.endLine, measurements.startOffset, measurements.endOffset)
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      renderer.draw(canvas, layout, measurements.startLine, measurements.endLine, measurements.startOffset, measurements.endOffset, drawables)
+      nextSpoilerDrawablePool[annotation] = drawables
+=======
+      renderer.draw(canvas, layout, measurements.startLine, measurements.endLine, measurements.startOffset, measurements.endOffset)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       hasSpoilersToRender = true
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     if (hasSpoilersToRender && systemAnimationsEnabled) {
@@ -230,6 +268,13 @@ class SpoilerRendererDelegate @JvmOverloads constructor(
     spoilerDrawablePool = nextSpoilerDrawablePool
     nextSpoilerDrawablePool = temporaryPool
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    val temporaryPool = spoilerDrawablePool
+    spoilerDrawablePool = nextSpoilerDrawablePool
+    nextSpoilerDrawablePool = temporaryPool
+
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     val temporaryPool = spoilerDrawablePool
     spoilerDrawablePool = nextSpoilerDrawablePool

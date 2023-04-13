@@ -3294,12 +3294,19 @@
     <string name="ConversationUpdateItem_activate_payments">Activate payments</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Update item alerting the user they hid this person and that they can message them to unhide them -->
     <string name="ConversationUpdateItem_hidden_contact_message_to_add_back">You have removed this person, messaging them again will add them back to your list.</string>
     <!-- Update item button text shown for the accepted message request update message -->
     <string name="ConversationUpdateItem_options">Options</string>
     <!-- Update item button text shown for a profile name change. -->
     <string name="ConversationUpdateItem_update">Update</string>
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+
+=======
+    <!-- Update item alerting the user they hid this person and that they can message them to unhide them -->
+    <string name="ConversationUpdateItem_hidden_contact_message_to_add_back">You have removed this person, messaging them again will add them back to your list.</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
 =======
@@ -7010,6 +7017,7 @@
     <string name="CallLogAdapter__return">Return</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Call state template when there is more than one call collapsed into a single row. D is a number > 1 and S is a call info string (like Missed) -->
     <string name="CallLogAdapter__d_s">(%1$d) %2$s</string>
     <!-- Status text on call links -->
@@ -7049,6 +7057,11 @@
     <!-- Displayed on Group Call button if user is in the call -->
     <string name="CallLogAdapter__return">Return</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+    <!-- Call state template when there is more than one call collapsed into a single row. D is a number > 1 and S is a call info string (like Missed) -->
+    <string name="CallLogAdapter__d_s">(%1$d) %2$s</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     <!-- Call Log context menu -->
     <!-- Displayed as a context menu item to start a video call -->
@@ -7876,6 +7889,8 @@
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
     <!-- CallPreference -->
+    <!-- Generic group call in call info -->
+    <string name="CallPreference__group_call">Group call</string>
     <!-- Missed group call in call info -->
     <string name="CallPreference__missed_group_call">Missed group call</string>
     <!-- Incoming group call in call info -->

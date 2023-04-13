@@ -161,6 +161,7 @@ public class ConversationRepository {
       }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       messageRequestData = new ConversationData.MessageRequestData(isMessageRequestAccepted, isConversationHidden, recipientIsKnownOrHasGroupsInCommon, isGroup);
     }
 
@@ -169,6 +170,11 @@ public class ConversationRepository {
       groupMemberAcis = conversationRecipient.getParticipantAcis();
     } else {
       groupMemberAcis = Collections.emptyList();
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      messageRequestData = new ConversationData.MessageRequestData(isMessageRequestAccepted, recipientIsKnownOrHasGroupsInCommon, isGroup);
+=======
+      messageRequestData = new ConversationData.MessageRequestData(isMessageRequestAccepted, isConversationHidden, recipientIsKnownOrHasGroupsInCommon, isGroup);
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       messageRequestData = new ConversationData.MessageRequestData(isMessageRequestAccepted, recipientIsKnownOrHasGroupsInCommon, isGroup);
 =======

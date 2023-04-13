@@ -21,9 +21,15 @@ public final class ThreadUpdateJob extends BaseJob {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private static final long DEBOUNCE_INTERVAL = 500;
   private static final long DEBOUNCE_INTERVAL_WITH_BACKLOG = 3000;
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+  private static final long DEBOUNCE_INTERVAL = 3000;
+
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
   private static final long DEBOUNCE_INTERVAL = 3000;
@@ -75,9 +81,15 @@ public final class ThreadUpdateJob extends BaseJob {
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     SignalDatabase.threads().update(threadId, true);
 <<<<<<< HEAD
+<<<<<<< HEAD
     ThreadUtil.sleep(1000);
 =======
     SignalDatabase.threads().update(threadId, true);
+    ThreadUtil.sleep(DEBOUNCE_INTERVAL);
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    ThreadUtil.sleep(1000);
+=======
     ThreadUtil.sleep(DEBOUNCE_INTERVAL);
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)

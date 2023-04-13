@@ -98,6 +98,7 @@ ktlint {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 def canonicalVersionCode = 1232
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -692,6 +693,13 @@ def canonicalVersionName = "6.17.0.0-JW-JK"
 def canonicalVersionCode = 1240
 def canonicalVersionName = "6.17.1.0-JW-JK"
 >>>>>>> a4f383c27f (Bumped to upstream version 6.17.1.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+def canonicalVersionCode = 1240
+def canonicalVersionName = "6.17.1.0-JW-JK"
+=======
+def canonicalVersionCode = 1243
+def canonicalVersionName = "6.18.0.0-JW-JK"
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
 def postFixSize = 100
 def abiPostFix = ['universal'   : 0,
@@ -1334,6 +1342,14 @@ android {
             minifyEnabled true
             matchingFallbacks = ['debug']
             buildConfigField "String", "BUILD_VARIANT_TYPE", "\"Perf\""
+        }
+
+        canary {
+            initWith debug
+            isDefault false
+            minifyEnabled false
+            matchingFallbacks = ['debug']
+            buildConfigField "String", "BUILD_VARIANT_TYPE", "\"Canary\""
         }
 
         canary {

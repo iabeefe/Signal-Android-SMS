@@ -2019,6 +2019,7 @@
     <string name="MessageRequestBottomView_unblock">ဘလော့ခ်ဖြေရန်</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Text explaining a message request from someone you\'ve removed before -->
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_you_removed_them_before">%1$s အား သင့်ထံ မက်ဆေ့ချ်ပို့ခွင့်ပြုပြီး သင့်အမည်နှင့် ဓာတ်ပုံကို ဝေမျှပေးမည်လား။ ဤလူကို ယခင်က ဖယ်ရှားထားပါသည်။</string>
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -2043,6 +2044,11 @@
 =======
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_you_removed_them_before">%1$s အား သင့်ထံ မက်ဆေ့ချ်ပို့ခွင့်ပြုပြီး သင့်အမည်နှင့် ဓာတ်ပုံကို ဝေမျှပေးမည်လား။ ဤလူကို ယခင်က ဖယ်ရှားထားပါသည်။</string>
 >>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+    <!-- Text explaining a message request from someone you\'ve removed before -->
+    <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_you_removed_them_before">Let %1$s message you and share your name and photo with them? You have removed this person in the past.</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_they_wont_know_youve_seen_their_messages_until_you_accept">%1$s မှ သင့်ကို မက်ဆေ့ချ်ပို့ရန် ခွင့်ပြုပြီး သင်၏ အမည်နှင့် ရုပ်ပုံတို့ကို ၎င်းနှင့် မျှဝေမည်လား? ၎င်းသည် သင်မှ ၎င်းတို့၏ မက်ဆေ့ချ်များကို ဖတ်ရှုခဲ့သည်ကို သင်လက်ခံသည်အထိ မတွေ့ရပါ။</string>
     <!-- Shown in message request flow. Describes what will happen if you unblock a Signal user -->
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_wont_receive_any_messages_until_you_unblock_them">%1$s အား သင့်ထံ မက်ဆေ့ချ်ပို့ခွင့်ပြုပြီး သင်၏ အမည်နှင့် ပုံကို ၎င်းထံ မျှဝေမည်လား။ ၎င်းတို့အား ဘလော့ခ် မဖြေမချင်း မက်ဆေ့ချ်များ ရရှိမည် မဟုတ်ပါ။</string>
@@ -2511,17 +2517,17 @@
     <string name="WebRtcAudioOutputBottomSheet__earpiece_icon_content_description">စက်တစ်ခု၏ နားကြပ်ကို ကိုယ်စားပြုသည့် အိုင်ကွန်။</string>
 
     <!-- Error message when the developer added a button in the wrong place. -->
-    <string name="WebRtcAudioOutputToggleButton_fragment_activity_error">A UI error occurred. Please report this error to the developers.</string>
+    <string name="WebRtcAudioOutputToggleButton_fragment_activity_error">UI ချို့ယွင်းချက်တစ်ခု ဖြစ်နေသည်။ ဤချို့ယွင်းချက်ကို ဆော့ဖ်ဝဲရေးသားသူများထံ ရီပို့(တ်)လုပ်ပါ။</string>
     <!-- Error message when the user is trying to change audio outputs but none are present. -->
-    <string name="WebRtcAudioOutputToggleButton_no_eligible_audio_i_o_detected">No eligible audio I/O detected.</string>
+    <string name="WebRtcAudioOutputToggleButton_no_eligible_audio_i_o_detected">သင့်လျော်ကိုက်ညီသော အသံ I/O မတွေ့ပါ။</string>
     <!-- A text description of the bluetooth icon, used for accessibility. -->
-    <string name="WebRtcAudioOutputBottomSheet__bluetooth_icon_content_description">An icon representing a Bluetooth device.</string>
+    <string name="WebRtcAudioOutputBottomSheet__bluetooth_icon_content_description">ဘလူးတုသ်စက်ကို ကိုယ်စားပြုသည့် အိုင်ကွန်။</string>
     <!-- A text description of the headset icon, used for accessibility. -->
-    <string name="WebRtcAudioOutputBottomSheet__headset_icon_content_description">An icon representing a wired headset.</string>
+    <string name="WebRtcAudioOutputBottomSheet__headset_icon_content_description">ကြိုးတပ်နားကြပ်ကို ကိုယ်စားပြုသည့် အိုင်ကွန်။</string>
     <!-- A text description of the speaker icon, used for accessibility. -->
-    <string name="WebRtcAudioOutputBottomSheet__speaker_icon_content_description">An icon representing a speakerphone.</string>
+    <string name="WebRtcAudioOutputBottomSheet__speaker_icon_content_description">စပီကာဖုန်းကို ကိုယ်စားပြုသည့် အိုင်ကွန်။</string>
     <!-- A text description of the earpiece icon, used for accessibility. -->
-    <string name="WebRtcAudioOutputBottomSheet__earpiece_icon_content_description">An icon representing a device\'s earpiece.</string>
+    <string name="WebRtcAudioOutputBottomSheet__earpiece_icon_content_description">စက်တစ်ခု၏ နားကြပ်ကို ကိုယ်စားပြုသည့် အိုင်ကွန်။</string>
 
     <!-- CallParticipantsListDialog -->
     <plurals name="CallParticipantsListDialog_in_this_call">
@@ -2662,8 +2668,14 @@
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 =======
     <!-- An error shown when the request was valid, but due to an issue with a partner vendor, the server is unable to send an SMS code -->
+<<<<<<< HEAD
     <string name="RegistrationActivity_external_service_error">Signal was unable to send an SMS code due to an external failure.</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    <string name="RegistrationActivity_external_service_error">Signal was unable to send an SMS code due to an external failure.</string>
+=======
+    <string name="RegistrationActivity_external_service_error">ပြင်ပပျက်ကွက်မှုတစ်ခုကြောင့် SMS ကုဒ်ကို Signal က ပေးပို့နိုင်ခြင်း မရှိပါ။</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     <string name="RegistrationActivity_next">နောက်ထက်</string>
     <string name="RegistrationActivity_continue">ရှေ့ဆက်ပါ</string>
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">လုံခြုံရေးကို သင်နှင့် ယူဆောင်သွားပါ။ \n မက်ဆေ့ချ်တိုင်းတွင် သင်ကိုယ်တိုင်ဖြစ်နိုင်ပါစေ။</string>
@@ -2852,6 +2864,7 @@
     <string name="ThreadRecord_message_request">မက်ဆေ့ပို့ရန် တောင်းခံချက်</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Thread preview for a recipient that has been hidden -->
     <string name="ThreadRecord_hidden_recipient">ဤလူကို သင် ဖျောက်ထားပါသည်၊ ၎င်းကို သင့်စာရင်းတွင် ပြန်၍ပေါင်းထည့်ရန် ၎င်းထံသို့ မက်ဆေ့ချ်ထပ်ပို့ပါ။</string>
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -2876,6 +2889,11 @@
 =======
     <string name="ThreadRecord_hidden_recipient">ဤလူကို သင် ဖျောက်ထားပါသည်၊ ၎င်းကို သင့်စာရင်းတွင် ပြန်၍ပေါင်းထည့်ရန် ၎င်းထံသို့ မက်ဆေ့ချ်ထပ်ပို့ပါ။</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+    <!-- Thread preview for a recipient that has been hidden -->
+    <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     <string name="ThreadRecord_photo">ရုပ်ပုံ</string>
     <string name="ThreadRecord_gif">လှုပ်ရှားနေသောရုပ်ပုံ</string>
     <string name="ThreadRecord_voice_message">အသံမက်ဆေ့ချ်</string>
@@ -3265,10 +3283,16 @@
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
     <!-- Audio output option referring to an external headset connected via a 3.5mm headphone jack -->
-    <string name="WebRtcAudioOutputToggle__wired_headset">Wired Headset</string>
+    <string name="WebRtcAudioOutputToggle__wired_headset">ကြိုးတပ်နားကြပ်</string>
     <!-- Audio output option referring to an external headset connected via a USB-C data cable -->
+<<<<<<< HEAD
     <string name="WebRtcAudioOutputToggle__wired_headset_usb">Wired Headset (USB)</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    <string name="WebRtcAudioOutputToggle__wired_headset_usb">Wired Headset (USB)</string>
+=======
+    <string name="WebRtcAudioOutputToggle__wired_headset_usb">ကြိုးတပ်နားကြပ် (USB)</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     <string name="WebRtcCallControls_answer_call_description">ဖုန်းကိုင်မည်</string>
     <string name="WebRtcCallControls_reject_call_description">ခေါ်ဆိုမှုကိုငြင်းပယ်ပါ</string>
@@ -3402,6 +3426,7 @@
     <string name="ConversationUpdateItem_activate_payments">ငွေပေးချေမှုများ ဖွင့်မယ်</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Update item alerting the user they hid this person and that they can message them to unhide them -->
     <string name="ConversationUpdateItem_hidden_contact_message_to_add_back">ဤလူကို ဖယ်ရှားထားပါသည်၊ ထိုသူတို့ထံ မက်ဆေ့ချ်ပို့ခြင်းဖြင့် ထိုသူတို့ကို သင့်စာရင်းတွင် ပြန်လည်ပေါင်းထည့်ပေးသွားပါမည်။</string>
     <!-- Update item button text shown for the accepted message request update message -->
@@ -3432,6 +3457,12 @@
 =======
     <string name="ConversationUpdateItem_hidden_contact_message_to_add_back">ဤလူကို ဖယ်ရှားထားပါသည်၊ ထိုသူတို့ထံ မက်ဆေ့ချ်ပို့ခြင်းဖြင့် ထိုသူတို့ကို သင့်စာရင်းတွင် ပြန်လည်ပေါင်းထည့်ပေးသွားပါမည်။</string>
 >>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+
+=======
+    <!-- Update item alerting the user they hid this person and that they can message them to unhide them -->
+    <string name="ConversationUpdateItem_hidden_contact_message_to_add_back">You have removed this person, messaging them again will add them back to your list.</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     <!-- audio_view -->
     <string name="audio_view__play_pause_accessibility_description">ဖွင့်မယ် … ခေတ္တရပ်မယ်</string>
@@ -5266,6 +5297,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="AccountSettingsFragment__request_account_data">သင့်အကောင့်ဒေတာ</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="AccountSettingsFragment__request_account_data">Request account data</string>
@@ -5307,6 +5339,11 @@
 =======
     <string name="AccountSettingsFragment__request_account_data">Your account data</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    <string name="AccountSettingsFragment__request_account_data">Your account data</string>
+=======
+    <string name="AccountSettingsFragment__request_account_data">သင့်အကောင့်ဒေတာ</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     <!-- ExportAccountDataFragment -->
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
@@ -5320,6 +5357,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_explanation">သင့် Signal အကောင့်ဒေတာ၏ အစီရင်ခံစာတစ်စောင်ကို ထုတ်ယူပါ။ ဤအစီရင်ခံစာတွင် မက်ဆေ့ချ် သို့မဟုတ် မီဒီယာတစ်ခုမျှ မပါဝင်ပါ။ %1$s</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
@@ -5361,6 +5399,11 @@
 =======
     <string name="ExportAccountDataFragment__export_explanation">Export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">Export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">သင့် Signal အကောင့်ဒေတာ၏ အစီရင်ခံစာတစ်စောင်ကို ထုတ်ယူပါ။ ဤအစီရင်ခံစာတွင် မက်ဆေ့ချ် သို့မဟုတ် မီဒီယာတစ်ခုမျှ မပါဝင်ပါ။ %1$s</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5566,10 +5609,16 @@
     <string name="ExportAccountDataFragment__report_download_failed">ကွန်ရက်ချို့ယွင်းချက်တစ်ခုကြောင့် သင့်အစီရင်ခံစာကို ဒေါင်းလုဒ်လုပ်၍ မရနိုင်ပါ။ ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်ကြိုးစားကြည့်ပါ။</string>
 =======
     <!-- Title of dialog shown when report fails to generate -->
-    <string name="ExportAccountDataFragment__report_generation_failed">Couldn\'t generate report</string>
+    <string name="ExportAccountDataFragment__report_generation_failed">အစီရင်ခံစာ မထုတ်နိုင်ခဲ့ပါ</string>
     <!-- Message of dialog shown when report fails to generate asking user to check network connection -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__check_network">Check your connection and try again.</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    <string name="ExportAccountDataFragment__check_network">Check your connection and try again.</string>
+=======
+    <string name="ExportAccountDataFragment__check_network">ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်ကြိုးစားကြည့်ပါ။</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">ဒေတာ ထုတ်ယူမည်လား။</string>
@@ -5690,6 +5739,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_progress">အစီရင်ခံစာ ထုတ်နေဆဲ…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">သင့်အစီရင်ခံစာကို ထုတ်သိမ်းသည့်အချိန်တွင်သာ ထုတ်ယူထားပြီး သင့်စက်တွင် Signal က မသိမ်းထားပါ။</string>
@@ -5770,9 +5820,20 @@
     <string name="ExportAccountDataFragment__report_deletion_disclaimer">သင့်အစီရင်ခံစာကို ရက် 30 ကြာသည်အထိ ထုတ်ယူနိုင်မည်ဖြစ်ပြီး ထို့နောက်တွင် အော်တိုဖျက်လိုက်ပါမည်။</string>
 =======
     <string name="ExportAccountDataFragment__download_progress">Generating report…</string>
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    <string name="ExportAccountDataFragment__download_progress">Generating report…</string>
+=======
+    <string name="ExportAccountDataFragment__download_progress">အစီရင်ခံစာ ထုတ်နေဆဲ…</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Your report is generated only at the time of export and is not stored by Signal on your device.</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Your report is generated only at the time of export and is not stored by Signal on your device.</string>
+=======
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">သင့်အစီရင်ခံစာကို ထုတ်သိမ်းသည့်အချိန်တွင်သာ ထုတ်ယူထားပြီး သင့်စက်တွင် Signal က မသိမ်းထားပါ။</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">သင့်လက်ရှိဖုန်းနံပါတ်ကို အသစ်တစ်ခုသို့ ပြောင်းရန် ဤသည်ကို သုံးပါ။ ဤပြောင်းလဲမှုကို ပြန်လည်ဖျက်သိမ်း၍ မရနိုင်ပါ။\n\nဆက်မလုပ်မီ သင့်နံပါတ်အသစ်တွင် SMS သို့မဟုတ် ကောလ်များ လက်ခံရရှိနိုင်ကြောင်း သေချာပါစေ။</string>
@@ -6247,7 +6308,7 @@
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
     <!-- Header for section of featured stickers (location/time stickers) -->
-    <string name="ScribbleStickersFragment__featured_stickers">Featured</string>
+    <string name="ScribbleStickersFragment__featured_stickers">အသားပေးထားသည်များ</string>
 
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="MediaCountIndicatorButton__send">ပေးပို့မယ်</string>
@@ -7717,10 +7778,18 @@
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
     <!-- Displayed on Group Call button if user is not in the call -->
-    <string name="CallLogAdapter__join">Join</string>
+    <string name="CallLogAdapter__join">ပါဝင်ရန်</string>
     <!-- Displayed on Group Call button if user is in the call -->
+<<<<<<< HEAD
     <string name="CallLogAdapter__return">Return</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    <string name="CallLogAdapter__return">Return</string>
+=======
+    <string name="CallLogAdapter__return">နောက်ပြန်သွားရန်</string>
+    <!-- Call state template when there is more than one call collapsed into a single row. D is a number > 1 and S is a call info string (like Missed) -->
+    <string name="CallLogAdapter__d_s">(%1$d) %2$s</string>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     <!-- Call Log context menu -->
     <!-- Displayed as a context menu item to start a video call -->
@@ -8538,50 +8607,52 @@
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
 =======
     <!-- CallPreference -->
+    <!-- Generic group call in call info -->
+    <string name="CallPreference__group_call">Group call</string>
     <!-- Missed group call in call info -->
-    <string name="CallPreference__missed_group_call">Missed group call</string>
+    <string name="CallPreference__missed_group_call">လွတ်သွားသော အဖွဲ့ကောလ်</string>
     <!-- Incoming group call in call info -->
-    <string name="CallPreference__incoming_group_call">Incoming group call</string>
+    <string name="CallPreference__incoming_group_call">အဝင် အဖွဲ့ကောလ်</string>
     <!-- Outgoing group call in call info -->
-    <string name="CallPreference__outgoing_group_call">Outgoing group call</string>
+    <string name="CallPreference__outgoing_group_call">အထွက် အဖွဲ့ကောလ်</string>
 
     <!-- CreateCallLink -->
     <!-- Call link creation item title on calls tab -->
-    <string name="CreateCallLink__create_a_call_link">Create a Call Link</string>
+    <string name="CreateCallLink__create_a_call_link">ကောလ်လင့်ခ်တစ်ခု ဖန်တီးရန်</string>
     <!-- Call link creation item description on calls tab -->
-    <string name="CreateCallLink__share_a_link_for">Share a link for a Signal call</string>
+    <string name="CreateCallLink__share_a_link_for">Signal ကောလ်အတွက် လင့်ခ် မျှဝေခြင်း</string>
 
     <!-- CreateCallLinkBottomSheetDialogFragment -->
     <!-- Fragment title -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__create_call_link">Create call link</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__create_call_link">ကောလ်လင့်ခ် ဖန်တီးရန်</string>
     <!-- Displayed as a default name for the signal call -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__signal_call">Signal call</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__signal_call">Signal ကောလ်</string>
     <!-- Displayed on a small button to allow user to instantly join call -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__join">Join</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__join">ပါဝင်ရန်</string>
     <!-- Option to open a full screen dialog to enter a call name -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__add_call_name">Add call name</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__add_call_name">ကောလ်အမည် ပေါင်းထည့်ရန်</string>
     <!-- Toggle to require approval for all members before joining -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__approve_all_members">Approve all members</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__approve_all_members">မန်ဘာအားလုံးကို အတည်ပြုရန်</string>
     <!-- Row label to share the link via Signal -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__share_link_via_signal">Share link via Signal</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link_via_signal">Signal မှတစ်ဆင့် လင့်ခ်ဝေမျှရန်</string>
     <!-- Row label to copy the link to the clipboard -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__copy_link">Copy link</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__copy_link">လင့်ခ်ကူးရန်</string>
     <!-- Row label to share the link with the external share sheet -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__share_link">Share link</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link">လင့်ခ်ဝေမျှရန်</string>
     <!-- Button text to dismiss the sheet and add it as an upcoming call -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__done">Done</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__done">ပြီးပါပြီ</string>
     <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Failed to open share sheet.</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">မျှဝေနည်း မျက်နှာပြင်ကို ဖွင့်ရန် မအောင်မြင်ပါ။</string>
     <!-- Displayed when we copy the call link to the clipboard -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">Copied to clipboard</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">ကလစ်ဘုတ်သို့ ကူးယူပြီး</string>
 
     <!-- EditCallLinkNameDialogFragment -->
     <!-- App bar title for editing a call name -->
-    <string name="EditCallLinkNameDialogFragment__edit_call_name">Edit call name</string>
+    <string name="EditCallLinkNameDialogFragment__edit_call_name">ကောလ်အမည် ပြင်ဆင်ရန်</string>
     <!-- Text on button to confirm edit -->
-    <string name="EditCallLinkNameDialogFragment__save">Save</string>
+    <string name="EditCallLinkNameDialogFragment__save">သိမ်းရန်</string>
     <!-- Placeholder text on input field when editing call name -->
-    <string name="EditCallLinkNameDialogFragment__call_name">Call name</string>
+    <string name="EditCallLinkNameDialogFragment__call_name">ကောလ်အမည်</string>
 
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <!-- EOF -->

@@ -60,6 +60,7 @@ public final class PendingRetryReceiptManager extends TimedEventManager<PendingR
   protected void executeEvent(@NonNull PendingRetryReceiptModel event) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (SignalDatabase.messages().messageExists(event.getSentTimestamp(), event.getAuthor())) {
       Log.w(TAG, "[" + event.getSentTimestamp() + "] We have since received the target message! No longer need to insert an error.");
     } else if (!SignalDatabase.threads().containsId(event.getThreadId())) {
@@ -71,6 +72,18 @@ public final class PendingRetryReceiptManager extends TimedEventManager<PendingR
       messageDatabase.insertBadDecryptMessage(event.getAuthor(), event.getAuthorDevice(), event.getSentTimestamp() - 1, event.getReceivedTimestamp(), event.getThreadId());
     }
     
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    Log.w(TAG, "It's been " + (System.currentTimeMillis() - event.getReceivedTimestamp()) + " ms since this retry receipt was received. Showing an error.");
+    messageDatabase.insertBadDecryptMessage(event.getAuthor(), event.getAuthorDevice(), event.getSentTimestamp(), event.getReceivedTimestamp(), event.getThreadId());
+=======
+    if (SignalDatabase.threads().containsId(event.getThreadId()) && SignalDatabase.recipients().containsId(event.getAuthor())) {
+      Log.w(TAG, "It's been " + (System.currentTimeMillis() - event.getReceivedTimestamp()) + " ms since this retry receipt was received. Showing an error.");
+      messageDatabase.insertBadDecryptMessage(event.getAuthor(), event.getAuthorDevice(), event.getSentTimestamp(), event.getReceivedTimestamp(), event.getThreadId());
+    } else {
+      Log.w(TAG, "Would normally show an error, but the thread or recipient has since been deleted! ThreadId: " + event.getThreadId() + ", RecipientId: " + event.getAuthor());
+    }
+    
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     Log.w(TAG, "It's been " + (System.currentTimeMillis() - event.getReceivedTimestamp()) + " ms since this retry receipt was received. Showing an error.");
     messageDatabase.insertBadDecryptMessage(event.getAuthor(), event.getAuthorDevice(), event.getSentTimestamp(), event.getReceivedTimestamp(), event.getThreadId());

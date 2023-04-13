@@ -374,10 +374,17 @@ public class ConversationParentFragment extends Fragment
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
                ScheduleMessageDialogCallback,
 <<<<<<< HEAD
+<<<<<<< HEAD
                ConversationOptionsMenu.Callback,
                ConversationOptionsMenu.Dependencies
 =======
                ScheduleMessageDialogCallback,
+               ConversationOptionsMenu.Callback
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+               ConversationOptionsMenu.Callback,
+               ConversationOptionsMenu.Dependencies
+=======
                ConversationOptionsMenu.Callback
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -515,8 +522,14 @@ public class ConversationParentFragment extends Fragment
     disposables.bindTo(getViewLifecycleOwner());
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     menuProvider = new ConversationOptionsMenu.Provider(this, this, disposables);
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    menuProvider = new ConversationOptionsMenu.Provider(this, this, disposables);
+=======
+    menuProvider = new ConversationOptionsMenu.Provider(this, disposables);
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     menuProvider = new ConversationOptionsMenu.Provider(this, this, disposables);
 =======
@@ -1358,6 +1371,7 @@ public class ConversationParentFragment extends Fragment
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   private void handleInviteLink() {
     String inviteText = getString(R.string.ConversationActivity_lets_switch_to_signal, getString(R.string.install_url));
 
@@ -1447,6 +1461,47 @@ public class ConversationParentFragment extends Fragment
       }
     }
 =======
+    InviteActions.INSTANCE.inviteUserToSignal(
+        requireContext(),
+        recipient.get(),
+        text -> {
+          composeText.appendInvite(text);
+          return Unit.INSTANCE;
+        },
+        intent -> {
+          startActivity(intent);
+          return Unit.INSTANCE;
+        }
+    );
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  @Override
+  public void handleInviteLink() {
+    String inviteText = getString(R.string.ConversationActivity_lets_switch_to_signal, getString(R.string.install_url));
+
+//    if (viewModel.isDefaultSmsApplication() && SignalStore.misc().getSmsExportPhase().isSmsSupported()) {
+    if (viewModel.isDefaultSmsApplication()) {
+      composeText.appendInvite(inviteText);
+    } else if (recipient.get().hasSmsAddress()) {
+      Intent intent = new Intent(Intent.ACTION_SENDTO);
+      intent.setData(Uri.parse("smsto:" + recipient.get().requireSmsAddress()));
+      intent.putExtra("sms_body", inviteText);
+      intent.putExtra(Intent.EXTRA_TEXT, inviteText);
+      startActivity(intent);
+    } else {
+      Intent sendIntent = new Intent();
+      sendIntent.setAction(Intent.ACTION_SEND);
+      sendIntent.putExtra(Intent.EXTRA_TEXT, inviteText);
+      sendIntent.setType("text/plain");
+      if (sendIntent.resolveActivity(requireContext().getPackageManager()) != null) {
+        startActivity(Intent.createChooser(sendIntent, getString(R.string.InviteActivity_invite_to_signal)));
+      } else {
+        Toast.makeText(requireContext(), R.string.InviteActivity_no_app_to_share_to, Toast.LENGTH_LONG).show();
+      }
+    }
+=======
+  @Override
+  public void handleInviteLink() {
     InviteActions.INSTANCE.inviteUserToSignal(
         requireContext(),
         recipient.get(),
@@ -1599,10 +1654,18 @@ public class ConversationParentFragment extends Fragment
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   @Override
 <<<<<<< HEAD
+<<<<<<< HEAD
   public void handleDial(final Recipient recipient, boolean isSecure) {
     if (recipient == null) return;
 =======
   @Override
+  public void handleDial(boolean isSecure) {
+    Recipient recipient = getRecipient();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  public void handleDial(final Recipient recipient, boolean isSecure) {
+    if (recipient == null) return;
+=======
   public void handleDial(boolean isSecure) {
     Recipient recipient = getRecipient();
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -1627,10 +1690,18 @@ public class ConversationParentFragment extends Fragment
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   @Override
 <<<<<<< HEAD
+<<<<<<< HEAD
   public void handleVideo(final Recipient recipient) {
     if (recipient == null) return;
 =======
   @Override
+  public void handleVideo() {
+    Recipient recipient = getRecipient();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  public void handleVideo(final Recipient recipient) {
+    if (recipient == null) return;
+=======
   public void handleVideo() {
     Recipient recipient = getRecipient();
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -3055,9 +3126,14 @@ public class ConversationParentFragment extends Fragment
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private boolean isInMessageRequest() {
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   @Override
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  @Override
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   @Override
 =======
@@ -3098,10 +3174,19 @@ public class ConversationParentFragment extends Fragment
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   protected long getThreadId() {
     return this.threadId;
   }
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  @Override
+  public long getThreadId() {
+    return this.threadId;
+  }
+
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   @Override
   public long getThreadId() {
@@ -3993,6 +4078,7 @@ public class ConversationParentFragment extends Fragment
   }
 
   @Override
+<<<<<<< HEAD
   public void clearExpiring() {
     titleView.clearExpiring();
   }
@@ -4025,6 +4111,23 @@ public class ConversationParentFragment extends Fragment
   @Override
   public void showExpiring(@NonNull Recipient recipient) {
     titleView.showExpiring(recipient);
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  public @Nullable GroupCallViewModel getGroupCallViewModel() {
+    return groupCallViewModel;
+  }
+
+  @Override
+  public @NonNull ConversationTitleView getTitleView() {
+    return titleView;
+  }
+
+  @Override
+  public int getDistributionType() {
+    return distributionType;
+=======
+  public void clearExpiring() {
+    titleView.clearExpiring();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   }
 
   @Override

@@ -68,6 +68,7 @@ android {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ktlint {
     // Use a newer version to resolve https://github.com/JLLeitschuh/ktlint-gradle/issues/507
@@ -114,4 +115,68 @@ dependencies {
   testImplementation(testLibs.robolectric.robolectric)
   testImplementation(testLibs.androidx.test.core)
   testImplementation(testLibs.androidx.test.core.ktx)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+ktlint {
+    // Use a newer version to resolve https://github.com/JLLeitschuh/ktlint-gradle/issues/507
+    version.set("0.47.1")
+}
+
+dependencies {
+    coreLibraryDesugaring(libs.android.tools.desugar)
+
+    implementation(project(":core-util"))
+
+    coreLibraryDesugaring(libs.android.tools.desugar)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.annotation)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.rxjava3.rxandroid)
+    implementation(libs.rxjava3.rxjava)
+    implementation(libs.rxjava3.rxkotlin)
+    implementation(libs.androidx.multidex)
+    implementation(libs.material.material)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.kotlin.stdlib.jdk8)
+
+    ktlintRuleset(libs.ktlint.twitter.compose)
+
+    testImplementation(testLibs.junit.junit)
+    testImplementation(testLibs.mockito.core)
+    testImplementation(testLibs.mockito.android)
+    testImplementation(testLibs.mockito.kotlin)
+    testImplementation(testLibs.robolectric.robolectric)
+    testImplementation(testLibs.androidx.test.core)
+    testImplementation(testLibs.androidx.test.core.ktx)
+=======
+dependencies {
+    coreLibraryDesugaring(libs.android.tools.desugar)
+
+    implementation(project(":core-util"))
+
+    coreLibraryDesugaring(libs.android.tools.desugar)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.annotation)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.rxjava3.rxandroid)
+    implementation(libs.rxjava3.rxjava)
+    implementation(libs.rxjava3.rxkotlin)
+    implementation(libs.androidx.multidex)
+    implementation(libs.material.material)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.kotlin.stdlib.jdk8)
+
+    ktlintRuleset(libs.ktlint.twitter.compose)
+
+    testImplementation(testLibs.junit.junit)
+    testImplementation(testLibs.mockito.core)
+    testImplementation(testLibs.mockito.android)
+    testImplementation(testLibs.mockito.kotlin)
+    testImplementation(testLibs.robolectric.robolectric)
+    testImplementation(testLibs.androidx.test.core)
+    testImplementation(testLibs.androidx.test.core.ktx)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 }

@@ -43,6 +43,7 @@ class ConversationSettingsRepository(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   fun getCallEvents(callRowIds: LongArray): Single<List<Pair<CallTable.Call, MessageRecord>>> {
     return if (callRowIds.isEmpty()) {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -62,6 +63,13 @@ class ConversationSettingsRepository(
   fun getCallEvents(callMessageIds: LongArray): Single<List<Pair<CallTable.Call, MessageRecord>>> {
     return if (callMessageIds.isEmpty()) {
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  fun getCallEvents(callMessageIds: LongArray): Single<List<Pair<CallTable.Call, MessageRecord>>> {
+    return if (callMessageIds.isEmpty()) {
+=======
+  fun getCallEvents(callRowIds: LongArray): Single<List<Pair<CallTable.Call, MessageRecord>>> {
+    return if (callRowIds.isEmpty()) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   fun getCallEvents(callMessageIds: LongArray): Single<List<Pair<CallTable.Call, MessageRecord>>> {
     return if (callMessageIds.isEmpty()) {
@@ -79,6 +87,7 @@ class ConversationSettingsRepository(
       Single.just(emptyList())
     } else {
       Single.fromCallable {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -130,6 +139,14 @@ class ConversationSettingsRepository(
 =======
         val callMap = SignalDatabase.calls.getCalls(callMessageIds.toList())
         SignalDatabase.messages.getMessages(callMessageIds.toList()).iterator().asSequence()
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        val callMap = SignalDatabase.calls.getCalls(callMessageIds.toList())
+        SignalDatabase.messages.getMessages(callMessageIds.toList()).iterator().asSequence()
+=======
+        val callMap = SignalDatabase.calls.getCallsByRowIds(callRowIds.toList())
+        val messageIds = callMap.values.mapNotNull { it.messageId }
+        SignalDatabase.messages.getMessages(messageIds).iterator().asSequence()
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
           .filter { callMap.containsKey(it.id) }
           .map { callMap[it.id]!! to it }
           .toList()

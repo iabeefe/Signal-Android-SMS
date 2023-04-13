@@ -118,6 +118,7 @@ public final class FeatureFlags {
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
   private static final String TEXT_FORMATTING_SPOILER_SEND      = "android.textFormatting.spoilerSend";
 <<<<<<< HEAD
+<<<<<<< HEAD
   private static final String EXPORT_ACCOUNT_DATA               = "android.exportAccountData";
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -129,6 +130,10 @@ public final class FeatureFlags {
   private static final String CALLS_TAB                         = "android.calls.tab.2";
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
   private static final String TEXT_FORMATTING_SPOILER_SEND      = "android.textFormatting.spoilerSend";
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  private static final String EXPORT_ACCOUNT_DATA               = "android.exportAccountData";
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   private static final String EXPORT_ACCOUNT_DATA               = "android.exportAccountData";
 =======
@@ -218,6 +223,7 @@ public final class FeatureFlags {
       CALLS_TAB,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       TEXT_FORMATTING_SPOILER_SEND,
       EXPORT_ACCOUNT_DATA
 =======
@@ -246,6 +252,12 @@ public final class FeatureFlags {
       EDIT_MESSAGE_RECEIVE,
       EDIT_MESSAGE_SEND
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      TEXT_FORMATTING_SPOILER_SEND,
+      EXPORT_ACCOUNT_DATA
+=======
+      TEXT_FORMATTING_SPOILER_SEND
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   );
 
   @VisibleForTesting
@@ -1308,6 +1320,7 @@ public final class FeatureFlags {
 
   /**
 <<<<<<< HEAD
+<<<<<<< HEAD
    * Whether or not the ability to export account data is enabled
    */
   public static boolean exportAccountData() {
@@ -1396,6 +1409,16 @@ public final class FeatureFlags {
   }
 
   /**
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+   * Whether or not the ability to export account data is enabled
+   */
+  public static boolean exportAccountData() {
+    return getBoolean(EXPORT_ACCOUNT_DATA, false);
+  }
+
+  /**
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
    * Whether or not the ability to export account data is enabled
    */

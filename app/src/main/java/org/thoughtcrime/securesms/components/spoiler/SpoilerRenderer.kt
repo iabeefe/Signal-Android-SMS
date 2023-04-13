@@ -29,12 +29,19 @@ class SpoilerRenderer(
     startOffset: Int,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     endOffset: Int
   ) {
     if (startLine == endLine) {
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     endOffset: Int,
     spoilerDrawables: List<SpoilerDrawable>
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    endOffset: Int,
+    spoilerDrawables: List<SpoilerDrawable>
+=======
+    endOffset: Int
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     endOffset: Int,
     spoilerDrawables: List<SpoilerDrawable>
@@ -103,6 +110,7 @@ class SpoilerRenderer(
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (renderForComposing) {
         canvas.drawComposeBackground(left, lineTop, right, lineBottom)
       } else {
@@ -111,6 +119,13 @@ class SpoilerRenderer(
       }
 
       return
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      spoilerDrawables[0].setBounds(left, lineTop, right, lineBottom)
+      spoilerDrawables[0].draw(canvas)
+=======
+      spoilerDrawable.setBounds(left, lineTop, right, lineBottom)
+      spoilerDrawable.draw(canvas)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       spoilerDrawables[0].setBounds(left, lineTop, right, lineBottom)
       spoilerDrawables[0].draw(canvas)
@@ -157,12 +172,18 @@ class SpoilerRenderer(
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private fun drawPartialLine(canvas: Canvas, start: Int, top: Int, end: Int, bottom: Int) {
     if (renderForComposing) {
       canvas.drawComposeBackground(start, top, end, bottom)
       return
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   class MultiLineSpoilerRenderer : SpoilerRenderer() {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  class MultiLineSpoilerRenderer : SpoilerRenderer() {
+=======
+  class MultiLineSpoilerRenderer(private val spoilerDrawable: SpoilerDrawable) : SpoilerRenderer() {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   class MultiLineSpoilerRenderer : SpoilerRenderer() {
 =======
@@ -200,6 +221,7 @@ class SpoilerRenderer(
       val lineStartOffset: Float = if (paragraphDirection == Layout.DIR_RIGHT_TO_LEFT) layout.getLineRight(startLine) else layout.getLineLeft(startLine)
       lineBottom = lineBottomCache.get(endLine, layout) { getLineBottom(layout, endLine) }
       lineTop = lineTopCache.get(endLine, layout) { getLineTop(layout, endLine) }
+<<<<<<< HEAD
 <<<<<<< HEAD
       drawEnd(canvas, lineStartOffset.toInt(), lineTop, endOffset, lineBottom, spoilerDrawables)
 =======
@@ -243,8 +265,14 @@ class SpoilerRenderer(
 =======
       drawEnd(canvas, lineStartOffset.toInt(), lineTop, endOffset, lineBottom)
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      drawEnd(canvas, lineStartOffset.toInt(), lineTop, endOffset, lineBottom, spoilerDrawables)
+=======
+      drawEnd(canvas, lineStartOffset.toInt(), lineTop, endOffset, lineBottom)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     if (start > end) {
@@ -258,11 +286,17 @@ class SpoilerRenderer(
 =======
     private fun drawStart(canvas: Canvas, start: Int, top: Int, end: Int, bottom: Int) {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    private fun drawStart(canvas: Canvas, start: Int, top: Int, end: Int, bottom: Int, spoilerDrawables: List<SpoilerDrawable>) {
+=======
+    private fun drawStart(canvas: Canvas, start: Int, top: Int, end: Int, bottom: Int) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       if (start > end) {
         spoilerDrawable.setBounds(end, top, start, bottom)
       } else {
         spoilerDrawable.setBounds(start, top, end, bottom)
       }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     private fun drawStart(canvas: Canvas, start: Int, top: Int, end: Int, bottom: Int) {
@@ -277,10 +311,15 @@ class SpoilerRenderer(
 =======
       spoilerDrawable.draw(canvas)
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+      spoilerDrawable.draw(canvas)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     }
     spoilerDrawable.draw(canvas)
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   private fun getLineTop(layout: Layout, line: Int): Int {
@@ -307,6 +346,11 @@ class SpoilerRenderer(
     )
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     private fun drawEnd(canvas: Canvas, start: Int, top: Int, end: Int, bottom: Int, spoilerDrawables: List<SpoilerDrawable>) {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    private fun drawEnd(canvas: Canvas, start: Int, top: Int, end: Int, bottom: Int, spoilerDrawables: List<SpoilerDrawable>) {
+=======
+    private fun drawEnd(canvas: Canvas, start: Int, top: Int, end: Int, bottom: Int) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     private fun drawEnd(canvas: Canvas, start: Int, top: Int, end: Int, bottom: Int, spoilerDrawables: List<SpoilerDrawable>) {
 =======

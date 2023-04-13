@@ -25,9 +25,14 @@ import org.thoughtcrime.securesms.database.model.StoryViewState;
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.thoughtcrime.securesms.mms.GlideRequests;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.recipients.LiveRecipient;
 =======
 import org.thoughtcrime.securesms.mms.GlideRequests;
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import org.thoughtcrime.securesms.recipients.LiveRecipient;
+=======
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.thoughtcrime.securesms.recipients.LiveRecipient;
@@ -108,6 +113,7 @@ public class ConversationTitleView extends ConstraintLayout {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.getExpiresInSeconds()));
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   public void showExpiring(@NonNull LiveRecipient recipient) {
@@ -119,13 +125,26 @@ public class ConversationTitleView extends ConstraintLayout {
   public void showExpiring(@NonNull Recipient recipient) {
     isSelf = recipient.isSelf();
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  public void showExpiring(@NonNull LiveRecipient recipient) {
+    isSelf = recipient.get().isSelf();
+=======
+  public void showExpiring(@NonNull Recipient recipient) {
+    isSelf = recipient.isSelf();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.get().getExpiresInSeconds()));
 =======
   public void showExpiring(@NonNull Recipient recipient) {
     isSelf = recipient.isSelf();
 
+    expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.getExpiresInSeconds()));
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.get().getExpiresInSeconds()));
+=======
     expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.getExpiresInSeconds()));
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)

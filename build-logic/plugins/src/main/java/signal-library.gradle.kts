@@ -25,10 +25,15 @@ plugins {
     id("kotlin-android")
     id("android-constants")
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     id("com.android.library")
     id("kotlin-android")
     id("android-constants")
+    id("ktlint")
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
     id("ktlint")
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -68,6 +73,7 @@ android {
     }
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ktlint {
     // Use a newer version to resolve https://github.com/JLLeitschuh/ktlint-gradle/issues/507
@@ -110,6 +116,14 @@ ktlint {
     version.set("0.47.1")
 }
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+ktlint {
+    // Use a newer version to resolve https://github.com/JLLeitschuh/ktlint-gradle/issues/507
+    version.set("0.47.1")
+}
+
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 dependencies {
     lintChecks(project(":lintchecks"))
 
