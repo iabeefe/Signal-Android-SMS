@@ -96,14 +96,21 @@ class CallLogRepository(
 
   fun deleteSelectedCallLogs(
 <<<<<<< HEAD
+<<<<<<< HEAD
     selectedCallRowIds: Set<Long>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     selectedMessageIds: Set<Long>
 =======
     selectedCallIds: Set<Long>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    selectedCallIds: Set<Long>
+=======
+    selectedCallRowIds: Set<Long>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   ): Completable {
     return Completable.fromAction {
+<<<<<<< HEAD
 <<<<<<< HEAD
       SignalDatabase.calls.deleteNonAdHocCallEvents(selectedCallRowIds)
     }.subscribeOn(Schedulers.io())
@@ -112,11 +119,17 @@ class CallLogRepository(
     }.observeOn(Schedulers.io())
 =======
       SignalDatabase.calls.deleteCallEvents(selectedCallIds)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      SignalDatabase.calls.deleteCallEvents(selectedCallIds)
+=======
+      SignalDatabase.calls.deleteCallEvents(selectedCallRowIds)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     }.observeOn(Schedulers.io())
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }
 
   fun deleteAllCallLogsExcept(
+<<<<<<< HEAD
 <<<<<<< HEAD
     selectedCallRowIds: Set<Long>,
     missedOnly: Boolean
@@ -125,8 +138,14 @@ class CallLogRepository(
 =======
     selectedCallIds: Set<Long>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    selectedCallIds: Set<Long>
+=======
+    selectedCallRowIds: Set<Long>
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   ): Completable {
     return Completable.fromAction {
+<<<<<<< HEAD
 <<<<<<< HEAD
       SignalDatabase.calls.deleteAllNonAdHocCallEventsExcept(selectedCallRowIds, missedOnly)
     }.subscribeOn(Schedulers.io())
@@ -202,6 +221,11 @@ class CallLogRepository(
     }.observeOn(Schedulers.io())
 =======
       SignalDatabase.calls.deleteAllCallEventsExcept(selectedCallIds)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      SignalDatabase.calls.deleteAllCallEventsExcept(selectedCallIds)
+=======
+      SignalDatabase.calls.deleteAllCallEventsExcept(selectedCallRowIds)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     }.observeOn(Schedulers.io())
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   }

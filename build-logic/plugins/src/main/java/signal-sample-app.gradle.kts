@@ -18,9 +18,21 @@ val signalJavaVersion: JavaVersion by rootProject.extra
 val signalKotlinJvmTarget: String by rootProject.extra
 
 plugins {
+<<<<<<< HEAD
   id("com.android.application")
   id("kotlin-android")
   id("ktlint")
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    id("com.android.application")
+    id("kotlin-android")
+    id("org.jlleitschuh.gradle.ktlint")
+    id("android-constants")
+=======
+    id("com.android.application")
+    id("kotlin-android")
+    id("ktlint")
+    id("android-constants")
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 }
 
 android {
@@ -45,6 +57,7 @@ android {
     jvmTarget = signalKotlinJvmTarget
   }
 
+<<<<<<< HEAD
   buildFeatures {
     compose = true
   }
@@ -54,6 +67,14 @@ android {
   }
 }
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+ktlint {
+    // Use a newer version to resolve https://github.com/JLLeitschuh/ktlint-gradle/issues/507
+    version.set("0.47.1")
+}
+
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 dependencies {
   coreLibraryDesugaring(libs.android.tools.desugar)
 

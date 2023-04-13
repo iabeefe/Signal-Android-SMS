@@ -194,10 +194,22 @@ public final class LocalBackupJobApi29 extends BaseJob {
           Log.w(TAG, "Unable to verify backup", e);
           valid = false;
         }
+<<<<<<< HEAD
 
         return new OperationResult.Success(valid);
       } catch (SecurityException | IOException e) {
         Log.w(TAG, "Unable to find backup file", e);
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      } catch (IOException e) {
+        attempts++;
+        Log.w(TAG, "Unable to find backup file, attempt: " + attempts + "/" + MAX_STORAGE_ATTEMPTS);
+      } catch (SecurityException e) {
+        Log.w(TAG, "Getting security exception when attempting to read file, aborting", e);
+=======
+      } catch (SecurityException | IOException e) {
+        attempts++;
+        Log.w(TAG, "Unable to find backup file, attempt: " + attempts + "/" + MAX_STORAGE_ATTEMPTS, e);
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       }
 
       if (isCanceled()) {

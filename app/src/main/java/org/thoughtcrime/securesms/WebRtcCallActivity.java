@@ -150,6 +150,7 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
   private WindowLayoutInfoConsumer         windowLayoutInfoConsumer;
   private WindowInfoTrackerCallbackAdapter windowInfoTrackerCallbackAdapter;
   private ThrottledDebouncer               requestNewSizesThrottle;
+<<<<<<< HEAD
   private PictureInPictureParams.Builder   pipBuilderParams;
   private LifecycleDisposable              lifecycleDisposable;
   private long                             lastCallLinkDisconnectDialogShowTime;
@@ -159,6 +160,14 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
   private WebRtcViewModel                  previousEvent = null;
   private Disposable                       ephemeralStateDisposable = Disposable.empty();
   private CallPermissionsDialogController  callPermissionsDialogController = new CallPermissionsDialogController();
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+
+  private Disposable ephemeralStateDisposable = Disposable.empty();
+=======
+  private PictureInPictureParams.Builder   pipBuilderParams;
+
+  private Disposable ephemeralStateDisposable = Disposable.empty();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
   @Override
   protected void attachBaseContext(@NonNull Context newBase) {
@@ -187,8 +196,15 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
 
     initializeResources();
+<<<<<<< HEAD
     initializeViewModel();
     initializePictureInPictureParams();
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    initializeViewModel(isLandscapeEnabled);
+=======
+    initializeViewModel(isLandscapeEnabled);
+    initializePictureInPictureParams();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     controlsAndInfo = new ControlsAndInfoController(this, callScreen, callOverflowPopupWindow, viewModel, controlsAndInfoViewModel);
     controlsAndInfo.addVisibilityListener(new FadeCallback());
@@ -364,10 +380,27 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     }
   }
 
+<<<<<<< HEAD
   private @NonNull CallIntent getCallIntent() {
     return new CallIntent(getIntent());
   }
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  private boolean enterPipModeIfPossible() {
+    if (viewModel.canEnterPipMode() && isSystemPipEnabledAndAvailable()) {
+      PictureInPictureParams params = new PictureInPictureParams.Builder()
+          .setAspectRatio(new Rational(9, 16))
+          .build();
+      enterPictureInPictureMode(params);
+      CallParticipantsListDialog.dismiss(getSupportFragmentManager());
+=======
+  private boolean enterPipModeIfPossible() {
+    if (isSystemPipEnabledAndAvailable()) {
+      if (viewModel.canEnterPipMode()) {
+        enterPictureInPictureMode(pipBuilderParams.build());
+        CallParticipantsListDialog.dismiss(getSupportFragmentManager());
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
+<<<<<<< HEAD
   private boolean enterPipModeIfPossible() {
     if (isSystemPipEnabledAndAvailable()) {
       if (viewModel.canEnterPipMode()) {
@@ -383,6 +416,15 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
       if (Build.VERSION.SDK_INT >= 31) {
         pipBuilderParams.setAutoEnterEnabled(false);
       }
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      return true;
+=======
+        return true;
+      }
+      if (Build.VERSION.SDK_INT >= 31) {
+        pipBuilderParams.setAutoEnterEnabled(false);
+      }
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     }
     return false;
   }
@@ -560,6 +602,7 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     controlsAndInfoViewModel = new ViewModelProvider(this).get(ControlsAndInfoViewModel.class);
   }
 
+<<<<<<< HEAD
   private void initializePictureInPictureParams() {
     if (isSystemPipEnabledAndAvailable()) {
       final Orientation orientation = resolveOrientationFromContext();
@@ -589,6 +632,28 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
   private void handleViewModelEvent(@NonNull CallEvent event) {
     if (event instanceof CallEvent.StartCall) {
       startCall(((CallEvent.StartCall) event).isVideoCall());
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  private void handleViewModelEvent(@NonNull WebRtcCallViewModel.Event event) {
+    if (event instanceof WebRtcCallViewModel.Event.StartCall) {
+      startCall(((WebRtcCallViewModel.Event.StartCall) event).isVideoCall());
+=======
+  private void initializePictureInPictureParams() {
+    if (isSystemPipEnabledAndAvailable()) {
+      pipBuilderParams = new PictureInPictureParams.Builder();
+      pipBuilderParams.setAspectRatio(new Rational(9, 16));
+      if (Build.VERSION.SDK_INT >= 31) {
+        pipBuilderParams.setAutoEnterEnabled(true);
+      }
+      if (Build.VERSION.SDK_INT >= 26) {
+        setPictureInPictureParams(pipBuilderParams.build());
+      }
+    }
+  }
+
+  private void handleViewModelEvent(@NonNull WebRtcCallViewModel.Event event) {
+    if (event instanceof WebRtcCallViewModel.Event.StartCall) {
+      startCall(((WebRtcCallViewModel.Event.StartCall) event).isVideoCall());
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       return;
     } else if (event instanceof CallEvent.ShowGroupCallSafetyNumberChange) {
       SafetyNumberBottomSheet.forGroupCall(((CallEvent.ShowGroupCallSafetyNumberChange) event).getIdentityRecords())

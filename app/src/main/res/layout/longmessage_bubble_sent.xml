@@ -21,7 +21,12 @@
         android:layout_marginBottom="@dimen/message_bubble_collapsed_footer_padding"
         android:textColor="@color/conversation_item_sent_text_primary_color"
         android:textColorLink="@color/conversation_item_sent_text_primary_color"
+<<<<<<< HEAD
         app:emoji_renderSpoilers="true"
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        android:textIsSelectable="true"
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         app:scaleEmojis="true"
         tools:text="With great power comes great responsibility." />
 

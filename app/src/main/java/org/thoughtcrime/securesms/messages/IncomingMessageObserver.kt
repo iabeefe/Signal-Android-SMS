@@ -7,7 +7,14 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
+<<<<<<< HEAD
 import kotlinx.collections.immutable.toImmutableSet
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import org.signal.core.util.ThreadUtil
+=======
+import kotlinx.collections.immutable.toImmutableSet
+import org.signal.core.util.ThreadUtil
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.R
@@ -31,6 +38,7 @@ import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.util.AlarmSleepTimer
 import org.thoughtcrime.securesms.util.AppForegroundObserver
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.SignalLocalMetrics
 import org.thoughtcrime.securesms.util.asChain
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -40,6 +48,10 @@ import org.whispersystems.signalservice.api.messages.SignalServiceMetadata
 =======
 import org.thoughtcrime.securesms.util.Util
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import org.thoughtcrime.securesms.util.Util
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.whispersystems.signalservice.api.push.ServiceId
 <<<<<<< HEAD
 import org.whispersystems.signalservice.api.util.SleepTimer
@@ -85,6 +97,7 @@ class IncomingMessageObserver(private val context: Application) {
 
   companion object {
     private val TAG = Log.tag(IncomingMessageObserver::class.java)
+<<<<<<< HEAD
 
     /** How long we wait for the websocket to time out before we try to connect again. */
     private val websocketReadTimeout: Long
@@ -98,6 +111,15 @@ class IncomingMessageObserver(private val context: Application) {
     private val maxBackgroundTime: Long
       get() = if (censored) 10.seconds.inWholeMilliseconds else 2.minutes.inWholeMilliseconds
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    private val WEBSOCKET_READ_TIMEOUT = TimeUnit.MINUTES.toMillis(1)
+    private val KEEP_ALIVE_TOKEN_MAX_AGE = TimeUnit.MINUTES.toMillis(5)
+    private val MAX_BACKGROUND_TIME = TimeUnit.MINUTES.toMillis(5)
+=======
+    private val WEBSOCKET_READ_TIMEOUT = TimeUnit.MINUTES.toMillis(1)
+    private val KEEP_ALIVE_TOKEN_MAX_AGE = TimeUnit.MINUTES.toMillis(5)
+    private val MAX_BACKGROUND_TIME = TimeUnit.MINUTES.toMillis(2)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     private val INSTANCE_COUNT = AtomicInteger(0)
 
     const val FOREGROUND_ID = 313399
@@ -202,6 +224,7 @@ class IncomingMessageObserver(private val context: Application) {
   }
 
   private fun isConnectionNecessary(): Boolean {
+<<<<<<< HEAD
     val timeIdle: Long
     val keepAliveEntries: Set<Pair<String, Long>>
     val appVisibleSnapshot: Boolean
@@ -209,7 +232,24 @@ class IncomingMessageObserver(private val context: Application) {
     lock.withLock {
       appVisibleSnapshot = appVisible
       timeIdle = if (appVisibleSnapshot) 0 else System.currentTimeMillis() - lastInteractionTime
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    lock.withLock {
+      val registered = SignalStore.account().isRegistered
+      val fcmEnabled = SignalStore.account().fcmEnabled
+      val hasNetwork = NetworkConstraint.isMet(context)
+      val hasProxy = SignalStore.proxy().isProxyEnabled
+      val forceWebsocket = SignalStore.internalValues().isWebsocketModeForced
+      val keepAliveCutoffTime = System.currentTimeMillis() - KEEP_ALIVE_TOKEN_MAX_AGE
+      val timeIdle = if (appVisible) 0 else System.currentTimeMillis() - lastInteractionTime
+      val removedRequests = keepAliveTokens.entries.removeIf { (_, createTime) -> createTime < keepAliveCutoffTime }
+      val decryptQueueEmpty = ApplicationDependencies.getJobManager().isQueueEmpty(PushDecryptMessageJob.QUEUE)
+=======
+    val timeIdle: Long
+    val keepAliveEntries: Set<Map.Entry<String, Long>>
+    val appVisibleSnapshot: Boolean
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
+<<<<<<< HEAD
       val keepAliveCutoffTime = System.currentTimeMillis() - keepAliveTokenMaxAge
       keepAliveEntries = keepAliveTokens.entries.mapNotNull { (key, createTime) ->
         if (createTime < keepAliveCutoffTime) {
@@ -220,7 +260,36 @@ class IncomingMessageObserver(private val context: Application) {
           key to createTime
         }
       }.toImmutableSet()
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      if (removedRequests) {
+        Log.d(TAG, "Removed old keep web socket open requests.")
+      }
+
+      val lastInteractionString = if (appVisible) "N/A" else timeIdle.toString() + " ms (" + (if (timeIdle < MAX_BACKGROUND_TIME) "within limit" else "over limit") + ")"
+      val conclusion = registered &&
+        (appVisible || timeIdle < MAX_BACKGROUND_TIME || !fcmEnabled || Util.hasItems(keepAliveTokens)) &&
+        hasNetwork &&
+        decryptQueueEmpty
+
+      val needsConnectionString = if (conclusion) "Needs Connection" else "Does Not Need Connection"
+
+      Log.d(TAG, "[$needsConnectionString] Network: $hasNetwork, Foreground: $appVisible, Time Since Last Interaction: $lastInteractionString, FCM: $fcmEnabled, Stay open requests: ${keepAliveTokens.entries}, Registered: $registered, Proxy: $hasProxy, Force websocket: $forceWebsocket, Decrypt Queue Empty: $decryptQueueEmpty")
+      return conclusion
+=======
+    lock.withLock {
+      appVisibleSnapshot = appVisible
+      timeIdle = if (appVisibleSnapshot) 0 else System.currentTimeMillis() - lastInteractionTime
+
+      val keepAliveCutoffTime = System.currentTimeMillis() - KEEP_ALIVE_TOKEN_MAX_AGE
+      val removedKeepAliveToken = keepAliveTokens.entries.removeIf { (_, createTime) -> createTime < keepAliveCutoffTime }
+      if (removedKeepAliveToken) {
+        Log.d(TAG, "Removed old keep web socket open requests.")
+      }
+
+      keepAliveEntries = keepAliveTokens.entries.toImmutableSet()
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     }
+<<<<<<< HEAD
 
     val registered = SignalStore.account.isRegistered
     val fcmEnabled = SignalStore.account.fcmEnabled
@@ -237,6 +306,27 @@ class IncomingMessageObserver(private val context: Application) {
 
     Log.d(TAG, "[$needsConnectionString] Network: $hasNetwork, Foreground: $appVisibleSnapshot, Time Since Last Interaction: $lastInteractionString, FCM: $fcmEnabled, Stay open requests: $keepAliveEntries, Registered: $registered, Proxy: $hasProxy, Force websocket: $forceWebsocket")
     return conclusion
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+
+    val registered = SignalStore.account().isRegistered
+    val fcmEnabled = SignalStore.account().fcmEnabled
+    val hasNetwork = NetworkConstraint.isMet(context)
+    val hasProxy = SignalStore.proxy().isProxyEnabled
+    val forceWebsocket = SignalStore.internalValues().isWebsocketModeForced
+    val decryptQueueEmpty = ApplicationDependencies.getJobManager().isQueueEmpty(PushDecryptMessageJob.QUEUE)
+
+    val lastInteractionString = if (appVisibleSnapshot) "N/A" else timeIdle.toString() + " ms (" + (if (timeIdle < MAX_BACKGROUND_TIME) "within limit" else "over limit") + ")"
+    val conclusion = registered &&
+      (appVisibleSnapshot || timeIdle < MAX_BACKGROUND_TIME || !fcmEnabled || keepAliveEntries.isNotEmpty()) &&
+      hasNetwork &&
+      decryptQueueEmpty
+
+    val needsConnectionString = if (conclusion) "Needs Connection" else "Does Not Need Connection"
+
+    Log.d(TAG, "[$needsConnectionString] Network: $hasNetwork, Foreground: $appVisibleSnapshot, Time Since Last Interaction: $lastInteractionString, FCM: $fcmEnabled, Stay open requests: $keepAliveEntries, Registered: $registered, Proxy: $hasProxy, Force websocket: $forceWebsocket, Decrypt Queue Empty: $decryptQueueEmpty")
+    return conclusion
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   }
 
   private fun waitForConnectionNecessary() {

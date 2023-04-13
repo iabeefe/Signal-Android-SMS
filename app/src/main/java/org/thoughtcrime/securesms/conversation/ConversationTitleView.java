@@ -21,6 +21,13 @@ import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.avatar.view.AvatarView;
 import org.thoughtcrime.securesms.badges.BadgeImageView;
 import org.thoughtcrime.securesms.database.model.StoryViewState;
+<<<<<<< HEAD
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import org.thoughtcrime.securesms.mms.GlideRequests;
+import org.thoughtcrime.securesms.recipients.LiveRecipient;
+=======
+import org.thoughtcrime.securesms.mms.GlideRequests;
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.util.ContextUtil;
 import org.thoughtcrime.securesms.util.DrawableUtil;
@@ -94,7 +101,19 @@ public class ConversationTitleView extends ConstraintLayout {
   public void showExpiring(@NonNull Recipient recipient) {
     isSelf = recipient.isSelf();
 
+<<<<<<< HEAD
     expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.getExpiresInSeconds()));
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  public void showExpiring(@NonNull LiveRecipient recipient) {
+    isSelf = recipient.get().isSelf();
+
+    expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.get().getExpiresInSeconds()));
+=======
+  public void showExpiring(@NonNull Recipient recipient) {
+    isSelf = recipient.isSelf();
+
+    expirationBadgeTime.setText(ExpirationUtil.getExpirationAbbreviatedDisplayValue(getContext(), recipient.getExpiresInSeconds()));
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     expirationBadgeContainer.setVisibility(View.VISIBLE);
     updateSubtitleVisibility();
   }

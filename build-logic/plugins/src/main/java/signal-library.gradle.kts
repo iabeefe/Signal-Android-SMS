@@ -16,9 +16,21 @@ val signalJavaVersion: JavaVersion by rootProject.extra
 val signalKotlinJvmTarget: String by rootProject.extra
 
 plugins {
+<<<<<<< HEAD
   id("com.android.library")
   id("kotlin-android")
   id("ktlint")
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    id("com.android.library")
+    id("kotlin-android")
+    id("org.jlleitschuh.gradle.ktlint")
+    id("android-constants")
+=======
+    id("com.android.library")
+    id("kotlin-android")
+    id("android-constants")
+    id("ktlint")
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 }
 
 android {
@@ -40,11 +52,30 @@ android {
     jvmTarget = signalKotlinJvmTarget
   }
 
+<<<<<<< HEAD
   lint {
     disable += "InvalidVectorPath"
   }
 }
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    lint {
+        disable += "InvalidVectorPath"
+    }
+}
+
+ktlint {
+    // Use a newer version to resolve https://github.com/JLLeitschuh/ktlint-gradle/issues/507
+    version.set("0.47.1")
+}
+
+=======
+    lint {
+        disable += "InvalidVectorPath"
+    }
+}
+
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 dependencies {
   lintChecks(project(":lintchecks"))
 

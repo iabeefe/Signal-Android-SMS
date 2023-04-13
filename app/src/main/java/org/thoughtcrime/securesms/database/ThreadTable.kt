@@ -1872,8 +1872,15 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
   private fun getExtrasFor(record: MessageRecord, body: ThreadBody): Extra? {
     val threadRecipient = getRecipientForThreadId(record.threadId)
     val messageRequestAccepted = RecipientUtil.isMessageRequestAccepted(record.threadId, threadRecipient)
+<<<<<<< HEAD
     val isHidden = threadRecipient?.isHidden ?: false
     val authorId = record.fromRecipient.id
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    val individualRecipientId = record.individualRecipient.id
+=======
+    val isHidden = threadRecipient?.isHidden ?: false
+    val individualRecipientId = record.individualRecipient.id
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     if (!messageRequestAccepted && threadRecipient != null) {
       if (threadRecipient.isPushGroup) {
@@ -1899,7 +1906,13 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
           }
         }
       } else {
+<<<<<<< HEAD
         return Extra.forMessageRequest(authorId, isHidden)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+        return Extra.forMessageRequest(individualRecipientId)
+=======
+        return Extra.forMessageRequest(individualRecipientId, isHidden)
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       }
     }
 

@@ -15,14 +15,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.annimon.stream.Stream;
 
+import com.annimon.stream.Stream;
+
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
+import org.thoughtcrime.securesms.components.recyclerview.SmoothScrollingLinearLayoutManager;
 import org.thoughtcrime.securesms.database.MessageTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.ThreadTable;
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.database.model.ReactionRecord;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+=======
+import org.thoughtcrime.securesms.database.model.MessageRecord;
+import org.thoughtcrime.securesms.database.model.ReactionRecord;
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.thoughtcrime.securesms.notifications.MarkReadReceiver;
 import org.thoughtcrime.securesms.notifications.v2.ConversationId;
 import org.thoughtcrime.securesms.util.Debouncer;
@@ -72,6 +83,7 @@ public class MarkReadHelper {
       });
     });
   }
+<<<<<<< HEAD
 
   /**
    * Prevent calls to {@link #onViewsRevealed(long)} from causing messages to be marked read.
@@ -132,4 +144,45 @@ public class MarkReadHelper {
 
     return Optional.empty();
   }
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+
+  /**
+   * Given the adapter and manager, figure out the timestamp to mark read up to.
+   *
+   * @param conversationAdapter   The conversation thread's adapter
+   * @param layoutManager         The conversation thread's layout manager
+   * @return A Present(Long) if there's a timestamp to proceed with, or Empty if this request should be ignored.
+   */
+  @SuppressWarnings("resource")
+  public static @NonNull Optional<Long> getLatestTimestamp(@NonNull ConversationAdapter conversationAdapter,
+                                                           @NonNull SmoothScrollingLinearLayoutManager layoutManager)
+  {
+    if (conversationAdapter.hasNoConversationMessages()) {
+      return Optional.empty();
+    }
+
+    int position = layoutManager.findFirstVisibleItemPosition();
+    if (position == -1 || position == layoutManager.getItemCount() - 1) {
+      return Optional.empty();
+    }
+
+    ConversationMessage item = conversationAdapter.getItem(position);
+    if (item == null) {
+      item = conversationAdapter.getItem(position + 1);
+    }
+
+    if (item != null) {
+      MessageRecord record = item.getMessageRecord();
+      long latestReactionReceived = Stream.of(record.getReactions())
+                                          .map(ReactionRecord::getDateReceived)
+                                          .max(Long::compareTo)
+                                          .orElse(0L);
+
+      return Optional.of(Math.max(record.getDateReceived(), latestReactionReceived));
+    }
+
+    return Optional.empty();
+  }
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 }

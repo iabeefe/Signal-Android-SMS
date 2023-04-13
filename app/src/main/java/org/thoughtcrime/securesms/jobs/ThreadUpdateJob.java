@@ -19,9 +19,15 @@ public final class ThreadUpdateJob extends BaseJob {
 
   private static final String KEY_THREAD_ID = "thread_id";
 
+<<<<<<< HEAD
   private static final long DEBOUNCE_INTERVAL = 500;
   private static final long DEBOUNCE_INTERVAL_WITH_BACKLOG = 3000;
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+  private static final long DEBOUNCE_INTERVAL = 3000;
+
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   private final long threadId;
 
   private ThreadUpdateJob(long threadId) {
@@ -55,10 +61,18 @@ public final class ThreadUpdateJob extends BaseJob {
 
   @Override
   protected void onRun() throws Exception {
+<<<<<<< HEAD
     SignalDatabase.threads().update(threadId, true, true);
     if (!AppDependencies.getIncomingMessageObserver().getDecryptionDrained()) {
       ThreadUtil.sleep(DEBOUNCE_INTERVAL_WITH_BACKLOG);
     }
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    SignalDatabase.threads().update(threadId, true);
+    ThreadUtil.sleep(1000);
+=======
+    SignalDatabase.threads().update(threadId, true);
+    ThreadUtil.sleep(DEBOUNCE_INTERVAL);
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   }
 
   @Override

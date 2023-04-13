@@ -115,6 +115,7 @@ class CallLogContextMenu(
       title = fragment.getString(R.string.CallContextMenu__info)
     ) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       val intent = when {
         peer.isCallLink -> CallLinkDetailsActivity.createIntent(fragment.requireContext(), peer.requireCallLinkRoomId())
         else -> ConversationSettingsActivity.forCall(fragment.requireContext(), peer, messageIds)
@@ -124,6 +125,11 @@ class CallLogContextMenu(
 =======
       val intent = ConversationSettingsActivity.forCall(fragment.requireContext(), call.peer, longArrayOf(call.call.messageId!!))
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      val intent = ConversationSettingsActivity.forCall(fragment.requireContext(), call.peer, longArrayOf(call.call.messageId!!))
+=======
+      val intent = ConversationSettingsActivity.forCall(fragment.requireContext(), call.peer, longArrayOf(call.record.messageId!!))
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       fragment.startActivity(intent)
     }
   }
@@ -137,8 +143,16 @@ class CallLogContextMenu(
     }
   }
 
+<<<<<<< HEAD
   private fun getDeleteActionItem(call: CallLogRow): ActionItem? {
     if (call is CallLogRow.Call && call.record.event == CallTable.Event.ONGOING) {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  private fun getDeleteActionItem(call: CallLogRow.Call): ActionItem? {
+    if (call.call.event == CallTable.Event.ONGOING) {
+=======
+  private fun getDeleteActionItem(call: CallLogRow.Call): ActionItem? {
+    if (call.record.event == CallTable.Event.ONGOING) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       return null
     }
 

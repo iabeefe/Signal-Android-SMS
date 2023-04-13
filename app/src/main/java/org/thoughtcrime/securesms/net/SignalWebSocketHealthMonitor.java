@@ -124,6 +124,7 @@ public final class SignalWebSocketHealthMonitor implements HealthMonitor {
             break;
           }
         case FAILED:
+<<<<<<< HEAD
           if (SignalStore.proxy().isProxyEnabled()) {
             Log.w(TAG, "Encountered an error while we had a proxy set! Terminating the connection to prevent retry spam.");
             ApplicationDependencies.closeConnections();
@@ -135,6 +136,13 @@ public final class SignalWebSocketHealthMonitor implements HealthMonitor {
             break;
           }
         case FAILED:
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+          if (SignalStore.proxy().isProxyEnabled()) {
+            Log.w(TAG, "Encountered an error while we had a proxy set! Terminating the connection to prevent retry spam.");
+            ApplicationDependencies.closeConnections();
+          }
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
           break;
       }
 

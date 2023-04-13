@@ -43,6 +43,7 @@ import org.thoughtcrime.securesms.database.helpers.migration.V180_RecipientNickn
 import org.thoughtcrime.securesms.database.helpers.migration.V181_ThreadTableForeignKeyCleanup
 <<<<<<< HEAD
 import org.thoughtcrime.securesms.database.helpers.migration.V182_CallTableMigration
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.database.helpers.migration.V183_CallLinkTableMigration
 import org.thoughtcrime.securesms.database.helpers.migration.V184_CallLinkReplaceIndexMigration
 import org.thoughtcrime.securesms.database.helpers.migration.V185_MessageRecipientsAndEditMessageMigration
@@ -114,6 +115,10 @@ import org.thoughtcrime.securesms.database.helpers.migration.V252_AttachmentOffl
 =======
 import org.thoughtcrime.securesms.database.helpers.migration.V182_CallTableMigration
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.database.helpers.migration.V183_CallLinkTableMigration
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
 /**
  * Contains all of the database migrations for [SignalDatabase]. Broken into a separate file for cleanliness.
@@ -122,6 +127,7 @@ object SignalDatabaseMigrations {
 
   val TAG: String = Log.tag(SignalDatabaseMigrations.javaClass)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   private val migrations: List<Pair<Int, SignalDatabaseMigration>> = listOf(
     149 to V149_LegacyMigrations,
@@ -235,6 +241,11 @@ object SignalDatabaseMigrations {
 =======
   const val DATABASE_VERSION = 182
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  const val DATABASE_VERSION = 182
+=======
+  const val DATABASE_VERSION = 183
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
   @JvmStatic
   fun migrate(context: Application, db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -537,7 +548,15 @@ object SignalDatabaseMigrations {
     if (oldVersion < 182) {
       V182_CallTableMigration.migrate(context, db, oldVersion, newVersion)
     }
+<<<<<<< HEAD
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+=======
+
+    if (oldVersion < 183) {
+      V183_CallLinkTableMigration.migrate(context, db, oldVersion, newVersion)
+    }
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   }
 
   @JvmStatic

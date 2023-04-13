@@ -1293,10 +1293,22 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         markExpireStarted(messageId, targetMessage.expireStarted)
       }
 
+<<<<<<< HEAD
       writableDatabase.update(TABLE_NAME)
         .values(LATEST_REVISION_ID to messageId)
         .where("$ID = ? OR $LATEST_REVISION_ID = ?", targetMessage.id, targetMessage.id)
         .run()
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+      if (!silent) {
+        threads.update(threadId, true)
+        TrimThreadJob.enqueueAsync(threadId)
+      }
+=======
+      if (!silent) {
+        ThreadUpdateJob.enqueue(threadId)
+        TrimThreadJob.enqueueAsync(threadId)
+      }
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
       reactions.moveReactionsToNewMessage(newMessageId = messageId, previousId = targetMessage.id)
 

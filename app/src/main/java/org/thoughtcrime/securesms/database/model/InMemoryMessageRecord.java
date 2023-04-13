@@ -107,6 +107,29 @@ public class InMemoryMessageRecord extends MessageRecord {
     }
   }
 
+  public static final class RemovedContactHidden extends InMemoryMessageRecord {
+
+    public RemovedContactHidden(long threadId) {
+      super(HIDDEN_CONTACT_WARNING_ID, "", Recipient.UNKNOWN, threadId, 0);
+    }
+
+    @Override
+    public @Nullable UpdateDescription getUpdateDisplayBody(@NonNull Context context, @Nullable Consumer<RecipientId> recipientClickHandler) {
+      return UpdateDescription.staticDescription(context.getString(R.string.ConversationUpdateItem_hidden_contact_message_to_add_back),
+                                                 R.drawable.symbol_info_compact_16);
+    }
+
+    @Override
+    public boolean isUpdate() {
+      return true;
+    }
+
+    @Override
+    public boolean showActionButton() {
+      return false;
+    }
+  }
+
   /**
    * Show temporary update message about setting the disappearing messages timer upon first message
    * send.

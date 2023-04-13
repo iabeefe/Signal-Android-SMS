@@ -2,8 +2,15 @@ package org.thoughtcrime.securesms
 
 import android.content.ContentValues
 import android.os.Build
+<<<<<<< HEAD
 import org.signal.core.util.logging.AndroidLogger
 import org.signal.core.util.logging.Log
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import leakcanary.LeakCanary
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import org.signal.spinner.Spinner
 import org.signal.spinner.Spinner.DatabaseConfig
 import org.signal.spinner.SpinnerLogger
@@ -29,7 +36,12 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.logging.PersistentLogger
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.util.AppSignatureUtil
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.RemoteConfig
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+import shark.AndroidReferenceMatchers
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 import java.util.Locale
 
 class SpinnerApplicationContext : ApplicationContext() {

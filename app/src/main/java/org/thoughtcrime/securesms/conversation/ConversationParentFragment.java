@@ -200,6 +200,7 @@ import org.thoughtcrime.securesms.groups.ui.invitesandrequests.ManagePendingAndR
 import org.thoughtcrime.securesms.groups.ui.migration.GroupsV1MigrationInitiationBottomSheetDialogFragment;
 import org.thoughtcrime.securesms.groups.ui.migration.GroupsV1MigrationSuggestionsDialog;
 import org.thoughtcrime.securesms.insights.InsightsLauncher;
+import org.thoughtcrime.securesms.invites.InviteActions;
 import org.thoughtcrime.securesms.invites.InviteReminderModel;
 import org.thoughtcrime.securesms.invites.InviteReminderRepository;
 import org.thoughtcrime.securesms.jobs.ForceUpdateGroupV2Job;
@@ -366,7 +367,16 @@ public class ConversationParentFragment extends Fragment
                MessageDetailsFragment.Callback,
                ScheduleMessageTimePickerBottomSheet.ScheduleCallback,
                ConversationBottomSheetCallback,
+<<<<<<< HEAD
                ScheduleMessageDialogCallback
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+               ScheduleMessageDialogCallback,
+               ConversationOptionsMenu.Callback,
+               ConversationOptionsMenu.Dependencies
+=======
+               ScheduleMessageDialogCallback,
+               ConversationOptionsMenu.Callback
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 {
 
   private static final int SHORTCUT_ICON_SIZE = Build.VERSION.SDK_INT >= 26 ? ViewUtil.dpToPx(72) : ViewUtil.dpToPx(48 + 16 * 2);
@@ -493,6 +503,14 @@ public class ConversationParentFragment extends Fragment
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     disposables.bindTo(getViewLifecycleOwner());
+<<<<<<< HEAD
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    menuProvider = new ConversationOptionsMenu.Provider(this, this, disposables);
+    SpoilerAnnotation.resetRevealedSpoilers();
+=======
+    menuProvider = new ConversationOptionsMenu.Provider(this, disposables);
+    SpoilerAnnotation.resetRevealedSpoilers();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     if (requireActivity() instanceof Callback) {
       callback = (Callback) requireActivity();
@@ -1322,6 +1340,7 @@ public class ConversationParentFragment extends Fragment
     startActivity(RegistrationNavigationActivity.newIntentForReRegistration(requireContext()));
   }
 
+<<<<<<< HEAD
   private void handleInviteLink() {
     String inviteText = getString(R.string.ConversationActivity_lets_switch_to_signal, getString(R.string.install_url));
 
@@ -1345,6 +1364,47 @@ public class ConversationParentFragment extends Fragment
         Toast.makeText(requireContext(), R.string.InviteActivity_no_app_to_share_to, Toast.LENGTH_LONG).show();
       }
     }
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  @Override
+  public void handleInviteLink() {
+    String inviteText = getString(R.string.ConversationActivity_lets_switch_to_signal, getString(R.string.install_url));
+
+//    if (viewModel.isDefaultSmsApplication() && SignalStore.misc().getSmsExportPhase().isSmsSupported()) {
+    if (viewModel.isDefaultSmsApplication()) {
+      composeText.appendInvite(inviteText);
+    } else if (recipient.get().hasSmsAddress()) {
+      Intent intent = new Intent(Intent.ACTION_SENDTO);
+      intent.setData(Uri.parse("smsto:" + recipient.get().requireSmsAddress()));
+      intent.putExtra("sms_body", inviteText);
+      intent.putExtra(Intent.EXTRA_TEXT, inviteText);
+      startActivity(intent);
+    } else {
+      Intent sendIntent = new Intent();
+      sendIntent.setAction(Intent.ACTION_SEND);
+      sendIntent.putExtra(Intent.EXTRA_TEXT, inviteText);
+      sendIntent.setType("text/plain");
+      if (sendIntent.resolveActivity(requireContext().getPackageManager()) != null) {
+        startActivity(Intent.createChooser(sendIntent, getString(R.string.InviteActivity_invite_to_signal)));
+      } else {
+        Toast.makeText(requireContext(), R.string.InviteActivity_no_app_to_share_to, Toast.LENGTH_LONG).show();
+      }
+    }
+=======
+  @Override
+  public void handleInviteLink() {
+    InviteActions.INSTANCE.inviteUserToSignal(
+        requireContext(),
+        recipient.get(),
+        text -> {
+          composeText.appendInvite(text);
+          return Unit.INSTANCE;
+        },
+        intent -> {
+          startActivity(intent);
+          return Unit.INSTANCE;
+        }
+    );
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   }
 
   private void handleViewMedia() {
@@ -1478,8 +1538,18 @@ public class ConversationParentFragment extends Fragment
     }
   }
 
+<<<<<<< HEAD
   private void handleDial(final Recipient recipient, boolean isSecure) {
     if (recipient == null) return;
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  @Override
+  public void handleDial(final Recipient recipient, boolean isSecure) {
+    if (recipient == null) return;
+=======
+  @Override
+  public void handleDial(boolean isSecure) {
+    Recipient recipient = getRecipient();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     if (isSecure) {
       CommunicationActions.startVoiceCall(this, recipient);
@@ -1488,8 +1558,18 @@ public class ConversationParentFragment extends Fragment
     }
   }
 
+<<<<<<< HEAD
   private void handleVideo(final Recipient recipient) {
     if (recipient == null) return;
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  @Override
+  public void handleVideo(final Recipient recipient) {
+    if (recipient == null) return;
+=======
+  @Override
+  public void handleVideo() {
+    Recipient recipient = getRecipient();
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
     if (recipient.isPushV2Group() && groupCallViewModel.hasActiveGroupCall().getValue() == Boolean.FALSE && groupViewModel.isNonAdminInAnnouncementGroup()) {
       new MaterialAlertDialogBuilder(requireContext()).setTitle(R.string.ConversationActivity_cant_start_group_call)
@@ -2144,7 +2224,7 @@ public class ConversationParentFragment extends Fragment
 
     reactionDelegate.setOnReactionSelectedListener(this);
 
-    joinGroupCallButton.setOnClickListener(v -> handleVideo(getRecipient()));
+    joinGroupCallButton.setOnClickListener(v -> handleVideo());
 
     voiceNoteMediaController.getVoiceNotePlayerViewState().observe(getViewLifecycleOwner(), state -> {
       if (state.isPresent()) {
@@ -2863,12 +2943,15 @@ public class ConversationParentFragment extends Fragment
     }
   }
 
+<<<<<<< HEAD
   private boolean isInMessageRequest() {
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  @Override
+  public boolean isInMessageRequest() {
+=======
+  public boolean isInMessageRequest() {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     return messageRequestBottomView.getVisibility() == View.VISIBLE;
-  }
-
-  private boolean isSingleConversation() {
-    return getRecipient() != null && !getRecipient().isGroup();
   }
 
   private boolean isActiveGroup() {
@@ -2898,10 +2981,19 @@ public class ConversationParentFragment extends Fragment
     return this.recipient.get();
   }
 
+<<<<<<< HEAD
   protected long getThreadId() {
     return this.threadId;
   }
 
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  @Override
+  public long getThreadId() {
+    return this.threadId;
+  }
+
+=======
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   private String getMessage() throws InvalidMessageException {
     String rawText = composeText.getTextTrimmed().toString();
 
@@ -3701,6 +3793,74 @@ public class ConversationParentFragment extends Fragment
     sendMessage(metricId, scheduledDate);
   }
 
+<<<<<<< HEAD
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+  @Override
+  public void handleGoHome() {
+    requireActivity().finish();
+  }
+
+  @Override
+  public @NonNull  ConversationViewModel getViewModel() {
+    return viewModel;
+  }
+
+  @Override
+  public @NonNull ConversationGroupViewModel getGroupViewModel() {
+    return groupViewModel;
+  }
+
+  @Override
+  public @Nullable GroupCallViewModel getGroupCallViewModel() {
+    return groupCallViewModel;
+  }
+
+  @Override
+  public @NonNull ConversationTitleView getTitleView() {
+    return titleView;
+  }
+
+  @Override
+  public int getDistributionType() {
+    return distributionType;
+  }
+
+=======
+  @Override
+  public void handleGoHome() {
+    requireActivity().finish();
+  }
+
+  @Override
+  public @NonNull ConversationOptionsMenu.Snapshot getSnapshot() {
+    ConversationGroupViewModel.GroupActiveState groupActiveState = groupViewModel.getGroupActiveState().getValue();
+
+    return new ConversationOptionsMenu.Snapshot(
+        recipient != null ? recipient.get() : null,
+        viewModel.isPushAvailable(),
+        viewModel.canShowAsBubble(),
+        groupActiveState != null && groupActiveState.isActiveGroup(),
+        groupActiveState != null && groupActiveState.isActiveV2Group(),
+        groupActiveState != null && !groupActiveState.isActiveGroup(),
+        groupCallViewModel != null && groupCallViewModel.hasActiveGroupCall().getValue() == Boolean.TRUE,
+        distributionType,
+        threadId,
+        isInMessageRequest(),
+        isInBubble()
+    );
+  }
+
+  @Override
+  public void showExpiring(@NonNull Recipient recipient) {
+    titleView.showExpiring(recipient);
+  }
+
+  @Override
+  public void clearExpiring() {
+    titleView.clearExpiring();
+  }
+
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
   // Listeners
 
   private class RecordingSession implements SingleObserver<VoiceNoteDraft>, Disposable {

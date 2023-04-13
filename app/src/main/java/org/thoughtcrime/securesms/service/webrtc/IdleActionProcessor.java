@@ -7,6 +7,7 @@ import org.signal.ringrtc.CallException;
 import org.signal.ringrtc.CallManager;
 import org.signal.ringrtc.PeekInfo;
 import org.thoughtcrime.securesms.components.webrtc.EglBaseWrapper;
+import org.thoughtcrime.securesms.database.CallTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.events.WebRtcViewModel;
 import org.thoughtcrime.securesms.groups.GroupId;
@@ -111,12 +112,18 @@ public class IdleActionProcessor extends WebRtcActionProcessor {
       SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(ringId, remotePeerGroup.getId(), sender, System.currentTimeMillis(), ringUpdate);
       return currentState;
 <<<<<<< HEAD
+<<<<<<< HEAD
     } else if (SignalDatabase.calls().isRingCancelled(ringId, remotePeerGroup.getId())) {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     } else if (SignalDatabase.groupCallRings().isCancelled(ringId)) {
 =======
     } else if (SignalDatabase.calls().isRingCancelled(ringId)) {
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    } else if (SignalDatabase.calls().isRingCancelled(ringId)) {
+=======
+    } else if (SignalDatabase.calls().isRingCancelled(ringId, remotePeerGroup.getId())) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       try {
         Log.i(TAG, "Incoming ring request for already cancelled ring: " + ringId);
         webRtcInteractor.getCallManager().cancelGroupRing(groupId.getDecodedId(), ringId, null);
@@ -154,12 +161,18 @@ public class IdleActionProcessor extends WebRtcActionProcessor {
     Log.i(tag, "handleReceivedGroupCallPeekForRingingCheck(): recipient: " + info.getRecipientId() + " ring: " + info.getRingId());
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (SignalDatabase.calls().isRingCancelled(info.getRingId(), info.getRecipientId())) {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     if (SignalDatabase.groupCallRings().isCancelled(info.getRingId())) {
 =======
     if (SignalDatabase.calls().isRingCancelled(info.getRingId())) {
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    if (SignalDatabase.calls().isRingCancelled(info.getRingId())) {
+=======
+    if (SignalDatabase.calls().isRingCancelled(info.getRingId(), info.getRecipientId())) {
+>>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       try {
         Log.i(TAG, "Ring was cancelled while getting peek info ring: " + info.getRingId());
         webRtcInteractor.getCallManager().cancelGroupRing(info.getGroupId().getDecodedId(), info.getRingId(), null);
