@@ -563,7 +563,8 @@ object SyncMessageProcessor {
     val previews: List<LinkPreview> = DataMessageProcessor.getLinkPreviews(sent.message.previewList, sent.message.body ?: "", false)
     val mentions: List<Mention> = DataMessageProcessor.getMentions(sent.message.bodyRangesList)
     val giftBadge: GiftBadge? = if (sent.message.hasGiftBadge()) GiftBadge.newBuilder().setRedemptionToken(sent.message.giftBadge.receiptCredentialPresentation).build() else null
-    val viewOnce: Boolean = sent.message.isViewOnce
+    val viewOnce: Boolean // JW
+    if (TextSecurePreferences.isKeepViewOnceMessages(context)) viewOnce = false else viewOnce = sent.message.isViewOnce // JW
     val bodyRanges: BodyRangeList? = sent.message.bodyRangesList.toBodyRangeList()
     val syncAttachments: List<Attachment> = listOfNotNull(sticker) + if (viewOnce) listOf<Attachment>(TombstoneAttachment(MediaUtil.VIEW_ONCE, false)) else sent.message.attachmentsList.toPointers()
 
@@ -778,6 +779,7 @@ object SyncMessageProcessor {
   }
 
   private fun handleSynchronizeViewOnceOpenMessage(context: Context, openMessage: ViewOnceOpen, envelopeTimestamp: Long, earlyMessageCacheEntry: EarlyMessageCacheEntry?) {
+    if (TextSecurePreferences.isKeepViewOnceMessages(context)) return // JW
     log(envelopeTimestamp, "Handling a view-once open for message: " + openMessage.timestamp)
 
     val author: RecipientId = Recipient.externalPush(ServiceId.parseOrThrow(openMessage.senderUuid)).id
@@ -1009,7 +1011,7 @@ object SyncMessageProcessor {
 
     log(envelopeTimestamp, "Synchronize call event call: $callId")
 
-    val call = SignalDatabase.calls.getCallById(callId)
+    val call = SignalDatabase.calls.getCallById(callId, CallTable.CallConversationId.Peer(recipientId))
     if (call != null) {
       val typeMismatch = call.type !== type
       val directionMismatch = call.direction !== direction
@@ -1044,7 +1046,11 @@ object SyncMessageProcessor {
       return
     }
 
-    val call = SignalDatabase.calls.getCallById(callId)
+    val groupId: GroupId = GroupId.push(callEvent.conversationId.toByteArray())
+    val recipientId = Recipient.externalGroupExact(groupId).id
+    val conversationId = CallTable.CallConversationId.Peer(recipientId)
+
+    val call = SignalDatabase.calls.getCallById(callId, CallTable.CallConversationId.Peer(recipientId))
 
     if (call != null) {
       if (call.type !== type) {
@@ -1055,7 +1061,7 @@ object SyncMessageProcessor {
         CallTable.Event.DELETE -> SignalDatabase.calls.deleteGroupCall(call)
         CallTable.Event.ACCEPTED -> {
           if (call.timestamp < callEvent.timestamp) {
-            SignalDatabase.calls.setTimestamp(call.callId, callEvent.timestamp)
+            SignalDatabase.calls.setTimestamp(call.callId, conversationId, callEvent.timestamp)
           }
           if (callEvent.direction == SyncMessage.CallEvent.Direction.INCOMING) {
             SignalDatabase.calls.acceptIncomingGroupCall(call)
@@ -1067,8 +1073,6 @@ object SyncMessageProcessor {
         else -> warn("Unsupported event type " + event + ". Ignoring. timestamp: " + timestamp + " type: " + type + " direction: " + direction + " event: " + event + " hasPeer: " + callEvent.hasConversationId())
       }
     } else {
-      val groupId: GroupId = GroupId.push(callEvent.conversationId.toByteArray())
-      val recipientId = Recipient.externalGroupExact(groupId).id
       when (event) {
         CallTable.Event.DELETE -> SignalDatabase.calls.insertDeletedGroupCallFromSyncEvent(callEvent.id, recipientId, direction, timestamp)
         CallTable.Event.ACCEPTED -> SignalDatabase.calls.insertAcceptedGroupCall(callEvent.id, recipientId, direction, timestamp)
