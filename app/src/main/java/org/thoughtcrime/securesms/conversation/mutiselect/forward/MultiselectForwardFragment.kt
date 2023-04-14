@@ -58,7 +58,14 @@ import org.thoughtcrime.securesms.stories.settings.create.CreateStoryWithViewers
 import org.thoughtcrime.securesms.stories.settings.privacy.ChooseInitialMyStoryMembershipBottomSheetDialogFragment
 import org.thoughtcrime.securesms.util.BottomSheetUtil
 import org.thoughtcrime.securesms.util.FullscreenHelper
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.RemoteConfig
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+import org.thoughtcrime.securesms.util.LifecycleDisposable
+import org.thoughtcrime.securesms.util.Util
+=======
+import org.thoughtcrime.securesms.util.Util
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.ViewUtil
 import org.thoughtcrime.securesms.util.fragments.findListener
 import org.thoughtcrime.securesms.util.fragments.requireListener

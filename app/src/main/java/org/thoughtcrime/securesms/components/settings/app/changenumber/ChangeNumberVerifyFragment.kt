@@ -12,15 +12,39 @@ import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+<<<<<<< HEAD
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.signal.core.util.isNotNullOrBlank
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
+=======
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
+import org.signal.core.util.concurrent.LifecycleDisposable
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.LoggingFragment
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.settings.app.changenumber.ChangeNumberUtil.changeNumberSuccess
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.registration.data.RegistrationRepository
 import org.thoughtcrime.securesms.registration.data.network.Challenge
 import org.thoughtcrime.securesms.registration.data.network.VerificationCodeRequestResult
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+import org.thoughtcrime.securesms.components.settings.app.changenumber.ChangeNumberUtil.getCaptchaArguments
+import org.thoughtcrime.securesms.components.settings.app.changenumber.ChangeNumberUtil.getViewModel
+import org.thoughtcrime.securesms.registration.RegistrationSessionProcessor
+import org.thoughtcrime.securesms.registration.VerifyAccountRepository
+import org.thoughtcrime.securesms.util.LifecycleDisposable
+import org.thoughtcrime.securesms.util.dualsim.MccMncProducer
+=======
+import org.thoughtcrime.securesms.components.settings.app.changenumber.ChangeNumberUtil.getCaptchaArguments
+import org.thoughtcrime.securesms.components.settings.app.changenumber.ChangeNumberUtil.getViewModel
+import org.thoughtcrime.securesms.registration.RegistrationSessionProcessor
+import org.thoughtcrime.securesms.registration.VerifyAccountRepository
+import org.thoughtcrime.securesms.util.dualsim.MccMncProducer
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
 
 /**

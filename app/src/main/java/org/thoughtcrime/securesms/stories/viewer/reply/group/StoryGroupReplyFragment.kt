@@ -20,8 +20,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
+<<<<<<< HEAD
 import kotlinx.coroutines.launch
 import org.signal.core.util.concurrent.LifecycleDisposable
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+=======
+import org.signal.core.util.concurrent.LifecycleDisposable
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.getParcelableCompat
 import org.signal.core.util.logging.Log

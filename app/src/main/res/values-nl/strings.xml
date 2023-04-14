@@ -719,6 +719,7 @@
     </plurals>
     <plurals name="ConversationListFragment_unread_plural">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <item quantity="one">Ongelezen</item>
         <item quantity="other">Ongelezen</item>
     </plurals>
@@ -749,6 +750,13 @@
 =======
         <item quantity="one">Onglz.</item>
         <item quantity="other">Onglz.</item>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+        <item quantity="one">Onglz.</item>
+        <item quantity="other">Onglz.</item>
+=======
+        <item quantity="one">Ongelezen</item>
+        <item quantity="other">Ongelezen</item>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     </plurals>
     <string name="ConversationListFragment_pin">Vastprikken</string>
     <string name="ConversationListFragment_unpin">Losmaken</string>
@@ -1555,8 +1563,16 @@
     <string name="InputPanel__discard">Verwijderen</string>
 
     <!-- InviteActivity -->
+<<<<<<< HEAD
     <string name="InviteActivity_share">Delen via andere app</string>
     <string name="InviteActivity_share_with_contacts">Delen met contacten</string>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="InviteActivity_share">Doorsturen via andere app</string>
+    <string name="InviteActivity_share_with_contacts">Contactpersonen kiezen (sms)</string>
+=======
+    <string name="InviteActivity_share">Delen via andere app</string>
+    <string name="InviteActivity_share_with_contacts">Contactpersonen kiezen (sms)</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     <string name="InviteActivity_share_via">Delen via …</string>
 
     <string name="InviteActivity_cancel">Annuleren</string>
@@ -2676,9 +2692,19 @@
     <string name="SubmitDebugLogActivity_submit">Uploaden</string>
     <string name="SubmitDebugLogActivity_failed_to_submit_logs">Uploaden van foutopsporingslogs is mislukt</string>
     <string name="SubmitDebugLogActivity_success">Succesvol geüpload!</string>
+<<<<<<< HEAD
     <string name="SubmitDebugLogActivity_copy_this_url_and_add_it_to_your_issue">Kopieer deze URL en voeg die toe aan je foutrapport of aan een e-mail naar ondersteuning:\n\n<b>%1$s</b></string>
     <string name="SubmitDebugLogActivity_share">Delen</string>
     <string name="SubmitDebugLogActivity_this_log_will_be_posted_publicly_online_for_contributors">Dit log bevat geen persoonlijke details zoals telefoonnummers. Als je op uploaden tikt dan wordt dit log 30 dagen lang online beschikbaar gesteld op een unieke nergens onthulde URL. Die URL kun je zelf naar de ontwikkelaars sturen.</string>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="SubmitDebugLogActivity_copy_this_url_and_add_it_to_your_issue">Kopieer deze verwijzing (door deze aan te tikken en vast te houden) en voeg die toe aan je foutrapport op GitHub of aan een e-mail naar ondersteuning:\n\n<b>%1$s</b></string>
+    <string name="SubmitDebugLogActivity_share">Doorsturen via andere app</string>
+    <string name="SubmitDebugLogActivity_this_log_will_be_posted_publicly_online_for_contributors">Dit log bevat geen persoonlijke details zoals telefoonnummers. Als je op uploaden klikt dan wordt dit log 30 dagen lang online beschikbaar gesteld op een unieke nergens onthulde verwijzing. Die verwijzing kun je zelf naar de ontwikkelaars sturen.</string>
+=======
+    <string name="SubmitDebugLogActivity_copy_this_url_and_add_it_to_your_issue">Kopieer deze verwijzing (door deze aan te tikken en vast te houden) en voeg die toe aan je foutrapport op GitHub of aan een e-mail naar ondersteuning:\n\n<b>%1$s</b></string>
+    <string name="SubmitDebugLogActivity_share">Delen via andere app</string>
+    <string name="SubmitDebugLogActivity_this_log_will_be_posted_publicly_online_for_contributors">Dit log bevat geen persoonlijke details zoals telefoonnummers. Als je op uploaden klikt dan wordt dit log 30 dagen lang online beschikbaar gesteld op een unieke nergens onthulde verwijzing. Die verwijzing kun je zelf naar de ontwikkelaars sturen.</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 
     <!-- SupportEmailUtil -->
   <!-- Removed by excludeNonTranslatables <string name="SupportEmailUtil_support_email" translatable="false">support@signal.org</string> -->
@@ -2827,8 +2853,16 @@
 
     <!-- VerifyIdentityActivity -->
     <string name="VerifyIdentityActivity_your_contact_is_running_a_newer_version_of_Signal">Je contact gebruikt een nieuwere versie van Signal met een incompatibel QR-codeformaat. Werk Signal bij om te vergelijken.</string>
+<<<<<<< HEAD
     <string name="VerifyIdentityActivity_the_scanned_qr_code_is_not_a_correctly_formatted_safety_number">De gescande QR-code is geen goed geformatteerde veiligheidsnummer-verificatiecode. Probeer de QR-code opnieuw te scannen.</string>
     <string name="VerifyIdentityActivity_share_safety_number_via">Veiligheidsnummer delen via …</string>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="VerifyIdentityActivity_the_scanned_qr_code_is_not_a_correctly_formatted_safety_number">De gescande QR-code is geen goed geformatteerd veiligheidsnummer-verificatiecode. Probeer de QR-code opnieuw te scannen.</string>
+    <string name="VerifyIdentityActivity_share_safety_number_via">Veiligheidsnummer doorsturen via …</string>
+=======
+    <string name="VerifyIdentityActivity_the_scanned_qr_code_is_not_a_correctly_formatted_safety_number">De gescande QR-code is geen goed geformatteerd veiligheidsnummer-verificatiecode. Probeer de QR-code opnieuw te scannen.</string>
+    <string name="VerifyIdentityActivity_share_safety_number_via">Veiligheidsnummer delen via …</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     <string name="VerifyIdentityActivity_our_signal_safety_number">Ons Signal-veiligheidsnummer:</string>
     <string name="VerifyIdentityActivity_no_app_to_share_to">Het lijkt erop dat je geen apps hebt waarmee je je veiligheidsnummer kunt delen.</string>
     <string name="VerifyIdentityActivity_no_safety_number_to_compare_was_found_in_the_clipboard">Geen veiligheidsnummer gevonden op het klembord</string>
@@ -3494,6 +3528,16 @@
     <string name="verify_display_fragment__mark_as_verified">Als geverifieerd markeren</string>
     <string name="verify_display_fragment__clear_verification">Verificatie ongedaan maken</string>
 
+<<<<<<< HEAD
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <!-- verify_identity -->
+    <string name="verify_identity__share_safety_number">Veiligheidsnummer doorsturen</string>
+
+=======
+    <!-- verify_identity -->
+    <string name="verify_identity__share_safety_number">Veiligheidsnummer delen</string>
+
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     <!-- verity_scan_fragment -->
     <string name="verify_scan_fragment__scan_the_qr_code_on_your_contact">Scan de QR-code op het apparaat van je contact.</string>
 
@@ -4727,9 +4771,19 @@
     <string name="GroupsLearnMore_paragraph_3">Signal zal in de toekomst een manier aanbieden om verouderde groepen om te zetten in nieuwe groepen.</string>
 
     <!-- GroupLinkBottomSheetDialogFragment -->
+<<<<<<< HEAD
     <string name="GroupLinkBottomSheet_share_hint_requiring_approval">Iedereen met deze link kan de naam, afbeelding en het aantal groepsleden zien en kan een verzoek indienen om lid te mogen worden deze groep. Deel deze link alleen met personen die je vertrouwt.</string>
     <string name="GroupLinkBottomSheet_share_hint_not_requiring_approval">Iedereen met deze link kan de naam, afbeelding en het aantal groepsleden zien en kan direct lid worden. Deel deze link alleen met personen die je vertrouwt.</string>
     <string name="GroupLinkBottomSheet_share_via_signal">Delen via Signal</string>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="GroupLinkBottomSheet_share_hint_requiring_approval">Ieder die over deze link beschikt kan de naam, afbeelding en het aantal leden van deze groep zien en kan ook een verzoek indienen om lid te mogen worden. Deel deze link alleen met personen die je vertrouwt.</string>
+    <string name="GroupLinkBottomSheet_share_hint_not_requiring_approval">Ieder die over deze link beschikt kan de naam, afbeelding en het aantal leden van deze groep zien en kan direct lid worden. Deel deze link alleen met personen die je vertrouwt.</string>
+    <string name="GroupLinkBottomSheet_share_via_signal">Verzenden via Signal</string>
+=======
+    <string name="GroupLinkBottomSheet_share_hint_requiring_approval">Ieder die over deze link beschikt kan de naam, afbeelding en het aantal leden van deze groep zien en kan ook een verzoek indienen om lid te mogen worden. Deel deze link alleen met personen die je vertrouwt.</string>
+    <string name="GroupLinkBottomSheet_share_hint_not_requiring_approval">Ieder die over deze link beschikt kan de naam, afbeelding en het aantal leden van deze groep zien en kan direct lid worden. Deel deze link alleen met personen die je vertrouwt.</string>
+    <string name="GroupLinkBottomSheet_share_via_signal">Delen via Signal</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     <string name="GroupLinkBottomSheet_copy">Kopiëren</string>
     <string name="GroupLinkBottomSheet_qr_code">QR-code</string>
     <string name="GroupLinkBottomSheet_share">Delen via andere app</string>
@@ -4866,7 +4920,13 @@
 
     <!-- MultiShareDialogs -->
     <string name="MultiShareDialogs__failed_to_send_to_some_users">Het verzenden is naar sommige personen mislukt</string>
+<<<<<<< HEAD
     <string name="MultiShareDialogs__you_can_only_share_with_up_to">Je kunt dit niet naar meer dan %1$d chats tegelijk delen</string>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="MultiShareDialogs__you_can_only_share_with_up_to">Je kunt dit niet naar meer dan %1$d gesprekken tegelijk doorsturen</string>
+=======
+    <string name="MultiShareDialogs__you_can_only_share_with_up_to">Je kunt dit niet naar meer dan %1$d gesprekken tegelijk delen</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 
     <!-- ChatWallpaperActivity -->
 
@@ -5658,7 +5718,13 @@
     <string name="VectorAvatarCreationFragment__select_a_color">Kies een achtergrondkleur</string>
 
     <!-- Displayed in the toolbar when externally sharing text to multiple recipients -->
+<<<<<<< HEAD
     <string name="ShareInterstitialActivity__share">Delen</string>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="ShareInterstitialActivity__share">Naar gesprekken doorsturen</string>
+=======
+    <string name="ShareInterstitialActivity__share">Naar gesprekken delen</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 
     <!-- DSLSettingsToolbar -->
     <string name="DSLSettingsToolbar__navigate_up">Omhoog navigeren</string>
@@ -6221,7 +6287,13 @@
     <!-- Donation receipts date paid heading -->
     <string name="DonationReceiptDetailsFragment__date_paid">Datum van betaling</string>
     <!-- Donation receipts share PNG -->
+<<<<<<< HEAD
     <string name="DonationReceiptDetailsFragment__share_receipt">Donatiebewijs delen</string>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="DonationReceiptDetailsFragment__share_receipt">Afschrift doorsturen</string>
+=======
+    <string name="DonationReceiptDetailsFragment__share_receipt">Afschrift delen</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     <!-- Donation receipts list end note -->
     <string name="DonationReceiptListFragment__if_you_have">Als je de Signal-app opnieuw hebt geïnstalleerd, zijn donatiebewijzen van eerdere donaties niet beschikbaar.</string>
     <!-- Donation receipts document title -->

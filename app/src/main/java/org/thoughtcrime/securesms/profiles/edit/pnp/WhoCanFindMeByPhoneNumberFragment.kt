@@ -13,7 +13,16 @@ import org.thoughtcrime.securesms.components.settings.DSLConfiguration
 import org.thoughtcrime.securesms.components.settings.DSLSettingsFragment
 import org.thoughtcrime.securesms.components.settings.DSLSettingsText
 import org.thoughtcrime.securesms.components.settings.configure
+<<<<<<< HEAD:app/src/main/java/org/thoughtcrime/securesms/profiles/edit/pnp/WhoCanFindMeByPhoneNumberFragment.kt
 import org.thoughtcrime.securesms.databinding.WhoCanFindMeByPhoneNumberFragmentBinding
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.):app/src/main/java/org/thoughtcrime/securesms/profiles/edit/pnp/WhoCanSeeMyPhoneNumberFragment.kt
+import org.thoughtcrime.securesms.databinding.WhoCanSeeMyPhoneNumberFragmentBinding
+import org.thoughtcrime.securesms.util.FeatureFlags
+import org.thoughtcrime.securesms.util.LifecycleDisposable
+=======
+import org.thoughtcrime.securesms.databinding.WhoCanSeeMyPhoneNumberFragmentBinding
+import org.thoughtcrime.securesms.util.FeatureFlags
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.):app/src/main/java/org/thoughtcrime/securesms/profiles/edit/pnp/WhoCanSeeMyPhoneNumberFragment.kt
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter
 
 /**
