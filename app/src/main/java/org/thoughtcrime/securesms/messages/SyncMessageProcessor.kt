@@ -563,8 +563,7 @@ object SyncMessageProcessor {
     val previews: List<LinkPreview> = DataMessageProcessor.getLinkPreviews(sent.message.previewList, sent.message.body ?: "", false)
     val mentions: List<Mention> = DataMessageProcessor.getMentions(sent.message.bodyRangesList)
     val giftBadge: GiftBadge? = if (sent.message.hasGiftBadge()) GiftBadge.newBuilder().setRedemptionToken(sent.message.giftBadge.receiptCredentialPresentation).build() else null
-    val viewOnce: Boolean // JW
-    if (TextSecurePreferences.isKeepViewOnceMessages(context)) viewOnce = false else viewOnce = sent.message.isViewOnce // JW
+    val viewOnce: Boolean = if (TextSecurePreferences.isKeepViewOnceMessages(context)) false else sent.message.isViewOnce // JW
     val bodyRanges: BodyRangeList? = sent.message.bodyRangesList.toBodyRangeList()
     val syncAttachments: List<Attachment> = listOfNotNull(sticker) + if (viewOnce) listOf<Attachment>(TombstoneAttachment(MediaUtil.VIEW_ONCE, false)) else sent.message.attachmentsList.toPointers()
 
