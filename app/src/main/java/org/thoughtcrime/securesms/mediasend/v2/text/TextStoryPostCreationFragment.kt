@@ -15,9 +15,14 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 <<<<<<< HEAD
+<<<<<<< HEAD
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import org.signal.core.util.concurrent.LifecycleDisposable
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+=======
+import org.signal.core.util.concurrent.LifecycleDisposable
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 =======
 import org.signal.core.util.concurrent.LifecycleDisposable
@@ -38,9 +43,14 @@ import org.thoughtcrime.securesms.mediasend.v2.text.send.TextStoryPostSendResult
 import org.thoughtcrime.securesms.safety.SafetyNumberBottomSheet
 import org.thoughtcrime.securesms.stories.Stories
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.activitySavedStateViewModel
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.LifecycleDisposable
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+import org.thoughtcrime.securesms.util.LifecycleDisposable
+=======
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.livedata.LiveDataUtil
 =======
 import org.thoughtcrime.securesms.util.livedata.LiveDataUtil

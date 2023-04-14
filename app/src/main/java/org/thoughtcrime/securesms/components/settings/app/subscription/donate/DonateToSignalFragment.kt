@@ -16,8 +16,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.google.android.material.snackbar.Snackbar
 import org.signal.core.util.concurrent.LifecycleDisposable
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+=======
+import org.signal.core.util.concurrent.LifecycleDisposable
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 =======
 import org.signal.core.util.concurrent.LifecycleDisposable

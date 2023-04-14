@@ -30,8 +30,13 @@ import org.thoughtcrime.securesms.components.settings.app.subscription.donate.st
 import org.thoughtcrime.securesms.databinding.CreditCardFragmentBinding
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.LifecycleDisposable
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+import org.thoughtcrime.securesms.util.LifecycleDisposable
+=======
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.TextSecurePreferences
 =======
 import org.thoughtcrime.securesms.util.TextSecurePreferences

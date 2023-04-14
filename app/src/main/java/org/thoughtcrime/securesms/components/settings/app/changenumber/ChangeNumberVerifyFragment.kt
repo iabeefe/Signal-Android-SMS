@@ -18,9 +18,14 @@ import org.signal.core.util.isNotNullOrBlank
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
+<<<<<<< HEAD
 =======
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
+import org.signal.core.util.concurrent.LifecycleDisposable
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+=======
 import org.signal.core.util.concurrent.LifecycleDisposable
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.signal.core.util.logging.Log
@@ -36,7 +41,6 @@ import org.thoughtcrime.securesms.components.settings.app.changenumber.ChangeNum
 import org.thoughtcrime.securesms.components.settings.app.changenumber.ChangeNumberUtil.getViewModel
 import org.thoughtcrime.securesms.registration.RegistrationSessionProcessor
 import org.thoughtcrime.securesms.registration.VerifyAccountRepository
-import org.thoughtcrime.securesms.util.LifecycleDisposable
 import org.thoughtcrime.securesms.util.dualsim.MccMncProducer
 =======
 import org.thoughtcrime.securesms.components.settings.app.changenumber.ChangeNumberUtil.getCaptchaArguments

@@ -16,10 +16,15 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.subscribeBy
+<<<<<<< HEAD
 =======
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import org.signal.core.util.concurrent.LifecycleDisposable
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+=======
 import org.signal.core.util.concurrent.LifecycleDisposable
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.signal.core.util.logging.Log
@@ -32,8 +37,13 @@ import org.thoughtcrime.securesms.phonenumbers.PhoneNumberFormatter
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme
 import org.thoughtcrime.securesms.util.DynamicTheme
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.LifecycleDisposable
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+import org.thoughtcrime.securesms.util.LifecycleDisposable
+=======
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.whispersystems.signalservice.api.push.PNI
 import java.util.Objects
 

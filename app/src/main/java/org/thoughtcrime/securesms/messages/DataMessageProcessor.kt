@@ -3121,7 +3121,7 @@ object DataMessageProcessor {
   }
 
   // JW: add a reaction to a message. Thanks ClauZ for the implementation
-  private fun setMessageReaction(context: Context, message: DataMessage, targetMessage: MessageRecord?, reaction: String) {
+  fun setMessageReaction(context: Context, message: DataMessage, targetMessage: MessageRecord?, reaction: String) {
     if (targetMessage != null) {
       val reactionEmoji = EmojiUtil.getCanonicalRepresentation(reaction)
       val targetMessageId = MessageId(targetMessage.id)
@@ -3448,9 +3448,7 @@ object DataMessageProcessor {
     notifyTypingStoppedFromIncomingMessage(context, senderRecipient, threadRecipientId, metadata.sourceDeviceId)
 
     val insertResult: InsertResult?
-
-    val viewOnce: Boolean // JW
-    if (TextSecurePreferences.isKeepViewOnceMessages(context)) viewOnce = false else viewOnce = message.isViewOnce // JW
+    val viewOnce: Boolean = if (TextSecurePreferences.isKeepViewOnceMessages(context)) false else message.isViewOnce // JW
 
     SignalDatabase.messages.beginTransaction()
     try {

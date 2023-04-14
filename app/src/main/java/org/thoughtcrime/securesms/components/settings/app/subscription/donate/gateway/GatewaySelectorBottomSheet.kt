@@ -8,8 +8,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 <<<<<<< HEAD
+<<<<<<< HEAD
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import org.signal.core.util.concurrent.LifecycleDisposable
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+=======
+import org.signal.core.util.concurrent.LifecycleDisposable
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 =======
 import org.signal.core.util.concurrent.LifecycleDisposable
@@ -35,7 +40,12 @@ import org.thoughtcrime.securesms.database.InAppPaymentTable
 import org.thoughtcrime.securesms.database.model.databaseprotos.InAppPaymentData
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.payments.currency.CurrencyUtil
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+import org.thoughtcrime.securesms.util.LifecycleDisposable
+=======
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.LifecycleDisposable
 =======
