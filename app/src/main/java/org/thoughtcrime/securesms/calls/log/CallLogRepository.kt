@@ -6,10 +6,15 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.withinTransaction
 import org.thoughtcrime.securesms.calls.links.UpdateCallLinkRepository
 import org.thoughtcrime.securesms.database.CallLinkTable
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+=======
+import org.signal.core.util.concurrent.SignalExecutors
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 =======
 import org.signal.core.util.concurrent.SignalExecutors
@@ -40,6 +45,7 @@ class CallLogRepository(
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   override fun getCallLinksCount(query: String?, filter: CallLogFilter): Int {
     return when (filter) {
       CallLogFilter.MISSED -> 0
@@ -68,6 +74,15 @@ class CallLogRepository(
     }
   }
 
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+=======
+  fun markAllCallEventsRead() {
+    SignalExecutors.BOUNDED_IO.execute {
+      SignalDatabase.messages.markAllCallEventsRead()
+    }
+  }
+
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 =======
   fun markAllCallEventsRead() {

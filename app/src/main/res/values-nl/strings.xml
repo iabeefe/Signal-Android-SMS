@@ -801,6 +801,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <item quantity="one">Ongelezen</item>
         <item quantity="other">Ongelezen</item>
     </plurals>
@@ -879,6 +880,13 @@
 =======
         <item quantity="one">Onglz.</item>
         <item quantity="other">Onglz.</item>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+        <item quantity="one">Onglz.</item>
+        <item quantity="other">Onglz.</item>
+=======
+        <item quantity="one">Ongelezen</item>
+        <item quantity="other">Ongelezen</item>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
         <item quantity="one">Onglz.</item>
         <item quantity="other">Onglz.</item>
@@ -1787,10 +1795,16 @@
     <!-- InviteActivity -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="InviteActivity_share">Delen via andere app</string>
     <string name="InviteActivity_share_with_contacts">Delen met contacten</string>
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     <string name="InviteActivity_share">Doorsturen via andere app</string>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="InviteActivity_share">Doorsturen via andere app</string>
+=======
+    <string name="InviteActivity_share">Delen via andere app</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     <string name="InviteActivity_share">Doorsturen via andere app</string>
 =======
@@ -3271,9 +3285,15 @@
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     <string name="VerifyIdentityActivity_the_scanned_qr_code_is_not_a_correctly_formatted_safety_number">De gescande QR-code is geen goed geformatteerd veiligheidsnummer-verificatiecode. Probeer de QR-code opnieuw te scannen.</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="VerifyIdentityActivity_share_safety_number_via">Veiligheidsnummer doorsturen via …</string>
 =======
     <string name="VerifyIdentityActivity_the_scanned_qr_code_is_not_a_correctly_formatted_safety_number">De gescande QR-code is geen goed geformatteerd veiligheidsnummer-verificatiecode. Probeer de QR-code opnieuw te scannen.</string>
+    <string name="VerifyIdentityActivity_share_safety_number_via">Veiligheidsnummer delen via …</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="VerifyIdentityActivity_share_safety_number_via">Veiligheidsnummer doorsturen via …</string>
+=======
     <string name="VerifyIdentityActivity_share_safety_number_via">Veiligheidsnummer delen via …</string>
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
@@ -5351,10 +5371,16 @@
     <string name="GroupLinkBottomSheet_share_hint_requiring_approval">Ieder die over deze link beschikt kan de naam, afbeelding en het aantal leden van deze groep zien en kan ook een verzoek indienen om lid te mogen worden. Deel deze link alleen met personen die je vertrouwt.</string>
     <string name="GroupLinkBottomSheet_share_hint_not_requiring_approval">Ieder die over deze link beschikt kan de naam, afbeelding en het aantal leden van deze groep zien en kan direct lid worden. Deel deze link alleen met personen die je vertrouwt.</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="GroupLinkBottomSheet_share_via_signal">Verzenden via Signal</string>
 =======
     <string name="GroupLinkBottomSheet_share_hint_requiring_approval">Ieder die over deze link beschikt kan de naam, afbeelding en het aantal leden van deze groep zien en kan ook een verzoek indienen om lid te mogen worden. Deel deze link alleen met personen die je vertrouwt.</string>
     <string name="GroupLinkBottomSheet_share_hint_not_requiring_approval">Ieder die over deze link beschikt kan de naam, afbeelding en het aantal leden van deze groep zien en kan direct lid worden. Deel deze link alleen met personen die je vertrouwt.</string>
+    <string name="GroupLinkBottomSheet_share_via_signal">Delen via Signal</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="GroupLinkBottomSheet_share_via_signal">Verzenden via Signal</string>
+=======
     <string name="GroupLinkBottomSheet_share_via_signal">Delen via Signal</string>
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
@@ -5500,7 +5526,13 @@
     <string name="MultiShareDialogs__failed_to_send_to_some_users">Het verzenden is naar sommige personen mislukt</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="MultiShareDialogs__you_can_only_share_with_up_to">Je kunt dit niet naar meer dan %1$d chats tegelijk delen</string>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="MultiShareDialogs__you_can_only_share_with_up_to">Je kunt dit niet naar meer dan %1$d gesprekken tegelijk doorsturen</string>
+=======
+    <string name="MultiShareDialogs__you_can_only_share_with_up_to">Je kunt dit niet naar meer dan %1$d gesprekken tegelijk delen</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     <string name="MultiShareDialogs__you_can_only_share_with_up_to">Je kunt dit niet naar meer dan %1$d gesprekken tegelijk doorsturen</string>
 =======
@@ -6622,7 +6654,13 @@
     <!-- Displayed in the toolbar when externally sharing text to multiple recipients -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ShareInterstitialActivity__share">Delen</string>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="ShareInterstitialActivity__share">Naar gesprekken doorsturen</string>
+=======
+    <string name="ShareInterstitialActivity__share">Naar gesprekken delen</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     <string name="ShareInterstitialActivity__share">Naar gesprekken doorsturen</string>
 =======
@@ -7211,7 +7249,13 @@
     <!-- Donation receipts share PNG -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="DonationReceiptDetailsFragment__share_receipt">Donatiebewijs delen</string>
+||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+    <string name="DonationReceiptDetailsFragment__share_receipt">Afschrift doorsturen</string>
+=======
+    <string name="DonationReceiptDetailsFragment__share_receipt">Afschrift delen</string>
+>>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
     <string name="DonationReceiptDetailsFragment__share_receipt">Afschrift doorsturen</string>
 =======

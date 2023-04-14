@@ -2612,6 +2612,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     return markedMessageInfos
   }
 
+  fun markAllCallEventsRead(): List<MarkedMessageInfo> {
+    val where = "$IS_CALL_TYPE_CLAUSE AND $READ = 0"
+    val markedMessageInfos = setMessagesRead(where, null)
+    notifyConversationListListeners()
+    return markedMessageInfos
+  }
+
   fun markAllFailedStoriesNotified() {
     val where = "$IS_STORY_CLAUSE AND ($outgoingTypeClause) AND $NOTIFIED = 0 AND ($TYPE & ${MessageTypes.BASE_TYPE_MASK}) = ${MessageTypes.BASE_SENT_FAILED_TYPE}"
 
