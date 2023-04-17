@@ -162,22 +162,47 @@ public class NewConversationActivity extends ContactSelectionActivity
             if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
 =======
           if (resolved != null) {
+            launch(resolved);
             //if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
+<<<<<<< HEAD
             if (resolved.isRegistered() && resolved.hasServiceId()) {
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+            if (resolved.isRegistered() && resolved.hasServiceId()) {
+=======
+            /*if (resolved.hasServiceId()) {
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
               launch(resolved);
+<<<<<<< HEAD
             }
           } else if (result instanceof RecipientRepository.LookupResult.NotFound || result instanceof RecipientRepository.LookupResult.InvalidEntry) {
             new MaterialAlertDialogBuilder(this)
                 .setMessage(getString(R.string.NewConversationActivity__s_is_not_a_signal_user, number))
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+            } else {
+              new MaterialAlertDialogBuilder(this)
+                  .setMessage(getString(R.string.NewConversationActivity__s_is_not_a_signal_user, resolved.getDisplayName(this)))
+                  .setPositiveButton(android.R.string.ok, null)
+                  .show();
+            }
+=======
+            } else {
+              new MaterialAlertDialogBuilder(this)
+                  .setMessage(getString(R.string.NewConversationActivity__s_is_not_a_signal_user, resolved.getDisplayName(this)))
+                  .setPositiveButton(android.R.string.ok, null)
+                  .show();
+            }*/
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
           } else {
-            new MaterialAlertDialogBuilder(this)
+           /* new MaterialAlertDialogBuilder(this)
                 .setMessage(R.string.NetworkFailure__network_error_check_your_connection_and_try_again)
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
-          }
+            */
+            launch(Recipient.external(this, number));
+         }
         });
 <<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)

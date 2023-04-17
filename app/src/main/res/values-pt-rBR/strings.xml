@@ -1978,8 +1978,14 @@
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
     <!-- Text explaining a message request from someone you\'ve removed before -->
+<<<<<<< HEAD
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_you_removed_them_before">Let %1$s message you and share your name and photo with them? You have removed this person in the past.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+    <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_you_removed_them_before">Let %1$s message you and share your name and photo with them? You have removed this person in the past.</string>
+=======
+    <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_you_removed_them_before">Quer compartilhar seu nome e foto, e permitir que %1$s envie uma mensagem pra você? Você removeu essa pessoa anteriormente.</string>
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_they_wont_know_youve_seen_their_messages_until_you_accept">Você aceita que %1$s lhe envie uma mensagem, saiba seu nome e veja sua foto? Essa pessoa não saberá que você viu a mensagem dela ao menos que você aceite.</string>
     <!-- Shown in message request flow. Describes what will happen if you unblock a Signal user -->
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_wont_receive_any_messages_until_you_unblock_them">Permitir que %1$s envie mensagens para você e veja o seu nome e foto? Você não receberá mensagens dessa pessoa até que a desbloqueie.</string>
@@ -3230,8 +3236,14 @@
 
 =======
     <!-- Update item alerting the user they hid this person and that they can message them to unhide them -->
+<<<<<<< HEAD
     <string name="ConversationUpdateItem_hidden_contact_message_to_add_back">You have removed this person, messaging them again will add them back to your list.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+    <string name="ConversationUpdateItem_hidden_contact_message_to_add_back">You have removed this person, messaging them again will add them back to your list.</string>
+=======
+    <string name="ConversationUpdateItem_hidden_contact_message_to_add_back">Você removeu esta pessoa. Se você enviar uma mensagem, ela voltará à sua lista.</string>
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
 
     <!-- audio_view -->
     <string name="audio_view__play_pause_accessibility_description">Tocar … Pausar</string>
@@ -7837,7 +7849,7 @@
 =======
     <!-- CallPreference -->
     <!-- Generic group call in call info -->
-    <string name="CallPreference__group_call">Group call</string>
+    <string name="CallPreference__group_call">Chamada em grupo</string>
     <!-- Missed group call in call info -->
     <string name="CallPreference__missed_group_call">Chamada de grupo perdida</string>
     <!-- Incoming group call in call info -->

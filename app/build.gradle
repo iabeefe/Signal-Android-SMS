@@ -54,6 +54,7 @@ ktlint {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 def canonicalVersionCode = 1232
 def canonicalVersionName = "6.14.5.0-JW-JK"
 ||||||| parent of 775ec008cc (Added extra options)
@@ -112,6 +113,13 @@ def canonicalVersionName = "6.18.0.0-JW-JK"
 def canonicalVersionCode = 1244
 def canonicalVersionName = "6.18.1.0-JW-JK"
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+def canonicalVersionCode = 1244
+def canonicalVersionName = "6.18.1.0-JW-JK"
+=======
+def canonicalVersionCode = 1245
+def canonicalVersionName = "6.18.2.0-JW-JK"
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
 
 def postFixSize = 100
 def abiPostFix = ['universal'   : 0,

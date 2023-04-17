@@ -7,7 +7,13 @@ import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.impl.DataRestoreConstraint
 import org.thoughtcrime.securesms.transport.RetryLaterException
 import java.lang.Exception
+<<<<<<< HEAD
 import kotlin.time.Duration.Companion.seconds
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+=======
+import java.lang.IllegalStateException
+import kotlin.time.Duration.Companion.seconds
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
 
 class RebuildMessageSearchIndexJob private constructor(params: Parameters) : BaseJob(params) {
 
@@ -24,8 +30,13 @@ class RebuildMessageSearchIndexJob private constructor(params: Parameters) : Bas
   private constructor() : this(
     Parameters.Builder()
       .setQueue("RebuildMessageSearchIndex")
+<<<<<<< HEAD
       .addConstraint(DataRestoreConstraint.KEY)
       .setMaxAttempts(3)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+=======
+      .setMaxAttempts(3)
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
       .build()
   )
 
@@ -44,11 +55,21 @@ class RebuildMessageSearchIndexJob private constructor(params: Parameters) : Bas
     }
   }
 
+<<<<<<< HEAD
   override fun getNextRunAttemptBackoff(pastAttemptCount: Int, exception: Exception): Long {
     return 10.seconds.inWholeMilliseconds
   }
 
   override fun onShouldRetry(e: Exception): Boolean = e is RetryLaterException
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+  override fun onShouldRetry(e: Exception): Boolean = false
+=======
+  override fun getNextRunAttemptBackoff(pastAttemptCount: Int, exception: Exception): Long {
+    return 10.seconds.inWholeMilliseconds
+  }
+
+  override fun onShouldRetry(e: Exception): Boolean = e is IllegalStateException
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
 
   class Factory : Job.Factory<RebuildMessageSearchIndexJob> {
     override fun create(parameters: Parameters, serializedData: ByteArray?): RebuildMessageSearchIndexJob {

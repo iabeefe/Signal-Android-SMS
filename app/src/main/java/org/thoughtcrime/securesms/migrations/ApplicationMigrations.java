@@ -121,6 +121,7 @@ public class ApplicationMigrations {
     static final int GLIDE_CACHE_CLEAR             = 77;
     static final int SYSTEM_NAME_RESYNC            = 78;
     static final int RECOVERY_PASSWORD_SYNC        = 79;
+<<<<<<< HEAD
 //    static final int DECRYPTIONS_DRAINED           = 80;
     static final int REBUILD_MESSAGE_FTS_INDEX_3   = 81;
     static final int TO_FROM_RECIPIENTS            = 82;
@@ -157,9 +158,21 @@ public class ApplicationMigrations {
     static final int BACKFILL_DIGESTS_V2           = 113;
     static final int CALL_LINK_STORAGE_SYNC        = 114;
     static final int WALLPAPER_MIGRATION           = 115;
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+    static final int DECRYPTIONS_DRAINED           = 80;
+=======
+    static final int DECRYPTIONS_DRAINED           = 80;
+    static final int REBUILD_MESSAGE_FTS_INDEX_3   = 81;
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
   }
 
+<<<<<<< HEAD
   public static final int CURRENT_VERSION = 115;
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+  public static final int CURRENT_VERSION = 80;
+=======
+  public static final int CURRENT_VERSION = 81;
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
 
  /**
    * This *must* be called after the {@link JobManager} has been instantiated, but *before* the call
@@ -716,6 +729,10 @@ public class ApplicationMigrations {
 
     if (lastSeenVersion < Version.WALLPAPER_MIGRATION) {
       jobs.put(Version.WALLPAPER_MIGRATION, new WallpaperStorageMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.REBUILD_MESSAGE_FTS_INDEX_3) {
+      jobs.put(Version.REBUILD_MESSAGE_FTS_INDEX_3, new RebuildMessageSearchIndexMigrationJob());
     }
 
     return jobs;
