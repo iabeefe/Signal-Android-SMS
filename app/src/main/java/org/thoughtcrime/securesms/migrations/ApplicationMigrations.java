@@ -160,6 +160,7 @@ public class ApplicationMigrations {
     static final int WALLPAPER_MIGRATION           = 115;
 ||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
     static final int DECRYPTIONS_DRAINED           = 80;
+<<<<<<< HEAD
 =======
     static final int DECRYPTIONS_DRAINED           = 80;
     static final int REBUILD_MESSAGE_FTS_INDEX_3   = 81;
@@ -170,8 +171,13 @@ public class ApplicationMigrations {
     static final int TO_FROM_RECIPIENTS            = 82;
     static final int REBUILD_MESSAGE_FTS_INDEX_4   = 83;
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+=======
+    static final int REBUILD_MESSAGE_FTS_INDEX_3   = 81;
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   public static final int CURRENT_VERSION = 115;
@@ -185,6 +191,11 @@ public class ApplicationMigrations {
 =======
   public static final int CURRENT_VERSION = 83;
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+  public static final int CURRENT_VERSION = 80;
+=======
+  public static final int CURRENT_VERSION = 81;
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
 
  /**
    * This *must* be called after the {@link JobManager} has been instantiated, but *before* the call
@@ -753,6 +764,10 @@ public class ApplicationMigrations {
 
     if (lastSeenVersion < Version.REBUILD_MESSAGE_FTS_INDEX_4) {
       jobs.put(Version.REBUILD_MESSAGE_FTS_INDEX_4, new RebuildMessageSearchIndexMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.REBUILD_MESSAGE_FTS_INDEX_3) {
+      jobs.put(Version.REBUILD_MESSAGE_FTS_INDEX_3, new RebuildMessageSearchIndexMigrationJob());
     }
 
     return jobs;

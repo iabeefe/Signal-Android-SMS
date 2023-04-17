@@ -530,6 +530,7 @@ public class ThumbnailView extends FrameLayout {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   private <T> RequestBuilder<T> override(@NonNull RequestBuilder<T> request, int width, int height) {
     if (width > 0 && height > 0) {
       Log.d(TAG, "override: apply w" + width + "xh" + height);
@@ -540,6 +541,19 @@ public class ThumbnailView extends FrameLayout {
     }
   }
 
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+=======
+  private <T> GlideRequest<T> override(@NonNull GlideRequest<T> request, int width, int height) {
+    if (width > 0 && height > 0) {
+      Log.d(TAG, "override: apply w" + width + "xh" + height);
+      return request.override(width, height);
+    } else {
+      Log.d(TAG, "override: skip w" + width + "xh" + height);
+      return request;
+    }
+  }
+
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
 ||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
 =======
   private <T> GlideRequest<T> override(@NonNull GlideRequest<T> request, int width, int height) {
