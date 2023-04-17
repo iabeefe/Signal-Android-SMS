@@ -134,21 +134,24 @@ public class NewConversationActivity extends ContactSelectionActivity
           progress.dismiss();
 
           if (resolved != null) {
+            launch(resolved);
             //if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
-            if (resolved.isRegistered() && resolved.hasServiceId()) {
+            /*if (resolved.hasServiceId()) {
               launch(resolved);
             } else {
               new MaterialAlertDialogBuilder(this)
                   .setMessage(getString(R.string.NewConversationActivity__s_is_not_a_signal_user, resolved.getDisplayName(this)))
                   .setPositiveButton(android.R.string.ok, null)
                   .show();
-            }
+            }*/
           } else {
-            new MaterialAlertDialogBuilder(this)
+           /* new MaterialAlertDialogBuilder(this)
                 .setMessage(R.string.NetworkFailure__network_error_check_your_connection_and_try_again)
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
-          }
+            */
+            launch(Recipient.external(this, number));
+         }
         });
       //} else if (smsSupported) {
       } else {
