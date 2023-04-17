@@ -12,6 +12,7 @@ ext.service_ips='new String[]{"13.248.212.111","76.223.92.165"}'
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ext.storage_ips='new String[]{"142.251.40.115"}'
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 ext.storage_ips='new String[]{"142.250.65.243"}'
@@ -78,6 +79,11 @@ ext.storage_ips='new String[]{"142.250.80.83"}'
 =======
 ext.storage_ips='new String[]{"142.251.40.211"}'
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+ext.storage_ips='new String[]{"142.251.40.211"}'
+=======
+ext.storage_ips='new String[]{"142.251.35.179"}'
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
 ext.cdn_ips='new String[]{"99.84.37.46","99.84.37.63","99.84.37.78","99.84.37.83"}'
 ext.cdn2_ips='new String[]{"104.18.2.43","104.18.3.43"}'
 ext.cds_ips='new String[]{"20.73.137.187"}'

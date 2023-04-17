@@ -38,6 +38,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Consumer;
 import androidx.lifecycle.LiveData;
@@ -450,7 +451,13 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
 =======
     if (isSystemPipEnabledAndAvailable()) {
       if (viewModel.canEnterPipMode()) {
-        enterPictureInPictureMode(pipBuilderParams.build());
+        try {
+          enterPictureInPictureMode(pipBuilderParams.build());
+        } catch (IllegalStateException e) {
+          Log.w(TAG, "Device lied to us about supporting PiP.", e);
+          return false;
+        }
+
         CallParticipantsListDialog.dismiss(getSupportFragmentManager());
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 

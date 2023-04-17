@@ -174,6 +174,7 @@ public class NewConversationActivity extends ContactSelectionActivity
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
 =======
           if (resolved != null) {
@@ -206,9 +207,19 @@ public class NewConversationActivity extends ContactSelectionActivity
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
             if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
 =======
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+=======
+            launch(resolved);
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
             //if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
+<<<<<<< HEAD
             if (resolved.isRegistered() && resolved.hasServiceId()) {
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+            if (resolved.isRegistered() && resolved.hasServiceId()) {
+=======
+            /*if (resolved.hasServiceId()) {
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
               launch(resolved);
 <<<<<<< HEAD
             }
@@ -224,6 +235,7 @@ public class NewConversationActivity extends ContactSelectionActivity
                   .setPositiveButton(android.R.string.ok, null)
                   .show();
 <<<<<<< HEAD
+<<<<<<< HEAD
             }
 =======
             } else {
@@ -231,6 +243,11 @@ public class NewConversationActivity extends ContactSelectionActivity
                   .setMessage(getString(R.string.NewConversationActivity__s_is_not_a_signal_user, resolved.getDisplayName(this)))
                   .setPositiveButton(android.R.string.ok, null)
                   .show();
+            }*/
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+            }
+=======
             }*/
 >>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
 ||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)

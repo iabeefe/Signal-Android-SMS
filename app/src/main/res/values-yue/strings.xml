@@ -1991,8 +1991,14 @@
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
     <!-- Text explaining a message request from someone you\'ve removed before -->
+<<<<<<< HEAD
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_you_removed_them_before">Let %1$s message you and share your name and photo with them? You have removed this person in the past.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+    <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_you_removed_them_before">Let %1$s message you and share your name and photo with them? You have removed this person in the past.</string>
+=======
+    <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_you_removed_them_before">你係咪想俾 %1$s 傳送訊息俾你，同埋同佢分享你嘅名同相呀？你之前已經移除咗呢個人。</string>
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_they_wont_know_youve_seen_their_messages_until_you_accept">您肯唔肯俾 %1$s 發訊息畀您，並同佢分享您嘅名同相？您話䎺之前，佢都唔會知您睇過佢個訊息嘅。</string>
     <!-- Shown in message request flow. Describes what will happen if you unblock a Signal user -->
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_wont_receive_any_messages_until_you_unblock_them">你係咪想俾 %1$s 傳送訊息俾你，同埋同佢分享你嘅名同相？喺解除封鎖之前，你都唔會收到對方嘅任何訊息。</string>
@@ -3417,8 +3423,14 @@
 
 =======
     <!-- Update item alerting the user they hid this person and that they can message them to unhide them -->
+<<<<<<< HEAD
     <string name="ConversationUpdateItem_hidden_contact_message_to_add_back">You have removed this person, messaging them again will add them back to your list.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+    <string name="ConversationUpdateItem_hidden_contact_message_to_add_back">You have removed this person, messaging them again will add them back to your list.</string>
+=======
+    <string name="ConversationUpdateItem_hidden_contact_message_to_add_back">你已經移除咗呢個人。如果宜家傳送訊息俾佢嘅話，佢就會重新加返入你嘅聯絡人清單。</string>
+>>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
 
     <!-- audio_view -->
     <string name="audio_view__play_pause_accessibility_description">播放 … 暫停</string>
@@ -8532,7 +8544,7 @@
 =======
     <!-- CallPreference -->
     <!-- Generic group call in call info -->
-    <string name="CallPreference__group_call">Group call</string>
+    <string name="CallPreference__group_call">成谷通話</string>
     <!-- Missed group call in call info -->
     <string name="CallPreference__missed_group_call">未接嘅群組通話</string>
     <!-- Incoming group call in call info -->
