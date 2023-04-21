@@ -28,6 +28,7 @@ class ConversationListTabsViewModel(repository: ConversationListTabRepository) :
   init {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     disposables += performStoreUpdate(repository.getNumberOfUnreadMessages()) { unreadChats, state ->
       state.copy(unreadMessagesCount = unreadChats)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -44,8 +45,16 @@ class ConversationListTabsViewModel(repository: ConversationListTabRepository) :
     disposables += store.update(repository.getNumberOfUnreadMessages()) { unreadChats, state ->
       state.copy(unreadMessagesCount = unreadChats)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    disposables += repository.getNumberOfUnreadMessages().subscribe { unreadChats ->
+      store.update { it.copy(unreadMessagesCount = unreadChats) }
+=======
+    disposables += store.update(repository.getNumberOfUnreadMessages()) { unreadChats, state ->
+      state.copy(unreadMessagesCount = unreadChats)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     disposables += performStoreUpdate(repository.getNumberOfUnseenCalls()) { unseenCalls, state ->
@@ -64,8 +73,16 @@ class ConversationListTabsViewModel(repository: ConversationListTabRepository) :
     disposables += store.update(repository.getNumberOfUnseenCalls()) { unseenCalls, state ->
       state.copy(unreadCallsCount = unseenCalls)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    disposables += repository.getNumberOfUnseenCalls().subscribe { unseenCalls ->
+      store.update { it.copy(unreadCallsCount = unseenCalls) }
+=======
+    disposables += store.update(repository.getNumberOfUnseenCalls()) { unseenCalls, state ->
+      state.copy(unreadCallsCount = unseenCalls)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     disposables += performStoreUpdate(repository.getNumberOfUnseenStories()) { unseenStories, state ->
@@ -84,12 +101,27 @@ class ConversationListTabsViewModel(repository: ConversationListTabRepository) :
     disposables += store.update(repository.getNumberOfUnseenStories()) { unseenStories, state ->
       state.copy(unreadStoriesCount = unseenStories)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    disposables += repository.getNumberOfUnseenStories().subscribe { unseenStories ->
+      store.update { it.copy(unreadStoriesCount = unseenStories) }
+=======
+    disposables += store.update(repository.getNumberOfUnseenStories()) { unseenStories, state ->
+      state.copy(unreadStoriesCount = unseenStories)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     disposables += performStoreUpdate(repository.getHasFailedOutgoingStories()) { hasFailedStories, state ->
       state.copy(hasFailedStory = hasFailedStories)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    disposables += repository.getHasFailedOutgoingStories().subscribe { hasFailedStories ->
+      store.update { it.copy(hasFailedStory = hasFailedStories) }
+=======
+    disposables += store.update(repository.getHasFailedOutgoingStories()) { hasFailedStories, state ->
+      state.copy(hasFailedStory = hasFailedStories)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     disposables += repository.getHasFailedOutgoingStories().subscribe { hasFailedStories ->
       store.update { it.copy(hasFailedStory = hasFailedStories) }

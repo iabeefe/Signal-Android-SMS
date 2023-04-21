@@ -837,6 +837,7 @@ public class ConversationFragment extends LoggingFragment implements Multiselect
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (menuState.shouldShowEditAction() && FeatureFlags.editMessageSending()) {
       items.add(new ActionItem(R.drawable.symbol_edit_24, getResources().getString(R.string.conversation_selection__menu_edit), () -> {
         handleEditMessage(getSelectedConversationMessage());
@@ -854,6 +855,18 @@ public class ConversationFragment extends LoggingFragment implements Multiselect
 =======
     if (menuState.shouldShowEditAction() && FeatureFlags.editMessageSending()) {
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+      items.add(new ActionItem(R.drawable.symbol_edit_24, getResources().getString(R.string.conversation_selection__menu_edit), () -> {
+        handleEditMessage(getSelectedConversationMessage());
+        if (actionMode != null) {
+          actionMode.finish();
+        }
+      }));
+    }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    if (menuState.shouldShowEditAction()) {
       items.add(new ActionItem(R.drawable.symbol_edit_24, getResources().getString(R.string.conversation_selection__menu_edit), () -> {
         handleEditMessage(getSelectedConversationMessage());
         if (actionMode != null) {

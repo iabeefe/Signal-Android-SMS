@@ -52,11 +52,17 @@ public abstract class DisplayRecord {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   DisplayRecord(String body, Recipient fromRecipient, Recipient toRecipient, long dateSent,
                 long dateReceived, long threadId, int deliveryStatus, boolean hasDeliveryReceipt,
                 long type, boolean hasReadReceipt, boolean viewed)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   DisplayRecord(String body, Recipient recipient, long dateSent,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  DisplayRecord(String body, Recipient recipient, long dateSent,
+=======
+  DisplayRecord(String body, Recipient fromRecipient, Recipient toRecipient, long dateSent,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   DisplayRecord(String body, Recipient recipient, long dateSent,
 =======

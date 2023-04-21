@@ -253,6 +253,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- CallInfoView -->
     <!-- Unknown people row text when the only people in the call are unknowns -->
     <plurals name="CallInfoView__d_people">
@@ -275,6 +276,13 @@
     <!-- Toasted when user device does not support video recording -->
     <string name="CameraFragment__video_recording_is_not_supported_on_your_device">Bideo-grabaketa ez da onartzen zure gailuan</string>
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- CameraFragment -->
+    <!-- Toasted when user device does not support video recording -->
+    <string name="CameraFragment__video_recording_is_not_supported_on_your_device">Video recording is not supported on your device</string>
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- CameraFragment -->
@@ -454,6 +462,7 @@
     <string name="ConversationItem_cant_download_video_you_will_need_to_send_it_again">Ezin da deskargatu bideoa. Berriro bidali beharko duzu.</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp represents a message that has been edited within the last minute. -->
     <string name="ConversationItem_edited_now_timestamp_footer">Orain editatua</string>
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. This is displayed when the edit has occurred between 1-59 minutes ago. -->
@@ -472,14 +481,25 @@
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp will go from \'11m\' to \'edited 11m\' -->
     <string name="ConversationItem_edited_timestamp_footer">edited %1$s</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp will go from \'11m\' to \'edited 11m\' -->
+    <string name="ConversationItem_edited_timestamp_footer">edited %1$s</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- ConversationActivity -->
     <string name="ConversationActivity_add_attachment">Eranskina gehitu</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Accessibility text associated with image button to send an edited message. -->
     <string name="ConversationActivity_send_edit">Bidali editatutako mezua</string>
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Accessibility text associated with image button to send an edited message. -->
+    <string name="ConversationActivity_send_edit">Send edit</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Accessibility text associated with image button to send an edited message. -->
@@ -510,8 +530,19 @@
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ConversationActivity__tap_here_to_start_a_group_call">Sakatu hau talde-dei bat hasteko</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <string name="ConversationActivity__tap_here_to_start_a_group_call">Sakatu hau talde-dei bat hasteko</string>
+    <!-- Warning toast shown to user if they somehow try to edit an sms/mms message -->
+    <string name="ConversationActivity_edit_sms_message_error">Unable to edit SMS messages</string>
+    <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
+    <plurals name="ConversationActivity_edit_message_too_old">
+        <item quantity="one">Edits can only be applied within %1$d hour from the time you sent this message.</item>
+        <item quantity="other">Edits can only be applied within %1$d hours from the time you sent this message.</item>
+    </plurals>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
     <!-- Warning toast shown to user if they somehow try to edit an sms/mms message -->
     <string name="ConversationActivity_edit_sms_message_error">Unable to edit SMS messages</string>
     <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
@@ -1727,10 +1758,16 @@
     <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
     <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">Signal-en jada ez dira onartzen SMS mezuak.</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">Eduki sakatuta ahots mezu bat grabatzeko; jaregin bidaltzeko.</string>
     <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
     <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">Signal-en jada ez dira onartzen SMS mezuak.</string>
+    <!-- When editing a message, label shown above the text input field in the composer -->
+    <string name="InputPanel_edit_message">Edit message</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
     <!-- When editing a message, label shown above the text input field in the composer -->
     <string name="InputPanel_edit_message">Edit message</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -2816,6 +2853,7 @@
     </string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
     <string name="RegistrationActivity_phone_number_verification_dialog_title">Zuzena al da beheko telefono-zenbakia?</string>
@@ -2823,6 +2861,17 @@
     <string name="RegistrationActivity_additional_verification_required">Egiaztapen osagarria behar da</string>
     <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
     <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">Zenbaki honetara egiaztapen-kode bat bidaliko da. Baliteke operadorearen tarifak aplikatzea.</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to">Egiaztapen-kodea hona bidaliko da:</string>
+=======
+
+    <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
+    <string name="RegistrationActivity_phone_number_verification_dialog_title">Is the phone number below correct?</string>
+    <!-- Dialog title shown when re-registering and skip sms flow failed or was aborted and now need perform additional verification via sms and warn about carrier charges -->
+    <string name="RegistrationActivity_additional_verification_required">Additional verification required</string>
+    <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">A verification code will be sent to this number. Carrier rates may apply.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="RegistrationActivity_a_verification_code_will_be_sent_to">Egiaztapen-kodea hona bidaliko da:</string>
 =======
@@ -2923,6 +2972,7 @@
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Pribatutasuna zurekin eraman.\nZu zeu izan mezu bakoitzean.</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Title of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_phone_number">Telefono-zenbakia</string>
     <!-- Subtitle of registration screen when asking for the users phone number -->
@@ -2942,6 +2992,15 @@
 =======
     <!-- Title of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_phone_number">Telefono-zenbakia</string>
+    <!-- Subtitle of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Enter your phone number to get started.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_enter_your_phone_number">Idatzi zure telefono zenbakia</string>
+    <string name="RegistrationActivity_you_will_receive_a_verification_code">Egiaztapen-kode bat jasoko duzu.\nBaliteke operadoreak tarifa bat kobratzea.</string>
+=======
+    <!-- Title of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_phone_number">Phone number</string>
     <!-- Subtitle of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Enter your phone number to get started.</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -3134,8 +3193,14 @@
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
     <!-- Thread preview for a recipient that has been hidden -->
+<<<<<<< HEAD
     <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
+=======
+    <string name="ThreadRecord_hidden_recipient">Pertsona hau ezkutatu egin duzu. Zure zerrendan berriro gehitzeko, bidal iezaiozu beste mezu bat.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ThreadRecord_photo">Argazkia</string>
     <string name="ThreadRecord_gif">GIF</string>
     <string name="ThreadRecord_voice_message">Ahots-mezua</string>
@@ -3979,8 +4044,14 @@
     <string name="message_details_recipient__new_safety_number">Segurtasun zenbaki berria</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
     <string name="MessageDetails__view_edit_history">Ikusi edizio-historia</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
+    <string name="MessageDetails__view_edit_history">View edit history</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
@@ -4305,6 +4376,7 @@
     <string name="preferences_enter_proxy_address">Idatzi proxyaren helbidea</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Preference title for changing navigation (bottom) bar size -->
     <string name="preferences_navigation_bar_size">Nabigazio-barraren tamaina</string>
     <!-- Preference summary for normal navigation bar size -->
@@ -4326,6 +4398,15 @@
     <string name="preferences_navigation_bar_size">Navigation bar size</string>
     <!-- Preference summary for normal navigation bar size -->
     <string name="preferences_normal">Normala</string>
+    <!-- Preference summary for compact navigation bar size -->
+    <string name="preferences_compact">Compact</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Preference title for changing navigation (bottom) bar size -->
+    <string name="preferences_navigation_bar_size">Navigation bar size</string>
+    <!-- Preference summary for normal navigation bar size -->
+    <string name="preferences_normal">Normal</string>
     <!-- Preference summary for compact navigation bar size -->
     <string name="preferences_compact">Compact</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -4622,6 +4703,7 @@
     <string name="conversation_selection__menu_reply">Erantzun</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
     <string name="conversation_selection__menu_edit">Editatu</string>
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -4646,6 +4728,11 @@
 =======
     <string name="conversation_selection__menu_edit">Editatu</string>
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
+    <string name="conversation_selection__menu_edit">Edit</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Button to save a message attachment (image, file etc.); Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
     <string name="conversation_selection__menu_save">Gorde</string>
     <!-- Button to retry sending a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
@@ -5621,6 +5708,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_explanation">Esportatu Signal-eko kontuaren datuen txostena. Txosten horrek ez du mezurik edo multimedia-edukirik. %1$s</string>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
@@ -5662,6 +5750,11 @@
 =======
     <string name="ExportAccountDataFragment__export_explanation">Esportatu Signal kontuaren datuen txostena. Txosten honek ez du mezurik edo artxiborik jasotzen. %1$s</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">Esportatu Signal kontuaren datuen txostena. Txosten honek ez du mezurik edo artxiborik jasotzen. %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">Esportatu Signal-eko kontuaren datuen txostena. Txosten horrek ez du mezurik edo multimedia-edukirik. %1$s</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5797,7 +5890,7 @@
     <string name="ExportAccountDataFragment__report_download_failed">Your report could not be downloaded due to a network error. Check your connection and try again.</string>
 =======
     <!-- Title of dialog shown when report fails to generate -->
-    <string name="ExportAccountDataFragment__report_generation_failed">Ezin izan da txostena sortu</string>
+    <string name="ExportAccountDataFragment__report_generation_failed">Ezin izan da sortu txostena</string>
     <!-- Message of dialog shown when report fails to generate asking user to check network connection -->
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__check_network">Check your connection and try again.</string>
@@ -5814,6 +5907,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report_confirmation">Datuak esportatu nahi dituzu?</string>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="ExportAccountDataFragment__export_report_confirmation">Export data?</string>
@@ -5840,12 +5934,18 @@
 =======
     <string name="ExportAccountDataFragment__export_report_confirmation">Datuak esportatu?</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_report_confirmation">Datuak esportatu?</string>
+=======
+    <string name="ExportAccountDataFragment__export_report_confirmation">Datuak esportatu nahi dituzu?</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Message for export confirmation dialog -->
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report_confirmation_message">Partekatu Signal-eko kontuaren datuak fidagarriak diren pertsonekin edo aplikazioekin soilik.</string>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="ExportAccountDataFragment__export_report_confirmation_message">Only share your Signal account data with people or apps you trust.</string>
@@ -5872,6 +5972,11 @@
 =======
     <string name="ExportAccountDataFragment__export_report_confirmation_message">Partekatu zure Signal kontuaren datuak fidagarriak diren pertsonekin edo aplikazioekin soilik.</string>
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">Partekatu zure Signal kontuaren datuak fidagarriak diren pertsonekin edo aplikazioekin soilik.</string>
+=======
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">Partekatu Signal-eko kontuaren datuak fidagarriak diren pertsonekin edo aplikazioekin soilik.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">Esportatu</string>
 
@@ -5947,6 +6052,7 @@
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Esportatzeko unean soilik sortzen da txostena, eta Signal-ek ez du gordetzen zure gailuan.</string>
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     <string name="ExportAccountDataFragment__download_progress">Downloading report…</string>
@@ -6018,6 +6124,11 @@
 =======
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Zure txostena esportatzeko unean soilik sortzen da eta Signal-ek ez du gordetzen zure gailuan.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Zure txostena esportatzeko unean soilik sortzen da eta Signal-ek ez du gordetzen zure gailuan.</string>
+=======
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Esportatzeko unean soilik sortzen da txostena, eta Signal-ek ez du gordetzen zure gailuan.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">Erabili hau zure oraingo telefono-zenbakia telefono-zenbaki berri batera aldatzeko. Ezin duzu aldaketa hau desegin.\n\nJarraitu aurretik, ziurtatu zure zenbaki berriak SMSak edo deiak jaso ditzakeela.</string>
@@ -8150,7 +8261,7 @@
     <!-- Button text to dismiss the sheet and add it as an upcoming call -->
     <string name="CreateCallLinkBottomSheetDialogFragment__done">Eginda</string>
     <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Ezin izan da partekatzeko orria ireki.</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Unable to share call link.</string>
     <!-- Displayed when we copy the call link to the clipboard -->
     <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">Arbelera kopiatuta</string>
 
@@ -8349,6 +8460,7 @@
     <!-- Placeholder text on input field when editing call name -->
     <string name="EditCallLinkNameDialogFragment__call_name">Deitu izena</string>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     <!-- ChooseNavigationBarStyleFragment -->
@@ -8906,6 +9018,20 @@
 
     <!-- Title shown at top of bottom sheet dialog for displaying a message\'s edit history -->
     <string name="EditMessageHistoryDialog_title">Edizio-historia</string>
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- ChooseNavigationBarStyleFragment -->
+    <!-- Dialog title, displayed below the header image -->
+    <string name="ChooseNavigationBarStyleFragment__navigation_bar_size">Navigation bar size</string>
+    <!-- Toggle button label for normal size -->
+    <string name="ChooseNavigationBarStyleFragment__normal">Normal</string>
+    <!-- Toggle button label for compact size -->
+    <string name="ChooseNavigationBarStyleFragment__compact">Compact</string>
+
+    <!-- Title shown at top of bottom sheet dialog for displaying a message\'s edit history -->
+    <string name="EditMessageHistoryDialog_title">Edit history</string>
 
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- EOF -->

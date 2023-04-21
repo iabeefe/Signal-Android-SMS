@@ -191,6 +191,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     const val BODY = "body"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     const val FROM_RECIPIENT_ID = "from_recipient_id"
     const val FROM_DEVICE_ID = "from_device_id"
     const val TO_RECIPIENT_ID = "to_recipient_id"
@@ -200,6 +201,14 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     const val RECIPIENT_ID = "recipient_id"
     const val RECIPIENT_DEVICE_ID = "recipient_device_id"
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    const val RECIPIENT_ID = "recipient_id"
+    const val RECIPIENT_DEVICE_ID = "recipient_device_id"
+=======
+    const val FROM_RECIPIENT_ID = "from_recipient_id"
+    const val FROM_DEVICE_ID = "from_device_id"
+    const val TO_RECIPIENT_ID = "to_recipient_id"
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     const val RECIPIENT_ID = "recipient_id"
     const val RECIPIENT_DEVICE_ID = "recipient_device_id"
@@ -257,6 +266,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     const val SCHEDULED_DATE = "scheduled_date"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     const val LATEST_REVISION_ID = "latest_revision_id"
     const val ORIGINAL_MESSAGE_ID = "original_message_id"
     const val REVISION_NUMBER = "revision_number"
@@ -266,6 +276,12 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     const val QUOTE_TARGET_MISSING_ID = -1L
 
     const val ADDRESSABLE_MESSAGE_LIMIT = 5
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    const val LATEST_REVISION_ID = "latest_revision_id"
+    const val ORIGINAL_MESSAGE_ID = "original_message_id"
+    const val REVISION_NUMBER = "revision_number"
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     const val LATEST_REVISION_ID = "latest_revision_id"
@@ -331,6 +347,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         $EXPORTED INTEGER DEFAULT 0,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $SCHEDULED_DATE INTEGER DEFAULT -1,
         $LATEST_REVISION_ID INTEGER DEFAULT NULL REFERENCES $TABLE_NAME ($ID) ON DELETE CASCADE,
         $ORIGINAL_MESSAGE_ID INTEGER DEFAULT NULL REFERENCES $TABLE_NAME ($ID) ON DELETE CASCADE,
@@ -353,9 +370,18 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         $ORIGINAL_MESSAGE_ID INTEGER DEFAULT NULL REFERENCES $TABLE_NAME ($ID) ON DELETE CASCADE,
         $REVISION_NUMBER INTEGER DEFAULT 0
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        $SCHEDULED_DATE INTEGER DEFAULT -1
+=======
+        $SCHEDULED_DATE INTEGER DEFAULT -1,
+        $LATEST_REVISION_ID INTEGER DEFAULT NULL REFERENCES $TABLE_NAME ($ID) ON DELETE CASCADE,
+        $ORIGINAL_MESSAGE_ID INTEGER DEFAULT NULL REFERENCES $TABLE_NAME ($ID) ON DELETE CASCADE,
+        $REVISION_NUMBER INTEGER DEFAULT 0
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       )
     """
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     private const val INDEX_THREAD_STORY_SCHEDULED_DATE_LATEST_REVISION_ID = "message_thread_story_parent_story_scheduled_date_latest_revision_id_index"
@@ -376,9 +402,17 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     private const val INDEX_THREAD_DATE = "message_thread_date_index"
     private const val INDEX_THREAD_STORY_SCHEDULED_DATE_LATEST_REVISION_ID = "message_thread_story_parent_story_scheduled_date_latest_revision_id_index"
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    private const val INDEX_THREAD_DATE = "mms_thread_date_index"
+    private const val INDEX_THREAD_STORY_SCHEDULED_DATE = "mms_thread_story_parent_story_scheduled_date_index"
+=======
+    private const val INDEX_THREAD_DATE = "message_thread_date_index"
+    private const val INDEX_THREAD_STORY_SCHEDULED_DATE_LATEST_REVISION_ID = "message_thread_story_parent_story_scheduled_date_latest_revision_id_index"
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     @JvmField
     val CREATE_INDEXS = arrayOf(
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "CREATE INDEX IF NOT EXISTS message_read_and_notified_and_thread_id_index ON $TABLE_NAME ($READ, $NOTIFIED, $THREAD_ID)",
@@ -417,7 +451,19 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       "CREATE INDEX IF NOT EXISTS message_date_sent_from_to_thread_index ON $TABLE_NAME ($DATE_SENT, $FROM_RECIPIENT_ID, $TO_RECIPIENT_ID, $THREAD_ID)",
       "CREATE INDEX IF NOT EXISTS message_date_server_index ON $TABLE_NAME ($DATE_SERVER)",
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      "CREATE INDEX IF NOT EXISTS mms_read_and_notified_and_thread_id_index ON $TABLE_NAME ($READ, $NOTIFIED, $THREAD_ID)",
+      "CREATE INDEX IF NOT EXISTS mms_type_index ON $TABLE_NAME ($TYPE)",
+      "CREATE INDEX IF NOT EXISTS mms_date_sent_index ON $TABLE_NAME ($DATE_SENT, $RECIPIENT_ID, $THREAD_ID)",
+      "CREATE INDEX IF NOT EXISTS mms_date_server_index ON $TABLE_NAME ($DATE_SERVER)",
+=======
+      "CREATE INDEX IF NOT EXISTS message_read_and_notified_and_thread_id_index ON $TABLE_NAME ($READ, $NOTIFIED, $THREAD_ID)",
+      "CREATE INDEX IF NOT EXISTS message_type_index ON $TABLE_NAME ($TYPE)",
+      "CREATE INDEX IF NOT EXISTS message_date_sent_from_to_thread_index ON $TABLE_NAME ($DATE_SENT, $FROM_RECIPIENT_ID, $TO_RECIPIENT_ID, $THREAD_ID)",
+      "CREATE INDEX IF NOT EXISTS message_date_server_index ON $TABLE_NAME ($DATE_SERVER)",
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       "CREATE INDEX IF NOT EXISTS $INDEX_THREAD_DATE ON $TABLE_NAME ($THREAD_ID, $DATE_RECEIVED);",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "CREATE INDEX IF NOT EXISTS mms_reactions_unread_index ON $TABLE_NAME ($REACTIONS_UNREAD);",
       "CREATE INDEX IF NOT EXISTS mms_story_type_index ON $TABLE_NAME ($STORY_TYPE);",
@@ -432,6 +478,23 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       "CREATE INDEX IF NOT EXISTS message_date_sent_from_to_thread_index ON $TABLE_NAME ($DATE_SENT, $FROM_RECIPIENT_ID, $TO_RECIPIENT_ID, $THREAD_ID)",
       "CREATE INDEX IF NOT EXISTS message_date_server_index ON $TABLE_NAME ($DATE_SERVER)",
       "CREATE INDEX IF NOT EXISTS $INDEX_THREAD_DATE ON $TABLE_NAME ($THREAD_ID, $DATE_RECEIVED);",
+      "CREATE INDEX IF NOT EXISTS message_reactions_unread_index ON $TABLE_NAME ($REACTIONS_UNREAD);",
+      "CREATE INDEX IF NOT EXISTS message_story_type_index ON $TABLE_NAME ($STORY_TYPE);",
+      "CREATE INDEX IF NOT EXISTS message_parent_story_id_index ON $TABLE_NAME ($PARENT_STORY_ID);",
+      "CREATE INDEX IF NOT EXISTS $INDEX_THREAD_STORY_SCHEDULED_DATE_LATEST_REVISION_ID ON $TABLE_NAME ($THREAD_ID, $DATE_RECEIVED, $STORY_TYPE, $PARENT_STORY_ID, $SCHEDULED_DATE, $LATEST_REVISION_ID);",
+      "CREATE INDEX IF NOT EXISTS message_quote_id_quote_author_scheduled_date_latest_revision_id_index ON $TABLE_NAME ($QUOTE_ID, $QUOTE_AUTHOR, $SCHEDULED_DATE, $LATEST_REVISION_ID);",
+      "CREATE INDEX IF NOT EXISTS message_exported_index ON $TABLE_NAME ($EXPORTED);",
+      "CREATE INDEX IF NOT EXISTS message_id_type_payment_transactions_index ON $TABLE_NAME ($ID,$TYPE) WHERE $TYPE & ${MessageTypes.SPECIAL_TYPE_PAYMENTS_NOTIFICATION} != 0;"
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      "CREATE INDEX IF NOT EXISTS mms_reactions_unread_index ON $TABLE_NAME ($REACTIONS_UNREAD);",
+      "CREATE INDEX IF NOT EXISTS mms_story_type_index ON $TABLE_NAME ($STORY_TYPE);",
+      "CREATE INDEX IF NOT EXISTS mms_parent_story_id_index ON $TABLE_NAME ($PARENT_STORY_ID);",
+      "CREATE INDEX IF NOT EXISTS $INDEX_THREAD_STORY_SCHEDULED_DATE ON $TABLE_NAME ($THREAD_ID, $DATE_RECEIVED, $STORY_TYPE, $PARENT_STORY_ID, $SCHEDULED_DATE);",
+      "CREATE INDEX IF NOT EXISTS message_quote_id_quote_author_scheduled_date_index ON $TABLE_NAME ($QUOTE_ID, $QUOTE_AUTHOR, $SCHEDULED_DATE);",
+      "CREATE INDEX IF NOT EXISTS mms_exported_index ON $TABLE_NAME ($EXPORTED);",
+      "CREATE INDEX IF NOT EXISTS mms_id_type_payment_transactions_index ON $TABLE_NAME ($ID,$TYPE) WHERE $TYPE & ${MessageTypes.SPECIAL_TYPE_PAYMENTS_NOTIFICATION} != 0;"
+=======
       "CREATE INDEX IF NOT EXISTS message_reactions_unread_index ON $TABLE_NAME ($REACTIONS_UNREAD);",
       "CREATE INDEX IF NOT EXISTS message_story_type_index ON $TABLE_NAME ($STORY_TYPE);",
       "CREATE INDEX IF NOT EXISTS message_parent_story_id_index ON $TABLE_NAME ($PARENT_STORY_ID);",
@@ -475,6 +538,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       BODY,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       FROM_RECIPIENT_ID,
       FROM_DEVICE_ID,
       TO_RECIPIENT_ID,
@@ -483,6 +547,14 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       RECIPIENT_ID,
       RECIPIENT_DEVICE_ID,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      RECIPIENT_ID,
+      RECIPIENT_DEVICE_ID,
+=======
+      FROM_RECIPIENT_ID,
+      FROM_DEVICE_ID,
+      TO_RECIPIENT_ID,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       RECIPIENT_ID,
       RECIPIENT_DEVICE_ID,
@@ -529,11 +601,20 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       PARENT_STORY_ID,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       SCHEDULED_DATE,
       LATEST_REVISION_ID,
       ORIGINAL_MESSAGE_ID,
       REVISION_NUMBER,
       MESSAGE_EXTRAS
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      SCHEDULED_DATE
+=======
+      SCHEDULED_DATE,
+      LATEST_REVISION_ID,
+      ORIGINAL_MESSAGE_ID,
+      REVISION_NUMBER
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       SCHEDULED_DATE
 =======
@@ -614,12 +695,19 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
           $PARENT_STORY_ID <= 0 AND
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           $SCHEDULED_DATE = -1 AND
           $LATEST_REVISION_ID IS NULL AND
           $TYPE & ${MessageTypes.KEY_EXCHANGE_IDENTITY_DEFAULT_BIT} = 0 AND
           $TYPE & ${MessageTypes.KEY_EXCHANGE_IDENTITY_VERIFIED_BIT} = 0 AND
           $TYPE & ${MessageTypes.SPECIAL_TYPES_MASK} != ${MessageTypes.SPECIAL_TYPE_REPORTED_SPAM} AND
           $TYPE & ${MessageTypes.SPECIAL_TYPES_MASK} != ${MessageTypes.SPECIAL_TYPE_MESSAGE_REQUEST_ACCEPTED} AND
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          $SCHEDULED_DATE = -1 AND 
+=======
+          $SCHEDULED_DATE = -1 AND
+          $LATEST_REVISION_ID IS NULL AND
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           $SCHEDULED_DATE = -1 AND 
 =======
@@ -650,6 +738,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
            ) 
          ORDER BY $DATE_RECEIVED DESC LIMIT 1
 <<<<<<< HEAD
+<<<<<<< HEAD
        """.toSingleLine()
 =======
              ${MessageTypes.GV1_MIGRATION_TYPE},
@@ -658,6 +747,11 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
              ${MessageTypes.SMS_EXPORT_TYPE}
            ) 
          ORDER BY $DATE_RECEIVED DESC LIMIT 1
+       """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+       """.toSingleLine()
+=======
        """
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -683,6 +777,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 <<<<<<< HEAD
       OR
       ($TYPE = ${MessageTypes.GROUP_CALL_TYPE})
+<<<<<<< HEAD
 <<<<<<< HEAD
     )"""
 
@@ -745,6 +840,17 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 <<<<<<< HEAD
     )""".toSingleLine()
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    )""".toSingleLine()
+=======
+    )"""
+
+    private val outgoingTypeClause: String by lazy {
+      MessageTypes.OUTGOING_MESSAGE_TYPES
+        .map { "($TABLE_NAME.$TYPE & ${MessageTypes.BASE_TYPE_MASK} = $it)" }
+        .joinToString(" OR ")
+    }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     )""".toSingleLine()
 =======
@@ -1079,7 +1185,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       .from(TABLE_NAME)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       .where("""$ID IN (${Util.join(messageIds, ",")}) AND ($outgoingTypeClause) AND ($TYPE & ${MessageTypes.SPECIAL_TYPES_MASK} = ${MessageTypes.SPECIAL_TYPE_GIFT_BADGE}) AND $VIEWED_COLUMN = 0""")
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      .where("""$ID IN (${Util.join(messageIds, ",")}) AND (${getOutgoingTypeClause()}) AND ($TYPE & ${MessageTypes.SPECIAL_TYPES_MASK} = ${MessageTypes.SPECIAL_TYPE_GIFT_BADGE}) AND $VIEWED_RECEIPT_COUNT = 0""")
+=======
+      .where("""$ID IN (${Util.join(messageIds, ",")}) AND ($outgoingTypeClause) AND ($TYPE & ${MessageTypes.SPECIAL_TYPES_MASK} = ${MessageTypes.SPECIAL_TYPE_GIFT_BADGE}) AND $VIEWED_RECEIPT_COUNT = 0""")
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       .where("""$ID IN (${Util.join(messageIds, ",")}) AND (${getOutgoingTypeClause()}) AND ($TYPE & ${MessageTypes.SPECIAL_TYPES_MASK} = ${MessageTypes.SPECIAL_TYPE_GIFT_BADGE}) AND $VIEWED_RECEIPT_COUNT = 0""")
 =======
@@ -1117,9 +1229,15 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   fun insertCallLog(recipientId: RecipientId, type: Long, timestamp: Long, outgoing: Boolean): InsertResult {
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   fun insertCallLog(recipientId: RecipientId, type: Long, timestamp: Long): InsertResult {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  fun insertCallLog(recipientId: RecipientId, type: Long, timestamp: Long): InsertResult {
+=======
+  fun insertCallLog(recipientId: RecipientId, type: Long, timestamp: Long, outgoing: Boolean): InsertResult {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   fun insertCallLog(recipientId: RecipientId, type: Long, timestamp: Long): InsertResult {
 =======
@@ -1389,8 +1507,9 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       }
 =======
       val values = contentValuesOf(
-        RECIPIENT_ID to sender.serialize(),
-        RECIPIENT_DEVICE_ID to 1,
+        FROM_RECIPIENT_ID to sender.serialize(),
+        FROM_DEVICE_ID to 1,
+        TO_RECIPIENT_ID to groupRecipientId.serialize(),
         DATE_RECEIVED to timestamp,
         DATE_SENT to timestamp,
         READ to if (markRead) 1 else 0,
@@ -2188,6 +2307,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       reactions.moveReactionsToNewMessage(newMessageId = messageId, previousId = targetMessage.id)
 
 <<<<<<< HEAD
@@ -2201,6 +2321,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         notifyConversationListeners(threadId)
       }
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      notifyConversationListeners(threadId)
+=======
+      if (notifyObservers) {
+        notifyConversationListeners(threadId)
+      }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
       Optional.of(InsertResult(messageId, threadId))
 =======
@@ -2210,6 +2337,52 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
       Optional.of(InsertResult(messageId, threadId))
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    }
+
+    return insertResult
+  }
+
+  fun insertEditMessageInbox(threadId: Long, mediaMessage: IncomingMediaMessage, targetMessage: MediaMmsMessageRecord): Optional<InsertResult> {
+    val insertResult = insertSecureDecryptedMessageInbox(retrieved = mediaMessage, threadId = threadId, edittedMediaMessage = targetMessage, notifyObservers = false)
+
+    if (insertResult.isPresent) {
+      val (messageId) = insertResult.get()
+
+      if (targetMessage.expireStarted > 0) {
+        markExpireStarted(messageId, targetMessage.expireStarted)
+      }
+
+      writableDatabase.update(TABLE_NAME)
+        .values(LATEST_REVISION_ID to messageId)
+        .where("$ID = ? OR $LATEST_REVISION_ID = ?", targetMessage.id, targetMessage.id)
+        .run()
+
+      reactions.moveReactionsToNewMessage(newMessageId = messageId, previousId = targetMessage.id)
+
+      notifyConversationListeners(targetMessage.threadId)
+    }
+
+    return insertResult
+  }
+
+  fun insertEditMessageInbox(textMessage: IncomingTextMessage, targetMessage: MediaMmsMessageRecord): Optional<InsertResult> {
+    val insertResult = insertMessageInbox(message = textMessage, editedMessage = targetMessage, notifyObservers = false)
+
+    if (insertResult.isPresent) {
+      val (messageId) = insertResult.get()
+
+      if (targetMessage.expireStarted > 0) {
+        markExpireStarted(messageId, targetMessage.expireStarted)
+      }
+
+      writableDatabase.update(TABLE_NAME)
+        .values(LATEST_REVISION_ID to messageId)
+        .where("$ID_WHERE OR $LATEST_REVISION_ID = ?", targetMessage.id, targetMessage.id)
+        .run()
+
+      reactions.moveReactionsToNewMessage(newMessageId = messageId, previousId = targetMessage.id)
+
+      notifyConversationListeners(targetMessage.threadId)
     }
 
     return insertResult
@@ -2575,6 +2748,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
   fun markAllIncomingStoriesRead(): List<MarkedMessageInfo> {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     val where = "$IS_STORY_CLAUSE AND NOT ($outgoingTypeClause) AND $READ = 0"
     val markedMessageInfos = setMessagesRead(where, null)
     notifyConversationListListeners()
@@ -2607,6 +2781,11 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
   fun markAllCallEventsRead(): List<MarkedMessageInfo> {
     val where = "$IS_CALL_TYPE_CLAUSE AND $READ = 0"
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    val where = "$IS_STORY_CLAUSE AND NOT (${getOutgoingTypeClause()}) AND $READ = 0"
+=======
+    val where = "$IS_STORY_CLAUSE AND NOT ($outgoingTypeClause) AND $READ = 0"
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     val markedMessageInfos = setMessagesRead(where, null)
     notifyConversationListListeners()
     return markedMessageInfos
@@ -2637,9 +2816,15 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     val recipientId = SignalStore.releaseChannelValues().releaseChannelRecipientId ?: return
 <<<<<<< HEAD
+<<<<<<< HEAD
     val where = "$IS_STORY_CLAUSE AND NOT (${getOutgoingTypeClause()}) AND $READ = 0 AND $RECIPIENT_ID = ?"
 =======
     val recipientId = SignalStore.releaseChannelValues().releaseChannelRecipientId ?: return
+    val where = "$IS_STORY_CLAUSE AND NOT ($outgoingTypeClause) AND $READ = 0 AND $FROM_RECIPIENT_ID = ?"
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    val where = "$IS_STORY_CLAUSE AND NOT (${getOutgoingTypeClause()}) AND $READ = 0 AND $RECIPIENT_ID = ?"
+=======
     val where = "$IS_STORY_CLAUSE AND NOT ($outgoingTypeClause) AND $READ = 0 AND $FROM_RECIPIENT_ID = ?"
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -2666,7 +2851,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     val threadId = threads.getThreadIdIfExistsFor(recipientId)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     val query = "$IS_STORY_CLAUSE AND NOT ($outgoingTypeClause) AND $THREAD_ID = ? AND $VIEWED_COLUMN = ?"
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    val query = "$IS_STORY_CLAUSE AND NOT (${getOutgoingTypeClause()}) AND $THREAD_ID = ? AND $VIEWED_RECEIPT_COUNT = ?"
+=======
+    val query = "$IS_STORY_CLAUSE AND NOT ($outgoingTypeClause) AND $THREAD_ID = ? AND $VIEWED_RECEIPT_COUNT = ?"
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     val query = "$IS_STORY_CLAUSE AND NOT (${getOutgoingTypeClause()}) AND $THREAD_ID = ? AND $VIEWED_RECEIPT_COUNT = ?"
 =======
@@ -2731,7 +2922,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         .from(TABLE_NAME)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         .where("$IS_STORY_CLAUSE AND $DATE_SENT IN ($timestamps) AND NOT ($outgoingTypeClause) AND $VIEWED_COLUMN > 0")
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        .where("$IS_STORY_CLAUSE AND $DATE_SENT IN ($timestamps) AND NOT (${getOutgoingTypeClause()}) AND $VIEWED_RECEIPT_COUNT > 0")
+=======
+        .where("$IS_STORY_CLAUSE AND $DATE_SENT IN ($timestamps) AND NOT ($outgoingTypeClause) AND $VIEWED_RECEIPT_COUNT > 0")
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         .where("$IS_STORY_CLAUSE AND $DATE_SENT IN ($timestamps) AND NOT (${getOutgoingTypeClause()}) AND $VIEWED_RECEIPT_COUNT > 0")
 =======
@@ -2763,7 +2960,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       .exists(TABLE_NAME)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       .where("$IS_STORY_CLAUSE AND $THREAD_ID = ? AND $VIEWED_COLUMN = ? AND NOT ($outgoingTypeClause)", threadId, 0)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      .where("$IS_STORY_CLAUSE AND $THREAD_ID = ? AND $VIEWED_RECEIPT_COUNT = ? AND NOT (${getOutgoingTypeClause()})", threadId, 0)
+=======
+      .where("$IS_STORY_CLAUSE AND $THREAD_ID = ? AND $VIEWED_RECEIPT_COUNT = ? AND NOT ($outgoingTypeClause)", threadId, 0)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       .where("$IS_STORY_CLAUSE AND $THREAD_ID = ? AND $VIEWED_RECEIPT_COUNT = ? AND NOT (${getOutgoingTypeClause()})", threadId, 0)
 =======
@@ -2811,10 +3014,16 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         $IS_STORY_CLAUSE AND 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         ($outgoingTypeClause) = 0 AND 
         $VIEWED_COLUMN = 0 AND 
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         (${getOutgoingTypeClause()}) = 0 AND 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        (${getOutgoingTypeClause()}) = 0 AND 
+=======
+        ($outgoingTypeClause) = 0 AND 
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         (${getOutgoingTypeClause()}) = 0 AND 
 =======
@@ -2846,10 +3055,16 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         ${ThreadTable.TABLE_NAME}.${ThreadTable.RECIPIENT_ID},
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         ($outgoingTypeClause) AS is_outgoing,
         $VIEWED_COLUMN,
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         (${getOutgoingTypeClause()}) AS is_outgoing,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        (${getOutgoingTypeClause()}) AS is_outgoing,
+=======
+        ($outgoingTypeClause) AS is_outgoing,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         (${getOutgoingTypeClause()}) AS is_outgoing,
 =======
@@ -2864,7 +3079,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         $RECEIPT_TIMESTAMP,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         ($outgoingTypeClause) = 0 AND $VIEWED_COLUMN = 0 AS is_unread
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        (${getOutgoingTypeClause()}) = 0 AND $VIEWED_RECEIPT_COUNT = 0 AS is_unread
+=======
+        ($outgoingTypeClause) = 0 AND $VIEWED_RECEIPT_COUNT = 0 AS is_unread
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         (${getOutgoingTypeClause()}) = 0 AND $VIEWED_RECEIPT_COUNT = 0 AS is_unread
 =======
@@ -2996,10 +3217,16 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         .run()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         .readToList { RecipientId.from(it.requireLong(FROM_RECIPIENT_ID)) }
         .forEach { id -> AppDependencies.databaseObserver.notifyStoryObservers(id) }
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         .readToList { RecipientId.from(it.requireLong(RECIPIENT_ID)) }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        .readToList { RecipientId.from(it.requireLong(RECIPIENT_ID)) }
+=======
+        .readToList { RecipientId.from(it.requireLong(FROM_RECIPIENT_ID)) }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         .readToList { RecipientId.from(it.requireLong(RECIPIENT_ID)) }
 =======
@@ -3164,11 +3391,19 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       .select("COUNT(*)")
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_COUNT")
       .where("$THREAD_ID = $threadId AND $STORY_TYPE = 0 AND $PARENT_STORY_ID <= 0 AND $SCHEDULED_DATE = -1 AND $LATEST_REVISION_ID IS NULL")
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_STORY_SCHEDULED_DATE")
       .where("$THREAD_ID = ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ?", threadId, 0, 0, -1)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_STORY_SCHEDULED_DATE")
+      .where("$THREAD_ID = ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ?", threadId, 0, 0, -1)
+=======
+      .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_STORY_SCHEDULED_DATE_LATEST_REVISION_ID")
+      .where("$THREAD_ID = ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ? AND $LATEST_REVISION_ID IS NULL", threadId, 0, 0, -1)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_STORY_SCHEDULED_DATE")
       .where("$THREAD_ID = ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ?", threadId, 0, 0, -1)
@@ -3184,6 +3419,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     return readableDatabase
       .select("COUNT(*)")
 <<<<<<< HEAD
+<<<<<<< HEAD
       .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_STORY_SCHEDULED_DATE")
       .where("$THREAD_ID = ? AND $DATE_RECEIVED < ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ?", threadId, beforeTime, 0, 0, -1)
 =======
@@ -3196,6 +3432,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
   fun getMessageCountForThread(threadId: Long, beforeTime: Long): Int {
     return readableDatabase
       .select("COUNT(*)")
+      .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_STORY_SCHEDULED_DATE_LATEST_REVISION_ID")
+      .where("$THREAD_ID = ? AND $DATE_RECEIVED < ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ? AND $LATEST_REVISION_ID IS NULL", threadId, beforeTime, 0, 0, -1)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_STORY_SCHEDULED_DATE")
+      .where("$THREAD_ID = ? AND $DATE_RECEIVED < ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ?", threadId, beforeTime, 0, 0, -1)
+=======
       .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_STORY_SCHEDULED_DATE_LATEST_REVISION_ID")
       .where("$THREAD_ID = ? AND $DATE_RECEIVED < ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ? AND $LATEST_REVISION_ID IS NULL", threadId, beforeTime, 0, 0, -1)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -3392,6 +3635,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   fun getMessageEditHistory(id: Long): MmsReader {
     val cursor = readableDatabase.select(*MMS_PROJECTION)
       .from(TABLE_NAME)
@@ -3414,6 +3658,19 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       }
   }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  fun getMessageEditHistory(id: Long): MmsReader {
+    val cursor = readableDatabase.select(*MMS_PROJECTION)
+      .from(TABLE_NAME)
+      .where("$TABLE_NAME.$ID = ? OR $TABLE_NAME.$LATEST_REVISION_ID = ?", id, id)
+      .orderBy("$TABLE_NAME.$ID DESC")
+      .run()
+
+    return mmsReaderFor(cursor)
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
   fun getMessageEditHistory(id: Long): MmsReader {
@@ -3828,11 +4085,17 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     return readableDatabase
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       .select(FROM_RECIPIENT_ID, DATE_RECEIVED)
       .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_UNREAD_COUNT")
       .where("$THREAD_ID = ? AND $STORY_TYPE = 0 AND $PARENT_STORY_ID <= 0 AND $LATEST_REVISION_ID IS NULL AND $SCHEDULED_DATE = -1 AND $READ = 0 AND $MENTIONS_SELF = 1", threadId)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       .select(RECIPIENT_ID, DATE_RECEIVED)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      .select(RECIPIENT_ID, DATE_RECEIVED)
+=======
+      .select(FROM_RECIPIENT_ID, DATE_RECEIVED)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       .select(RECIPIENT_ID, DATE_RECEIVED)
 =======
@@ -4016,10 +4279,16 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         OutgoingMessage.groupUpdateMessage(
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           threadRecipient = threadRecipient,
           groupContext = if (messageExtras != null) MessageGroupContext(messageExtras, MessageTypes.isGroupV2(outboxType)) else MessageGroupContext(body, MessageTypes.isGroupV2(outboxType)),
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           recipient = recipient,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          recipient = recipient,
+=======
+          threadRecipient = threadRecipient,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           recipient = recipient,
 =======
@@ -4063,6 +4332,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         OutgoingMessage.paymentsActivatedMessage(
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           threadRecipient = threadRecipient,
           sentTimeMillis = timestamp,
           expiresIn = expiresIn
@@ -4076,6 +4346,11 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       } else if (MessageTypes.isMessageRequestAccepted(outboxType)) {
         OutgoingMessage.messageRequestAcceptMessage(
           threadRecipient = threadRecipient,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          recipient = recipient,
+=======
+          threadRecipient = threadRecipient,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           recipient = recipient,
 =======
@@ -4151,12 +4426,20 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     contentLocation: String,
     candidateThreadId: Long,
 <<<<<<< HEAD
+<<<<<<< HEAD
     mailbox: Long
 =======
   private fun insertMessageInbox(
     retrieved: IncomingMediaMessage,
     contentLocation: String,
     candidateThreadId: Long,
+    mailbox: Long,
+    editedMessage: MediaMmsMessageRecord?,
+    notifyObservers: Boolean
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    mailbox: Long
+=======
     mailbox: Long,
     editedMessage: MediaMmsMessageRecord?,
     notifyObservers: Boolean
@@ -4198,11 +4481,18 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       DATE_SERVER to retrieved.serverTimeMillis,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       FROM_RECIPIENT_ID to retrieved.from.serialize(),
       TO_RECIPIENT_ID to Recipient.self().id.serialize(),
       TYPE to type,
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       RECIPIENT_ID to retrieved.from!!.serialize(),
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      RECIPIENT_ID to retrieved.from!!.serialize(),
+=======
+      FROM_RECIPIENT_ID to retrieved.from!!.serialize(),
+      TO_RECIPIENT_ID to Recipient.self().id.serialize(),
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       RECIPIENT_ID to retrieved.from!!.serialize(),
 =======
@@ -4229,11 +4519,20 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       UNIDENTIFIED to retrieved.isUnidentified,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       SERVER_GUID to retrieved.serverGuid,
       LATEST_REVISION_ID to null,
       ORIGINAL_MESSAGE_ID to editedMessage?.getOriginalOrOwnMessageId()?.id,
       REVISION_NUMBER to (editedMessage?.revisionNumber?.inc() ?: 0),
       MESSAGE_EXTRAS to (retrieved.messageExtras?.encode())
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      SERVER_GUID to retrieved.serverGuid
+=======
+      SERVER_GUID to retrieved.serverGuid,
+      LATEST_REVISION_ID to null,
+      ORIGINAL_MESSAGE_ID to editedMessage?.getOriginalOrOwnMessageId()?.id,
+      REVISION_NUMBER to (editedMessage?.revisionNumber?.inc() ?: 0)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       SERVER_GUID to retrieved.serverGuid
 =======
@@ -4292,6 +4591,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (messageId < 0) {
       Log.w(TAG, "Failed to insert media message (${retrieved.sentTimeMillis}, ${retrieved.from}, ThreadId::$threadId})! Likely a duplicate.")
       return Optional.empty()
@@ -4303,6 +4603,27 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       threads.incrementUnread(threadId, 1, if (incrementUnreadMentions) 1 else 0)
       threads.update(threadId, true)
 =======
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    if (editedMessage != null) {
+      if (retrieved.quote != null && editedMessage.quote != null) {
+        writableDatabase.execSQL(
+          """  
+          WITH o as (SELECT $QUOTE_ID, $QUOTE_AUTHOR, $QUOTE_BODY, $QUOTE_TYPE, $QUOTE_MISSING, $QUOTE_BODY_RANGES FROM $TABLE_NAME WHERE $ID = ${editedMessage.id})
+          UPDATE $TABLE_NAME
+          SET $QUOTE_ID = old.$QUOTE_ID, $QUOTE_AUTHOR = old.$QUOTE_AUTHOR, $QUOTE_BODY = old.$QUOTE_BODY, $QUOTE_TYPE = old.$QUOTE_TYPE, $QUOTE_MISSING = old.$QUOTE_MISSING, $QUOTE_BODY_RANGES = old.$QUOTE_BODY_RANGES
+          FROM o old
+          WHERE $TABLE_NAME.$ID = $messageId
+          """
+        )
+      }
+    }
+
+    if (retrieved.attachments.isEmpty() && editedMessage?.id != null && attachments.getAttachmentsForMessage(editedMessage.id).isNotEmpty()) {
+      attachments.duplicateAttachmentsForMessage(messageId, editedMessage.id)
+    }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     val isNotStoryGroupReply = retrieved.parentStoryId == null || !retrieved.parentStoryId.isGroupReply()
 
     if (!MessageTypes.isPaymentsActivated(mailbox) && !MessageTypes.isPaymentsRequestToActivate(mailbox) && !MessageTypes.isExpirationTimerUpdate(mailbox) && !retrieved.storyType.isStory && isNotStoryGroupReply) {
@@ -4312,6 +4633,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     }
 
+<<<<<<< HEAD
     if (editedMessage != null) {
       if (retrieved.quote != null && editedMessage.quote != null) {
         writableDatabase.execSQL(
@@ -4394,6 +4716,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       notifyConversationListeners(threadId)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     notifyConversationListeners(threadId)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    notifyConversationListeners(threadId)
+=======
+    if (notifyObservers) {
+      notifyConversationListeners(threadId)
+    }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     if (retrieved.storyType.isStory) {
       ApplicationDependencies.getDatabaseObserver().notifyStoryObservers(threads.getRecipientIdForThreadId(threadId)!!)
@@ -4887,6 +5216,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     var editedMessage: MessageRecord? = null
     if (message.isMessageEdit) {
       try {
@@ -4940,6 +5270,21 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     }
 
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    var editedMessage: MessageRecord? = null
+    if (message.isMessageEdit) {
+      try {
+        editedMessage = getMessageRecord(message.messageToEdit)
+        if (!MessageConstraintsUtil.isValidEditMessageSend(editedMessage)) {
+          throw MmsException("Message is not valid to edit")
+        }
+      } catch (e: NoSuchMessageException) {
+        throw MmsException("Unable to locate edited message", e)
+      }
+    }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     val contentValues = ContentValues()
     contentValues.put(DATE_SENT, message.sentTimeMillis)
     contentValues.put(TYPE, type)
@@ -4947,6 +5292,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     contentValues.put(READ, 1)
     contentValues.put(DATE_RECEIVED, editedMessage?.dateReceived ?: System.currentTimeMillis())
     contentValues.put(SMS_SUBSCRIPTION_ID, message.subscriptionId)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     contentValues.put(EXPIRES_IN, editedMessage?.expiresIn ?: message.expiresIn)
@@ -4961,7 +5307,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 =======
     contentValues.put(EXPIRES_IN, editedMessage?.expiresIn ?: message.expiresIn)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    contentValues.put(EXPIRES_IN, message.expiresIn)
+=======
+    contentValues.put(EXPIRES_IN, editedMessage?.expiresIn ?: message.expiresIn)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     contentValues.put(VIEW_ONCE, message.isViewOnce)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     contentValues.put(FROM_RECIPIENT_ID, Recipient.self().id.serialize())
@@ -4970,6 +5322,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     contentValues.put(HAS_DELIVERY_RECEIPT, earlyDeliveryReceipts.values.sumOf { it.count })
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     contentValues.put(RECIPIENT_ID, message.recipient.id.serialize())
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    contentValues.put(RECIPIENT_ID, message.recipient.id.serialize())
+=======
+    contentValues.put(FROM_RECIPIENT_ID, Recipient.self().id.serialize())
+    contentValues.put(FROM_DEVICE_ID, SignalStore.account().deviceId)
+    contentValues.put(TO_RECIPIENT_ID, message.threadRecipient.id.serialize())
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     contentValues.put(RECIPIENT_ID, message.recipient.id.serialize())
 =======
@@ -4990,6 +5349,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     contentValues.put(SCHEDULED_DATE, message.scheduledDate)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     contentValues.putNull(LATEST_REVISION_ID)
     contentValues.put(MESSAGE_EXTRAS, message.messageExtras?.encode())
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -5000,7 +5360,12 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 =======
     contentValues.putNull(LATEST_REVISION_ID)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    contentValues.putNull(LATEST_REVISION_ID)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     if (editedMessage != null) {
@@ -5015,6 +5380,18 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       contentValues.put(VIEWED_COLUMN, 1L)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (message.recipient.isSelf && hasAudioAttachment(message.attachments)) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (message.recipient.isSelf && hasAudioAttachment(message.attachments)) {
+=======
+    if (editedMessage != null) {
+      contentValues.put(ORIGINAL_MESSAGE_ID, editedMessage.getOriginalOrOwnMessageId().id)
+      contentValues.put(REVISION_NUMBER, editedMessage.revisionNumber + 1)
+    } else {
+      contentValues.putNull(ORIGINAL_MESSAGE_ID)
+    }
+
+    if (message.threadRecipient.isSelf && hasAudioAttachment(message.attachments)) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (message.recipient.isSelf && hasAudioAttachment(message.attachments)) {
 =======
@@ -5092,11 +5469,17 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (messageId < 0) {
       throw MmsException("Failed to insert message! Likely a duplicate.")
     }
 
     if (message.threadRecipient.isGroup) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (message.recipient.isGroup) {
+=======
+    if (message.threadRecipient.isGroup) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (message.recipient.isGroup) {
 =======
@@ -5135,6 +5518,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     if (message.messageToEdit > 0) {
@@ -5177,15 +5561,33 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     }
 
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    if (message.messageToEdit > 0) {
+      writableDatabase.update(TABLE_NAME)
+        .values(LATEST_REVISION_ID to messageId)
+        .where("$ID_WHERE OR $LATEST_REVISION_ID = ?", message.messageToEdit, message.messageToEdit)
+        .run()
+
+      reactions.moveReactionsToNewMessage(messageId, message.messageToEdit)
+    }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     threads.updateLastSeenAndMarkSentAndLastScrolledSilenty(threadId)
 
     if (!message.storyType.isStory) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       if (message.outgoingQuote == null && editedMessage == null) {
         AppDependencies.databaseObserver.notifyMessageInsertObservers(threadId, MessageId(messageId))
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       if (message.outgoingQuote == null) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (message.outgoingQuote == null) {
+=======
+      if (message.outgoingQuote == null && editedMessage == null) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       if (message.outgoingQuote == null) {
 =======
@@ -5206,7 +5608,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     } else {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       AppDependencies.databaseObserver.notifyStoryObservers(message.threadRecipient.id)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      ApplicationDependencies.getDatabaseObserver().notifyStoryObservers(message.recipient.id)
+=======
+      ApplicationDependencies.getDatabaseObserver().notifyStoryObservers(message.threadRecipient.id)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       ApplicationDependencies.getDatabaseObserver().notifyStoryObservers(message.recipient.id)
 =======
@@ -5847,9 +6255,15 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         (${AttachmentTable.DATA} NOT NULL OR ${AttachmentTable.TRANSFER_STATE} != ?)
 <<<<<<< HEAD
+<<<<<<< HEAD
       """.toSingleLine()
 =======
         (${AttachmentTable.DATA} NOT NULL OR ${AttachmentTable.TRANSFER_STATE} != ?)
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.toSingleLine()
+=======
       """
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -6392,6 +6806,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     if (groupStoryId > 0) {
       order = "$DATE_RECEIVED ASC"
 <<<<<<< HEAD
+<<<<<<< HEAD
       selection = "$THREAD_ID = $threadId AND $DATE_RECEIVED < $receivedTimestamp AND $STORY_TYPE = 0 AND $PARENT_STORY_ID = $groupStoryId AND $SCHEDULED_DATE = -1"
 =======
     val order: String
@@ -6406,15 +6821,26 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 =======
       selection = "$THREAD_ID = $threadId AND $DATE_RECEIVED < $receivedTimestamp AND $STORY_TYPE = 0 AND $PARENT_STORY_ID = $groupStoryId AND $SCHEDULED_DATE = -1 AND $LATEST_REVISION_ID IS NULL"
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      selection = "$THREAD_ID = $threadId AND $DATE_RECEIVED < $receivedTimestamp AND $STORY_TYPE = 0 AND $PARENT_STORY_ID = $groupStoryId AND $SCHEDULED_DATE = -1"
+=======
+      selection = "$THREAD_ID = $threadId AND $DATE_RECEIVED < $receivedTimestamp AND $STORY_TYPE = 0 AND $PARENT_STORY_ID = $groupStoryId AND $SCHEDULED_DATE = -1 AND $LATEST_REVISION_ID IS NULL"
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     } else {
 <<<<<<< HEAD
       "$THREAD_ID = $threadId AND $DATE_RECEIVED > $receivedTimestamp AND $STORY_TYPE = 0 AND $PARENT_STORY_ID <= 0 AND $SCHEDULED_DATE = -1 AND $LATEST_REVISION_ID IS NULL"
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       order = "$DATE_RECEIVED DESC"
 <<<<<<< HEAD
+<<<<<<< HEAD
       selection = "$THREAD_ID = $threadId AND $DATE_RECEIVED > $receivedTimestamp AND $STORY_TYPE = 0 AND $PARENT_STORY_ID <= 0 AND $SCHEDULED_DATE = -1"
 =======
       order = "$DATE_RECEIVED DESC"
+      selection = "$THREAD_ID = $threadId AND $DATE_RECEIVED > $receivedTimestamp AND $STORY_TYPE = 0 AND $PARENT_STORY_ID <= 0 AND $SCHEDULED_DATE = -1 AND $LATEST_REVISION_ID IS NULL"
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      selection = "$THREAD_ID = $threadId AND $DATE_RECEIVED > $receivedTimestamp AND $STORY_TYPE = 0 AND $PARENT_STORY_ID <= 0 AND $SCHEDULED_DATE = -1"
+=======
       selection = "$THREAD_ID = $threadId AND $DATE_RECEIVED > $receivedTimestamp AND $STORY_TYPE = 0 AND $PARENT_STORY_ID <= 0 AND $SCHEDULED_DATE = -1 AND $LATEST_REVISION_ID IS NULL"
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -6501,9 +6927,15 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_DATE")
 <<<<<<< HEAD
+<<<<<<< HEAD
       .where("$READ = 0 AND $STORY_TYPE = 0 AND $THREAD_ID = $threadId AND $PARENT_STORY_ID <= 0")
 =======
       .from("$TABLE_NAME INDEXED BY $INDEX_THREAD_DATE")
+      .where("$READ = 0 AND $STORY_TYPE = 0 AND $THREAD_ID = $threadId AND $PARENT_STORY_ID <= 0  AND $LATEST_REVISION_ID IS NULL")
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      .where("$READ = 0 AND $STORY_TYPE = 0 AND $THREAD_ID = $threadId AND $PARENT_STORY_ID <= 0")
+=======
       .where("$READ = 0 AND $STORY_TYPE = 0 AND $THREAD_ID = $threadId AND $PARENT_STORY_ID <= 0  AND $LATEST_REVISION_ID IS NULL")
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -6619,8 +7051,16 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   fun incrementDeliveryReceiptCounts(targetTimestamps: List<Long>, receiptAuthor: RecipientId, receiptSentTimestamp: Long, stopwatch: Stopwatch? = null): Set<Long> {
     return incrementReceiptCounts(targetTimestamps, receiptAuthor, receiptSentTimestamp, ReceiptType.DELIVERY, stopwatch = stopwatch)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  fun incrementDeliveryReceiptCounts(syncMessageIds: List<SyncMessageId>, timestamp: Long): Collection<SyncMessageId> {
+    return incrementReceiptCounts(syncMessageIds, timestamp, ReceiptType.DELIVERY)
+=======
+  fun incrementDeliveryReceiptCounts(targetTimestamps: List<Long>, receiptAuthor: RecipientId, receiptSentTimestamp: Long): Set<Long> {
+    return incrementReceiptCounts(targetTimestamps, receiptAuthor, receiptSentTimestamp, ReceiptType.DELIVERY)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   fun incrementDeliveryReceiptCounts(syncMessageIds: List<SyncMessageId>, timestamp: Long): Collection<SyncMessageId> {
     return incrementReceiptCounts(syncMessageIds, timestamp, ReceiptType.DELIVERY)
@@ -6669,6 +7109,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   fun incrementViewedStoryReceiptCounts(targetTimestamps: List<Long>, receiptAuthor: RecipientId, receiptSentTimestamp: Long): Set<Long> {
     val messageUpdates: MutableSet<MessageReceiptUpdate> = HashSet()
     val unhandled: MutableSet<Long> = HashSet()
@@ -6679,12 +7120,23 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 =======
   fun incrementViewedStoryReceiptCounts(targetTimestamps: List<Long>, receiptAuthor: RecipientId, receiptSentTimestamp: Long): Set<Long> {
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  fun incrementViewedStoryReceiptCounts(syncMessageIds: List<SyncMessageId>, timestamp: Long): Collection<SyncMessageId> {
+=======
+  fun incrementViewedStoryReceiptCounts(targetTimestamps: List<Long>, receiptAuthor: RecipientId, receiptSentTimestamp: Long): Set<Long> {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     val messageUpdates: MutableSet<MessageUpdate> = HashSet()
+<<<<<<< HEAD
 <<<<<<< HEAD
     val unhandled: MutableSet<SyncMessageId> = HashSet()
 =======
   fun incrementViewedStoryReceiptCounts(targetTimestamps: List<Long>, receiptAuthor: RecipientId, receiptSentTimestamp: Long): Set<Long> {
     val messageUpdates: MutableSet<MessageUpdate> = HashSet()
+    val unhandled: MutableSet<Long> = HashSet()
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    val unhandled: MutableSet<SyncMessageId> = HashSet()
+=======
     val unhandled: MutableSet<Long> = HashSet()
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -6724,10 +7176,16 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
    */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private fun incrementReceiptCount(targetTimestamp: Long, receiptAuthor: RecipientId, receiptSentTimestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier = MessageQualifier.ALL): Boolean {
     var messageUpdates: Set<MessageReceiptUpdate> = HashSet()
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private fun incrementReceiptCount(syncMessageId: SyncMessageId, timestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier = MessageQualifier.ALL): Boolean {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private fun incrementReceiptCount(syncMessageId: SyncMessageId, timestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier = MessageQualifier.ALL): Boolean {
+=======
+  private fun incrementReceiptCount(targetTimestamp: Long, receiptAuthor: RecipientId, receiptSentTimestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier = MessageQualifier.ALL): Boolean {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private fun incrementReceiptCount(syncMessageId: SyncMessageId, timestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier = MessageQualifier.ALL): Boolean {
 =======
@@ -6761,6 +7219,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
    */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private fun incrementReceiptCounts(targetTimestamps: List<Long>, receiptAuthor: RecipientId, receiptSentTimestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier = MessageQualifier.ALL, stopwatch: Stopwatch? = null): Set<Long> {
     val messageUpdates: MutableSet<MessageReceiptUpdate> = HashSet()
     val missingTargetTimestamps: MutableSet<Long> = HashSet()
@@ -6771,12 +7230,23 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 =======
   private fun incrementReceiptCounts(targetTimestamps: List<Long>, receiptAuthor: RecipientId, receiptSentTimestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier = MessageQualifier.ALL): Set<Long> {
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private fun incrementReceiptCounts(syncMessageIds: List<SyncMessageId>, timestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier = MessageQualifier.ALL): Collection<SyncMessageId> {
+=======
+  private fun incrementReceiptCounts(targetTimestamps: List<Long>, receiptAuthor: RecipientId, receiptSentTimestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier = MessageQualifier.ALL): Set<Long> {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     val messageUpdates: MutableSet<MessageUpdate> = HashSet()
+<<<<<<< HEAD
 <<<<<<< HEAD
     val unhandled: MutableSet<SyncMessageId> = HashSet()
 =======
   private fun incrementReceiptCounts(targetTimestamps: List<Long>, receiptAuthor: RecipientId, receiptSentTimestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier = MessageQualifier.ALL): Set<Long> {
     val messageUpdates: MutableSet<MessageUpdate> = HashSet()
+    val missingTargetTimestamps: MutableSet<Long> = HashSet()
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    val unhandled: MutableSet<SyncMessageId> = HashSet()
+=======
     val missingTargetTimestamps: MutableSet<Long> = HashSet()
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -6788,11 +7258,19 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     writableDatabase.withinTransaction {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       for (targetTimestamp in targetTimestamps) {
         val updates: Set<MessageReceiptUpdate> = incrementReceiptCountInternal(targetTimestamp, receiptAuthor, receiptSentTimestamp, receiptType, messageQualifier, stopwatch)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       for (id in syncMessageIds) {
         val updates = incrementReceiptCountInternal(id, timestamp, receiptType, messageQualifier)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      for (id in syncMessageIds) {
+        val updates = incrementReceiptCountInternal(id, timestamp, receiptType, messageQualifier)
+=======
+      for (targetTimestamp in targetTimestamps) {
+        val updates: Set<MessageUpdate> = incrementReceiptCountInternal(targetTimestamp, receiptAuthor, receiptSentTimestamp, receiptType, messageQualifier)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       for (id in syncMessageIds) {
         val updates = incrementReceiptCountInternal(id, timestamp, receiptType, messageQualifier)
@@ -6835,9 +7313,15 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     stopwatch?.split("observers")
 
     return missingTargetTimestamps
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    return unhandled
+=======
+    return missingTargetTimestamps
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     return unhandled
 =======
@@ -6852,9 +7336,15 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private fun incrementReceiptCountInternal(targetTimestamp: Long, receiptAuthor: RecipientId, receiptSentTimestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier, stopwatch: Stopwatch? = null): Set<MessageReceiptUpdate> {
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private fun incrementReceiptCountInternal(messageId: SyncMessageId, timestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier): Set<MessageUpdate> {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private fun incrementReceiptCountInternal(messageId: SyncMessageId, timestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier): Set<MessageUpdate> {
+=======
+  private fun incrementReceiptCountInternal(targetTimestamp: Long, receiptAuthor: RecipientId, receiptSentTimestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier): Set<MessageUpdate> {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private fun incrementReceiptCountInternal(messageId: SyncMessageId, timestamp: Long, receiptType: ReceiptType, messageQualifier: MessageQualifier): Set<MessageUpdate> {
 =======
@@ -6873,6 +7363,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       MessageQualifier.ALL -> ""
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     // Note: While it is true that multiple messages can have the same (sent, author) pair, this should only happen for stories, which are handled below.
@@ -6990,6 +7481,59 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
                 ${RecipientTable.TABLE_NAME}.${RecipientTable.ID} = $TO_RECIPIENT_ID AND 
                 ${RecipientTable.TABLE_NAME}.${RecipientTable.GROUP_TYPE} != ${RecipientTable.GroupType.NONE.id}
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    readableDatabase
+      .select(ID, THREAD_ID, TYPE, RECIPIENT_ID, receiptType.columnName, RECEIPT_TIMESTAMP)
+      .from(TABLE_NAME)
+      .where("$DATE_SENT = ? $qualifierWhere", messageId.timetamp)
+      .run()
+      .forEach { cursor ->
+        if (MessageTypes.isOutgoingMessageType(cursor.requireLong(TYPE))) {
+          val theirRecipientId = RecipientId.from(cursor.requireLong(RECIPIENT_ID))
+          val ourRecipientId = messageId.recipientId
+          val columnName = receiptType.columnName
+
+          if (ourRecipientId == theirRecipientId || Recipient.resolved(theirRecipientId).isGroup) {
+            val id = cursor.requireLong(ID)
+            val threadId = cursor.requireLong(THREAD_ID)
+            val status = receiptType.groupStatus
+            val isFirstIncrement = cursor.requireLong(columnName) == 0L
+            val savedTimestamp = cursor.requireLong(RECEIPT_TIMESTAMP)
+            val updatedTimestamp = if (isFirstIncrement) max(savedTimestamp, timestamp) else savedTimestamp
+
+            writableDatabase.execSQL(
+              """
+                UPDATE $TABLE_NAME 
+                SET 
+                  $columnName = $columnName + 1,
+                  $RECEIPT_TIMESTAMP = ? 
+                WHERE $ID = ?
+              """.toSingleLine(),
+              buildArgs(updatedTimestamp, id)
+=======
+    var found = false
+    var hasStory = false
+    writableDatabase.rawQuery(
+      """
+        UPDATE $TABLE_NAME
+        SET
+          ${receiptType.columnName} = ${receiptType.columnName} + 1,
+          $RECEIPT_TIMESTAMP = CASE 
+            WHEN ${receiptType.columnName} = 0 THEN MAX($RECEIPT_TIMESTAMP, $receiptSentTimestamp) 
+            ELSE $RECEIPT_TIMESTAMP 
+          END 
+        WHERE
+          $DATE_SENT = $targetTimestamp AND
+          $FROM_RECIPIENT_ID = ? AND
+          (
+            $TO_RECIPIENT_ID = ? OR 
+            EXISTS (
+              SELECT 1 
+              FROM ${RecipientTable.TABLE_NAME} 
+              WHERE 
+                ${RecipientTable.TABLE_NAME}.${RecipientTable.ID} = $TO_RECIPIENT_ID AND 
+                ${RecipientTable.TABLE_NAME}.${RecipientTable.GROUP_TYPE} != ${RecipientTable.GroupType.NONE.id}
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
             )
           )
           $qualifierWhere
@@ -7008,6 +7552,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       hasStory = storyType != StoryType.NONE
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         if (messageUpdates.isNotEmpty() && receiptType == ReceiptType.DELIVERY) {
           earlyDeliveryReceiptCache.increment(messageId.timetamp, messageId.recipientId, timestamp)
@@ -7076,7 +7621,22 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         groupReceipts.update(receiptAuthor, messageId.id, receiptType.groupStatus, receiptSentTimestamp)
         messageUpdates += MessageUpdate(-1, messageId)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        if (messageUpdates.isNotEmpty() && receiptType == ReceiptType.DELIVERY) {
+          earlyDeliveryReceiptCache.increment(messageId.timetamp, messageId.recipientId, timestamp)
+        }
+=======
+    if (!found && receiptType == ReceiptType.DELIVERY) {
+      earlyDeliveryReceiptCache.increment(targetTimestamp, receiptAuthor, receiptSentTimestamp)
+    }
+
+    if (hasStory) {
+      for (messageId in storySends.getStoryMessagesFor(receiptAuthor, targetTimestamp)) {
+        groupReceipts.update(receiptAuthor, messageId.id, receiptType.groupStatus, receiptSentTimestamp)
+        messageUpdates += MessageUpdate(-1, messageId)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -7122,6 +7682,39 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     messageUpdates += incrementStoryReceiptCount(messageId, timestamp, receiptType)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+
+    messageUpdates += incrementStoryReceiptCount(messageId, timestamp, receiptType)
+
+    return messageUpdates
+  }
+
+  private fun incrementStoryReceiptCount(messageId: SyncMessageId, timestamp: Long, receiptType: ReceiptType): Set<MessageUpdate> {
+    val messageUpdates: MutableSet<MessageUpdate> = HashSet()
+    val columnName = receiptType.columnName
+
+    for (storyMessageId in storySends.getStoryMessagesFor(messageId)) {
+      writableDatabase.execSQL(
+        """
+          UPDATE $TABLE_NAME 
+          SET 
+            $columnName = $columnName + 1, 
+            $RECEIPT_TIMESTAMP = CASE 
+              WHEN $columnName = 0 THEN MAX($RECEIPT_TIMESTAMP, ?) 
+              ELSE $RECEIPT_TIMESTAMP 
+            END 
+          WHERE $ID = ?
+        """.toSingleLine(),
+        buildArgs(timestamp, storyMessageId.id)
+      )
+
+      groupReceipts.update(messageId.recipientId, storyMessageId.id, receiptType.groupStatus, timestamp)
+
+      messageUpdates += MessageUpdate(-1, storyMessageId)
+    }
+=======
+    }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     return messageUpdates
   }
@@ -7331,9 +7924,15 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       .from(TABLE_NAME)
 <<<<<<< HEAD
+<<<<<<< HEAD
       .where("$THREAD_ID = ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ?", threadId, 0, 0, -1)
 =======
       .from(TABLE_NAME)
+      .where("$THREAD_ID = ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ? AND $LATEST_REVISION_ID IS NULL", threadId, 0, 0, -1)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      .where("$THREAD_ID = ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ?", threadId, 0, 0, -1)
+=======
       .where("$THREAD_ID = ? AND $STORY_TYPE = ? AND $PARENT_STORY_ID <= ? AND $SCHEDULED_DATE = ? AND $LATEST_REVISION_ID IS NULL", threadId, 0, 0, -1)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -7738,6 +8337,10 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     return this.originalMessageId ?: MessageId(this.id)
   }
 
+  private fun MessageRecord.getOriginalOrOwnMessageId(): MessageId {
+    return this.originalMessageId ?: MessageId(this.id)
+  }
+
   protected enum class ReceiptType(val columnName: String, val groupStatus: Int) {
     READ(HAS_READ_RECEIPT, GroupReceiptTable.STATUS_READ),
     DELIVERY(HAS_DELIVERY_RECEIPT, GroupReceiptTable.STATUS_DELIVERED),
@@ -8088,6 +8691,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       val threadId = cursor.requireLong(THREAD_ID)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       val fromRecipientId = cursor.requireLong(FROM_RECIPIENT_ID)
       val fromDeviceId = cursor.requireInt(FROM_DEVICE_ID)
       val toRecipientId = cursor.requireLong(TO_RECIPIENT_ID)
@@ -8096,6 +8700,14 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       val recipientId = cursor.requireLong(RECIPIENT_ID)
       val addressDeviceId = cursor.requireInt(RECIPIENT_DEVICE_ID)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      val recipientId = cursor.requireLong(RECIPIENT_ID)
+      val addressDeviceId = cursor.requireInt(RECIPIENT_DEVICE_ID)
+=======
+      val fromRecipientId = cursor.requireLong(FROM_RECIPIENT_ID)
+      val fromDeviceId = cursor.requireInt(FROM_DEVICE_ID)
+      val toRecipientId = cursor.requireLong(TO_RECIPIENT_ID)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       val recipientId = cursor.requireLong(RECIPIENT_ID)
       val addressDeviceId = cursor.requireInt(RECIPIENT_DEVICE_ID)
@@ -8133,12 +8745,19 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       val scheduledDate = cursor.requireLong(SCHEDULED_DATE)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       val latestRevisionId: MessageId? = cursor.requireLong(LATEST_REVISION_ID).let { if (it == 0L) null else MessageId(it) }
       val originalMessageId: MessageId? = cursor.requireLong(ORIGINAL_MESSAGE_ID).let { if (it == 0L) null else MessageId(it) }
       val editCount = cursor.requireInt(REVISION_NUMBER)
       val isRead = cursor.requireBoolean(READ)
       val messageExtraBytes = cursor.requireBlob(MESSAGE_EXTRAS)
       val messageExtras = messageExtraBytes?.let { MessageExtras.ADAPTER.decode(it) }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+      val latestRevisionId: MessageId? = cursor.requireLong(LATEST_REVISION_ID).let { if (it == 0L) null else MessageId(it) }
+      val originalMessageId: MessageId? = cursor.requireLong(ORIGINAL_MESSAGE_ID).let { if (it == 0L) null else MessageId(it) }
+      val editCount = cursor.requireInt(REVISION_NUMBER)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
       val latestRevisionId: MessageId? = cursor.requireLong(LATEST_REVISION_ID).let { if (it == 0L) null else MessageId(it) }
@@ -8237,12 +8856,21 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         null,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         scheduledDate,
         latestRevisionId,
         originalMessageId,
         editCount,
         isRead,
         messageExtras
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        scheduledDate
+=======
+        scheduledDate,
+        latestRevisionId,
+        originalMessageId,
+        editCount
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         scheduledDate
 =======

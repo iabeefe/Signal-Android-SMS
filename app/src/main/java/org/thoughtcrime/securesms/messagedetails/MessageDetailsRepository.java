@@ -80,7 +80,13 @@ public final class MessageDetailsRepository {
       recipients.add(new RecipientDeliveryStatus(messageRecord,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                  messageRecord.isOutgoing() ? messageRecord.getToRecipient() : messageRecord.getFromRecipient(),
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                                                 messageRecord.getRecipient(),
+=======
+                                                 messageRecord.getToRecipient(),
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                                                  messageRecord.getRecipient(),
 =======

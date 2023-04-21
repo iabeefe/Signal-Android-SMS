@@ -835,6 +835,7 @@ class InternalSettingsFragment : DSLSettingsFragment(R.string.preferences__inter
         )
       }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       if (FeatureFlags.chatFilters()) {
         dividerPref()
@@ -846,6 +847,18 @@ class InternalSettingsFragment : DSLSettingsFragment(R.string.preferences__inter
           }
         )
       }
+
+      dividerPref()
+      switchPref(
+        title = DSLSettingsText.from("Use V2 ConversationFragment"),
+        isChecked = state.useConversationFragmentV2,
+        onClick = {
+          viewModel.setUseConversationFragmentV2(!state.useConversationFragmentV2)
+        }
+      )
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
 
       dividerPref()
       switchPref(

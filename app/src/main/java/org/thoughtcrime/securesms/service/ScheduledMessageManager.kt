@@ -58,8 +58,16 @@ class ScheduledMessageManager(
       if (messagesTable.clearScheduledStatus(record.threadId, record.id, expiresIn.seconds.inWholeMilliseconds)) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (record.toRecipient.isPushGroup) {
           PushGroupSendJob.enqueue(application, AppDependencies.jobManager, record.id, record.toRecipient.id, emptySet(), true)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        if (record.recipient.isPushGroup) {
+          PushGroupSendJob.enqueue(application, ApplicationDependencies.getJobManager(), record.id, record.recipient.id, emptySet(), true)
+=======
+        if (record.toRecipient.isPushGroup) {
+          PushGroupSendJob.enqueue(application, ApplicationDependencies.getJobManager(), record.id, record.toRecipient.id, emptySet(), true)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         if (record.recipient.isPushGroup) {
           PushGroupSendJob.enqueue(application, ApplicationDependencies.getJobManager(), record.id, record.recipient.id, emptySet(), true)
@@ -77,7 +85,13 @@ class ScheduledMessageManager(
         } else {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           IndividualSendJob.enqueue(application, AppDependencies.jobManager, record.id, record.toRecipient, true)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          IndividualSendJob.enqueue(application, ApplicationDependencies.getJobManager(), record.id, record.recipient, true)
+=======
+          IndividualSendJob.enqueue(application, ApplicationDependencies.getJobManager(), record.id, record.toRecipient, true)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           IndividualSendJob.enqueue(application, ApplicationDependencies.getJobManager(), record.id, record.recipient, true)
 =======

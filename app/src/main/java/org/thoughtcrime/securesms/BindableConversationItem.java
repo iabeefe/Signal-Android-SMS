@@ -125,9 +125,14 @@ public interface BindableConversationItem extends Unbindable, GiphyMp4Playable, 
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     void onScheduledIndicatorClicked(@NonNull View view, @NonNull MessageRecord messageRecord);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     void onScheduledIndicatorClicked(@NonNull View view, @NonNull MessageRecord messageRecord);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+
+=======
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
@@ -140,6 +145,7 @@ public interface BindableConversationItem extends Unbindable, GiphyMp4Playable, 
     void goToMediaPreview(ConversationItem parent, View sharedElement, MediaIntentFactory.MediaPreviewArgs args);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     void onEditedIndicatorClicked(@NonNull ConversationMessage conversationMessage);
     void onShowGroupDescriptionClicked(@NonNull String groupName, @NonNull String description, boolean shouldLinkifyWebLinks);
     void onJoinCallLink(@NonNull CallLinkRootKey callLinkRootKey);
@@ -148,6 +154,10 @@ public interface BindableConversationItem extends Unbindable, GiphyMp4Playable, 
     void onMessageRequestAcceptOptionsClicked();
     void onItemDoubleClick(MultiselectPart multiselectPart);
     void onPaymentTombstoneClicked();
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    void onEditedIndicatorClicked(@NonNull MessageRecord messageRecord);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     void onEditedIndicatorClicked(@NonNull MessageRecord messageRecord);

@@ -30,8 +30,13 @@ import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.animation.AnimationCompleteListener;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode;
 import org.thoughtcrime.securesms.conversation.v2.computed.FormattedDate;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode;
@@ -332,6 +337,7 @@ public class ConversationItemFooter extends ConstraintLayout {
     } else {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       long timestamp = messageRecord.getTimestamp();
       FormattedDate date = DateUtils.getDatelessRelativeTimeSpanFormattedDate(getContext(), locale, timestamp);
       String dateLabel = date.getValue();
@@ -345,6 +351,15 @@ public class ConversationItemFooter extends ConstraintLayout {
         }
       }
       dateView.setText(dateLabel);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      dateView.setText(DateUtils.getSimpleRelativeTimeSpanString(getContext(), locale, messageRecord.getTimestamp()));
+=======
+      String date = DateUtils.getSimpleRelativeTimeSpanString(getContext(), locale, messageRecord.getTimestamp());
+      if (displayMode != ConversationItemDisplayMode.DETAILED && messageRecord instanceof MediaMmsMessageRecord && ((MediaMmsMessageRecord) messageRecord).isEditMessage()) {
+        date = getContext().getString(R.string.ConversationItem_edited_timestamp_footer, date);
+      }
+      dateView.setText(date);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       dateView.setText(DateUtils.getSimpleRelativeTimeSpanString(getContext(), locale, messageRecord.getTimestamp()));
 =======
@@ -408,8 +423,21 @@ public class ConversationItemFooter extends ConstraintLayout {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           SignalDatabase.messages().markExpireStarted(id, now);
           AppDependencies.getExpiringMessageManager().scheduleDeletion(id, mms, now, messageRecord.getExpiresIn());
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          if (mms) {
+            SignalDatabase.messages().markExpireStarted(id);
+          } else {
+            SignalDatabase.messages().markExpireStarted(id);
+          }
+
+          expirationManager.scheduleDeletion(id, mms, messageRecord.getExpiresIn());
+=======
+          SignalDatabase.messages().markExpireStarted(id, now);
+          ApplicationDependencies.getExpiringMessageManager().scheduleDeletion(id, mms, now, messageRecord.getExpiresIn());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           if (mms) {
             SignalDatabase.messages().markExpireStarted(id);
@@ -494,7 +522,13 @@ public class ConversationItemFooter extends ConstraintLayout {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (messageRecord.isViewed() || (messageRecord.isOutgoing() && Objects.equals(messageRecord.getToRecipient(), Recipient.self()))) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        if (messageRecord.getViewedReceiptCount() > 0 || (messageRecord.isOutgoing() && Objects.equals(messageRecord.getRecipient(), Recipient.self()))) {
+=======
+        if (messageRecord.getViewedReceiptCount() > 0 || (messageRecord.isOutgoing() && Objects.equals(messageRecord.getToRecipient(), Recipient.self()))) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         if (messageRecord.getViewedReceiptCount() > 0 || (messageRecord.isOutgoing() && Objects.equals(messageRecord.getRecipient(), Recipient.self()))) {
 =======

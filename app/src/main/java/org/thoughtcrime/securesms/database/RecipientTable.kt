@@ -36,7 +36,12 @@ import org.signal.core.util.requireString
 import org.signal.core.util.select
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.signal.core.util.toInt
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import org.signal.core.util.toSingleLine
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.signal.core.util.toSingleLine
 =======
@@ -1220,10 +1225,16 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
         )
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         """,
         RecipientType.INDIVIDUAL.id,
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         """.toSingleLine(),
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        """.toSingleLine(),
+=======
+        """,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         """.toSingleLine(),
 =======
@@ -3562,10 +3573,16 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
         )
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       """
     val args = SqlUtil.buildArgs(0, query, query, query, query)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       """.trimIndent()
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.trimIndent()
+=======
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       """.trimIndent()
 =======
@@ -4668,8 +4685,14 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
         )
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       """
       val E164_SEARCH = "(($PHONE_NUMBER_SHARING != ${PhoneNumberSharingState.DISABLED.id} OR $SYSTEM_CONTACT_URI NOT NULL) AND $E164 GLOB ?)"
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.toSingleLine()
+=======
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       """.toSingleLine()
 =======

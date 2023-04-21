@@ -100,10 +100,16 @@ public final class ThreadBodyUtil {
     if (messageRecord.isOutgoing()) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       return context.getString(R.string.ThreadRecord__you_donated_for_s, messageRecord.getToRecipient().getShortDisplayName(context));
     } else if (messageRecord.isViewed()) {
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       return context.getString(R.string.ThreadRecord__you_donated_for_s, messageRecord.getRecipient().getShortDisplayName(context));
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      return context.getString(R.string.ThreadRecord__you_donated_for_s, messageRecord.getRecipient().getShortDisplayName(context));
+=======
+      return context.getString(R.string.ThreadRecord__you_donated_for_s, messageRecord.getToRecipient().getShortDisplayName(context));
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       return context.getString(R.string.ThreadRecord__you_donated_for_s, messageRecord.getRecipient().getShortDisplayName(context));
 =======

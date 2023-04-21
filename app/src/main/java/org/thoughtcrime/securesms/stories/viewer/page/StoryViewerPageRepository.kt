@@ -85,10 +85,16 @@ open class StoryViewerPageRepository(context: Context, private val storyViewStat
           group = if (recipient.isGroup) recipient else null,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           distributionList = if (record.toRecipient.isDistributionList) record.toRecipient else null,
           viewCount = viewedCount,
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           distributionList = if (record.recipient.isDistributionList) record.recipient else null,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          distributionList = if (record.recipient.isDistributionList) record.recipient else null,
+=======
+          distributionList = if (record.toRecipient.isDistributionList) record.toRecipient else null,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           distributionList = if (record.recipient.isDistributionList) record.recipient else null,
 =======

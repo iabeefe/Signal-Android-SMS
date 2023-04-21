@@ -218,11 +218,17 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
         )
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       """
 
       val CREATE_INDEXES = arrayOf(
         "CREATE INDEX IF NOT EXISTS group_membership_recipient_id ON $TABLE_NAME ($RECIPIENT_ID)"
       )
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.toSingleLine()
+=======
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       """.toSingleLine()
 =======
@@ -407,9 +413,15 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       ORDER BY $TITLE COLLATE NOCASE ASC
 <<<<<<< HEAD
+<<<<<<< HEAD
     """.trimIndent()
 =======
       ORDER BY $TITLE COLLATE NOCASE ASC
+    """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    """.trimIndent()
+=======
     """
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -534,9 +546,15 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       ORDER BY ${ThreadTable.TABLE_NAME}.${ThreadTable.DATE} DESC
 <<<<<<< HEAD
+<<<<<<< HEAD
     """.toSingleLine()
 =======
       ORDER BY ${ThreadTable.TABLE_NAME}.${ThreadTable.DATE} DESC
+    """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    """.toSingleLine()
+=======
     """
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)

@@ -248,6 +248,7 @@ public class ConversationListFragment extends MainFragment implements ActionMode
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private ActionMode                             actionMode;
   private View                                   coordinator;
   private RecyclerView                           list;
@@ -258,6 +259,30 @@ public class ConversationListFragment extends MainFragment implements ActionMode
   private AppBarLayout                           pullViewAppBarLayout;
   private ConversationListViewModel              viewModel;
   private RecyclerView.Adapter                   activeAdapter;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private ActionMode                     actionMode;
+  private View                           coordinator;
+  private RecyclerView                   list;
+  private Stub<ReminderView>             reminderView;
+  private Stub<UnreadPaymentsView>       paymentNotificationView;
+  private PulsingFloatingActionButton    fab;
+  private PulsingFloatingActionButton    cameraFab;
+  private ConversationListFilterPullView pullView;
+  private AppBarLayout                   pullViewAppBarLayout;
+  private ConversationListViewModel      viewModel;
+  private RecyclerView.Adapter           activeAdapter;
+=======
+  private ActionMode                             actionMode;
+  private View                                   coordinator;
+  private RecyclerView                           list;
+  private Stub<ReminderView>                     reminderView;
+  private PulsingFloatingActionButton            fab;
+  private PulsingFloatingActionButton            cameraFab;
+  private ConversationListFilterPullView         pullView;
+  private AppBarLayout                           pullViewAppBarLayout;
+  private ConversationListViewModel              viewModel;
+  private RecyclerView.Adapter                   activeAdapter;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private ActionMode                     actionMode;
   private View                           coordinator;
@@ -358,12 +383,19 @@ public class ConversationListFragment extends MainFragment implements ActionMode
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     getViewLifecycleOwner().getLifecycle().addObserver(new InAppPaymentsBottomSheetDelegate(getParentFragmentManager(), getViewLifecycleOwner()));
     BackupAlertDelegate.delegate(getParentFragmentManager(), getViewLifecycleOwner().getLifecycle());
 
     lifecycleDisposable = new LifecycleDisposable();
     lifecycleDisposable.bindTo(getViewLifecycleOwner());
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    lifecycleDisposable = new LifecycleDisposable();
+    lifecycleDisposable.bindTo(getViewLifecycleOwner());
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     lifecycleDisposable = new LifecycleDisposable();

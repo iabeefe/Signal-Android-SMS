@@ -89,12 +89,27 @@ public class AudioRecorder {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         recordingUriFuture = BlobProvider.getInstance()
                                        .forData(new ParcelFileDescriptor.AutoCloseInputStream(fds[0]), 0)
                                        .withMimeType(MediaUtil.AUDIO_AAC)
                                        .createForDraftAttachmentAsync(context);
 
         recorder = useMediaRecorderWrapper ? new MediaRecorderWrapper() : new AudioCodec();
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        captureUri = BlobProvider.getInstance()
+                                 .forData(new ParcelFileDescriptor.AutoCloseInputStream(fds[0]), 0)
+                                 .withMimeType(MediaUtil.AUDIO_AAC)
+                                 .createForDraftAttachmentAsync(context, () -> Log.i(TAG, "Write successful."), e -> Log.w(TAG, "Error during recording", e));
+        recorder   = Build.VERSION.SDK_INT >= 26 ? new MediaRecorderWrapper() : new AudioCodec();
+=======
+        recordingUriFuture = BlobProvider.getInstance()
+                                       .forData(new ParcelFileDescriptor.AutoCloseInputStream(fds[0]), 0)
+                                       .withMimeType(MediaUtil.AUDIO_AAC)
+                                       .createForDraftAttachmentAsync(context);
+
+        recorder = Build.VERSION.SDK_INT >= 26 ? new MediaRecorderWrapper() : new AudioCodec();
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         captureUri = BlobProvider.getInstance()
                                  .forData(new ParcelFileDescriptor.AutoCloseInputStream(fds[0]), 0)

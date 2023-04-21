@@ -253,6 +253,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- CallInfoView -->
     <!-- Unknown people row text when the only people in the call are unknowns -->
     <plurals name="CallInfoView__d_people">
@@ -275,6 +276,13 @@
     <!-- Toasted when user device does not support video recording -->
     <string name="CameraFragment__video_recording_is_not_supported_on_your_device">Videoinspelning stöds inte på din enhet</string>
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- CameraFragment -->
+    <!-- Toasted when user device does not support video recording -->
+    <string name="CameraFragment__video_recording_is_not_supported_on_your_device">Video recording is not supported on your device</string>
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- CameraFragment -->
@@ -454,6 +462,7 @@
     <string name="ConversationItem_cant_download_video_you_will_need_to_send_it_again">Det går inte att ladda ner videon. Du behöver skicka den igen.</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp represents a message that has been edited within the last minute. -->
     <string name="ConversationItem_edited_now_timestamp_footer">Redigerad nu</string>
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. This is displayed when the edit has occurred between 1-59 minutes ago. -->
@@ -472,14 +481,25 @@
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp will go from \'11m\' to \'edited 11m\' -->
     <string name="ConversationItem_edited_timestamp_footer">edited %1$s</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp will go from \'11m\' to \'edited 11m\' -->
+    <string name="ConversationItem_edited_timestamp_footer">edited %1$s</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- ConversationActivity -->
     <string name="ConversationActivity_add_attachment">Lägg till bilaga</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Accessibility text associated with image button to send an edited message. -->
     <string name="ConversationActivity_send_edit">Skicka redigerad</string>
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Accessibility text associated with image button to send an edited message. -->
+    <string name="ConversationActivity_send_edit">Send edit</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Accessibility text associated with image button to send an edited message. -->
@@ -510,8 +530,19 @@
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ConversationActivity__tap_here_to_start_a_group_call">Tryck här för att starta ett gruppsamtal</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <string name="ConversationActivity__tap_here_to_start_a_group_call">Tryck här för att starta ett gruppsamtal</string>
+    <!-- Warning toast shown to user if they somehow try to edit an sms/mms message -->
+    <string name="ConversationActivity_edit_sms_message_error">Unable to edit SMS messages</string>
+    <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
+    <plurals name="ConversationActivity_edit_message_too_old">
+        <item quantity="one">Edits can only be applied within %1$d hour from the time you sent this message.</item>
+        <item quantity="other">Edits can only be applied within %1$d hours from the time you sent this message.</item>
+    </plurals>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
     <!-- Warning toast shown to user if they somehow try to edit an sms/mms message -->
     <string name="ConversationActivity_edit_sms_message_error">Unable to edit SMS messages</string>
     <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
@@ -1578,10 +1609,16 @@
     <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
     <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">Sms-meddelanden stöds inte längre i Signal.</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">Tryck och håll in för att spela in ett röstmeddelande, släpp för att skicka</string>
     <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
     <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">Sms-meddelanden stöds inte längre i Signal.</string>
+    <!-- When editing a message, label shown above the text input field in the composer -->
+    <string name="InputPanel_edit_message">Edit message</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
     <!-- When editing a message, label shown above the text input field in the composer -->
     <string name="InputPanel_edit_message">Edit message</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -2613,6 +2650,7 @@
     </string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
     <string name="RegistrationActivity_phone_number_verification_dialog_title">Är telefonnumret nedan korrekt?</string>
@@ -2620,6 +2658,17 @@
     <string name="RegistrationActivity_additional_verification_required">Ytterligare verifiering krävs</string>
     <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
     <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">En verifieringskod skickas till detta nummer. Operatörsavgifter kan tillkomma.</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to">En verifieringskod skickas till:</string>
+=======
+
+    <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
+    <string name="RegistrationActivity_phone_number_verification_dialog_title">Is the phone number below correct?</string>
+    <!-- Dialog title shown when re-registering and skip sms flow failed or was aborted and now need perform additional verification via sms and warn about carrier charges -->
+    <string name="RegistrationActivity_additional_verification_required">Additional verification required</string>
+    <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">A verification code will be sent to this number. Carrier rates may apply.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="RegistrationActivity_a_verification_code_will_be_sent_to">En verifieringskod skickas till:</string>
 =======
@@ -2720,6 +2769,7 @@
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Ta med dig integritet.\nVar dig själv i varje meddelande.</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Title of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_phone_number">Telefonnummer</string>
     <!-- Subtitle of registration screen when asking for the users phone number -->
@@ -2754,6 +2804,15 @@
 =======
     <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Ange ditt telefonnummer för att komma igång.</string>
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_enter_your_phone_number">Ange ditt telefonnummer</string>
+    <string name="RegistrationActivity_you_will_receive_a_verification_code">Du kommer att få en verifieringskod. Din operatör kan ta betalt för det.</string>
+=======
+    <!-- Title of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_phone_number">Phone number</string>
+    <!-- Subtitle of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Enter your phone number to get started.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="RegistrationActivity_enter_the_code_we_sent_to_s">Ange koden vi skickade till %1$s</string>
 
     <string name="RegistrationActivity_phone_number_description">Telefonnummer</string>
@@ -2943,8 +3002,14 @@
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
     <!-- Thread preview for a recipient that has been hidden -->
+<<<<<<< HEAD
     <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
+=======
+    <string name="ThreadRecord_hidden_recipient">Du har gömt den här personen. Meddela hen igen för att lägga tillbaka personen till din lista.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ThreadRecord_photo">Foto</string>
     <string name="ThreadRecord_gif">GIF</string>
     <string name="ThreadRecord_voice_message">Röstmeddelande</string>
@@ -3826,8 +3891,14 @@
     <string name="message_details_recipient__new_safety_number">Nytt säkerhetsnummer</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
     <string name="MessageDetails__view_edit_history">Visa redigeringshistorik</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
+    <string name="MessageDetails__view_edit_history">View edit history</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
@@ -4152,12 +4223,22 @@
     <string name="preferences_enter_proxy_address">Ange proxyadress</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Preference title for changing navigation (bottom) bar size -->
     <string name="preferences_navigation_bar_size">Storlek på navigeringsfältet</string>
     <!-- Preference summary for normal navigation bar size -->
     <string name="preferences_normal">Normal</string>
     <!-- Preference summary for compact navigation bar size -->
     <string name="preferences_compact">Kompakt</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Preference title for changing navigation (bottom) bar size -->
+    <string name="preferences_navigation_bar_size">Navigation bar size</string>
+    <!-- Preference summary for normal navigation bar size -->
+    <string name="preferences_normal">Normal</string>
+    <!-- Preference summary for compact navigation bar size -->
+    <string name="preferences_compact">Compact</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Preference title for changing navigation (bottom) bar size -->
@@ -4469,6 +4550,7 @@
     <string name="conversation_selection__menu_reply">Svara</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
     <string name="conversation_selection__menu_edit">Redigera</string>
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -4493,6 +4575,11 @@
 =======
     <string name="conversation_selection__menu_edit">Ändra</string>
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
+    <string name="conversation_selection__menu_edit">Edit</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Button to save a message attachment (image, file etc.); Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
     <string name="conversation_selection__menu_save">Spara</string>
     <!-- Button to retry sending a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
@@ -5718,7 +5805,7 @@
     <string name="ExportAccountDataFragment__report_download_failed">Din rapport kunde inte laddas ner på grund av ett nätverksfel. Kontrollera din anslutning och försök igen.</string>
 =======
     <!-- Title of dialog shown when report fails to generate -->
-    <string name="ExportAccountDataFragment__report_generation_failed">Kunde inte generera rapport</string>
+    <string name="ExportAccountDataFragment__report_generation_failed">Det gick inte att generera rapport</string>
     <!-- Message of dialog shown when report fails to generate asking user to check network connection -->
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__check_network">Check your connection and try again.</string>
@@ -8746,7 +8833,7 @@
     <!-- Button text to dismiss the sheet and add it as an upcoming call -->
     <string name="CreateCallLinkBottomSheetDialogFragment__done">Klar</string>
     <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Det gick inte att öppna delningsbladet.</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Unable to share call link.</string>
     <!-- Displayed when we copy the call link to the clipboard -->
     <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">Kopierad till urklipp</string>
 
@@ -8758,6 +8845,21 @@
     <!-- Placeholder text on input field when editing call name -->
     <string name="EditCallLinkNameDialogFragment__call_name">Samtalsnamn</string>
 
+<<<<<<< HEAD
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- ChooseNavigationBarStyleFragment -->
+    <!-- Dialog title, displayed below the header image -->
+    <string name="ChooseNavigationBarStyleFragment__navigation_bar_size">Navigation bar size</string>
+    <!-- Toggle button label for normal size -->
+    <string name="ChooseNavigationBarStyleFragment__normal">Normal</string>
+    <!-- Toggle button label for compact size -->
+    <string name="ChooseNavigationBarStyleFragment__compact">Compact</string>
+
+    <!-- Title shown at top of bottom sheet dialog for displaying a message\'s edit history -->
+    <string name="EditMessageHistoryDialog_title">Edit history</string>
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- EOF -->
 </resources>

@@ -108,9 +108,15 @@ public abstract class MessageRecord extends DisplayRecord {
   private final long                     receiptTimestamp;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private final MessageId                originalMessageId;
   private final int                      revisionNumber;
   private final MessageExtras            messageExtras;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  private final MessageId                originalMessageId;
+  private final int                      revisionNumber;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
   private final MessageId                originalMessageId;
@@ -129,6 +135,7 @@ public abstract class MessageRecord extends DisplayRecord {
                 int deliveryStatus, boolean hasDeliveryReceipt, long type,
                 Set<IdentityKeyMismatch> mismatches,
                 Set<NetworkFailure> networkFailures,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
                 int subscriptionId,
@@ -183,7 +190,27 @@ public abstract class MessageRecord extends DisplayRecord {
                 @Nullable MessageId originalMessageId,
                 int revisionNumber)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                int subscriptionId, long expiresIn, long expireStarted,
+                int readReceiptCount, boolean unidentified,
+                @NonNull List<ReactionRecord> reactions, boolean remoteDelete, long notifiedTimestamp,
+                int viewedReceiptCount, long receiptTimestamp)
+=======
+                int subscriptionId,
+                long expiresIn,
+                long expireStarted,
+                int readReceiptCount,
+                boolean unidentified,
+                @NonNull List<ReactionRecord> reactions,
+                boolean remoteDelete,
+                long notifiedTimestamp,
+                int viewedReceiptCount,
+                long receiptTimestamp,
+                @Nullable MessageId originalMessageId,
+                int revisionNumber)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     super(body, fromRecipient, toRecipient, dateSent, dateReceived,
@@ -191,6 +218,11 @@ public abstract class MessageRecord extends DisplayRecord {
           hasReadReceipt, viewed);
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     super(body, conversationRecipient, dateSent, dateReceived,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    super(body, conversationRecipient, dateSent, dateReceived,
+=======
+    super(body, fromRecipient, toRecipient, dateSent, dateReceived,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     super(body, conversationRecipient, dateSent, dateReceived,
 =======
@@ -219,9 +251,15 @@ public abstract class MessageRecord extends DisplayRecord {
     this.receiptTimestamp    = receiptTimestamp;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     this.originalMessageId   = originalMessageId;
     this.revisionNumber      = revisionNumber;
     this.messageExtras       = messageExtras;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    this.originalMessageId   = originalMessageId;
+    this.revisionNumber      = revisionNumber;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     this.originalMessageId   = originalMessageId;
@@ -308,8 +346,16 @@ public abstract class MessageRecord extends DisplayRecord {
     } else if (isIdentityVerified()) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (isOutgoing()) return fromRecipient(getToRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_verified, r.getDisplayName(context)), R.drawable.ic_safety_number_16);
       else              return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_verified_from_another_device, r.getDisplayName(context)), R.drawable.ic_safety_number_16);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (isOutgoing()) return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_verified, r.getDisplayName(context)), R.drawable.ic_update_verified_16);
+      else              return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_verified_from_another_device, r.getDisplayName(context)), R.drawable.ic_update_verified_16);
+=======
+      if (isOutgoing()) return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_verified, r.getDisplayName(context)), R.drawable.ic_update_verified_16);
+      else              return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_verified_from_another_device, r.getDisplayName(context)), R.drawable.ic_update_verified_16);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       if (isOutgoing()) return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_verified, r.getDisplayName(context)), R.drawable.ic_update_verified_16);
       else              return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_verified_from_another_device, r.getDisplayName(context)), R.drawable.ic_update_verified_16);
@@ -327,8 +373,16 @@ public abstract class MessageRecord extends DisplayRecord {
     } else if (isIdentityDefault()) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (isOutgoing()) return fromRecipient(getToRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_unverified, r.getDisplayName(context)), R.drawable.ic_update_info_16);
       else              return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_unverified_from_another_device, r.getDisplayName(context)), R.drawable.ic_update_info_16);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (isOutgoing()) return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_unverified, r.getDisplayName(context)), R.drawable.ic_update_info_16);
+      else              return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_unverified_from_another_device, r.getDisplayName(context)), R.drawable.ic_update_info_16);
+=======
+      if (isOutgoing()) return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_unverified, r.getDisplayName(context)), R.drawable.ic_update_info_16);
+      else              return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_unverified_from_another_device, r.getDisplayName(context)), R.drawable.ic_update_info_16);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       if (isOutgoing()) return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_unverified, r.getDisplayName(context)), R.drawable.ic_update_info_16);
       else              return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_you_marked_your_safety_number_with_s_unverified_from_another_device, r.getDisplayName(context)), R.drawable.ic_update_info_16);
@@ -348,10 +402,16 @@ public abstract class MessageRecord extends DisplayRecord {
     } else if (isChangeNumber()) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_s_changed_their_phone_number, r.getDisplayName(context)), R.drawable.ic_phone_16);
     } else if (isReleaseChannelDonationRequest()) {
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_s_changed_their_phone_number, r.getDisplayName(context)), R.drawable.ic_phone_16);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_s_changed_their_phone_number, r.getDisplayName(context)), R.drawable.ic_phone_16);
+=======
+      return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_s_changed_their_phone_number, r.getDisplayName(context)), R.drawable.ic_phone_16);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_s_changed_their_phone_number, r.getDisplayName(context)), R.drawable.ic_phone_16);
 =======
@@ -382,6 +442,7 @@ public abstract class MessageRecord extends DisplayRecord {
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         if (event.getPreviousE164().isEmpty()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
           return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_your_message_history_with_s_and_another_chat_has_been_merged, r.getDisplayName(context)), R.drawable.ic_thread_merge_16);
 =======
         if (event.getPreviousE164().isEmpty()) {
@@ -392,10 +453,21 @@ public abstract class MessageRecord extends DisplayRecord {
 =======
           return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_your_message_history_with_s_and_another_chat_has_been_merged, r.getDisplayName(context)), R.drawable.ic_thread_merge_16);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_your_message_history_with_s_and_another_chat_has_been_merged, r.getDisplayName(context)), R.drawable.ic_thread_merge_16);
+=======
+          return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_your_message_history_with_s_and_another_chat_has_been_merged, r.getDisplayName(context)), R.drawable.ic_thread_merge_16);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         } else {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged, r.getDisplayName(context), PhoneNumberFormatter.prettyPrint(event.previousE164)), R.drawable.ic_thread_merge_16);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged, r.getDisplayName(context), PhoneNumberFormatter.prettyPrint(event.getPreviousE164())), R.drawable.ic_thread_merge_16);
+=======
+          return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged, r.getDisplayName(context), PhoneNumberFormatter.prettyPrint(event.getPreviousE164())), R.drawable.ic_thread_merge_16);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged, r.getDisplayName(context), PhoneNumberFormatter.prettyPrint(event.getPreviousE164())), R.drawable.ic_thread_merge_16);
 =======
@@ -420,6 +492,7 @@ public abstract class MessageRecord extends DisplayRecord {
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         if (event.getE164().isEmpty()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
           return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_your_safety_number_with_s_has_changed, r.getDisplayName(context)), R.drawable.ic_update_safety_number_16);
 =======
         if (event.getE164().isEmpty()) {
@@ -430,10 +503,21 @@ public abstract class MessageRecord extends DisplayRecord {
 =======
           return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_your_safety_number_with_s_has_changed, r.getDisplayName(context)), R.drawable.ic_update_safety_number_16);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_your_safety_number_with_s_has_changed, r.getDisplayName(context)), R.drawable.ic_update_safety_number_16);
+=======
+          return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_your_safety_number_with_s_has_changed, r.getDisplayName(context)), R.drawable.ic_update_safety_number_16);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         } else {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_s_belongs_to_s, PhoneNumberFormatter.prettyPrint(event.e164), r.getDisplayName(context)), R.drawable.ic_update_info_16);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_s_belongs_to_s, PhoneNumberFormatter.prettyPrint(r.requireE164()), r.getDisplayName(context)), R.drawable.ic_update_info_16);
+=======
+          return fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_s_belongs_to_s, PhoneNumberFormatter.prettyPrint(r.requireE164()), r.getDisplayName(context)), R.drawable.ic_update_info_16);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           return fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_s_belongs_to_s, PhoneNumberFormatter.prettyPrint(r.requireE164()), r.getDisplayName(context)), R.drawable.ic_update_info_16);
 =======
@@ -469,6 +553,7 @@ public abstract class MessageRecord extends DisplayRecord {
       //                                                                                    R.string.MessageRecord__you_can_no_longer_send_sms_messages_in_signal;
       int messageResource = R.string.MessageRecord__you_will_no_longer_be_able_to_send_sms_messages_from_signal_soon;
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     } else if (isSmsExportType()) {
@@ -501,7 +586,13 @@ public abstract class MessageRecord extends DisplayRecord {
 =======
       return fromRecipient(getFromRecipient(), r -> context.getString(messageResource, r.getDisplayName(context)), R.drawable.ic_update_info_16);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      return fromRecipient(getIndividualRecipient(), r -> context.getString(messageResource, r.getDisplayName(context)), R.drawable.ic_update_info_16);
+=======
+      return fromRecipient(getFromRecipient(), r -> context.getString(messageResource, r.getDisplayName(context)), R.drawable.ic_update_info_16);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     } else if (isPaymentsRequestToActivate()) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       return isOutgoing() ? fromRecipient(getToRecipient(), r -> context.getString(R.string.MessageRecord_you_sent_request, r.getShortDisplayName(context)), R.drawable.ic_card_activate_payments)
@@ -520,8 +611,16 @@ public abstract class MessageRecord extends DisplayRecord {
       return isOutgoing() ? fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_you_sent_request, r.getShortDisplayName(context)), R.drawable.ic_card_activate_payments)
                           : fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_wants_you_to_activate_payments, r.getShortDisplayName(context)), R.drawable.ic_card_activate_payments);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      return isOutgoing() ? fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_you_sent_request, r.getShortDisplayName(context)), R.drawable.ic_card_activate_payments)
+                          : fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_wants_you_to_activate_payments, r.getShortDisplayName(context)), R.drawable.ic_card_activate_payments);
+=======
+      return isOutgoing() ? fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_you_sent_request, r.getShortDisplayName(context)), R.drawable.ic_card_activate_payments)
+                          : fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_wants_you_to_activate_payments, r.getShortDisplayName(context)), R.drawable.ic_card_activate_payments);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
    } else if (isPaymentsActivated()) {
       return isOutgoing() ? staticUpdateDescription(context.getString(R.string.MessageRecord_you_activated_payments), R.drawable.ic_card_activate_payments)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
                           : fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_can_accept_payments, r.getShortDisplayName(context)), R.drawable.ic_card_activate_payments);
@@ -529,6 +628,11 @@ public abstract class MessageRecord extends DisplayRecord {
       return staticUpdateDescription(context.getString(R.string.MessageRecord_reported_as_spam), R.drawable.symbol_spam_16);
     } else if (isMessageRequestAccepted()) {
       return staticUpdateDescription(context.getString(R.string.MessageRecord_you_accepted_the_message_request), R.drawable.symbol_thread_16);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                          : fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_can_accept_payments, r.getShortDisplayName(context)), R.drawable.ic_card_activate_payments);
+=======
+                          : fromRecipient(getFromRecipient(), r -> context.getString(R.string.MessageRecord_can_accept_payments, r.getShortDisplayName(context)), R.drawable.ic_card_activate_payments);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                           : fromRecipient(getIndividualRecipient(), r -> context.getString(R.string.MessageRecord_can_accept_payments, r.getShortDisplayName(context)), R.drawable.ic_card_activate_payments);
 =======
@@ -749,6 +853,7 @@ public abstract class MessageRecord extends DisplayRecord {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (profileChangeDetails != null) {
       if (profileChangeDetails.profileNameChange != null) {
         String displayName  = getFromRecipient().getDisplayName(context);
@@ -780,6 +885,11 @@ public abstract class MessageRecord extends DisplayRecord {
     }
 
     return staticUpdateDescription(context.getString(R.string.MessageRecord_changed_their_profile, getFromRecipient().getDisplayName(context)), R.drawable.ic_update_profile_16);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    return context.getString(R.string.MessageRecord_changed_their_profile, getIndividualRecipient().getDisplayName(context));
+=======
+    return context.getString(R.string.MessageRecord_changed_their_profile, getFromRecipient().getDisplayName(context));
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     return context.getString(R.string.MessageRecord_changed_their_profile, getIndividualRecipient().getDisplayName(context));
 =======
@@ -1116,6 +1226,7 @@ public abstract class MessageRecord extends DisplayRecord {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   public boolean isEditMessage() {
     return originalMessageId != null;
   }
@@ -1142,6 +1253,21 @@ public abstract class MessageRecord extends DisplayRecord {
     return false;
   }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  public boolean isEditMessage() {
+    return originalMessageId != null;
+  }
+
+  public @Nullable MessageId getOriginalMessageId() {
+    return originalMessageId;
+  }
+
+  public int getRevisionNumber() {
+    return revisionNumber;
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
   public boolean isEditMessage() {

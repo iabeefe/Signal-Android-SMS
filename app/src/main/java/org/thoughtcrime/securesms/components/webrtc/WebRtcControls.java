@@ -188,6 +188,7 @@ public final class WebRtcControls {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || enableHeadsetInAudioToggle());
 =======
   boolean displayAudioToggle() {
@@ -229,6 +230,11 @@ public final class WebRtcControls {
 =======
     return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || isBluetoothHeadsetAvailableForAudioToggle());
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || isBluetoothHeadsetAvailableForAudioToggle());
+=======
+    return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || isBluetoothHeadsetAvailableForAudioToggle() || isWiredHeadsetAvailableForAudioToggle());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   public boolean displayCameraToggle() {
@@ -341,6 +347,10 @@ public final class WebRtcControls {
 =======
   boolean isBluetoothHeadsetAvailableForAudioToggle() {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+    return availableDevices.contains(SignalAudioManager.AudioDevice.BLUETOOTH);
+  }
+
+  boolean isWiredHeadsetAvailableForAudioToggle() {
     return availableDevices.contains(SignalAudioManager.AudioDevice.BLUETOOTH);
   }
 

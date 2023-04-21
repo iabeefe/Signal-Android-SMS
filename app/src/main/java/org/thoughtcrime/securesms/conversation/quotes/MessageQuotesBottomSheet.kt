@@ -22,8 +22,13 @@ import org.thoughtcrime.securesms.conversation.ConversationAdapterBridge
 import org.thoughtcrime.securesms.conversation.ConversationBottomSheetCallback
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode
 import org.thoughtcrime.securesms.conversation.ConversationMessage
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode
@@ -90,9 +95,15 @@ class MessageQuotesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment() {
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, GlideApp.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient, colorizer).apply {
 <<<<<<< HEAD
+<<<<<<< HEAD
       setCondensedMode(true)
 =======
     messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, GlideApp.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient, colorizer).apply {
+      setCondensedMode(ConversationItemDisplayMode.CONDENSED)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      setCondensedMode(true)
+=======
       setCondensedMode(ConversationItemDisplayMode.CONDENSED)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -279,6 +290,7 @@ class MessageQuotesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment() {
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     override fun onEditedIndicatorClicked(conversationMessage: ConversationMessage) {
       dismiss()
@@ -289,6 +301,14 @@ class MessageQuotesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment() {
     override fun onReportSpamLearnMoreClicked() = Unit
     override fun onMessageRequestAcceptOptionsClicked() = Unit
     override fun onItemDoubleClick(item: MultiselectPart) = Unit
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+
+    override fun onEditedIndicatorClicked(messageRecord: MessageRecord) {
+      dismiss()
+      getAdapterListener().onEditedIndicatorClicked(messageRecord)
+    }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 

@@ -775,6 +775,7 @@ public final class GroupSendUtil {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       return messageSender.sendGroupDataMessage(distributionId, targets, access, groupSendEndorsements, isRecipientUpdate, contentHint, message, listener, urgent, isForStory, editMessage, partialListener);
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       return messageSender.sendGroupDataMessage(distributionId, targets, access, isRecipientUpdate, contentHint, message, listener, urgent, isForStory);
@@ -801,6 +802,11 @@ public final class GroupSendUtil {
 =======
       return messageSender.sendGroupDataMessage(distributionId, targets, access, isRecipientUpdate, contentHint, message, listener, urgent, isForStory, partialListener);
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      return messageSender.sendGroupDataMessage(distributionId, targets, access, isRecipientUpdate, contentHint, message, listener, urgent, isForStory, partialListener);
+=======
+      return messageSender.sendGroupDataMessage(distributionId, targets, access, isRecipientUpdate, contentHint, message, listener, urgent, isForStory, editMessage, partialListener);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
 
     @Override
@@ -815,6 +821,7 @@ public final class GroupSendUtil {
     {
       // PniSignatures are only needed for 1:1 messages, but some message jobs use the GroupSendUtil methods to send 1:1
       if (targets.size() == 1 && relatedMessageId == null) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         Recipient          targetRecipient    = targetRecipients.get(0);
@@ -832,6 +839,19 @@ public final class GroupSendUtil {
 =======
         Recipient         targetRecipient = targetRecipients.get(0);
         SendMessageResult result;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        Recipient            targetRecipient = targetRecipients.get(0);
+        SendMessageResult    result          = messageSender.sendDataMessage(targets.get(0), access.get(0), contentHint, message, SignalServiceMessageSender.IndividualSendEvents.EMPTY, urgent, targetRecipient.needsPniSignature());
+=======
+        Recipient         targetRecipient = targetRecipients.get(0);
+        SendMessageResult result;
+
+        if (editMessage != null) {
+          result = messageSender.sendEditMessage(targets.get(0), access.get(0), contentHint, message, SignalServiceMessageSender.IndividualSendEvents.EMPTY, urgent, editMessage.getTargetSentTimestamp());
+        } else {
+          result = messageSender.sendDataMessage(targets.get(0), access.get(0), contentHint, message, SignalServiceMessageSender.IndividualSendEvents.EMPTY, urgent, targetRecipient.needsPniSignature());
+        }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
         if (editMessage != null) {
           result = messageSender.sendEditMessage(targets.get(0), access.get(0), contentHint, message, SignalServiceMessageSender.IndividualSendEvents.EMPTY, urgent, editMessage.getTargetSentTimestamp());

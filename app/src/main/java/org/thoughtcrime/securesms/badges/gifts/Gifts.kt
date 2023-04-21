@@ -33,10 +33,16 @@ object Gifts {
     return OutgoingMessage(
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       threadRecipient = recipient,
       body = Base64.encodeWithPadding(giftBadge.encode()),
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       recipient = recipient,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      recipient = recipient,
+=======
+      threadRecipient = recipient,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       recipient = recipient,
 =======

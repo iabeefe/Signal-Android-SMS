@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.schedulers.Schedulers
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.signal.core.util.Base64
 import org.signal.core.util.StreamUtil
 import org.signal.core.util.concurrent.MaybeCompat
@@ -20,11 +21,20 @@ import org.signal.core.util.StreamUtil
 =======
 import org.signal.core.util.StreamUtil
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.signal.core.util.StreamUtil
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.signal.core.util.concurrent.SignalExecutors
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.components.location.SignalPlace
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.signal.core.util.logging.Log
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 import org.signal.core.util.logging.Log
@@ -60,8 +70,13 @@ import org.thoughtcrime.securesms.mms.PartAuthority
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+import org.thoughtcrime.securesms.mms.PartAuthority
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
 import org.thoughtcrime.securesms.mms.PartAuthority
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -89,6 +104,7 @@ class DraftRepository(
   private val conversationArguments: ConversationIntents.Args? = null
 ) {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   companion object {
@@ -206,6 +222,13 @@ class DraftRepository(
   }
 
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  companion object {
+    val TAG = Log.tag(DraftRepository::class.java)
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   fun deleteVoiceNoteDraftData(draft: DraftTable.Draft?) {
     if (draft != null) {
       SignalExecutors.BOUNDED.execute {
@@ -230,10 +253,20 @@ class DraftRepository(
 
         draftTable.replaceDrafts(actualThreadId, drafts)
 <<<<<<< HEAD
+<<<<<<< HEAD
         threadTable.updateSnippet(actualThreadId, drafts.getSnippet(context), drafts.getUriSnippet(), System.currentTimeMillis(), MessageTypes.BASE_DRAFT_TYPE, true)
 =======
 
         draftTable.replaceDrafts(actualThreadId, drafts)
+        if (drafts.shouldUpdateSnippet()) {
+          threadTable.updateSnippet(actualThreadId, drafts.getSnippet(context), drafts.getUriSnippet(), System.currentTimeMillis(), MessageTypes.BASE_DRAFT_TYPE, true)
+        } else {
+          threadTable.update(actualThreadId, unarchive = false, allowDeletion = false)
+        }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        threadTable.updateSnippet(actualThreadId, drafts.getSnippet(context), drafts.getUriSnippet(), System.currentTimeMillis(), MessageTypes.BASE_DRAFT_TYPE, true)
+=======
         if (drafts.shouldUpdateSnippet()) {
           threadTable.updateSnippet(actualThreadId, drafts.getSnippet(context), drafts.getUriSnippet(), System.currentTimeMillis(), MessageTypes.BASE_DRAFT_TYPE, true)
         } else {
@@ -308,6 +341,27 @@ class DraftRepository(
       }
     }
     return ConversationMessageFactory.createWithUnresolvedData(context, messageRecord, threadRecipient)
+  }
+
+  fun loadDraftMessageEdit(serialized: String): Maybe<ConversationMessage> {
+    return Maybe.fromCallable {
+      val messageId = MessageId.deserialize(serialized)
+      val messageRecord: MessageRecord = SignalDatabase.messages.getMessageRecordOrNull(messageId.id) ?: return@fromCallable null
+      if (messageRecord.hasTextSlide()) {
+        val textSlide = messageRecord.requireTextSlide()
+        if (textSlide.uri != null) {
+          try {
+            PartAuthority.getAttachmentStream(context, textSlide.uri!!).use { stream ->
+              val body = StreamUtil.readFullyAsString(stream)
+              return@fromCallable ConversationMessageFactory.createWithUnresolvedData(context, messageRecord, body)
+            }
+          } catch (e: IOException) {
+            Log.e(TAG, "Failed to load text slide", e)
+          }
+        }
+      }
+      ConversationMessageFactory.createWithUnresolvedData(context, messageRecord)
+    }
   }
 
   fun loadDraftMessageEdit(serialized: String): Maybe<ConversationMessage> {

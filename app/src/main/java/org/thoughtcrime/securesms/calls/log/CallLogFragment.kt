@@ -24,6 +24,7 @@ import androidx.fragment.app.viewModels
 <<<<<<< HEAD
 import androidx.navigation.fragment.findNavController
 <<<<<<< HEAD
+<<<<<<< HEAD
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
@@ -41,6 +42,10 @@ import androidx.navigation.fragment.findNavController
 <<<<<<< HEAD
 import androidx.recyclerview.widget.LinearLayoutManager
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import androidx.recyclerview.widget.LinearLayoutManager
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import androidx.recyclerview.widget.LinearLayoutManager
 =======
@@ -83,8 +88,13 @@ import org.thoughtcrime.securesms.calls.new.NewCallActivity
 import org.thoughtcrime.securesms.components.Material3SearchToolbar
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.components.ProgressCardDialogFragment
 import org.thoughtcrime.securesms.components.ScrollToPositionDelegate
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.components.ScrollToPositionDelegate
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 import org.thoughtcrime.securesms.components.ScrollToPositionDelegate
@@ -135,6 +145,7 @@ import org.thoughtcrime.securesms.util.CommunicationActions
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.RemoteConfig
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.LifecycleDisposable
@@ -164,6 +175,11 @@ import org.thoughtcrime.securesms.util.LifecycleDisposable
 import org.thoughtcrime.securesms.util.SnapToTopDataObserver
 import org.thoughtcrime.securesms.util.SnapToTopDataObserver.ScrollRequestValidator
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import org.thoughtcrime.securesms.util.SnapToTopDataObserver
+import org.thoughtcrime.securesms.util.SnapToTopDataObserver.ScrollRequestValidator
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.util.ViewUtil
 import org.thoughtcrime.securesms.util.doAfterNextLayout
 import org.thoughtcrime.securesms.util.fragments.requireListener
@@ -177,6 +193,7 @@ import java.util.concurrent.TimeUnit
 @SuppressLint("DiscouragedApi")
 class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Callbacks, CallLogContextMenu.Callbacks {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   companion object {
@@ -195,6 +212,13 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
     private const val LIST_SMOOTH_SCROLL_TO_TOP_THRESHOLD = 25
   }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  companion object {
+    private const val LIST_SMOOTH_SCROLL_TO_TOP_THRESHOLD = 25
+  }
+
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   companion object {
     private const val LIST_SMOOTH_SCROLL_TO_TOP_THRESHOLD = 25
@@ -260,6 +284,7 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
       }
     })
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -348,8 +373,39 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
         binding.recycler.scrollToPosition(0)
       }
     }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    val snapToTopDataObserver = SnapToTopDataObserver(
+      binding.recycler,
+      object : ScrollRequestValidator {
+        override fun isPositionStillValid(position: Int): Boolean {
+          return position < adapter.itemCount && position >= 0
+        }
 
+        override fun isItemAtPositionLoaded(position: Int): Boolean {
+          return adapter.getItem(position) != null
+        }
+      }
+    ) {
+      val layoutManager = binding.recycler.layoutManager as? LinearLayoutManager ?: return@SnapToTopDataObserver
+      if (layoutManager.findFirstVisibleItemPosition() <= LIST_SMOOTH_SCROLL_TO_TOP_THRESHOLD) {
+        binding.recycler.smoothScrollToPosition(0)
+      } else {
+        binding.recycler.scrollToPosition(0)
+      }
+    }
+=======
+    val scrollToPositionDelegate = ScrollToPositionDelegate(
+      recyclerView = binding.recycler,
+      canJumpToPosition = { adapter.isAvailableAround(it) }
+    )
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+
+<<<<<<< HEAD
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    disposables += scrollToPositionDelegate
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     disposables += Flowables.combineLatest(viewModel.data, viewModel.selectedAndStagedDeletion)
 =======
     val snapToTopDataObserver = SnapToTopDataObserver(
@@ -405,12 +461,23 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
       .subscribe { (data, selected) ->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         val filteredCount = callLogAdapter.submitCallRows(
           data,
           selected,
           viewModel.callLogPeekHelper.localDeviceCallRecipientId,
           scrollToPositionDelegate::notifyListCommitted
         )
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        val filteredCount = adapter.submitCallRows(data, selected.first, selected.second)
+=======
+        val filteredCount = adapter.submitCallRows(
+          data,
+          selected.first,
+          selected.second,
+          scrollToPositionDelegate::notifyListCommitted
+        )
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         val filteredCount = adapter.submitCallRows(data, selected.first, selected.second)
 =======
@@ -474,6 +541,7 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     initializePullToFilter(scrollToPositionDelegate)
     initializeTapToScrollToTop(scrollToPositionDelegate)
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
@@ -509,6 +577,13 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
 =======
     initializeTapToScrollToTop(snapToTopDataObserver)
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    initializePullToFilter()
+    initializeTapToScrollToTop(snapToTopDataObserver)
+=======
+    initializePullToFilter(scrollToPositionDelegate)
+    initializeTapToScrollToTop(scrollToPositionDelegate)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     requireActivity().onBackPressedDispatcher.addCallback(
       viewLifecycleOwner,
@@ -570,6 +645,7 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private fun onTimestampTick() {
     callLogAdapter?.onTimestampTick()
   }
@@ -620,6 +696,11 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
 =======
   private fun initializeTapToScrollToTop(snapToTopDataObserver: SnapToTopDataObserver) {
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private fun initializeTapToScrollToTop(snapToTopDataObserver: SnapToTopDataObserver) {
+=======
+  private fun initializeTapToScrollToTop(scrollToPositionDelegate: ScrollToPositionDelegate) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     disposables += tabsViewModel.tabClickEvents
       .filter { it == ConversationListTab.CALLS }
       .subscribeBy(onNext = {
@@ -628,6 +709,7 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         scrollToPositionDelegate.resetScrollPosition()
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
         val layoutManager = binding.recycler.layoutManager as? LinearLayoutManager ?: return@subscribeBy
@@ -669,6 +751,11 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
 =======
         snapToTopDataObserver.requestScrollPosition(0)
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        snapToTopDataObserver.requestScrollPosition(0)
+=======
+        scrollToPositionDelegate.resetScrollPosition()
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       })
   }
 
@@ -718,6 +805,7 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
       when (state) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         FilterPullState.CLOSING -> {
           viewModel.setFilter(CallLogFilter.ALL)
           binding.recycler.doAfterNextLayout {
@@ -725,6 +813,16 @@ class CallLogFragment : Fragment(R.layout.call_log_fragment), CallLogAdapter.Cal
           }
         }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        FilterPullState.CLOSING -> viewModel.setFilter(CallLogFilter.ALL)
+=======
+        FilterPullState.CLOSING -> {
+          viewModel.setFilter(CallLogFilter.ALL)
+          binding.recycler.doAfterNextLayout {
+            scrollToPositionDelegate.resetScrollPosition()
+          }
+        }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         FilterPullState.CLOSING -> viewModel.setFilter(CallLogFilter.ALL)
 =======

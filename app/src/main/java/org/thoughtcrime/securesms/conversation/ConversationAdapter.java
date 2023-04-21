@@ -107,6 +107,7 @@ public class ConversationAdapter
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private String                      searchQuery;
   private ConversationMessage         recordToPulse;
   private View                        typingView;
@@ -119,6 +120,35 @@ public class ConversationAdapter
   private boolean                     isTypingViewEnabled;
   private ConversationItemDisplayMode displayMode;
   private PulseRequest                pulseRequest;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private String              searchQuery;
+  private ConversationMessage recordToPulse;
+  private View                typingView;
+  private View                footerView;
+  private PagingController    pagingController;
+  private boolean             hasWallpaper;
+  private boolean             isMessageRequestAccepted;
+  private ConversationMessage inlineContent;
+  private Colorizer           colorizer;
+  private boolean             isTypingViewEnabled;
+  private boolean             condensedMode;
+  private boolean             scheduledMessagesMode;
+  private PulseRequest        pulseRequest;
+=======
+  private String                      searchQuery;
+  private ConversationMessage         recordToPulse;
+  private View                        typingView;
+  private View                        footerView;
+  private PagingController            pagingController;
+  private boolean                     hasWallpaper;
+  private boolean                     isMessageRequestAccepted;
+  private ConversationMessage         inlineContent;
+  private Colorizer                   colorizer;
+  private boolean                     isTypingViewEnabled;
+  private ConversationItemDisplayMode condensedMode;
+  private boolean                     scheduledMessagesMode;
+  private PulseRequest                pulseRequest;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private String              searchQuery;
   private ConversationMessage recordToPulse;
@@ -313,10 +343,16 @@ public class ConversationAdapter
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   public void setCondensedMode(ConversationItemDisplayMode condensedMode) {
     this.displayMode = condensedMode;
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   public void setCondensedMode(boolean condensedMode) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  public void setCondensedMode(boolean condensedMode) {
+=======
+  public void setCondensedMode(ConversationItemDisplayMode condensedMode) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   public void setCondensedMode(boolean condensedMode) {
 =======
@@ -357,7 +393,13 @@ public class ConversationAdapter
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         ConversationItemDisplayMode itemDisplayMode = displayMode != null ? displayMode : ConversationItemDisplayMode.Standard.INSTANCE;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        ConversationItemDisplayMode displayMode = condensedMode ? ConversationItemDisplayMode.CONDENSED : ConversationItemDisplayMode.STANDARD;
+=======
+        ConversationItemDisplayMode displayMode = condensedMode != null ? condensedMode : ConversationItemDisplayMode.STANDARD;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         ConversationItemDisplayMode displayMode = condensedMode ? ConversationItemDisplayMode.CONDENSED : ConversationItemDisplayMode.STANDARD;
 =======
@@ -381,7 +423,13 @@ public class ConversationAdapter
                                                   conversationMessage == recordToPulse,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                   hasWallpaper && itemDisplayMode.displayWallpaper(),
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                                                  hasWallpaper && !condensedMode,
+=======
+                                                  hasWallpaper && displayMode.displayWallpaper(),
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                                                   hasWallpaper && !condensedMode,
 =======

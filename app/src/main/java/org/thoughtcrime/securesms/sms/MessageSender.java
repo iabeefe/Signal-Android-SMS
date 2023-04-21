@@ -232,6 +232,7 @@ public class MessageSender {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (message.getThreadRecipient().isGroup()) {
         if (message.getAttachments().isEmpty() && message.getLinkPreviews().isEmpty() && message.getSharedContacts().isEmpty()) {
           SignalLocalMetrics.GroupMessageSend.onInsertedIntoDatabase(messageId, metricId);
@@ -240,6 +241,11 @@ public class MessageSender {
         }
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       if (message.getRecipient().isGroup() && message.getAttachments().isEmpty() && message.getLinkPreviews().isEmpty() && message.getSharedContacts().isEmpty()) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (message.getRecipient().isGroup() && message.getAttachments().isEmpty() && message.getLinkPreviews().isEmpty() && message.getSharedContacts().isEmpty()) {
+=======
+      if (message.getThreadRecipient().isGroup() && message.getAttachments().isEmpty() && message.getLinkPreviews().isEmpty() && message.getSharedContacts().isEmpty()) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       if (message.getRecipient().isGroup() && message.getAttachments().isEmpty() && message.getLinkPreviews().isEmpty() && message.getSharedContacts().isEmpty()) {
 =======
@@ -280,6 +286,7 @@ public class MessageSender {
                                                   final MessageTable.InsertListener insertListener)
   {
 <<<<<<< HEAD
+<<<<<<< HEAD
     Log.i(TAG, "Sending media message with pre-uploads to " + message.getRecipient().getId() + ", thread: " + threadId + ", pre-uploads: " +  preUploadResults);
 =======
   public static long sendPushWithPreUploadedMedia(final Context context,
@@ -288,6 +295,11 @@ public class MessageSender {
                                                   final long threadId,
                                                   final MessageTable.InsertListener insertListener)
   {
+    Log.i(TAG, "Sending media message with pre-uploads to " + message.getThreadRecipient().getId() + ", thread: " + threadId + ", pre-uploads: " + preUploadResults);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    Log.i(TAG, "Sending media message with pre-uploads to " + message.getRecipient().getId() + ", thread: " + threadId + ", pre-uploads: " +  preUploadResults);
+=======
     Log.i(TAG, "Sending media message with pre-uploads to " + message.getThreadRecipient().getId() + ", thread: " + threadId + ", pre-uploads: " + preUploadResults);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -304,11 +316,19 @@ public class MessageSender {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       Recipient recipient         = message.getThreadRecipient();
       long      allocatedThreadId = threadTable.getOrCreateValidThreadId(message.getThreadRecipient(), threadId);
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       Recipient recipient         = message.getRecipient();
       long      allocatedThreadId = threadTable.getOrCreateValidThreadId(message.getRecipient(), threadId);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      Recipient recipient         = message.getRecipient();
+      long      allocatedThreadId = threadTable.getOrCreateValidThreadId(message.getRecipient(), threadId);
+=======
+      Recipient recipient         = message.getThreadRecipient();
+      long      allocatedThreadId = threadTable.getOrCreateValidThreadId(message.getThreadRecipient(), threadId);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       Recipient recipient         = message.getRecipient();
       long      allocatedThreadId = threadTable.getOrCreateValidThreadId(message.getRecipient(), threadId);

@@ -14,9 +14,14 @@ import org.thoughtcrime.securesms.database.ThreadTable;
 import org.thoughtcrime.securesms.database.model.GroupRecord;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.database.model.MessageRecord;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 import org.thoughtcrime.securesms.database.model.MessageRecord;
@@ -56,8 +61,13 @@ import java.util.stream.Collectors;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -78,10 +88,16 @@ public class ConversationRepository {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   public ConversationRepository() {
     this.context = AppDependencies.getApplication();
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   ConversationRepository() {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  ConversationRepository() {
+=======
+  public ConversationRepository() {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   ConversationRepository() {
 =======

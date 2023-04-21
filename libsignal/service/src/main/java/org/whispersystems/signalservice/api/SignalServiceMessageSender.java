@@ -546,6 +546,7 @@ public class SignalServiceMessageSender {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   public List<SendMessageResult> sendGroupDataMessage(DistributionId distributionId,
                                                       List<SignalServiceAddress> recipients,
                                                       List<UnidentifiedAccess> unidentifiedAccess,
@@ -621,6 +622,28 @@ public class SignalServiceMessageSender {
                                                       SenderKeyGroupEvents             sendEvents,
                                                       boolean                          urgent,
                                                       boolean                          isForStory,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  public List<SendMessageResult> sendGroupDataMessage(DistributionId                   distributionId,
+                                                      List<SignalServiceAddress>       recipients,
+                                                      List<UnidentifiedAccess>         unidentifiedAccess,
+                                                      boolean                          isRecipientUpdate,
+                                                      ContentHint                      contentHint,
+                                                      SignalServiceDataMessage         message,
+                                                      SenderKeyGroupEvents             sendEvents,
+                                                      boolean                          urgent,
+                                                      boolean                          isForStory,
+=======
+  public List<SendMessageResult> sendGroupDataMessage(DistributionId distributionId,
+                                                      List<SignalServiceAddress> recipients,
+                                                      List<UnidentifiedAccess> unidentifiedAccess,
+                                                      boolean isRecipientUpdate,
+                                                      ContentHint contentHint,
+                                                      SignalServiceDataMessage message,
+                                                      SenderKeyGroupEvents sendEvents,
+                                                      boolean urgent,
+                                                      boolean isForStory,
+                                                      SignalServiceEditMessage editMessage,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                                                       PartialSendBatchCompleteListener partialListener)
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       throws IOException, UntrustedIdentityException, NoSessionException, InvalidKeyException, InvalidRegistrationIdException

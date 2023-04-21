@@ -186,6 +186,7 @@ class IncomingMessageObserver(private val context: Application) {
   private val lock: ReentrantLock = ReentrantLock()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private val connectionNecessarySemaphore = Semaphore(0)
   private val networkConnectionListener = NetworkConnectionListener(context) { isNetworkUnavailable ->
     lock.withLock {
@@ -199,6 +200,11 @@ class IncomingMessageObserver(private val context: Application) {
   }
 
   private val messageContentProcessor = MessageContentProcessor(context)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private val condition: Condition = lock.newCondition()
+=======
+  private val connectionNecessarySemaphore = Semaphore(0)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private val condition: Condition = lock.newCondition()
 =======
@@ -748,10 +754,16 @@ class IncomingMessageObserver(private val context: Application) {
     Log.i(TAG, "Received server receipt. Sender: $senderId, Device: ${envelope.sourceDevice}, Timestamp: ${envelope.timestamp}")
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     SignalDatabase.messages.incrementDeliveryReceiptCount(envelope.timestamp!!, senderId, System.currentTimeMillis())
     SignalDatabase.messageLog.deleteEntryForRecipient(envelope.timestamp!!, senderId, envelope.sourceDevice!!)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     SignalDatabase.messages.incrementDeliveryReceiptCount(MessageTable.SyncMessageId(senderId, envelope.timestamp), System.currentTimeMillis())
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    SignalDatabase.messages.incrementDeliveryReceiptCount(MessageTable.SyncMessageId(senderId, envelope.timestamp), System.currentTimeMillis())
+=======
+    SignalDatabase.messages.incrementDeliveryReceiptCount(envelope.timestamp, senderId, System.currentTimeMillis())
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     SignalDatabase.messages.incrementDeliveryReceiptCount(MessageTable.SyncMessageId(senderId, envelope.timestamp), System.currentTimeMillis())
 =======

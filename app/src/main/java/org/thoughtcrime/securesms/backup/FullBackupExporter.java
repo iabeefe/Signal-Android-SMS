@@ -616,6 +616,7 @@ public class FullBackupExporter extends FullBackupBase {
 
   private static boolean isForNonExpiringMmsMessage(@NonNull SQLiteDatabase db, long mmsId) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     String[] columns = new String[] { MessageTable.RECIPIENT_ID, MessageTable.EXPIRES_IN, MessageTable.VIEW_ONCE };
 =======
   private static boolean isNonExpiringSmsMessage(@NonNull Cursor cursor) {
@@ -627,6 +628,11 @@ public class FullBackupExporter extends FullBackupBase {
   }
 
   private static boolean isForNonExpiringMmsMessage(@NonNull SQLiteDatabase db, long mmsId) {
+    String[] columns = new String[] { MessageTable.EXPIRES_IN, MessageTable.VIEW_ONCE };
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    String[] columns = new String[] { MessageTable.RECIPIENT_ID, MessageTable.EXPIRES_IN, MessageTable.VIEW_ONCE };
+=======
     String[] columns = new String[] { MessageTable.EXPIRES_IN, MessageTable.VIEW_ONCE };
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)

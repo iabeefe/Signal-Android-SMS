@@ -607,7 +607,7 @@ class CallLinkTable(context: Context, databaseHelper: SignalDatabase) : Database
       CREATE TABLE $TABLE_NAME (
         $ID INTEGER PRIMARY KEY
       )
-    """.trimIndent()
+    """
   }
 }
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)

@@ -132,6 +132,7 @@ public class ConversationIntents {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   public final static class Args {
     private final RecipientId            recipientId;
     private final long                   threadId;
@@ -149,6 +150,36 @@ public class ConversationIntents {
     private final Badge                  giftBadge;
     private final long                   shareDataTimestamp;
     private final ConversationScreenType conversationScreenType;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  final static class Args {
+    private final RecipientId      recipientId;
+    private final long             threadId;
+    private final String           draftText;
+    private final ArrayList<Media> media;
+    private final StickerLocator   stickerLocator;
+    private final boolean          isBorderless;
+    private final int              distributionType;
+    private final int              startingPosition;
+    private final boolean          firstTimeInSelfCreatedGroup;
+    private final boolean          withSearchOpen;
+    private final Badge giftBadge;
+    private final long  shareDataTimestamp;
+=======
+  public final static class Args {
+    private final RecipientId            recipientId;
+    private final long                   threadId;
+    private final String                 draftText;
+    private final ArrayList<Media>       media;
+    private final StickerLocator         stickerLocator;
+    private final boolean                isBorderless;
+    private final int                    distributionType;
+    private final int                    startingPosition;
+    private final boolean                firstTimeInSelfCreatedGroup;
+    private final boolean                withSearchOpen;
+    private final Badge                  giftBadge;
+    private final long                   shareDataTimestamp;
+    private final ConversationScreenType conversationScreenType;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   final static class Args {
     private final RecipientId      recipientId;
@@ -277,10 +308,19 @@ public class ConversationIntents {
       this.withSearchOpen              = withSearchOpen;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       this.giftBadge                   = giftBadge;
       this.shareDataTimestamp          = shareDataTimestamp;
       this.conversationScreenType      = conversationScreenType;
       this.draftMediaType              = SlideFactory.MediaType.from(draftContentType);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      this.giftBadge          = giftBadge;
+      this.shareDataTimestamp = shareDataTimestamp;
+=======
+      this.giftBadge                   = giftBadge;
+      this.shareDataTimestamp          = shareDataTimestamp;
+      this.conversationScreenType      = conversationScreenType;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       this.giftBadge          = giftBadge;
       this.shareDataTimestamp = shareDataTimestamp;
@@ -368,6 +408,7 @@ public class ConversationIntents {
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     public @NonNull ConversationScreenType getConversationScreenType() {
       return conversationScreenType;
@@ -390,9 +431,17 @@ public class ConversationIntents {
       return conversationScreenType;
     }
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+
+    public @NonNull ConversationScreenType getConversationScreenType() {
+      return conversationScreenType;
+    }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   public final static class Builder {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     private final Context                   context;
@@ -422,7 +471,19 @@ public class ConversationIntents {
     private final RecipientId               recipientId;
     private final long                      threadId;
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    private final Context                               context;
+    private final Class<? extends ConversationActivity> conversationActivityClass;
+    private final RecipientId                           recipientId;
+    private final long                                  threadId;
+=======
+    private final Context                   context;
+    private final Class<? extends Activity> conversationActivityClass;
+    private final RecipientId               recipientId;
+    private final long                      threadId;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     private String                 draftText;
@@ -437,6 +498,34 @@ public class ConversationIntents {
     private boolean                withSearchOpen;
     private Badge                  giftBadge;
     private long                   shareDataTimestamp = -1L;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    private String         draftText;
+    private List<Media>    media;
+    private StickerLocator stickerLocator;
+    private boolean        isBorderless;
+    private int            distributionType = ThreadTable.DistributionTypes.DEFAULT;
+    private int            startingPosition = -1;
+    private Uri            dataUri;
+    private String         dataType;
+    private boolean        firstTimeInSelfCreatedGroup;
+    private boolean        withSearchOpen;
+    private Badge          giftBadge;
+    private long           shareDataTimestamp = -1L;
+=======
+    private String                 draftText;
+    private List<Media>            media;
+    private StickerLocator         stickerLocator;
+    private boolean                isBorderless;
+    private int                    distributionType   = ThreadTable.DistributionTypes.DEFAULT;
+    private int                    startingPosition   = -1;
+    private Uri                    dataUri;
+    private String                 dataType;
+    private boolean                firstTimeInSelfCreatedGroup;
+    private boolean                withSearchOpen;
+    private Badge                  giftBadge;
+    private long                   shareDataTimestamp = -1L;
+    private ConversationScreenType conversationScreenType;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     private String         draftText;
     private List<Media>    media;
@@ -537,8 +626,15 @@ public class ConversationIntents {
       this.recipientId               = recipientId;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       this.threadId                  = checkThreadId(threadId);
       this.conversationScreenType    = conversationScreenType;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      this.threadId                  = threadId;
+=======
+      this.threadId                  = resolveThreadId(recipientId, threadId);
+      this.conversationScreenType    = ConversationScreenType.fromActivityClass(conversationActivityClass);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       this.threadId                  = threadId;
 =======
@@ -707,6 +803,64 @@ public class ConversationIntents {
       throw new IllegalArgumentException("ThreadId is a required field in CFV2");
     } else {
       return threadId;
+    }
+  }
+
+  public enum ConversationScreenType {
+    NORMAL(0),
+    BUBBLE(1),
+    POPUP(2);
+
+    private final int code;
+
+    ConversationScreenType(int code) {
+      this.code = code;
+    }
+
+    public boolean isInBubble() {
+      return Objects.equals(this, BUBBLE);
+    }
+
+    public boolean isNormal() {
+      return Objects.equals(this, NORMAL);
+    }
+
+    private static @NonNull ConversationScreenType from(int code) {
+      for (ConversationScreenType type : values()) {
+        if (type.code == code) {
+          return type;
+        }
+      }
+
+      return NORMAL;
+    }
+
+    private static @NonNull ConversationScreenType fromActivityClass(Class<? extends Activity> activityClass) {
+      if (Objects.equals(activityClass, ConversationPopupActivity.class)) {
+        return POPUP;
+      } else if (Objects.equals(activityClass, BubbleConversationActivity.class)) {
+        return BUBBLE;
+      } else {
+        return NORMAL;
+      }
+    }
+  }
+
+  private static long resolveThreadId(@NonNull RecipientId recipientId, long threadId) {
+    if (threadId >= 0 && SignalStore.internalValues().useConversationFragmentV2()) {
+      Log.w(TAG, "Getting thread id from database...");
+      // TODO [alex] -- Yes, this hits the database. No, we shouldn't be doing this.
+      return SignalDatabase.threads().getOrCreateThreadIdFor(Recipient.resolved(recipientId));
+    } else {
+      return threadId;
+    }
+  }
+
+  private static Class<? extends Activity> getBaseConversationActivity() {
+    if (SignalStore.internalValues().useConversationFragmentV2()) {
+      return ConversationActivity.class;
+    } else {
+      return org.thoughtcrime.securesms.conversation.ConversationActivity.class;
     }
   }
 

@@ -472,9 +472,15 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
     writableDatabase.withinTransaction {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       val result = SignalDatabase.messages.insertCallLog(peer, messageType, timestamp, direction == Direction.OUTGOING)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       val result = SignalDatabase.messages.insertCallLog(peer, messageType, timestamp)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      val result = SignalDatabase.messages.insertCallLog(peer, messageType, timestamp)
+=======
+      val result = SignalDatabase.messages.insertCallLog(peer, messageType, timestamp, direction == Direction.OUTGOING)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       val result = SignalDatabase.messages.insertCallLog(peer, messageType, timestamp)
 =======
@@ -3583,7 +3589,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
     val projection = if (isCount) {
       "COUNT(*),"
     } else {
-      "p.$ID, $TIMESTAMP, $EVENT, $DIRECTION, $PEER, p.$TYPE, $CALL_ID, $MESSAGE_ID, $RINGER, children, in_period, ${MessageTable.DATE_RECEIVED}, ${MessageTable.BODY},"
+      "p.$ID, p.$TIMESTAMP, $EVENT, $DIRECTION, $PEER, p.$TYPE, $CALL_ID, $MESSAGE_ID, $RINGER, children, in_period, ${MessageTable.DATE_RECEIVED}, ${MessageTable.BODY},"
     }
 
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -3824,6 +3830,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
       SELECT $projection
         LOWER(
           COALESCE(
+            NULLIF(${GroupTable.TABLE_NAME}.${GroupTable.TITLE}, ''),
             NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.SYSTEM_JOINED_NAME}, ''),
             NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.SYSTEM_GIVEN_NAME}, ''),
             NULLIF(${RecipientTable.TABLE_NAME}.${RecipientTable.PROFILE_JOINED_NAME}, ''),
@@ -3976,6 +3983,7 @@ class CallTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTabl
       ) p
       INNER JOIN ${RecipientTable.TABLE_NAME} ON ${RecipientTable.TABLE_NAME}.${RecipientTable.ID} = $PEER
       INNER JOIN ${MessageTable.TABLE_NAME} ON ${MessageTable.TABLE_NAME}.${MessageTable.ID} = $MESSAGE_ID
+      LEFT JOIN ${GroupTable.TABLE_NAME} ON ${GroupTable.TABLE_NAME}.${GroupTable.RECIPIENT_ID} = ${RecipientTable.TABLE_NAME}.${RecipientTable.ID}
       WHERE true_parent = p.$ID ${if (queryClause.where.isNotEmpty()) "AND ${queryClause.where}" else ""}
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
       $offsetLimit

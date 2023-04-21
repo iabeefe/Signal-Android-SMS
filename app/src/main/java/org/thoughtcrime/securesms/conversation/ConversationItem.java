@@ -198,10 +198,16 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
   private boolean                     groupThread;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private LiveRecipient               author;
   private RequestManager              requestManager;
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private LiveRecipient               recipient;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private LiveRecipient               recipient;
+=======
+  private LiveRecipient               author;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private LiveRecipient               recipient;
 =======
@@ -394,9 +400,15 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
   {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     unbind();
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (this.recipient != null) this.recipient.removeForeverObserver(this);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (this.recipient != null) this.recipient.removeForeverObserver(this);
+=======
+    if (this.author != null) this.author.removeForeverObserver(this);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (this.recipient != null) this.recipient.removeForeverObserver(this);
 =======
@@ -429,8 +441,14 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     this.recipient.observeForever(this);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    this.recipient.observeForever(this);
+=======
+    this.author.observeForever(this);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     this.recipient.observeForever(this);
 =======
@@ -756,10 +774,18 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
   public void unbind() {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     isBound = false;
 
     if (author != null) {
       author.removeForeverObserver(this);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (recipient != null) {
+      recipient.removeForeverObserver(this);
+=======
+    if (author != null) {
+      author.removeForeverObserver(this);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (recipient != null) {
       recipient.removeForeverObserver(this);
@@ -1438,7 +1464,13 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
       MmsMessageRecord mmsMessageRecord = (MmsMessageRecord) messageRecord;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       giftViewStub.get().setGiftBadge(requestManager, Objects.requireNonNull(mmsMessageRecord.getGiftBadge()), messageRecord.isOutgoing(), giftMessageViewCallback, messageRecord.getFromRecipient(), messageRecord.getToRecipient());
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      giftViewStub.get().setGiftBadge(glideRequests, Objects.requireNonNull(mmsMessageRecord.getGiftBadge()), messageRecord.isOutgoing(), giftMessageViewCallback, messageRecord.getRecipient());
+=======
+      giftViewStub.get().setGiftBadge(glideRequests, Objects.requireNonNull(mmsMessageRecord.getGiftBadge()), messageRecord.isOutgoing(), giftMessageViewCallback, messageRecord.getFromRecipient(), messageRecord.getToRecipient());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       giftViewStub.get().setGiftBadge(glideRequests, Objects.requireNonNull(mmsMessageRecord.getGiftBadge()), messageRecord.isOutgoing(), giftMessageViewCallback, messageRecord.getRecipient());
 =======
@@ -1468,6 +1500,7 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
       paymentViewStub.setVisibility(View.VISIBLE);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       paymentViewStub.get().setOnTombstoneClickListener(paymentTombstoneClickListener);
       paymentViewStub.get().bindPayment(conversationRecipient.get(), Objects.requireNonNull(mediaMmsMessageRecord.getPayment()), colorizer);
 
@@ -1490,6 +1523,11 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
       MessageExtras messageExtras = mediaMmsMessageRecord.getMessageExtras();
 
       paymentViewStub.get().bindPaymentTombstone(mediaMmsMessageRecord.isOutgoing(), conversationRecipient.get(), messageExtras == null ? null : messageExtras.paymentTombstone, colorizer);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      paymentViewStub.get().bindPayment(messageRecord.getIndividualRecipient(), Objects.requireNonNull(mediaMmsMessageRecord.getPayment()), colorizer);
+=======
+      paymentViewStub.get().bindPayment(messageRecord.getFromRecipient(), Objects.requireNonNull(mediaMmsMessageRecord.getPayment()), colorizer);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       paymentViewStub.get().bindPayment(messageRecord.getIndividualRecipient(), Objects.requireNonNull(mediaMmsMessageRecord.getPayment()), colorizer);
 =======
@@ -1830,6 +1868,7 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
       activeFooter.setVisibility(VISIBLE);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       activeFooter.setMessageRecord(current, locale, displayMode);
 
       if (MessageRecordUtil.isEditMessage(current)) {
@@ -1842,6 +1881,22 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
         activeFooter.getDateView().setOnClickListener(null);
         activeFooter.getDateView().setClickable(false);
       }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      activeFooter.setMessageRecord(current, locale);
+=======
+      activeFooter.setMessageRecord(current, locale, displayMode);
+
+      if (MessageRecordUtil.isEditMessage(current)) {
+        activeFooter.getDateView().setOnClickListener(v -> {
+          if (eventListener != null) {
+            eventListener.onEditedIndicatorClicked(current);
+          }
+        });
+      } else {
+        activeFooter.getDateView().setOnClickListener(null);
+        activeFooter.getDateView().setClickable(false);
+      }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       activeFooter.setMessageRecord(current, locale);
 =======
@@ -1923,7 +1978,13 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
   private void setHasBeenQuoted(@NonNull ConversationMessage message) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (message.hasBeenQuoted() && !isCondensedMode() && quotedIndicator != null && batchSelected.isEmpty() && displayMode != ConversationItemDisplayMode.EditHistory.INSTANCE) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (message.hasBeenQuoted() && !isCondensedMode() && quotedIndicator != null && batchSelected.isEmpty()) {
+=======
+    if (message.hasBeenQuoted() && !isCondensedMode() && quotedIndicator != null && batchSelected.isEmpty() && displayMode != ConversationItemDisplayMode.EXTRA_CONDENSED) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (message.hasBeenQuoted() && !isCondensedMode() && quotedIndicator != null && batchSelected.isEmpty()) {
 =======
@@ -1958,11 +2019,17 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
   private boolean forceFooter(@NonNull MessageRecord messageRecord) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return hasAudio(messageRecord) || MessageRecordUtil.isEditMessage(messageRecord) || displayMode == ConversationItemDisplayMode.EditHistory.INSTANCE;
   }
 
   private boolean forceGroupHeader(@NonNull MessageRecord messageRecord) {
     return displayMode == ConversationItemDisplayMode.EditHistory.INSTANCE;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    return hasAudio(messageRecord);
+=======
+    return hasAudio(messageRecord) || MessageRecordUtil.isEditMessage(messageRecord);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     return hasAudio(messageRecord);
 =======
@@ -2018,10 +2085,16 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (!previous.isPresent() || previous.get().isUpdate() || !current.getFromRecipient().equals(previous.get().getFromRecipient()) ||
           !DateUtils.isSameDay(previous.get().getTimestamp(), current.getTimestamp()) || !isWithinClusteringTime(current, previous.get()) || forceGroupHeader(current))
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       if (!previous.isPresent() || previous.get().isUpdate() || !current.getRecipient().equals(previous.get().getRecipient()) ||
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (!previous.isPresent() || previous.get().isUpdate() || !current.getRecipient().equals(previous.get().getRecipient()) ||
+=======
+      if (!previous.isPresent() || previous.get().isUpdate() || !current.getFromRecipient().equals(previous.get().getFromRecipient()) ||
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       if (!previous.isPresent() || previous.get().isUpdate() || !current.getRecipient().equals(previous.get().getRecipient()) ||
 =======
@@ -2047,7 +2120,13 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (!next.isPresent() || next.get().isUpdate() || !current.getFromRecipient().equals(next.get().getFromRecipient()) || !isWithinClusteringTime(current, next.get()) || forceGroupHeader(current)) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (!next.isPresent() || next.get().isUpdate() || !current.getRecipient().equals(next.get().getRecipient()) || !isWithinClusteringTime(current, next.get())) {
+=======
+      if (!next.isPresent() || next.get().isUpdate() || !current.getFromRecipient().equals(next.get().getFromRecipient()) || !isWithinClusteringTime(current, next.get())) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       if (!next.isPresent() || next.get().isUpdate() || !current.getRecipient().equals(next.get().getRecipient()) || !isWithinClusteringTime(current, next.get())) {
 =======
@@ -2103,7 +2182,13 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (isSingularMessage(current, previous, next, isGroupThread) || displayMode == ConversationItemDisplayMode.EditHistory.INSTANCE) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (isSingularMessage(current, previous, next, isGroupThread)) {
+=======
+    if (isSingularMessage(current, previous, next, isGroupThread) || displayMode == ConversationItemDisplayMode.EXTRA_CONDENSED) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (isSingularMessage(current, previous, next, isGroupThread)) {
 =======
@@ -2215,7 +2300,13 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (isStartOfMessageCluster(current, previous, isGroupThread) && (displayMode != ConversationItemDisplayMode.EditHistory.INSTANCE || next.isEmpty())) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (isStartOfMessageCluster(current, previous, isGroupThread)) {
+=======
+    if (isStartOfMessageCluster(current, previous, isGroupThread) && (displayMode != ConversationItemDisplayMode.EXTRA_CONDENSED || next.isEmpty())) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (isStartOfMessageCluster(current, previous, isGroupThread)) {
 =======
@@ -2231,7 +2322,13 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (isEndOfMessageCluster(current, next, isGroupThread) || displayMode == ConversationItemDisplayMode.EditHistory.INSTANCE) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (isEndOfMessageCluster(current, next, isGroupThread)) {
+=======
+    if (isEndOfMessageCluster(current, next, isGroupThread) || displayMode == ConversationItemDisplayMode.EXTRA_CONDENSED) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (isEndOfMessageCluster(current, next, isGroupThread)) {
 =======

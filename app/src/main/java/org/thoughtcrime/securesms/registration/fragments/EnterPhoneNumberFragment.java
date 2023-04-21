@@ -321,7 +321,8 @@ public final class EnterPhoneNumberFragment extends LoggingFragment implements R
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
 =======
                                     } else if (processor instanceof RegistrationSessionProcessor.RegistrationSessionProcessorForVerification
-                                               && ((RegistrationSessionProcessor.RegistrationSessionProcessorForVerification) processor).externalServiceFailure()) {
+                                               && ((RegistrationSessionProcessor.RegistrationSessionProcessorForVerification) processor).externalServiceFailure())
+                                    {
                                       Log.w(TAG, "The server reported a failure with an external service.", processor.getError());
                                       showErrorDialog(register.getContext(), getString(R.string.RegistrationActivity_external_service_error));
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)

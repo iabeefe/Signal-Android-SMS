@@ -26,7 +26,12 @@ import org.signal.core.util.requireString
 import org.signal.core.util.select
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.signal.core.util.toInt
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import org.signal.core.util.toSingleLine
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.signal.core.util.toSingleLine
 =======
@@ -1580,9 +1585,44 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
     stopwatch?.split("thread-query")
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private fun update(threadId: Long, unarchive: Boolean, allowDeletion: Boolean, notifyListeners: Boolean): Boolean {
+<<<<<<< HEAD
     if (threadId == -1L) {
       Log.d(TAG, "Skipping update for threadId -1")
       return false
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    val meaningfulMessages = messages.hasMeaningfulMessage(threadId)
+
+    val isPinned = getPinnedThreadIds().contains(threadId)
+    val shouldDelete = allowDeletion && !isPinned && !messages.containsStories(threadId)
+
+    if (!meaningfulMessages) {
+      if (shouldDelete) {
+        Log.d(TAG, "Deleting thread $threadId because it has no meaningful messages.")
+        deleteConversation(threadId)
+        return true
+      } else if (!isPinned) {
+        return false
+      }
+=======
+    if (threadId == -1L) {
+      Log.d(TAG, "Skipping update for threadId -1")
+      return false
+    }
+
+    val meaningfulMessages = messages.hasMeaningfulMessage(threadId)
+
+    val isPinned = getPinnedThreadIds().contains(threadId)
+    val shouldDelete = allowDeletion && !isPinned && !messages.containsStories(threadId)
+
+    if (!meaningfulMessages) {
+      if (shouldDelete) {
+        Log.d(TAG, "Deleting thread $threadId because it has no meaningful messages.")
+        deleteConversation(threadId)
+        return true
+      } else if (!isPinned) {
+        return false
+      }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
 
     val meaningfulMessages = messages.hasMeaningfulMessage(threadId)
@@ -1935,6 +1975,7 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
 <<<<<<< HEAD
     val isHidden = threadRecipient?.isHidden ?: false
 <<<<<<< HEAD
+<<<<<<< HEAD
     val authorId = record.fromRecipient.id
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
@@ -1951,6 +1992,11 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
 <<<<<<< HEAD
     val individualRecipientId = record.individualRecipient.id
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    val individualRecipientId = record.individualRecipient.id
+=======
+    val authorId = record.fromRecipient.id
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     val individualRecipientId = record.individualRecipient.id
 =======
@@ -1991,6 +2037,7 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         return Extra.forMessageRequest(authorId, isHidden)
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
         return Extra.forMessageRequest(individualRecipientId)
@@ -2017,6 +2064,11 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
 =======
         return Extra.forMessageRequest(individualRecipientId, isHidden)
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        return Extra.forMessageRequest(individualRecipientId, isHidden)
+=======
+        return Extra.forMessageRequest(authorId, isHidden)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       }
     }
 

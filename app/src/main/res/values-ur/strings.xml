@@ -253,6 +253,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- CallInfoView -->
     <!-- Unknown people row text when the only people in the call are unknowns -->
     <plurals name="CallInfoView__d_people">
@@ -275,6 +276,13 @@
     <!-- Toasted when user device does not support video recording -->
     <string name="CameraFragment__video_recording_is_not_supported_on_your_device">آپ کی ڈیوائس پر ویڈیو ریکارڈنگ سپورٹ کردہ نہیں ہے</string>
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- CameraFragment -->
+    <!-- Toasted when user device does not support video recording -->
+    <string name="CameraFragment__video_recording_is_not_supported_on_your_device">Video recording is not supported on your device</string>
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- CameraFragment -->
@@ -454,6 +462,7 @@
     <string name="ConversationItem_cant_download_video_you_will_need_to_send_it_again">ویڈیو ڈاؤن لوڈ نہیں کر سکتے۔ آپ کو اسے دوبارہ بھیجنے کی ضرورت ہو گی۔</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp represents a message that has been edited within the last minute. -->
     <string name="ConversationItem_edited_now_timestamp_footer">ابھی ترمیم کردہ</string>
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. This is displayed when the edit has occurred between 1-59 minutes ago. -->
@@ -472,14 +481,25 @@
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp will go from \'11m\' to \'edited 11m\' -->
     <string name="ConversationItem_edited_timestamp_footer">edited %1$s</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp will go from \'11m\' to \'edited 11m\' -->
+    <string name="ConversationItem_edited_timestamp_footer">edited %1$s</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- ConversationActivity -->
     <string name="ConversationActivity_add_attachment">اٹیچمنٹ شامل کریں</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Accessibility text associated with image button to send an edited message. -->
     <string name="ConversationActivity_send_edit">ترمیم بھیجیں</string>
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Accessibility text associated with image button to send an edited message. -->
+    <string name="ConversationActivity_send_edit">Send edit</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Accessibility text associated with image button to send an edited message. -->
@@ -510,8 +530,19 @@
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ConversationActivity__tap_here_to_start_a_group_call">گروپ کال شروع کرنے کے لئے یہاں ٹیپ کریں</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <string name="ConversationActivity__tap_here_to_start_a_group_call">گروپ کال شروع کرنے کے لئے یہاں ٹیپ کریں</string>
+    <!-- Warning toast shown to user if they somehow try to edit an sms/mms message -->
+    <string name="ConversationActivity_edit_sms_message_error">Unable to edit SMS messages</string>
+    <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
+    <plurals name="ConversationActivity_edit_message_too_old">
+        <item quantity="one">Edits can only be applied within %1$d hour from the time you sent this message.</item>
+        <item quantity="other">Edits can only be applied within %1$d hours from the time you sent this message.</item>
+    </plurals>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
     <!-- Warning toast shown to user if they somehow try to edit an sms/mms message -->
     <string name="ConversationActivity_edit_sms_message_error">Unable to edit SMS messages</string>
     <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
@@ -1640,9 +1671,15 @@
     <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
     <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">SMS میسیجنگ Signal میں مزید سپورٹ نہیں کیا جاتا۔</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
     <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">SMS میسیجنگ Signal میں مزید سپورٹ نہیں کیا جاتا۔</string>
+    <!-- When editing a message, label shown above the text input field in the composer -->
+    <string name="InputPanel_edit_message">Edit message</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
     <!-- When editing a message, label shown above the text input field in the composer -->
     <string name="InputPanel_edit_message">Edit message</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -2674,6 +2711,7 @@
     </string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
     <string name="RegistrationActivity_phone_number_verification_dialog_title">کیا درج ذیل فون نمبر درست ہے؟</string>
@@ -2681,6 +2719,17 @@
     <string name="RegistrationActivity_additional_verification_required">اضافی تصدیق چاہیے</string>
     <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
     <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">اس نمبر پر ایک تصدیقی کوڈ بھیجا جائے گا۔ کیریئر ریٹس کا اطلاق ہو سکتا ہے۔</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to">اس پر توثیقی کوڈ بھیجا جائے گا:</string>
+=======
+
+    <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
+    <string name="RegistrationActivity_phone_number_verification_dialog_title">Is the phone number below correct?</string>
+    <!-- Dialog title shown when re-registering and skip sms flow failed or was aborted and now need perform additional verification via sms and warn about carrier charges -->
+    <string name="RegistrationActivity_additional_verification_required">Additional verification required</string>
+    <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">A verification code will be sent to this number. Carrier rates may apply.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="RegistrationActivity_a_verification_code_will_be_sent_to">اس پر توثیقی کوڈ بھیجا جائے گا:</string>
 =======
@@ -2781,6 +2830,7 @@
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">اپنے ساتھ رازداری اختیار کریں۔/n ہر پیغام میں اپنے آپ کو سمجھیں۔</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Title of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_phone_number">فون نمبر</string>
     <!-- Subtitle of registration screen when asking for the users phone number -->
@@ -2815,6 +2865,15 @@
 =======
     <string name="RegistrationActivity_enter_your_phone_number_to_get_started">شروع کرنے کے لیے اپنا فون نمبر درج کریں۔</string>
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_enter_your_phone_number">اپنا فون نمبر درج کریں</string>
+    <string name="RegistrationActivity_you_will_receive_a_verification_code">آپ کو تصدیقی کوڈ وصول ہوگا۔\n کیریئر کی درجہ بندی لاگو ہو سکتی ہے۔</string>
+=======
+    <!-- Title of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_phone_number">Phone number</string>
+    <!-- Subtitle of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Enter your phone number to get started.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="RegistrationActivity_enter_the_code_we_sent_to_s">ہم نے جو کوڈ بھیجا ہے%1$sداخل کریں</string>
 
     <string name="RegistrationActivity_phone_number_description">فون نمبر</string>
@@ -3004,8 +3063,14 @@
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
     <!-- Thread preview for a recipient that has been hidden -->
+<<<<<<< HEAD
     <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
+=======
+    <string name="ThreadRecord_hidden_recipient">آپ نے اس شخص کو مخفی کر دیا ہے، انہیں واپس اپنی فہرست میں شامل کرنے کے لیے انہیں دوبارہ میسج بھیجیں۔</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ThreadRecord_photo">تصویر</string>
     <string name="ThreadRecord_gif">GIF</string>
     <string name="ThreadRecord_voice_message">پیغام بذریعہ آواز</string>
@@ -3849,8 +3914,14 @@
     <string name="message_details_recipient__new_safety_number">نیا حفاظتی نمبر</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
     <string name="MessageDetails__view_edit_history">ترمیم کی ہسٹری دیکھیں</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
+    <string name="MessageDetails__view_edit_history">View edit history</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
@@ -4175,6 +4246,7 @@
     <string name="preferences_enter_proxy_address">پراکسی ایڈریس درج کریں</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Preference title for changing navigation (bottom) bar size -->
     <string name="preferences_navigation_bar_size">نیویگیشن بار سائز</string>
     <!-- Preference summary for normal navigation bar size -->
@@ -4196,6 +4268,15 @@
     <string name="preferences_navigation_bar_size">Navigation bar size</string>
     <!-- Preference summary for normal navigation bar size -->
     <string name="preferences_normal">عام</string>
+    <!-- Preference summary for compact navigation bar size -->
+    <string name="preferences_compact">Compact</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Preference title for changing navigation (bottom) bar size -->
+    <string name="preferences_navigation_bar_size">Navigation bar size</string>
+    <!-- Preference summary for normal navigation bar size -->
+    <string name="preferences_normal">Normal</string>
     <!-- Preference summary for compact navigation bar size -->
     <string name="preferences_compact">Compact</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -4492,6 +4573,7 @@
     <string name="conversation_selection__menu_reply">جواب دیں</string>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
     <string name="conversation_selection__menu_edit">ترمیم کریں</string>
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -4516,6 +4598,11 @@
 =======
     <string name="conversation_selection__menu_edit">ترتیب دیں</string>
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
+    <string name="conversation_selection__menu_edit">Edit</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Button to save a message attachment (image, file etc.); Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
     <string name="conversation_selection__menu_save">محفوظ کریں</string>
     <!-- Button to retry sending a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
@@ -5504,6 +5591,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__your_account_data">آپ کا اکاؤنٹ ڈیٹا</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__your_account_data">Your account data</string>
@@ -5530,6 +5618,11 @@
 =======
     <string name="ExportAccountDataFragment__your_account_data">آپ کے اکاؤنٹ کا ڈیٹا</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__your_account_data">آپ کے اکاؤنٹ کا ڈیٹا</string>
+=======
+    <string name="ExportAccountDataFragment__your_account_data">آپ کا اکاؤنٹ ڈیٹا</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5542,6 +5635,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_explanation">اپنے Signal اکاؤنٹ ڈیٹا کی رپورٹ ایکسپورٹ کریں۔ اس رپورٹ میں کوئی میسجز یا میڈیا شامل نہیں ہے۔ %1$s</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_explanation">Download and export a report of your Signal account data. This report does not include any messages or media. %1$s</string>
@@ -5598,6 +5692,11 @@
 =======
     <string name="ExportAccountDataFragment__export_explanation">اپنے Signal اکاؤنٹ ڈیٹا کی رپورٹ برآمد کریں۔ اس رپورٹ میں کوئی میسجز یا میڈیا شامل نہیں ہے۔ %1$s</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_explanation">اپنے Signal اکاؤنٹ ڈیٹا کی رپورٹ برآمد کریں۔ اس رپورٹ میں کوئی میسجز یا میڈیا شامل نہیں ہے۔ %1$s</string>
+=======
+    <string name="ExportAccountDataFragment__export_explanation">اپنے Signal اکاؤنٹ ڈیٹا کی رپورٹ ایکسپورٹ کریں۔ اس رپورٹ میں کوئی میسجز یا میڈیا شامل نہیں ہے۔ %1$s</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Learn more link to more information about requesting account data -->
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5658,6 +5757,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report">رپورٹ ایکسپورٹ کریں</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_report">Export report</string>
@@ -5718,6 +5818,11 @@
     <string name="ExportAccountDataFragment__delete_report">رپورٹ حذف کریں</string>
 =======
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_report">رپورٹ برآمد کریں</string>
+=======
+    <string name="ExportAccountDataFragment__export_report">رپورٹ ایکسپورٹ کریں</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- Radio option to export the data as a text file .txt -->
 <<<<<<< HEAD
@@ -5725,6 +5830,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_as_txt">بطور TXT ایکسپورٹ کریں</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_as_txt">Export as TXT</string>
@@ -5751,6 +5857,11 @@
 =======
     <string name="ExportAccountDataFragment__export_as_txt">بطور TXT برآمد کریں</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_as_txt">بطور TXT برآمد کریں</string>
+=======
+    <string name="ExportAccountDataFragment__export_as_txt">بطور TXT ایکسپورٹ کریں</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Label for the text file option -->
     <string name="ExportAccountDataFragment__export_as_txt_label">پڑھنے میں آسان ٹیکسٹ فائل</string>
     <!-- Radio option to export the data as a json (java script object notation) file .json -->
@@ -5759,6 +5870,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_as_json">بطور JSON ایکسپورٹ کریں</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_as_json">Export as JSON</string>
@@ -5785,6 +5897,11 @@
 =======
     <string name="ExportAccountDataFragment__export_as_json">بطور JSON برآمد کریں</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_as_json">بطور JSON برآمد کریں</string>
+=======
+    <string name="ExportAccountDataFragment__export_as_json">بطور JSON ایکسپورٹ کریں</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Label for the json file option, the account data in a machine readable file format -->
     <string name="ExportAccountDataFragment__export_as_json_label">مشین سے پڑھی جانے والی فائل</string>
 
@@ -5881,7 +5998,7 @@
     <string name="ExportAccountDataFragment__report_download_failed">نیٹ ورک نقص کے باعث آپ کی رپورٹ ڈاؤن لوڈ نہیں کی جا سکی۔ اپنا کنکشن چیک کریں اور دوبارہ کوشش کریں۔</string>
 =======
     <!-- Title of dialog shown when report fails to generate -->
-    <string name="ExportAccountDataFragment__report_generation_failed">رپورٹ جنریٹ نہیں ہو سکی</string>
+    <string name="ExportAccountDataFragment__report_generation_failed">رپورٹ تیار نہیں ہو سکی</string>
     <!-- Message of dialog shown when report fails to generate asking user to check network connection -->
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__check_network">Check your connection and try again.</string>
@@ -5898,6 +6015,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report_confirmation">ڈیٹا ایکسپورٹ کریں؟</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_report_confirmation">Export data?</string>
@@ -5924,6 +6042,11 @@
 =======
     <string name="ExportAccountDataFragment__export_report_confirmation">ڈیٹا برآمد کریں؟</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_report_confirmation">ڈیٹا برآمد کریں؟</string>
+=======
+    <string name="ExportAccountDataFragment__export_report_confirmation">ڈیٹا ایکسپورٹ کریں؟</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Message for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation_message">صرف اپنے قابلِ اعتماد لوگوں یا ایپس کے ساتھ اپنے Signal اکاؤنٹ کا ڈیٹا شیئر کریں۔</string>
     <!-- Action to export in for export confirmation dialog -->
@@ -5932,6 +6055,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report_action">ایکسپورٹ کریں</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_report_action">Export</string>
@@ -5958,6 +6082,11 @@
 =======
     <string name="ExportAccountDataFragment__export_report_action">برآمد کریں</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_report_action">برآمد کریں</string>
+=======
+    <string name="ExportAccountDataFragment__export_report_action">ایکسپورٹ کریں</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -6044,7 +6173,13 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_progress">رپورٹ تیار ہو رہی ہے۔ ۔ ۔</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__download_progress">رپورٹ جنریٹ ہو رہی ہے…</string>
+=======
+    <string name="ExportAccountDataFragment__download_progress">رپورٹ تیار ہو رہی ہے۔ ۔ ۔</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ExportAccountDataFragment__download_progress">رپورٹ جنریٹ ہو رہی ہے…</string>
 =======
@@ -6056,6 +6191,7 @@
     <string name="ExportAccountDataFragment__download_progress">رپورٹ تیار ہو رہی ہے۔ ۔ ۔</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">آپ کی رپورٹ محض ایکسپورٹ کے وقت تیار کی جاتی ہے اور اسے Signal کی جانب سے آپ کی ڈیوائس پر اسٹور نہیں کیا جاتا۔</string>
@@ -6160,6 +6296,11 @@
 =======
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">آپ کی رپورٹ صرف برآمدی کے وقت جنریٹ ہوتی ہے اور اسے Signal کی جانب سے آپ کی ڈیوائس پر اسٹور نہیں کیا جاتا۔</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">آپ کی رپورٹ صرف برآمدی کے وقت جنریٹ ہوتی ہے اور اسے Signal کی جانب سے آپ کی ڈیوائس پر اسٹور نہیں کیا جاتا۔</string>
+=======
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">آپ کی رپورٹ محض ایکسپورٹ کے وقت تیار کی جاتی ہے اور اسے Signal کی جانب سے آپ کی ڈیوائس پر اسٹور نہیں کیا جاتا۔</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">اپنا موجودہ فون نمبر ایک نئے فون نمبر پر تبدیل کرنے کے لیے اس کا استعمال کریں۔ آپ اس تبدیلی کو کالعدم نہیں کر سکتے۔\n\nجاری رکھنے سے پہلے، یقینی بنائیں کہ آپ کا نیا نمبر SMS یا کالز وصول کر سکتا ہو۔</string>
@@ -9007,7 +9148,7 @@
     <!-- Button text to dismiss the sheet and add it as an upcoming call -->
     <string name="CreateCallLinkBottomSheetDialogFragment__done">ہو گیا</string>
     <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">شیئر شیٹ کھولنے میں ناکام ہو گئے۔</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Unable to share call link.</string>
     <!-- Displayed when we copy the call link to the clipboard -->
     <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">کلپ بورڈ کو کاپی کریں</string>
 
@@ -9019,6 +9160,21 @@
     <!-- Placeholder text on input field when editing call name -->
     <string name="EditCallLinkNameDialogFragment__call_name">کال نیم</string>
 
+<<<<<<< HEAD
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- ChooseNavigationBarStyleFragment -->
+    <!-- Dialog title, displayed below the header image -->
+    <string name="ChooseNavigationBarStyleFragment__navigation_bar_size">Navigation bar size</string>
+    <!-- Toggle button label for normal size -->
+    <string name="ChooseNavigationBarStyleFragment__normal">Normal</string>
+    <!-- Toggle button label for compact size -->
+    <string name="ChooseNavigationBarStyleFragment__compact">Compact</string>
+
+    <!-- Title shown at top of bottom sheet dialog for displaying a message\'s edit history -->
+    <string name="EditMessageHistoryDialog_title">Edit history</string>
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- EOF -->
 </resources>

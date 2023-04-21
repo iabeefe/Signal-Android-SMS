@@ -35,9 +35,14 @@ import org.thoughtcrime.securesms.mms.DecryptableStreamUriLoader
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.mms.GlideApp
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.recipients.Recipient
 =======
 import org.thoughtcrime.securesms.mms.GlideApp
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import org.thoughtcrime.securesms.recipients.Recipient
+=======
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.recipients.Recipient

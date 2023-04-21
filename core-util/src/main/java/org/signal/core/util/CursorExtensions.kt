@@ -3,8 +3,13 @@ package org.signal.core.util
 import android.database.Cursor
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import androidx.core.database.getLongOrNull
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 import androidx.core.database.getLongOrNull

@@ -40,7 +40,13 @@ public final class MessageDetails {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (conversationMessage.getMessageRecord().getFromRecipient().isSelf() && conversationMessage.getMessageRecord().getToRecipient().isSelf()) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (conversationMessage.getMessageRecord().getRecipient().isSelf()) {
+=======
+    if (conversationMessage.getMessageRecord().getToRecipient().isSelf()) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (conversationMessage.getMessageRecord().getRecipient().isSelf()) {
 =======

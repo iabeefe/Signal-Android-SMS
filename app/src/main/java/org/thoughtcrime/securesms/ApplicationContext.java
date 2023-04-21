@@ -18,7 +18,12 @@ package org.thoughtcrime.securesms;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.app.Application;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import android.annotation.SuppressLint;
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import android.annotation.SuppressLint;
 =======
@@ -111,9 +116,14 @@ import org.thoughtcrime.securesms.util.AppStartup;
 import org.thoughtcrime.securesms.util.DynamicTheme;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.RemoteConfig;
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.util.Environment;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import org.thoughtcrime.securesms.util.Environment;
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.util.Environment;
 =======
@@ -209,9 +219,14 @@ public class ApplicationContext extends Application implements AppForegroundObse
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                             .addNonBlocking(() -> GlideApp.get(this))
 <<<<<<< HEAD
+<<<<<<< HEAD
                             .addNonBlocking(this::checkIsGooglePayReady)
 =======
                             .addNonBlocking(() -> GlideApp.get(this))
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                            .addNonBlocking(this::checkIsGooglePayReady)
+=======
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                             .addNonBlocking(this::checkIsGooglePayReady)
