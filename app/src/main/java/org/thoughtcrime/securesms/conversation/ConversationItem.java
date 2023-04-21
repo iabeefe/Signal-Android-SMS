@@ -196,8 +196,16 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
   private Optional<MessageRecord>     nextMessageRecord;
   private Locale                      locale;
   private boolean                     groupThread;
+<<<<<<< HEAD
   private LiveRecipient               author;
   private RequestManager              requestManager;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private LiveRecipient               recipient;
+  private GlideRequests               glideRequests;
+=======
+  private LiveRecipient               author;
+  private GlideRequests               glideRequests;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private Optional<MessageRecord>     previousMessage;
   private ConversationItemDisplayMode displayMode;
 
@@ -378,7 +386,15 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
                    @NonNull Colorizer colorizer,
                    @NonNull ConversationItemDisplayMode displayMode)
   {
+<<<<<<< HEAD
     unbind();
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (this.recipient != null) this.recipient.removeForeverObserver(this);
+    if (this.conversationRecipient != null) this.conversationRecipient.removeForeverObserver(this);
+=======
+    if (this.author != null) this.author.removeForeverObserver(this);
+    if (this.conversationRecipient != null) this.conversationRecipient.removeForeverObserver(this);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     lastYDownRelativeToThis = 0;
 
@@ -399,6 +415,16 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
     this.displayMode           = displayMode;
     this.previousMessage       = previousMessageRecord;
 
+<<<<<<< HEAD
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    this.recipient.observeForever(this);
+    this.conversationRecipient.observeForever(this);
+
+=======
+    this.author.observeForever(this);
+    this.conversationRecipient.observeForever(this);
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     setGutterSizes(messageRecord, groupThread);
     setMessageShape(messageRecord, previousMessageRecord, nextMessageRecord, groupThread);
     setMediaAttributes(messageRecord, previousMessageRecord, nextMessageRecord, groupThread, hasWallpaper, isMessageRequestAccepted, allowedToPlayInline);
@@ -710,10 +736,18 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
 
   @Override
   public void unbind() {
+<<<<<<< HEAD
     isBound = false;
 
     if (author != null) {
       author.removeForeverObserver(this);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (recipient != null) {
+      recipient.removeForeverObserver(this);
+=======
+    if (author != null) {
+      author.removeForeverObserver(this);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
 
     if (conversationRecipient != null) {
@@ -1376,7 +1410,13 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
       paymentViewStub.setVisibility(View.GONE);
 
       MmsMessageRecord mmsMessageRecord = (MmsMessageRecord) messageRecord;
+<<<<<<< HEAD
       giftViewStub.get().setGiftBadge(requestManager, Objects.requireNonNull(mmsMessageRecord.getGiftBadge()), messageRecord.isOutgoing(), giftMessageViewCallback, messageRecord.getFromRecipient(), messageRecord.getToRecipient());
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      giftViewStub.get().setGiftBadge(glideRequests, Objects.requireNonNull(mmsMessageRecord.getGiftBadge()), messageRecord.isOutgoing(), giftMessageViewCallback, messageRecord.getRecipient());
+=======
+      giftViewStub.get().setGiftBadge(glideRequests, Objects.requireNonNull(mmsMessageRecord.getGiftBadge()), messageRecord.isOutgoing(), giftMessageViewCallback, messageRecord.getFromRecipient(), messageRecord.getToRecipient());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       giftViewStub.get().setVisibility(VISIBLE);
 
       footer.setVisibility(VISIBLE);
@@ -1394,6 +1434,7 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
       MmsMessageRecord mediaMmsMessageRecord = (MmsMessageRecord) messageRecord;
 
       paymentViewStub.setVisibility(View.VISIBLE);
+<<<<<<< HEAD
       paymentViewStub.get().setOnTombstoneClickListener(paymentTombstoneClickListener);
       paymentViewStub.get().bindPayment(conversationRecipient.get(), Objects.requireNonNull(mediaMmsMessageRecord.getPayment()), colorizer);
 
@@ -1416,6 +1457,11 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
       MessageExtras messageExtras = mediaMmsMessageRecord.getMessageExtras();
 
       paymentViewStub.get().bindPaymentTombstone(mediaMmsMessageRecord.isOutgoing(), conversationRecipient.get(), messageExtras == null ? null : messageExtras.paymentTombstone, colorizer);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      paymentViewStub.get().bindPayment(messageRecord.getIndividualRecipient(), Objects.requireNonNull(mediaMmsMessageRecord.getPayment()), colorizer);
+=======
+      paymentViewStub.get().bindPayment(messageRecord.getFromRecipient(), Objects.requireNonNull(mediaMmsMessageRecord.getPayment()), colorizer);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
       footer.setVisibility(VISIBLE);
     } else {
@@ -1744,6 +1790,7 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
     if (isFooterVisible(current, next, isGroupThread)) {
       ConversationItemFooter activeFooter = getActiveFooter(current);
       activeFooter.setVisibility(VISIBLE);
+<<<<<<< HEAD
       activeFooter.setMessageRecord(current, locale, displayMode);
 
       if (MessageRecordUtil.isEditMessage(current)) {
@@ -1756,6 +1803,22 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
         activeFooter.getDateView().setOnClickListener(null);
         activeFooter.getDateView().setClickable(false);
       }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      activeFooter.setMessageRecord(current, locale);
+=======
+      activeFooter.setMessageRecord(current, locale, displayMode);
+
+      if (MessageRecordUtil.isEditMessage(current)) {
+        activeFooter.getDateView().setOnClickListener(v -> {
+          if (eventListener != null) {
+            eventListener.onEditedIndicatorClicked(current);
+          }
+        });
+      } else {
+        activeFooter.getDateView().setOnClickListener(null);
+        activeFooter.getDateView().setClickable(false);
+      }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
       if (hasWallpaper && hasNoBubble((messageRecord))) {
         if (messageRecord.isOutgoing()) {
@@ -1803,7 +1866,13 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
   }
 
   private void setHasBeenQuoted(@NonNull ConversationMessage message) {
+<<<<<<< HEAD
     if (message.hasBeenQuoted() && !isCondensedMode() && quotedIndicator != null && batchSelected.isEmpty() && displayMode != ConversationItemDisplayMode.EditHistory.INSTANCE) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (message.hasBeenQuoted() && !isCondensedMode() && quotedIndicator != null && batchSelected.isEmpty()) {
+=======
+    if (message.hasBeenQuoted() && !isCondensedMode() && quotedIndicator != null && batchSelected.isEmpty() && displayMode != ConversationItemDisplayMode.EXTRA_CONDENSED) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       quotedIndicator.setVisibility(VISIBLE);
       quotedIndicator.setOnClickListener(quotedIndicatorClickListener);
     } else if (quotedIndicator != null) {
@@ -1826,11 +1895,17 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
   }
 
   private boolean forceFooter(@NonNull MessageRecord messageRecord) {
+<<<<<<< HEAD
     return hasAudio(messageRecord) || MessageRecordUtil.isEditMessage(messageRecord) || displayMode == ConversationItemDisplayMode.EditHistory.INSTANCE;
   }
 
   private boolean forceGroupHeader(@NonNull MessageRecord messageRecord) {
     return displayMode == ConversationItemDisplayMode.EditHistory.INSTANCE;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    return hasAudio(messageRecord);
+=======
+    return hasAudio(messageRecord) || MessageRecordUtil.isEditMessage(messageRecord);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   private ConversationItemFooter getActiveFooter(@NonNull MessageRecord messageRecord) {
@@ -1874,8 +1949,16 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
     if (isGroupThread && !current.isOutgoing()) {
       contactPhotoHolder.setVisibility(VISIBLE);
 
+<<<<<<< HEAD
       if (!previous.isPresent() || previous.get().isUpdate() || !current.getFromRecipient().equals(previous.get().getFromRecipient()) ||
           !DateUtils.isSameDay(previous.get().getTimestamp(), current.getTimestamp()) || !isWithinClusteringTime(current, previous.get()) || forceGroupHeader(current))
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (!previous.isPresent() || previous.get().isUpdate() || !current.getRecipient().equals(previous.get().getRecipient()) ||
+          !DateUtils.isSameDay(previous.get().getTimestamp(), current.getTimestamp()) || !isWithinClusteringTime(current, previous.get()))
+=======
+      if (!previous.isPresent() || previous.get().isUpdate() || !current.getFromRecipient().equals(previous.get().getFromRecipient()) ||
+          !DateUtils.isSameDay(previous.get().getTimestamp(), current.getTimestamp()) || !isWithinClusteringTime(current, previous.get()))
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       {
         groupSenderHolder.setVisibility(VISIBLE);
 
@@ -1889,7 +1972,13 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
         groupSenderHolder.setVisibility(GONE);
       }
 
+<<<<<<< HEAD
       if (!next.isPresent() || next.get().isUpdate() || !current.getFromRecipient().equals(next.get().getFromRecipient()) || !isWithinClusteringTime(current, next.get()) || forceGroupHeader(current)) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (!next.isPresent() || next.get().isUpdate() || !current.getRecipient().equals(next.get().getRecipient()) || !isWithinClusteringTime(current, next.get())) {
+=======
+      if (!next.isPresent() || next.get().isUpdate() || !current.getFromRecipient().equals(next.get().getFromRecipient()) || !isWithinClusteringTime(current, next.get())) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         contactPhoto.setVisibility(VISIBLE);
         badgeImageView.setVisibility(VISIBLE);
       } else {
@@ -1933,7 +2022,13 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
 
     int background;
 
+<<<<<<< HEAD
     if (isSingularMessage(current, previous, next, isGroupThread) || displayMode == ConversationItemDisplayMode.EditHistory.INSTANCE) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (isSingularMessage(current, previous, next, isGroupThread)) {
+=======
+    if (isSingularMessage(current, previous, next, isGroupThread) || displayMode == ConversationItemDisplayMode.EXTRA_CONDENSED) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       if (current.isOutgoing()) {
         background = R.drawable.message_bubble_background_sent_alone;
         outliner.setRadius(bigRadius);
@@ -2014,6 +2109,10 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
   }
 
   private boolean isFooterVisible(@NonNull MessageRecord current, @NonNull Optional<MessageRecord> next, boolean isGroupThread) {
+    if (displayMode == ConversationItemDisplayMode.EXTRA_CONDENSED) {
+      return false;
+    }
+
     boolean differentTimestamps = next.isPresent() && !DateUtils.isSameExtendedRelativeTimestamp(next.get().getTimestamp(), current.getTimestamp());
 
     return forceFooter(messageRecord) || current.getExpiresIn() > 0 || !current.isSecure() || current.isPending() ||
@@ -2029,11 +2128,23 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
     int spacingTop    = readDimen(context, R.dimen.conversation_vertical_message_spacing_collapse);
     int spacingBottom = spacingTop;
 
+<<<<<<< HEAD
     if (isStartOfMessageCluster(current, previous, isGroupThread) && (displayMode != ConversationItemDisplayMode.EditHistory.INSTANCE || next.isEmpty())) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (isStartOfMessageCluster(current, previous, isGroupThread)) {
+=======
+    if (isStartOfMessageCluster(current, previous, isGroupThread) && (displayMode != ConversationItemDisplayMode.EXTRA_CONDENSED || next.isEmpty())) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       spacingTop = readDimen(context, R.dimen.conversation_vertical_message_spacing_default);
     }
 
+<<<<<<< HEAD
     if (isEndOfMessageCluster(current, next, isGroupThread) || displayMode == ConversationItemDisplayMode.EditHistory.INSTANCE) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (isEndOfMessageCluster(current, next, isGroupThread)) {
+=======
+    if (isEndOfMessageCluster(current, next, isGroupThread) || displayMode == ConversationItemDisplayMode.EXTRA_CONDENSED) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       spacingBottom = readDimen(context, R.dimen.conversation_vertical_message_spacing_default);
     }
 
@@ -2810,4 +2921,92 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
       footer.setAudioDuration(durationMillis, playheadMillis);
     }
   }
+<<<<<<< HEAD
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+
+  private void handleMessageApproval() {
+    final int title;
+    final int message;
+
+    if (messageRecord.isMms()) title = R.string.ConversationItem_click_to_approve_unencrypted_mms_dialog_title;
+    else title = R.string.ConversationItem_click_to_approve_unencrypted_sms_dialog_title;
+
+    message = R.string.ConversationItem_click_to_approve_unencrypted_dialog_message;
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    builder.setTitle(title);
+
+    if (message > -1) builder.setMessage(message);
+
+    builder.setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+      MessageTable db = messageRecord.isMms() ? SignalDatabase.messages()
+                                              : SignalDatabase.messages();
+
+      db.markAsInsecure(messageRecord.getId());
+      db.markAsOutbox(messageRecord.getId());
+      db.markAsForcedSms(messageRecord.getId());
+
+      if (messageRecord.isMms()) {
+        MmsSendJob.enqueue(context,
+                           ApplicationDependencies.getJobManager(),
+                           messageRecord.getId());
+      } else {
+        ApplicationDependencies.getJobManager().add(new SmsSendJob(messageRecord.getId(),
+                                                                   messageRecord.getIndividualRecipient()));
+      }
+    });
+
+    builder.setNegativeButton(R.string.no, (dialogInterface, i) -> {
+      if (messageRecord.isMms()) {
+        SignalDatabase.messages().markAsSentFailed(messageRecord.getId());
+      } else {
+        SignalDatabase.messages().markAsSentFailed(messageRecord.getId());
+      }
+    });
+    builder.show();
+  }
+=======
+
+  private void handleMessageApproval() {
+    final int title;
+    final int message;
+
+    if (messageRecord.isMms()) title = R.string.ConversationItem_click_to_approve_unencrypted_mms_dialog_title;
+    else title = R.string.ConversationItem_click_to_approve_unencrypted_sms_dialog_title;
+
+    message = R.string.ConversationItem_click_to_approve_unencrypted_dialog_message;
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    builder.setTitle(title);
+
+    if (message > -1) builder.setMessage(message);
+
+    builder.setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+      MessageTable db = messageRecord.isMms() ? SignalDatabase.messages()
+                                              : SignalDatabase.messages();
+
+      db.markAsInsecure(messageRecord.getId());
+      db.markAsOutbox(messageRecord.getId());
+      db.markAsForcedSms(messageRecord.getId());
+
+      if (messageRecord.isMms()) {
+        MmsSendJob.enqueue(context,
+                           ApplicationDependencies.getJobManager(),
+                           messageRecord.getId());
+      } else {
+        ApplicationDependencies.getJobManager().add(new SmsSendJob(messageRecord.getId(),
+                                                                   messageRecord.getToRecipient()));
+      }
+    });
+
+    builder.setNegativeButton(R.string.no, (dialogInterface, i) -> {
+      if (messageRecord.isMms()) {
+        SignalDatabase.messages().markAsSentFailed(messageRecord.getId());
+      } else {
+        SignalDatabase.messages().markAsSentFailed(messageRecord.getId());
+      }
+    });
+    builder.show();
+  }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 }

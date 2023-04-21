@@ -21,9 +21,16 @@ data class InternalSettingsState(
   val delayResends: Boolean,
   val disableStorageService: Boolean,
   val canClearOnboardingState: Boolean,
+<<<<<<< HEAD
   val pnpInitialized: Boolean,
   val useConversationItemV2ForMedia: Boolean,
   val hasPendingOneTimeDonation: Boolean,
   val hevcEncoding: Boolean,
   val newCallingUi: Boolean
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  val pnpInitialized: Boolean
+=======
+  val pnpInitialized: Boolean,
+  val useConversationFragmentV2: Boolean
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 )

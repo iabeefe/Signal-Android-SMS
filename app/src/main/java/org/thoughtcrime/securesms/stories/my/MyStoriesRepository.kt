@@ -5,8 +5,14 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.thoughtcrime.securesms.conversation.ConversationMessage
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.database.GroupReceiptTable
 import org.thoughtcrime.securesms.database.RxDatabaseObserver
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import org.thoughtcrime.securesms.database.DatabaseObserver
+=======
+import org.thoughtcrime.securesms.database.RxDatabaseObserver
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.model.MessageRecord
 import org.thoughtcrime.securesms.recipients.Recipient

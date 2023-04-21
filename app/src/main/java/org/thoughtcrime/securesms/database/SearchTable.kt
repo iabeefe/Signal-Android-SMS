@@ -154,6 +154,7 @@ class SearchTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
 
       Log.i(TAG, "Re-indexing. Operating on ID's 1-$maxId in steps of $batchSize.")
 
+<<<<<<< HEAD
       for (i in 1..maxId step batchSize) {
         Log.i(TAG, "Reindexing ID's [$i, ${i + batchSize})")
 
@@ -179,6 +180,39 @@ class SearchTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
     } catch (e: IllegalStateException) {
       Log.w(TAG, "Failed to rebuild index!", e)
       return false
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    for (i in 1..maxId step batchSize) {
+      Log.i(TAG, "Reindexing ID's [$i, ${i + batchSize})")
+      writableDatabase.execSQL(
+        """
+        INSERT INTO $FTS_TABLE_NAME ($ID, $BODY) 
+            SELECT 
+              ${MessageTable.ID}, 
+              ${MessageTable.BODY}
+            FROM 
+              ${MessageTable.TABLE_NAME} 
+            WHERE 
+              ${MessageTable.ID} >= $i AND
+              ${MessageTable.ID} < ${i + batchSize}
+        """.trimIndent()
+      )
+=======
+    for (i in 1..maxId step batchSize) {
+      Log.i(TAG, "Reindexing ID's [$i, ${i + batchSize})")
+      writableDatabase.execSQL(
+        """
+        INSERT INTO $FTS_TABLE_NAME ($ID, $BODY) 
+            SELECT 
+              ${MessageTable.ID}, 
+              ${MessageTable.BODY}
+            FROM 
+              ${MessageTable.TABLE_NAME} 
+            WHERE 
+              ${MessageTable.ID} >= $i AND
+              ${MessageTable.ID} < ${i + batchSize}
+        """
+      )
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
 
     return true

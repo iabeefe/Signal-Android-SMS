@@ -241,6 +241,7 @@
     <string name="BucketedThreadMedia_Medium">मध्यम</string>
     <string name="BucketedThreadMedia_Small">छोटे</string>
 
+<<<<<<< HEAD
     <!-- CallInfoView -->
     <!-- Unknown people row text when the only people in the call are unknowns -->
     <plurals name="CallInfoView__d_people">
@@ -263,6 +264,13 @@
     <!-- Toasted when user device does not support video recording -->
     <string name="CameraFragment__video_recording_is_not_supported_on_your_device">आपल्या डिव्हाइसवर व्हिडीओ रेकॉर्डिंग समर्थित नाही</string>
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- CameraFragment -->
+    <!-- Toasted when user device does not support video recording -->
+    <string name="CameraFragment__video_recording_is_not_supported_on_your_device">Video recording is not supported on your device</string>
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- CameraXFragment -->
     <string name="CameraXFragment_tap_for_photo_hold_for_video">फोटो करिता टॅप करा, व्हिडिओ करिता धरून ठेवा</string>
     <string name="CameraXFragment_capture_description">कॅप्चर करा</string>
@@ -426,6 +434,7 @@
     <string name="ConversationItem_cant_download_image_you_will_need_to_send_it_again">प्रतिमा डाउनलोड करु शकत नाही. आपणाला तो पुन्हा पाठवण्याची गरज आहे.</string>
     <!-- Dialog error message shown when user can\'t download a their own video message via a linked device due to a permanent failure (e.g., unable to decrypt) -->
     <string name="ConversationItem_cant_download_video_you_will_need_to_send_it_again">व्हिडिओ डाउनलोड करु शकत नाही. आपणाला तो पुन्हा पाठवण्याची गरज आहे.</string>
+<<<<<<< HEAD
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp represents a message that has been edited within the last minute. -->
     <string name="ConversationItem_edited_now_timestamp_footer">आत्ता संपादित केलेले</string>
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. This is displayed when the edit has occurred between 1-59 minutes ago. -->
@@ -434,16 +443,30 @@
     <string name="ConversationItem_edited_absolute_timestamp_footer">%1$s संपादित केलेले</string>
     <!-- Displayed if the link preview in the conversation item is for a call link call -->
     <string name="ConversationItem__join_call">कॉलमध्ये सामील व्हा</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp will go from \'11m\' to \'edited 11m\' -->
+    <string name="ConversationItem_edited_timestamp_footer">edited %1$s</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- ConversationActivity -->
     <string name="ConversationActivity_add_attachment">संलग्न जोडा</string>
+<<<<<<< HEAD
     <!-- Accessibility text associated with image button to send an edited message. -->
     <string name="ConversationActivity_send_edit">संपादन पाठवा</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ConversationActivity_select_contact_info">संपर्क माहिती जोडा</string>
+=======
+    <!-- Accessibility text associated with image button to send an edited message. -->
+    <string name="ConversationActivity_send_edit">Send edit</string>
+    <string name="ConversationActivity_select_contact_info">संपर्क माहिती जोडा</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ConversationActivity_compose_message">संदेश लिहा</string>
     <string name="ConversationActivity_sorry_there_was_an_error_setting_your_attachment">क्षमस्व, आपल्या संलग्न मध्ये एक त्रुटी होती.</string>
     <string name="ConversationActivity_recipient_is_not_a_valid_sms_or_email_address_exclamation">प्राप्तकर्ता एक वैध SMS किंवा ईमेल ऍड्रेस नाही!</string>
     <string name="ConversationActivity_message_is_empty_exclamation">संदेश रिक्त आहे!</string>
     <string name="ConversationActivity_group_members">गट सदस्य</string>
+<<<<<<< HEAD
     <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
     <plurals name="ConversationActivity_edit_message_too_old">
         <item quantity="one">आपण हा संदेश पाठवल्यापासून फक्त %1$d तासाच्या आत संपादन करणे लागू केले जाऊ शकते.</item>
@@ -454,6 +477,18 @@
         <item quantity="one">या संदेशाला फक्त %1$d संपादन लागू केले जाऊ शकते.</item>
         <item quantity="other">या संदेशाला फक्त %1$d संपादने लागू केली जाऊ शकतात.</item>
     </plurals>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ConversationActivity__tap_here_to_start_a_group_call">गट कॉल प्रारंभ करण्यासाठी येथे टॅप करा</string>
+=======
+    <string name="ConversationActivity__tap_here_to_start_a_group_call">गट कॉल प्रारंभ करण्यासाठी येथे टॅप करा</string>
+    <!-- Warning toast shown to user if they somehow try to edit an sms/mms message -->
+    <string name="ConversationActivity_edit_sms_message_error">Unable to edit SMS messages</string>
+    <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
+    <plurals name="ConversationActivity_edit_message_too_old">
+        <item quantity="one">Edits can only be applied within %1$d hour from the time you sent this message.</item>
+        <item quantity="other">Edits can only be applied within %1$d hours from the time you sent this message.</item>
+    </plurals>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <string name="ConversationActivity_invalid_recipient">अवैध प्राप्तकर्ता!</string>
     <string name="ConversationActivity_added_to_home_screen">मुख्यस्क्रीन वर जोडले</string>
@@ -1487,6 +1522,7 @@
     <string name="ImageEditorHud_draw_to_blur_additional_faces_or_areas">अतिरिक्त चेहरे किंवा क्षेत्र अस्पष्ट करण्यासाठी रेखाटा</string>
 
     <!-- InputPanel -->
+<<<<<<< HEAD
     <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">व्हॉईस संदेश रेकॉर्ड करण्यास टॅप व धरा, पाठवण्यास सोडा</string>
     <!-- When editing a message, label shown above the text input field in the composer -->
     <string name="InputPanel_edit_message">संदेश संपादित करा</string>
@@ -1496,6 +1532,17 @@
     <string name="InputPanel__this_action_cant_be_undone">ही क्रिया पूर्ववत केली जाऊ शकत नाही.</string>
     <!-- Button inside an alert dialog confirming the deletion of their draft -->
     <string name="InputPanel__discard">टाकून द्या</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">व्हॉईस संदेश रेकॉर्ड करण्यासाठी टॅप करा आणि धरून ठेवा, पाठविण्यासाठी सोडा</string>
+    <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
+    <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">SMS संदेशन यापुढे Signal मध्ये समर्थित नाही.</string>
+=======
+    <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">व्हॉईस संदेश रेकॉर्ड करण्यासाठी टॅप करा आणि धरून ठेवा, पाठविण्यासाठी सोडा</string>
+    <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
+    <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">SMS संदेशन यापुढे Signal मध्ये समर्थित नाही.</string>
+    <!-- When editing a message, label shown above the text input field in the composer -->
+    <string name="InputPanel_edit_message">Edit message</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- InviteActivity -->
     <string name="InviteActivity_share">सामायिक करा</string>
@@ -2443,6 +2490,7 @@
     <string name="RegistrationActivity_invalid_number">अवैध नंबर</string>
     <string name="RegistrationActivity_the_number_you_specified_s_is_invalid">आपण निर्दिष्ट केलेला नंबर (%1$s) अवैध आहे.
     </string>
+<<<<<<< HEAD
 
     <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
     <string name="RegistrationActivity_phone_number_verification_dialog_title">खाली दिलेला फोन नंबर बरोबर आहे काय?</string>
@@ -2450,6 +2498,17 @@
     <string name="RegistrationActivity_additional_verification_required">अतिरिक्त सत्यापन आवश्यक आहे</string>
     <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
     <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">या नंबरला सत्यापन कोड पाठवला जाईल. कॅरियर दर लागू शकतात.</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to">सत्यापन कोड यावर पाठवला जाईल:</string>
+=======
+
+    <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
+    <string name="RegistrationActivity_phone_number_verification_dialog_title">Is the phone number below correct?</string>
+    <!-- Dialog title shown when re-registering and skip sms flow failed or was aborted and now need perform additional verification via sms and warn about carrier charges -->
+    <string name="RegistrationActivity_additional_verification_required">Additional verification required</string>
+    <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">A verification code will be sent to this number. Carrier rates may apply.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="RegistrationActivity_you_will_receive_a_call_to_verify_this_number">हा नंबर सत्यापित करण्यासाठी आपल्याला कॉल येईल.</string>
     <string name="RegistrationActivity_edit_number">नंबर संपादित करा</string>
     <string name="RegistrationActivity_missing_google_play_services">Google प्ले सेवा नाहीत</string>
@@ -2502,10 +2561,20 @@
     <string name="RegistrationActivity_next">पुढे</string>
     <string name="RegistrationActivity_continue">सुरू ठेवा</string>
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">गोपनीयता आपल्यासोबत न्या.\nप्रत्येक संदेशात आपण स्वतः रहा.</string>
+<<<<<<< HEAD
     <!-- Title of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_phone_number">फोन नंबर</string>
     <!-- Subtitle of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_enter_your_phone_number_to_get_started">सुरूवात करण्यासाठी आपला फोन नंबर प्रविष्ट करा.</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_enter_your_phone_number">आपला फोन नंबर प्रविष्ट करा</string>
+    <string name="RegistrationActivity_you_will_receive_a_verification_code">आपल्याला एक सत्यापन कोड प्राप्त होईल.\nवाहक दर लागू होऊ शकतात.</string>
+=======
+    <!-- Title of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_phone_number">Phone number</string>
+    <!-- Subtitle of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Enter your phone number to get started.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="RegistrationActivity_enter_the_code_we_sent_to_s">%1$s वर पाठवलेला कोड प्रविष्ट करा</string>
 
     <string name="RegistrationActivity_phone_number_description">फोन नंबर</string>
@@ -2671,8 +2740,14 @@
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
     <!-- Thread preview for a recipient that has been hidden -->
+<<<<<<< HEAD
     <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
+=======
+    <string name="ThreadRecord_hidden_recipient">आपण या व्यक्तीला लपवलेले आहे, त्यांना पुन्हा आपल्या यादीमध्ये जोडण्यासाठी संदेश पाठवा.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ThreadRecord_photo">फोटो</string>
     <string name="ThreadRecord_gif">GIF</string>
     <string name="ThreadRecord_voice_message">व्हॉईस संदेश</string>
@@ -3460,8 +3535,14 @@
     <!-- message_Details_recipient -->
     <string name="message_details_recipient__failed_to_send">पाठविण्यात अयशस्वी</string>
     <string name="message_details_recipient__new_safety_number">नवीन सुरक्षितता नंबर</string>
+<<<<<<< HEAD
     <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
     <string name="MessageDetails__view_edit_history">संपादन इतिहास पहा</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
+    <string name="MessageDetails__view_edit_history">View edit history</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- AndroidManifest.xml -->
     <string name="AndroidManifest__create_passphrase">पासफ्रेझ तयार करा</string>
@@ -3774,12 +3855,22 @@
     <string name="preferences_success">यशस्वी</string>
     <string name="preferences_failed_to_connect">कनेक्ट करण्यात अयशस्वी</string>
     <string name="preferences_enter_proxy_address">प्रॉक्सी पत्ता प्रविष्ट करा</string>
+<<<<<<< HEAD
     <!-- Preference title for changing navigation (bottom) bar size -->
     <string name="preferences_navigation_bar_size">नॅव्हिगेशन बार आकार</string>
     <!-- Preference summary for normal navigation bar size -->
     <string name="preferences_normal">सामान्य</string>
     <!-- Preference summary for compact navigation bar size -->
     <string name="preferences_compact">संक्षिप्त</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Preference title for changing navigation (bottom) bar size -->
+    <string name="preferences_navigation_bar_size">Navigation bar size</string>
+    <!-- Preference summary for normal navigation bar size -->
+    <string name="preferences_normal">Normal</string>
+    <!-- Preference summary for compact navigation bar size -->
+    <string name="preferences_compact">Compact</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
 
     <string name="configurable_single_select__customize_option">पर्याय सानुकूलित करा</string>
@@ -4071,8 +4162,14 @@
     <string name="conversation_selection__menu_forward">फॉर्वर्ड करा</string>
     <!-- Button to reply to a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
     <string name="conversation_selection__menu_reply">प्रत्युत्तर द्या</string>
+<<<<<<< HEAD
     <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
     <string name="conversation_selection__menu_edit">संपादन</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
+    <string name="conversation_selection__menu_edit">Edit</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Button to save a message attachment (image, file etc.); Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
     <string name="conversation_selection__menu_save">जतन करा</string>
     <!-- Button to retry sending a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
@@ -5082,12 +5179,18 @@
     <string name="ExportAccountDataFragment__export_as_txt">TXT म्हणून एक्सपोर्ट करा</string>
     <!-- Label for the text file option -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_as_txt_label">वाचण्यास-सोपी-मजकूर फाईल</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_as_txt_label">Easy-to-read text file</string>
 =======
     <string name="ExportAccountDataFragment__export_as_txt_label">वाचण्यास सोपी मजकूर फाईल</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_as_txt_label">वाचण्यास सोपी मजकूर फाईल</string>
+=======
+    <string name="ExportAccountDataFragment__export_as_txt_label">वाचण्यास-सोपी-मजकूर फाईल</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Radio option to export the data as a json (java script object notation) file .json -->
     <string name="ExportAccountDataFragment__export_as_json">JSON म्हणून एक्सपोर्ट करा</string>
     <!-- Label for the json file option, the account data in a machine readable file format -->
@@ -5139,12 +5242,18 @@
     <string name="ExportAccountDataFragment__export_report_confirmation">डेटा एक्सपोर्ट करायचा?</string>
     <!-- Message for export confirmation dialog -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__export_report_confirmation_message">आपण विश्वास करत असलेल्या लोकांसह फक्त आपले Signal डेटा अकाऊंट शेअर करा.</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__export_report_confirmation_message">Only share your Signal account data with people or apps you trust.</string>
 =======
     <string name="ExportAccountDataFragment__export_report_confirmation_message">आपण विश्वास करत असलेल्या लोकांसह फक्त आपला Signal डेटा अकाऊंट शेअर करा.</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">आपण विश्वास करत असलेल्या लोकांसह फक्त आपला Signal डेटा अकाऊंट शेअर करा.</string>
+=======
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">आपण विश्वास करत असलेल्या लोकांसह फक्त आपले Signal डेटा अकाऊंट शेअर करा.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">एक्सपोर्ट करा</string>
 
@@ -5189,6 +5298,7 @@
 <<<<<<< HEAD
     <string name="ExportAccountDataFragment__download_progress">रिपोर्ट तयार करत आहे…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
+<<<<<<< HEAD
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">आपला रिपोर्ट फक्त एक्स्पोर्ट करण्याच्या वेळी तयार केला जाईल आणि तो Signal द्वारे आपल्या डिव्हाईसवर स्टोअर केला जाणार नाही.</string>
 ||||||| parent of ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="ExportAccountDataFragment__download_progress">Downloading report…</string>
@@ -5219,6 +5329,11 @@
 =======
     <string name="ExportAccountDataFragment__report_not_stored_disclaimer">आपला रिपोर्ट फक्त एक्स्पोर्ट करण्याच्या वेळी तयार केला जाईल आणि तो Signal आपल्या डिव्हाईसवर स्टोअर केला जाणार नाही.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">आपला रिपोर्ट फक्त एक्स्पोर्ट करण्याच्या वेळी तयार केला जाईल आणि तो Signal आपल्या डिव्हाईसवर स्टोअर केला जाणार नाही.</string>
+=======
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">आपला रिपोर्ट फक्त एक्स्पोर्ट करण्याच्या वेळी तयार केला जाईल आणि तो Signal द्वारे आपल्या डिव्हाईसवर स्टोअर केला जाणार नाही.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- ChangeNumberFragment -->
     <string name="ChangeNumberFragment__use_this_to_change_your_current_phone_number_to_a_new_phone_number">तुमचा वर्तमान फोन नंबर नवीन फोन नंबरवर बदलण्यासाठी याचा वापर करा.आपण हा बदल पूर्ववत करु शकत नाही.\n\nपुढे जाण्यापूर्वी, तुमच्या नवीन नंबरवर SMS किंवा कॉल मिळू शकतील याची खात्री करा.</string>
@@ -7862,7 +7977,7 @@
     <!-- Button text to dismiss the sheet and add it as an upcoming call -->
     <string name="CreateCallLinkBottomSheetDialogFragment__done">झाले</string>
     <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">शेअर शीट उघडण्यास अपयशी.</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Unable to share call link.</string>
     <!-- Displayed when we copy the call link to the clipboard -->
     <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">क्लिपबोर्ड वर कॉपी केले</string>
 
@@ -7874,6 +7989,21 @@
     <!-- Placeholder text on input field when editing call name -->
     <string name="EditCallLinkNameDialogFragment__call_name">कॉलचे नाव</string>
 
+<<<<<<< HEAD
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- ChooseNavigationBarStyleFragment -->
+    <!-- Dialog title, displayed below the header image -->
+    <string name="ChooseNavigationBarStyleFragment__navigation_bar_size">Navigation bar size</string>
+    <!-- Toggle button label for normal size -->
+    <string name="ChooseNavigationBarStyleFragment__normal">Normal</string>
+    <!-- Toggle button label for compact size -->
+    <string name="ChooseNavigationBarStyleFragment__compact">Compact</string>
+
+    <!-- Title shown at top of bottom sheet dialog for displaying a message\'s edit history -->
+    <string name="EditMessageHistoryDialog_title">Edit history</string>
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- EOF -->
 </resources>

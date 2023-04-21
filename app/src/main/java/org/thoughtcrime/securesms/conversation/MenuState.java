@@ -76,6 +76,7 @@ public final class MenuState {
     return paymentDetails;
   }
 
+<<<<<<< HEAD
   public boolean shouldShowEditAction() {
     return edit;
   }
@@ -84,6 +85,21 @@ public final class MenuState {
                                        @NonNull Set<MultiselectPart> selectedParts,
                                        boolean shouldShowMessageRequest,
                                        boolean isNonAdminInAnnouncementGroup)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  static MenuState getMenuState(@NonNull Recipient conversationRecipient,
+                                @NonNull Set<MultiselectPart> selectedParts,
+                                boolean shouldShowMessageRequest,
+                                boolean isNonAdminInAnnouncementGroup)
+=======
+  boolean shouldShowEditAction() {
+    return edit;
+  }
+
+  static MenuState getMenuState(@NonNull Recipient conversationRecipient,
+                                @NonNull Set<MultiselectPart> selectedParts,
+                                boolean shouldShowMessageRequest,
+                                boolean isNonAdminInAnnouncementGroup)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   {
     
     Builder builder         = new Builder();
@@ -178,11 +194,19 @@ public final class MenuState {
              .shouldShowForwardAction(shouldShowForwardAction)
              .shouldShowDetailsAction(!actionMessage && !conversationRecipient.isReleaseNotes())
              .shouldShowReplyAction(canReplyToMessage(conversationRecipient, actionMessage, messageRecord, shouldShowMessageRequest, isNonAdminInAnnouncementGroup));
+<<<<<<< HEAD
 
       builder.shouldShowEdit(!actionMessage &&
                              hasText &&
                              !multiSelectRecord.getConversationMessage().getOriginalMessage().isFailed() &&
                              MessageConstraintsUtil.isValidEditMessageSend(multiSelectRecord.getConversationMessage().getOriginalMessage(), System.currentTimeMillis()));
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+
+      builder.shouldShowEdit(!actionMessage &&
+                             hasText &&
+                             MessageConstraintsUtil.isValidEditMessageSend(messageRecord, System.currentTimeMillis()));
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
 
     return builder.shouldShowCopyAction(!actionMessage && !remoteDelete && hasText && !hasGift && !hasPayment)
@@ -217,8 +241,32 @@ public final class MenuState {
            !conversationRecipient.isReleaseNotes();
   }
 
+<<<<<<< HEAD
   public static boolean isActionMessage(@NonNull MessageRecord messageRecord) {
     return messageRecord.isInMemoryMessageRecord() || messageRecord.isUpdate();
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  static boolean isActionMessage(@NonNull MessageRecord messageRecord) {
+    return messageRecord.isGroupAction() ||
+           messageRecord.isCallLog() ||
+           messageRecord.isJoined() ||
+           messageRecord.isExpirationTimerUpdate() ||
+           messageRecord.isEndSession() ||
+           messageRecord.isIdentityUpdate() ||
+           messageRecord.isIdentityVerified() ||
+           messageRecord.isIdentityDefault() ||
+           messageRecord.isProfileChange() ||
+           messageRecord.isGroupV1MigrationEvent() ||
+           messageRecord.isChatSessionRefresh() ||
+           messageRecord.isInMemoryMessageRecord() ||
+           messageRecord.isChangeNumber() ||
+           messageRecord.isBoostRequest() ||
+           messageRecord.isPaymentsRequestToActivate() ||
+           messageRecord.isPaymentsActivated() ||
+           messageRecord.isSmsExportType();
+=======
+  static boolean isActionMessage(@NonNull MessageRecord messageRecord) {
+    return messageRecord.isInMemoryMessageRecord() || messageRecord.isUpdate();
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   private final static class Builder {

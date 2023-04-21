@@ -115,7 +115,13 @@ public final class FeatureFlags {
   private static final String CALLS_TAB                         = "android.calls.tab";
   private static final String TEXT_FORMATTING_SPOILER_SEND      = "android.textFormatting.spoilerSend";
   private static final String AD_HOC_CALLING                    = "android.calling.ad.hoc";
+<<<<<<< HEAD
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  private static final String EDIT_MESSAGE_RECEIVE              = "android.editMessage.receive";
+  private static final String EDIT_MESSAGE_SEND                 = "android.editMessage.send";
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
   /**
    * We will only store remote values for flags in this set. If you want a flag to be controllable
@@ -182,8 +188,16 @@ public final class FeatureFlags {
 =======
       ANY_ADDRESS_PORTS_KILL_SWITCH,
       CALLS_TAB,
+<<<<<<< HEAD
       TEXT_FORMATTING_SPOILER_SEND
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      TEXT_FORMATTING_SPOILER_SEND
+=======
+      TEXT_FORMATTING_SPOILER_SEND,
+      EDIT_MESSAGE_RECEIVE,
+      EDIT_MESSAGE_SEND
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   );
 
   @VisibleForTesting
@@ -247,7 +261,17 @@ public final class FeatureFlags {
       CREDIT_CARD_PAYMENTS,
       PAYMENTS_REQUEST_ACTIVATE_FLOW,
       CDS_HARD_LIMIT,
+<<<<<<< HEAD
       TEXT_FORMATTING
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      TEXT_FORMATTING,
+      TEXT_FORMATTING_SPOILER_SEND
+=======
+      TEXT_FORMATTING,
+      TEXT_FORMATTING_SPOILER_SEND,
+      EDIT_MESSAGE_RECEIVE,
+      EDIT_MESSAGE_SEND
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   );
 
   /**
@@ -633,6 +657,7 @@ public final class FeatureFlags {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   /**
    * Whether or not the calls tab is enabled
@@ -649,6 +674,17 @@ public final class FeatureFlags {
   }
 
 =======
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  public static boolean editMessageReceiving() {
+    return getBoolean(EDIT_MESSAGE_RECEIVE, false);
+  }
+
+  public static boolean editMessageSending() {
+    return getBoolean(EDIT_MESSAGE_SEND, false);
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   /**
    * Whether or not the calls tab is enabled
    */

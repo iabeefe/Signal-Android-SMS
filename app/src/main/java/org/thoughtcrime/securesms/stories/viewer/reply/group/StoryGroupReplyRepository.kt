@@ -51,6 +51,7 @@ class StoryGroupReplyRepository {
       }
   }
 
+<<<<<<< HEAD
   fun getNameColorsMap(storyId: Long): Observable<Map<RecipientId, NameColor>> {
     return Single
       .fromCallable {
@@ -65,6 +66,33 @@ class StoryGroupReplyRepository {
         } catch (e: NoSuchMessageException) {
           emptyMap()
         }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  fun getNameColorsMap(storyId: Long, sessionMemberCache: MutableMap<GroupId, Set<Recipient>>): Observable<Map<RecipientId, NameColor>> {
+    return Single.fromCallable { SignalDatabase.messages.getMessageRecord(storyId).individualRecipient.id }
+      .subscribeOn(Schedulers.io())
+      .flatMapObservable { recipientId ->
+        Observable.create<Map<RecipientId, NameColor>?> { emitter ->
+          val nameColorsMapLiveData = NameColors.getNameColorsMapLiveData(MutableLiveData(recipientId), sessionMemberCache)
+          val observer = Observer<Map<RecipientId, NameColor>> { emitter.onNext(it) }
+
+          ThreadUtil.postToMain { nameColorsMapLiveData.observeForever(observer) }
+
+          emitter.setCancellable { ThreadUtil.postToMain { nameColorsMapLiveData.removeObserver(observer) } }
+        }.subscribeOn(Schedulers.io())
+=======
+  fun getNameColorsMap(storyId: Long, sessionMemberCache: MutableMap<GroupId, Set<Recipient>>): Observable<Map<RecipientId, NameColor>> {
+    return Single.fromCallable { SignalDatabase.messages.getMessageRecord(storyId).fromRecipient.id }
+      .subscribeOn(Schedulers.io())
+      .flatMapObservable { recipientId ->
+        Observable.create<Map<RecipientId, NameColor>?> { emitter ->
+          val nameColorsMapLiveData = NameColors.getNameColorsMapLiveData(MutableLiveData(recipientId), sessionMemberCache)
+          val observer = Observer<Map<RecipientId, NameColor>> { emitter.onNext(it) }
+
+          ThreadUtil.postToMain { nameColorsMapLiveData.observeForever(observer) }
+
+          emitter.setCancellable { ThreadUtil.postToMain { nameColorsMapLiveData.removeObserver(observer) } }
+        }.subscribeOn(Schedulers.io())
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       }
       .toObservable()
   }

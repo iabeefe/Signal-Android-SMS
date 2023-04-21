@@ -210,8 +210,14 @@ public final class PushGroupSendJob extends PushSendJob {
     }
 
     try {
+<<<<<<< HEAD
       log(TAG, String.valueOf(message.getSentTimeMillis()), "Sending message: " + messageId + ", Recipient: " + message.getThreadRecipient()
                                                                                                                        .getId() + ", Thread: " + threadId + ", Attachments: " + buildAttachmentString(message.getAttachments()));
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      log(TAG, String.valueOf(message.getSentTimeMillis()), "Sending message: " + messageId + ", Recipient: " + message.getRecipient().getId() + ", Thread: " + threadId + ", Attachments: " + buildAttachmentString(message.getAttachments()));
+=======
+      log(TAG, String.valueOf(message.getSentTimeMillis()), "Sending message: " + messageId + ", Recipient: " + message.getThreadRecipient().getId() + ", Thread: " + threadId + ", Attachments: " + buildAttachmentString(message.getAttachments()));
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
       if (!groupRecipient.resolve().isProfileSharing() && !database.isGroupQuitMessage(messageId)) {
         RecipientUtil.shareProfileIfFirstSecureMessage(groupRecipient);
@@ -324,8 +330,14 @@ public final class PushGroupSendJob extends PushSendJob {
                                                                               .withExpiration(groupRecipient.getExpiresInSeconds())
                                                                               .asGroupMessage(group)
                                                                               .build();
+<<<<<<< HEAD
           return GroupSendUtil.sendResendableDataMessage(context, groupRecipient.requireGroupId()
                                                                                 .requireV2(), null, destinations, isRecipientUpdate, ContentHint.IMPLICIT, new MessageId(messageId), groupDataMessage, message.isUrgent(), false, null);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          return GroupSendUtil.sendResendableDataMessage(context, groupRecipient.requireGroupId().requireV2(), null, destinations, isRecipientUpdate, ContentHint.IMPLICIT, new MessageId(messageId), groupDataMessage, message.isUrgent(), false);
+=======
+          return GroupSendUtil.sendResendableDataMessage(context, groupRecipient.requireGroupId().requireV2(), null, destinations, isRecipientUpdate, ContentHint.IMPLICIT, new MessageId(messageId), groupDataMessage, message.isUrgent(), false, null);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         } else {
           throw new UndeliverableMessageException("Messages can no longer be sent to V1 groups!");
         }
@@ -358,7 +370,21 @@ public final class PushGroupSendJob extends PushSendJob {
             MessageRecord storyRecord = SignalDatabase.messages().getMessageRecord(message.getParentStoryId().asMessageId().getId());
             Recipient     storyAuthor = storyRecord.getFromRecipient();
 
+<<<<<<< HEAD
             SignalServiceDataMessage.StoryContext storyContext = new SignalServiceDataMessage.StoryContext(storyAuthor.requireServiceId(), storyRecord.getDateSent());
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+            destinations = destinations.stream()
+                                       .filter(r -> r.getStoriesCapability() == Recipient.Capability.SUPPORTED)
+                                       .collect(java.util.stream.Collectors.toList());
+
+            SignalServiceDataMessage.StoryContext storyContext = new SignalServiceDataMessage.StoryContext(recipient.requireServiceId(), storyRecord.getDateSent());
+=======
+            destinations = destinations.stream()
+                                       .filter(r -> r.getStoriesCapability() == Recipient.Capability.SUPPORTED)
+                                       .collect(java.util.stream.Collectors.toList());
+
+            SignalServiceDataMessage.StoryContext storyContext = new SignalServiceDataMessage.StoryContext(storyAuthor.requireServiceId(), storyRecord.getDateSent());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
             groupMessageBuilder.withStoryContext(storyContext);
 
             Optional<SignalServiceDataMessage.Reaction> reaction = getStoryReactionFor(message, storyContext);
@@ -373,10 +399,18 @@ public final class PushGroupSendJob extends PushSendJob {
           groupMessageBuilder.withQuote(getQuoteFor(message).orElse(null));
         }
 
+<<<<<<< HEAD
         SignalServiceDataMessage groupMessage = groupMessageBuilder.build();
         SignalServiceEditMessage editMessage = originalEditedMessage != null ? new SignalServiceEditMessage(originalEditedMessage.getDateSent(), groupMessage)
                                                                              : null;
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+        SignalServiceDataMessage groupMessage = groupMessageBuilder.build();
+        SignalServiceEditMessage editMessage  = originalEditedMessage != null ? new SignalServiceEditMessage(originalEditedMessage.getDateSent(), groupMessage)
+                                                                              : null;
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         Log.i(TAG, JobLogger.format(this, "Beginning message send."));
 
         return GroupSendUtil.sendResendableDataMessage(context,

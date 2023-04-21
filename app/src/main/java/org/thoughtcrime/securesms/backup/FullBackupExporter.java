@@ -602,8 +602,32 @@ public class FullBackupExporter extends FullBackupBase {
     return true;
   }
 
+<<<<<<< HEAD
   private static boolean isForNonExpiringMessage(@NonNull SQLiteDatabase db, long messageId) {
     String[] columns = new String[] { MessageTable.ID, MessageTable.EXPIRE_STARTED, MessageTable.EXPIRES_IN, MessageTable.LATEST_REVISION_ID };
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private static boolean isNonExpiringSmsMessage(@NonNull Cursor cursor) {
+    return cursor.getLong(cursor.getColumnIndexOrThrow(MessageTable.EXPIRES_IN)) <= 0;
+  }
+
+  private static boolean isForNonExpiringMessage(@NonNull SQLiteDatabase db, @NonNull MessageId messageId) {
+    return isForNonExpiringMmsMessage(db, messageId.getId());
+  }
+
+  private static boolean isForNonExpiringMmsMessage(@NonNull SQLiteDatabase db, long mmsId) {
+    String[] columns = new String[] { MessageTable.RECIPIENT_ID, MessageTable.EXPIRES_IN, MessageTable.VIEW_ONCE };
+=======
+  private static boolean isNonExpiringSmsMessage(@NonNull Cursor cursor) {
+    return cursor.getLong(cursor.getColumnIndexOrThrow(MessageTable.EXPIRES_IN)) <= 0;
+  }
+
+  private static boolean isForNonExpiringMessage(@NonNull SQLiteDatabase db, @NonNull MessageId messageId) {
+    return isForNonExpiringMmsMessage(db, messageId.getId());
+  }
+
+  private static boolean isForNonExpiringMmsMessage(@NonNull SQLiteDatabase db, long mmsId) {
+    String[] columns = new String[] { MessageTable.EXPIRES_IN, MessageTable.VIEW_ONCE };
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     String   where   = MessageTable.ID + " = ?";
     String[] args    = SqlUtil.buildArgs(messageId);
 

@@ -31,8 +31,16 @@ object Gifts {
     expiresIn: Long
   ): OutgoingMessage {
     return OutgoingMessage(
+<<<<<<< HEAD
       threadRecipient = recipient,
       body = Base64.encodeWithPadding(giftBadge.encode()),
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      recipient = recipient,
+      body = Base64.encodeBytes(giftBadge.toByteArray()),
+=======
+      threadRecipient = recipient,
+      body = Base64.encodeBytes(giftBadge.toByteArray()),
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       isSecure = true,
       sentTimeMillis = sentTimestamp,
       expiresIn = expiresIn,

@@ -180,8 +180,16 @@ public class MultiDeviceContactUpdateJob extends BaseJob {
 
       long length = BlobProvider.getInstance().calculateFileSize(context, updateUri);
 
+<<<<<<< HEAD
       sendUpdate(AppDependencies.getSignalServiceMessageSender(),
                  BlobProvider.getInstance().getStream(context, updateUri),
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      sendUpdate(ApplicationDependencies.getSignalServiceMessageSender(),
+                 BlobProvider.getInstance().getStream(context, writeDetails.uri),
+=======
+      sendUpdate(ApplicationDependencies.getSignalServiceMessageSender(),
+                 BlobProvider.getInstance().getStream(context, updateUri),
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                  length,
                  false);
 
@@ -263,12 +271,28 @@ public class MultiDeviceContactUpdateJob extends BaseJob {
 
       out.close();
 
+<<<<<<< HEAD
+      updateUri = writeDetails.getUri();
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      long length = BlobProvider.getInstance().calculateFileSize(context, writeDetails.uri);
+=======
       updateUri = writeDetails.getUri();
 
+      long length = BlobProvider.getInstance().calculateFileSize(context, updateUri);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+
+<<<<<<< HEAD
       long length = BlobProvider.getInstance().calculateFileSize(context, updateUri);
 
       sendUpdate(AppDependencies.getSignalServiceMessageSender(),
                  BlobProvider.getInstance().getStream(context, updateUri),
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      sendUpdate(ApplicationDependencies.getSignalServiceMessageSender(),
+                 BlobProvider.getInstance().getStream(context, writeDetails.uri),
+=======
+      sendUpdate(ApplicationDependencies.getSignalServiceMessageSender(),
+                 BlobProvider.getInstance().getStream(context, updateUri),
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                  length,
                  true);
     } catch(InvalidNumberException | InterruptedException e) {

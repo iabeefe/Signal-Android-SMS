@@ -20,8 +20,13 @@ import org.thoughtcrime.securesms.components.recyclerview.SmoothScrollingLinearL
 import org.thoughtcrime.securesms.conversation.ConversationAdapter
 import org.thoughtcrime.securesms.conversation.ConversationAdapterBridge
 import org.thoughtcrime.securesms.conversation.ConversationBottomSheetCallback
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode
 import org.thoughtcrime.securesms.conversation.ConversationMessage
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.conversation.colors.Colorizer
 import org.thoughtcrime.securesms.conversation.colors.RecyclerViewColorizer
 import org.thoughtcrime.securesms.conversation.mutiselect.MultiselectPart
@@ -74,8 +79,16 @@ class MessageQuotesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment() {
 
     val colorizer = Colorizer()
 
+<<<<<<< HEAD
     messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, Glide.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient.hasWallpaper, colorizer).apply {
       setCondensedMode(ConversationItemDisplayMode.Condensed(scheduleMessageMode = false))
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, GlideApp.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient, colorizer).apply {
+      setCondensedMode(true)
+=======
+    messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, GlideApp.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient, colorizer).apply {
+      setCondensedMode(ConversationItemDisplayMode.CONDENSED)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
 
     val list: RecyclerView = view.findViewById<RecyclerView>(R.id.quotes_list).apply {
@@ -253,6 +266,7 @@ class MessageQuotesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment() {
       dismiss()
       getAdapterListener().onSendPaymentClicked(recipientId)
     }
+<<<<<<< HEAD
 
     override fun onEditedIndicatorClicked(conversationMessage: ConversationMessage) {
       dismiss()
@@ -263,6 +277,14 @@ class MessageQuotesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment() {
     override fun onReportSpamLearnMoreClicked() = Unit
     override fun onMessageRequestAcceptOptionsClicked() = Unit
     override fun onItemDoubleClick(item: MultiselectPart) = Unit
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+
+    override fun onEditedIndicatorClicked(messageRecord: MessageRecord) {
+      dismiss()
+      getAdapterListener().onEditedIndicatorClicked(messageRecord)
+    }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   companion object {

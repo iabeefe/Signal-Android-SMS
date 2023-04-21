@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package org.thoughtcrime.securesms.util
 
 import androidx.activity.ComponentActivity
@@ -111,3 +112,31 @@ inline fun <reified VM : ViewModel> Fragment.activityViewModel(
 inline fun <reified VM : ViewModel> Fragment.createActivityViewModel(noinline create: () -> VM): VM {
   return ViewModelProvider(requireActivity().viewModelStore, ViewModelFactory { create() }).get(VM::class.java)
 }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+package org.thoughtcrime.securesms.util
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+
+/**
+ * Simplifies [ViewModel] creation by providing default implementations of [ViewModelProvider.Factory]
+ * and a factory producer that call through to a lambda to create the view model instance.
+ *
+ * Example use:
+ *
+ * private val viewModel: MyViewModel by viewModels(factoryProducer = ViewModelFactory.factoryProducer { MyViewModel(inputParams) })
+ */
+class ViewModelFactory<MODEL : ViewModel>(private val create: () -> MODEL) : ViewModelProvider.Factory {
+  @Suppress("UNCHECKED_CAST")
+  override fun <T : ViewModel> create(modelClass: Class<T>): T {
+    return create() as T
+  }
+
+  companion object {
+    fun <MODEL : ViewModel> factoryProducer(create: () -> MODEL): () -> ViewModelProvider.Factory {
+      return { ViewModelFactory(create) }
+    }
+  }
+}
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)

@@ -778,6 +778,7 @@ class InternalSettingsFragment : DSLSettingsFragment(R.string.preferences__inter
         }
       )
 
+<<<<<<< HEAD
       clickPref(
         title = DSLSettingsText.from("Corrupt username link"),
         summary = DSLSettingsText.from("Changes our local username link without telling the server so it falls out of sync. Refresh profile afterwards to trigger corruption."),
@@ -822,6 +823,38 @@ class InternalSettingsFragment : DSLSettingsFragment(R.string.preferences__inter
           viewModel.setUseConversationItemV2Media(!state.useConversationItemV2ForMedia)
         }
       )
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (FeatureFlags.chatFilters()) {
+        dividerPref()
+        sectionHeaderPref(DSLSettingsText.from("Chat Filters"))
+        clickPref(
+          title = DSLSettingsText.from("Reset pull to refresh tip count"),
+          onClick = {
+            SignalStore.uiHints().resetNeverDisplayPullToRefreshCount()
+          }
+        )
+      }
+=======
+      if (FeatureFlags.chatFilters()) {
+        dividerPref()
+        sectionHeaderPref(DSLSettingsText.from("Chat Filters"))
+        clickPref(
+          title = DSLSettingsText.from("Reset pull to refresh tip count"),
+          onClick = {
+            SignalStore.uiHints().resetNeverDisplayPullToRefreshCount()
+          }
+        )
+      }
+
+      dividerPref()
+      switchPref(
+        title = DSLSettingsText.from("Use V2 ConversationFragment"),
+        isChecked = state.useConversationFragmentV2,
+        onClick = {
+          viewModel.setUseConversationFragmentV2(!state.useConversationFragmentV2)
+        }
+      )
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
   }
 

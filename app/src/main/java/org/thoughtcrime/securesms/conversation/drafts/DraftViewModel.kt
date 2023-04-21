@@ -75,6 +75,22 @@ class DraftViewModel @JvmOverloads constructor(
     }
   }
 
+  fun setMessageEditDraft(messageId: MessageId, text: String, mentions: List<Mention>, styleBodyRanges: BodyRangeList?) {
+    store.update {
+      val mentionRanges: BodyRangeList? = MentionUtil.mentionsToBodyRangeList(mentions)
+
+      val bodyRanges: BodyRangeList? = if (styleBodyRanges == null) {
+        mentionRanges
+      } else if (mentionRanges == null) {
+        styleBodyRanges
+      } else {
+        styleBodyRanges.toBuilder().addAllRanges(mentionRanges.rangesList).build()
+      }
+
+      saveDrafts(it.copy(textDraft = text.toTextDraft(), bodyRangesDraft = bodyRanges?.toDraft(), messageEditDraft = Draft(Draft.MESSAGE_EDIT, messageId.serialize())))
+    }
+  }
+
   fun setTextDraft(text: String, mentions: List<Mention>, styleBodyRanges: BodyRangeList?) {
     store.update {
       val mentionRanges: BodyRangeList? = MentionUtil.mentionsToBodyRangeList(mentions)
@@ -143,6 +159,12 @@ class DraftViewModel @JvmOverloads constructor(
           Maybe.just(data)
         }
       }
+      .observeOn(AndroidSchedulers.mainThread())
+  }
+
+  fun loadDraftEditMessage(serialized: String): Maybe<ConversationMessage> {
+    return repository.loadDraftMessageEdit(serialized)
+      .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
   }
 }

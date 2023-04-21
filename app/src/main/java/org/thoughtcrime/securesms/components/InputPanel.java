@@ -56,10 +56,17 @@ import org.thoughtcrime.securesms.conversation.ConversationStickerSuggestionAdap
 import org.thoughtcrime.securesms.conversation.MessageStyler;
 import org.thoughtcrime.securesms.conversation.VoiceNoteDraftView;
 import org.thoughtcrime.securesms.database.DraftTable;
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.database.model.MessageId;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord;
 import org.thoughtcrime.securesms.database.model.Quote;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.database.model.MessageId;
+import org.thoughtcrime.securesms.database.model.MessageRecord;
+import org.thoughtcrime.securesms.database.model.Quote;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.database.model.StickerRecord;
 import org.thoughtcrime.securesms.keyboard.KeyboardPage;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
@@ -104,11 +111,19 @@ public class InputPanel extends ConstraintLayout
   private SendButton      sendButton;
   private View            recordingContainer;
   private View            recordLockCancel;
+<<<<<<< HEAD
   private View            composeContainer;
   private View            editMessageCancel;
   private ImageView       editMessageThumbnail;
   private View            editMessageTitle;
   private FrameLayout     composeTextContainer;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private ViewGroup       composeContainer;
+=======
+  private ViewGroup       composeContainer;
+  private View            editMessageLabel;
+  private View            editMessageCancel;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
   private MicrophoneRecorderView microphoneRecorderView;
   private SlideToCancel          slideToCancel;
@@ -168,9 +183,15 @@ public class InputPanel extends ConstraintLayout
                                                  findViewById(R.id.microphone),
                                                  TimeUnit.HOURS.toSeconds(1),
                                                  () -> microphoneRecorderView.cancelAction(false));
+<<<<<<< HEAD
     this.editMessageCancel      = findViewById(R.id.input_panel_exit_edit_mode);
     this.editMessageTitle       = findViewById(R.id.edit_message_title);
     this.editMessageThumbnail   = findViewById(R.id.edit_message_thumbnail);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    this.editMessageLabel       = findViewById(R.id.edit_message);
+    this.editMessageCancel      = findViewById(R.id.input_panel_exit_edit_mode);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     this.recordLockCancel.setOnClickListener(v -> microphoneRecorderView.cancelAction(true));
 
@@ -189,10 +210,16 @@ public class InputPanel extends ConstraintLayout
 
     stickerSuggestion.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     stickerSuggestion.setAdapter(stickerSuggestionAdapter);
+<<<<<<< HEAD
 
     editMessageCancel.setOnClickListener(v -> exitEditMessageMode());
 
     quickCameraToggle.setVisibility(View.GONE);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+
+    editMessageCancel.setOnClickListener(v -> exitEditMessageMode());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   public void setListener(final @NonNull Listener listener) {
@@ -405,6 +432,7 @@ public class InputPanel extends ConstraintLayout
     quoteView.setWallpaperEnabled(enabled);
   }
 
+<<<<<<< HEAD
   public void enterEditModeIfPossible(@NonNull RequestManager requestManager, @NonNull ConversationMessage conversationMessageToEdit, boolean fromDraft, boolean clearQuote) {
     String currentText = composeText.getText() == null ? "" : composeText.getText().toString();
     if ((messageToEdit == null && currentText.isEmpty()) || (messageToEdit != null && currentText.equals(messageToEdit.getBody()))) {
@@ -536,6 +564,55 @@ public class InputPanel extends ConstraintLayout
     return messageToEdit != null;
   }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  public void enterEditMessageMode(@NonNull GlideRequests glideRequests, @NonNull ConversationMessage messageToEdit, boolean fromDraft) {
+    SpannableString textToEdit = messageToEdit.getDisplayBody(getContext());
+    if (!fromDraft) {
+      composeText.setText(textToEdit);
+      composeText.setSelection(textToEdit.length());
+    }
+    Quote quote = MessageRecordUtil.getQuote(messageToEdit.getMessageRecord());
+    if (quote == null) {
+      clearQuote();
+    } else {
+      setQuote(glideRequests, quote.getId(), Recipient.resolved(quote.getAuthor()), quote.getDisplayText(), quote.getAttachment(), quote.getQuoteType());
+    }
+    this.messageToEdit = messageToEdit.getMessageRecord();
+    updateEditModeUi();
+  }
+
+  public void exitEditMessageMode() {
+    if (messageToEdit != null) {
+      composeText.setText("");
+      messageToEdit = null;
+      quoteView.setMessageType(QuoteView.MessageType.PREVIEW);
+    }
+    updateEditModeUi();
+  }
+
+  private void updateEditModeUi() {
+    if (inEditMessageMode()) {
+      ViewUtil.focusAndShowKeyboard(composeText);
+      editMessageLabel.setVisibility(View.VISIBLE);
+      editMessageCancel.setVisibility(View.VISIBLE);
+      if (listener != null) {
+        listener.onEnterEditMode();
+      }
+    } else {
+      editMessageLabel.setVisibility(View.GONE);
+      editMessageCancel.setVisibility(View.GONE);
+      if (listener != null) {
+        listener.onExitEditMode();
+      }
+    }
+  }
+
+  public boolean inEditMessageMode() {
+    return messageToEdit != null;
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   public void setHideForMessageRequestState(boolean hideForMessageRequestState) {
     this.hideForMessageRequestState = hideForMessageRequestState;
     updateVisibility();
@@ -802,9 +879,15 @@ public class InputPanel extends ConstraintLayout
     void onStickerSuggestionSelected(@NonNull StickerRecord sticker);
     void onQuoteChanged(long id, @NonNull RecipientId author);
     void onQuoteCleared();
+<<<<<<< HEAD
     void onEnterEditMode();
     void onExitEditMode();
     void onQuickCameraToggleClicked();
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    void onEnterEditMode();
+    void onExitEditMode();
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   private static class SlideToCancel {

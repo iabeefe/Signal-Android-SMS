@@ -263,6 +263,10 @@
     <!-- Toasted when user device does not support video recording -->
     <string name="CameraFragment__video_recording_is_not_supported_on_your_device">Снимање видео записа није подржано на вашем уређају</string>
 
+    <!-- CameraFragment -->
+    <!-- Toasted when user device does not support video recording -->
+    <string name="CameraFragment__video_recording_is_not_supported_on_your_device">Video recording is not supported on your device</string>
+
     <!-- CameraXFragment -->
     <string name="CameraXFragment_tap_for_photo_hold_for_video">Додирните да снимите фотографију, држите да снимите видео</string>
     <string name="CameraXFragment_capture_description">Сними</string>
@@ -425,6 +429,7 @@
     <!-- Dialog error message shown when user can\'t download a their own image message via a linked device due to a permanent failure (e.g., unable to decrypt) -->
     <string name="ConversationItem_cant_download_image_you_will_need_to_send_it_again">Преузимање слике није успело. Мораћете поново да је пошаљете.</string>
     <!-- Dialog error message shown when user can\'t download a their own video message via a linked device due to a permanent failure (e.g., unable to decrypt) -->
+<<<<<<< HEAD
     <string name="ConversationItem_cant_download_video_you_will_need_to_send_it_again">Преузимање видео записа није успело. Мораћете поново да га пошаљете.</string>
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp represents a message that has been edited within the last minute. -->
     <string name="ConversationItem_edited_now_timestamp_footer">Измењено сада</string>
@@ -434,16 +439,38 @@
     <string name="ConversationItem_edited_absolute_timestamp_footer">Измењено %1$s</string>
     <!-- Displayed if the link preview in the conversation item is for a call link call -->
     <string name="ConversationItem__join_call">Укључите се у позив</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ConversationItem_cant_download_video_you_will_need_to_send_it_again">Преузимање видео снимка није успело. Мораћете поново да га пошаљете.</string>
+=======
+    <string name="ConversationItem_cant_download_video_you_will_need_to_send_it_again">Преузимање видео снимка није успело. Мораћете поново да га пошаљете.</string>
+    <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp will go from \'11m\' to \'edited 11m\' -->
+    <string name="ConversationItem_edited_timestamp_footer">edited %1$s</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- ConversationActivity -->
     <string name="ConversationActivity_add_attachment">Додај прилог</string>
+<<<<<<< HEAD
     <!-- Accessibility text associated with image button to send an edited message. -->
     <string name="ConversationActivity_send_edit">Пошаљи измену</string>
     <string name="ConversationActivity_compose_message">Напишите поруку</string>
     <string name="ConversationActivity_sorry_there_was_an_error_setting_your_attachment">Дошло је до грешке приликом постављања прилога.</string>
     <string name="ConversationActivity_recipient_is_not_a_valid_sms_or_email_address_exclamation">Прималац није важећи број за SMS или имејл!</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ConversationActivity_select_contact_info">Изаберите податке о контакту</string>
+    <string name="ConversationActivity_compose_message">Састави поруку</string>
+    <string name="ConversationActivity_sorry_there_was_an_error_setting_your_attachment">Дошло је до грешке при постављању вашег прилога.</string>
+    <string name="ConversationActivity_recipient_is_not_a_valid_sms_or_email_address_exclamation">Прималац није исправан број или е-адреса!</string>
+=======
+    <!-- Accessibility text associated with image button to send an edited message. -->
+    <string name="ConversationActivity_send_edit">Send edit</string>
+    <string name="ConversationActivity_select_contact_info">Изаберите податке о контакту</string>
+    <string name="ConversationActivity_compose_message">Састави поруку</string>
+    <string name="ConversationActivity_sorry_there_was_an_error_setting_your_attachment">Дошло је до грешке при постављању вашег прилога.</string>
+    <string name="ConversationActivity_recipient_is_not_a_valid_sms_or_email_address_exclamation">Прималац није исправан број или е-адреса!</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ConversationActivity_message_is_empty_exclamation">Порука је празна!</string>
     <string name="ConversationActivity_group_members">Чланови групе</string>
+<<<<<<< HEAD
     <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
     <plurals name="ConversationActivity_edit_message_too_old">
         <item quantity="one">Измене се могу применити само у року од %1$d h од тренутка када сте послали ову поруку.</item>
@@ -454,6 +481,18 @@
         <item quantity="one">Број измена које се могу унети у ову поруку: %1$d.</item>
         <item quantity="other">Број измена које се могу унети у ову поруку: %1$d.</item>
     </plurals>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ConversationActivity__tap_here_to_start_a_group_call">Додирните овде да бисте започели групни позив</string>
+=======
+    <string name="ConversationActivity__tap_here_to_start_a_group_call">Додирните овде да бисте започели групни позив</string>
+    <!-- Warning toast shown to user if they somehow try to edit an sms/mms message -->
+    <string name="ConversationActivity_edit_sms_message_error">Unable to edit SMS messages</string>
+    <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
+    <plurals name="ConversationActivity_edit_message_too_old">
+        <item quantity="one">Edits can only be applied within %1$d hour from the time you sent this message.</item>
+        <item quantity="other">Edits can only be applied within %1$d hours from the time you sent this message.</item>
+    </plurals>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <string name="ConversationActivity_invalid_recipient">Прималац је неважећи!</string>
     <string name="ConversationActivity_added_to_home_screen">Додато је на почетни екран</string>
@@ -1506,6 +1545,7 @@
     <string name="ImageEditorHud_draw_to_blur_additional_faces_or_areas">Цртајте да замутите додатна лица или делове фотографије</string>
 
     <!-- InputPanel -->
+<<<<<<< HEAD
     <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">Додирните и држите да снимите поруку, пустите за слање</string>
     <!-- When editing a message, label shown above the text input field in the composer -->
     <string name="InputPanel_edit_message">Измените поруку</string>
@@ -1515,6 +1555,17 @@
     <string name="InputPanel__this_action_cant_be_undone">Ова радња се не може опозвати.</string>
     <!-- Button inside an alert dialog confirming the deletion of their draft -->
     <string name="InputPanel__discard">Одбаци</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">Тапните и држите за снимање гласовне поруке, пустите за слање</string>
+    <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
+    <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">Размена SMS порука више није подржана у Signal-у.</string>
+=======
+    <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">Тапните и држите за снимање гласовне поруке, пустите за слање</string>
+    <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
+    <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">Размена SMS порука више није подржана у Signal-у.</string>
+    <!-- When editing a message, label shown above the text input field in the composer -->
+    <string name="InputPanel_edit_message">Edit message</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- InviteActivity -->
     <string name="InviteActivity_share">Поделите</string>
@@ -2458,6 +2509,7 @@
     <string name="RegistrationActivity_invalid_number">Неважећи број</string>
     <string name="RegistrationActivity_the_number_you_specified_s_is_invalid">Број који сте навели (%1$s) није важећи.
     </string>
+<<<<<<< HEAD
 
     <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
     <string name="RegistrationActivity_phone_number_verification_dialog_title">Да ли је број телефона у наставку тачан?</string>
@@ -2466,6 +2518,21 @@
     <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
     <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">На овај број ће бити послата шифра за верификацију. Могу се применити тарифе оператера.</string>
     <string name="RegistrationActivity_you_will_receive_a_call_to_verify_this_number">Примићете позив за верфикацију овог броја.</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to">Верификациони кôд ће бити послат на:</string>
+    <string name="RegistrationActivity_you_will_receive_a_call_to_verify_this_number">Примићете позив за потврду овог броја.</string>
+    <string name="RegistrationActivity_is_your_phone_number_above_correct">Да ли је тачан ваш број телефона изнад?</string>
+=======
+
+    <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
+    <string name="RegistrationActivity_phone_number_verification_dialog_title">Is the phone number below correct?</string>
+    <!-- Dialog title shown when re-registering and skip sms flow failed or was aborted and now need perform additional verification via sms and warn about carrier charges -->
+    <string name="RegistrationActivity_additional_verification_required">Additional verification required</string>
+    <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">A verification code will be sent to this number. Carrier rates may apply.</string>
+    <string name="RegistrationActivity_you_will_receive_a_call_to_verify_this_number">Примићете позив за потврду овог броја.</string>
+    <string name="RegistrationActivity_is_your_phone_number_above_correct">Да ли је тачан ваш број телефона изнад?</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="RegistrationActivity_edit_number">Измени број</string>
     <string name="RegistrationActivity_missing_google_play_services">Недостају Google Play сервиси</string>
     <string name="RegistrationActivity_this_device_is_missing_google_play_services">Овом уређају недостају Google Play сервиси. И даље можете да користите Signal, али таква конфигурација може довести до умањене поузданости или перформансе.\n\nАко нисте напредан корисник, не користите прилагођени Android ROM или верујете да грешком видите ову поруку, обратите се подршци на support@signal.org за помоћ.</string>
@@ -2514,12 +2581,28 @@
     <string name="RegistrationActivity_next">Даље</string>
 >>>>>>> ea0aeccfc0 (Bumped to upstream version 6.16.2.0-JW.)
     <string name="RegistrationActivity_continue">Настави</string>
+<<<<<<< HEAD
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Чувајте приватност где год да се налазите.\nБудите то што јесте у свакој поруци.</string>
     <!-- Title of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_phone_number">Број телефона</string>
     <!-- Subtitle of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_enter_your_phone_number_to_get_started">За почетак, унесите свој број телефона.</string>
     <string name="RegistrationActivity_enter_the_code_we_sent_to_s">Унесите код послат на %1$s</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Обезбедите приватност где год се налазите.\nБудите својствени у свакој поруци.</string>
+    <string name="RegistrationActivity_enter_your_phone_number">Унесите ваш број телефона</string>
+    <string name="RegistrationActivity_you_will_receive_a_verification_code">Примићете шифру за верификацију.\nМогућа је наплата од стране оператера.</string>
+    <string name="RegistrationActivity_enter_the_code_we_sent_to_s">Унесите кôд послат на %1$s</string>
+    <string name="RegistrationActivity_make_sure_your_phone_has_a_cellular_signal">Проверите да ли је телефонска мрежа доступна и да ли имате могућност примања SMS порука и позива</string>
+=======
+    <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Обезбедите приватност где год се налазите.\nБудите својствени у свакој поруци.</string>
+    <!-- Title of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_phone_number">Phone number</string>
+    <!-- Subtitle of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Enter your phone number to get started.</string>
+    <string name="RegistrationActivity_enter_the_code_we_sent_to_s">Унесите кôд послат на %1$s</string>
+    <string name="RegistrationActivity_make_sure_your_phone_has_a_cellular_signal">Проверите да ли је телефонска мрежа доступна и да ли имате могућност примања SMS порука и позива</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <string name="RegistrationActivity_phone_number_description">Број телефона</string>
     <string name="RegistrationActivity_country_code_description">Позивни број државе</string>
@@ -2688,7 +2771,7 @@
 =======
     <string name="ThreadRecord_message_request">Захтев за разговор</string>
     <!-- Thread preview for a recipient that has been hidden -->
-    <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
+    <string name="ThreadRecord_hidden_recipient">Сакрили сте ову особу. Поново јој пошаљете поруку да је вратите на листу.</string>
     <string name="ThreadRecord_photo">Фотографија</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     <string name="ThreadRecord_gif">GIF</string>
@@ -3486,10 +3569,20 @@
     <string name="message_details_recipient_header__skipped">Није достављено</string>
 
     <!-- message_Details_recipient -->
+<<<<<<< HEAD
     <string name="message_details_recipient__failed_to_send">Слање није успело</string>
     <string name="message_details_recipient__new_safety_number">Нови сигурносни број</string>
     <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
     <string name="MessageDetails__view_edit_history">Прикажи историју измена</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="message_details_recipient__failed_to_send">Неуспех слања</string>
+    <string name="message_details_recipient__new_safety_number">Нова шифра преписке</string>
+=======
+    <string name="message_details_recipient__failed_to_send">Неуспех слања</string>
+    <string name="message_details_recipient__new_safety_number">Нова шифра преписке</string>
+    <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
+    <string name="MessageDetails__view_edit_history">View edit history</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- AndroidManifest.xml -->
     <string name="AndroidManifest__create_passphrase">Креирајте приступну фразу</string>
@@ -3800,6 +3893,7 @@
     <string name="preferences_couldnt_connect_to_the_proxy">Повезивање на прокси сервер није успело. Проверите адресу прокси сервера и пробајте поново.</string>
     <string name="preferences_you_are_connected_to_the_proxy">Повезани сте са прокси сервером. Можете искључити прокси сервер у било ком тренутку у подешавањима.</string>
     <string name="preferences_success">Успешно</string>
+<<<<<<< HEAD
     <string name="preferences_failed_to_connect">Повезивање није успело.</string>
     <string name="preferences_enter_proxy_address">Унесите адресу прокси сервера</string>
     <!-- Preference title for changing navigation (bottom) bar size -->
@@ -3808,6 +3902,19 @@
     <string name="preferences_normal">Нормално</string>
     <!-- Preference summary for compact navigation bar size -->
     <string name="preferences_compact">Компактно</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="preferences_failed_to_connect">Неуспешно повезивање</string>
+    <string name="preferences_enter_proxy_address">Унети адресу проксија</string>
+=======
+    <string name="preferences_failed_to_connect">Неуспешно повезивање</string>
+    <string name="preferences_enter_proxy_address">Унети адресу проксија</string>
+    <!-- Preference title for changing navigation (bottom) bar size -->
+    <string name="preferences_navigation_bar_size">Navigation bar size</string>
+    <!-- Preference summary for normal navigation bar size -->
+    <string name="preferences_normal">Normal</string>
+    <!-- Preference summary for compact navigation bar size -->
+    <string name="preferences_compact">Compact</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
 
     <string name="configurable_single_select__customize_option">Прилагодите опцију</string>
@@ -4098,9 +4205,17 @@
     <!-- Button to forward a message to another person or group chat; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
     <string name="conversation_selection__menu_forward">Проследи</string>
     <!-- Button to reply to a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
+<<<<<<< HEAD
     <string name="conversation_selection__menu_reply">Одговорите</string>
     <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
     <string name="conversation_selection__menu_edit">Измени</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="conversation_selection__menu_reply">Одговори</string>
+=======
+    <string name="conversation_selection__menu_reply">Одговори</string>
+    <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
+    <string name="conversation_selection__menu_edit">Edit</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- Button to save a message attachment (image, file etc.); Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
     <string name="conversation_selection__menu_save">Сачувај</string>
     <!-- Button to retry sending a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
@@ -7876,7 +7991,7 @@
     <!-- Button text to dismiss the sheet and add it as an upcoming call -->
     <string name="CreateCallLinkBottomSheetDialogFragment__done">Готово</string>
     <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Нисмо успели да отворимо опције за дељење.</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Unable to share call link.</string>
     <!-- Displayed when we copy the call link to the clipboard -->
     <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">Копирано</string>
 
@@ -7888,6 +8003,21 @@
     <!-- Placeholder text on input field when editing call name -->
     <string name="EditCallLinkNameDialogFragment__call_name">Назив позива</string>
 
+<<<<<<< HEAD
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- ChooseNavigationBarStyleFragment -->
+    <!-- Dialog title, displayed below the header image -->
+    <string name="ChooseNavigationBarStyleFragment__navigation_bar_size">Navigation bar size</string>
+    <!-- Toggle button label for normal size -->
+    <string name="ChooseNavigationBarStyleFragment__normal">Normal</string>
+    <!-- Toggle button label for compact size -->
+    <string name="ChooseNavigationBarStyleFragment__compact">Compact</string>
+
+    <!-- Title shown at top of bottom sheet dialog for displaying a message\'s edit history -->
+    <string name="EditMessageHistoryDialog_title">Edit history</string>
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- EOF -->
 </resources>

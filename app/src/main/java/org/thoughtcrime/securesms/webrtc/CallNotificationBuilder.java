@@ -6,9 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+<<<<<<< HEAD
 import androidx.annotation.IntDef;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import androidx.annotation.DrawableRes;
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import androidx.annotation.NonNull;
+<<<<<<< HEAD
 import androidx.annotation.Nullable;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import androidx.annotation.StringRes;
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.Person;
 
@@ -37,6 +47,7 @@ public class CallNotificationBuilder {
   public static final int TYPE_ESTABLISHED         = 3;
   public static final int TYPE_INCOMING_CONNECTING = 4;
 
+<<<<<<< HEAD
   @IntDef(value = {
       TYPE_INCOMING_RINGING,
       TYPE_OUTGOING_RINGING,
@@ -45,6 +56,28 @@ public class CallNotificationBuilder {
   })
   public @interface CallNotificationType {
   }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  public static Notification getCallInProgressNotification(Context context, int type, Recipient recipient) {
+    Intent contentIntent = new Intent(context, WebRtcCallActivity.class);
+    contentIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    contentIntent.putExtra(WebRtcCallActivity.EXTRA_STARTED_FROM_FULLSCREEN, true);
+=======
+  /**
+   * This is the API level at which call style notifications will
+   * properly pop over the screen and allow a user to answer a call.
+   * <p>
+   * Older API levels will still render a notification with the proper
+   * actions, but since we want to ensure that they are able to answer
+   * the call without having to open the shade, we fall back on launching
+   * the activity (done so in SignalCallManager).
+   */
+  public static final int API_LEVEL_CALL_STYLE = 29;
+
+  public static Notification getCallInProgressNotification(Context context, int type, Recipient recipient) {
+    Intent contentIntent = new Intent(context, WebRtcCallActivity.class);
+    contentIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    contentIntent.putExtra(WebRtcCallActivity.EXTRA_STARTED_FROM_FULLSCREEN, true);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
   private enum LaunchCallScreenIntentState {
     CONTENT(null, 0),
@@ -100,11 +133,25 @@ public class CallNotificationBuilder {
       builder.setContentIntent(null);
       return builder.build();
     } else if (type == TYPE_INCOMING_RINGING) {
+<<<<<<< HEAD
       builder.setContentText(getIncomingCallContentText(context, recipient, isVideoCall));
       builder.setPriority(NotificationCompat.PRIORITY_HIGH);
       builder.setCategory(NotificationCompat.CATEGORY_CALL);
       builder.setFullScreenIntent(pendingIntent, true);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      builder.setContentText(context.getString(recipient.isGroup() ? R.string.NotificationBarManager__incoming_signal_group_call : R.string.NotificationBarManager__incoming_signal_call));
+      builder.addAction(getServiceNotificationAction(context, WebRtcCallService.denyCallIntent(context), R.drawable.ic_close_grey600_32dp, R.string.NotificationBarManager__decline_call));
+      builder.addAction(getActivityNotificationAction(context, WebRtcCallActivity.ANSWER_ACTION, R.drawable.ic_phone_grey600_32dp, recipient.isGroup() ? R.string.NotificationBarManager__join_call : R.string.NotificationBarManager__answer_call));
+=======
+      builder.setContentText(context.getString(recipient.isGroup() ? R.string.NotificationBarManager__incoming_signal_group_call : R.string.NotificationBarManager__incoming_signal_call));
+      builder.setStyle(NotificationCompat.CallStyle.forIncomingCall(
+          ConversationUtil.buildPersonWithoutIcon(context, recipient),
+          getServicePendingIntent(context, WebRtcCallService.denyCallIntent(context)),
+          getActivityPendingIntent(context, WebRtcCallActivity.ANSWER_ACTION)
+      ));
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
+<<<<<<< HEAD
       Person person = skipPersonIcon ? ConversationUtil.buildPersonWithoutIcon(context, recipient)
                                      : ConversationUtil.buildPerson(context.getApplicationContext(), recipient);
 
@@ -119,6 +166,16 @@ public class CallNotificationBuilder {
       }
 
       return builder.build();
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (callActivityRestricted()) {
+        builder.setFullScreenIntent(pendingIntent, true);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setCategory(NotificationCompat.CATEGORY_CALL);
+      }
+=======
+      builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+      builder.setCategory(NotificationCompat.CATEGORY_CALL);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     } else if (type == TYPE_OUTGOING_RINGING) {
       builder.setContentText(context.getString(R.string.NotificationBarManager__establishing_signal_call));
       builder.addAction(getServiceNotificationAction(context, WebRtcCallService.hangupIntent(context), R.drawable.symbol_phone_down_fill_24, R.string.NotificationBarManager__cancel_call));
@@ -126,8 +183,22 @@ public class CallNotificationBuilder {
     } else {
       builder.setContentText(getOngoingCallContentText(context, recipient, isVideoCall));
       builder.setOnlyAlertOnce(true);
+<<<<<<< HEAD
       builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
       builder.setCategory(NotificationCompat.CATEGORY_CALL);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      builder.addAction(getServiceNotificationAction(context, WebRtcCallService.hangupIntent(context), R.drawable.ic_call_end_grey600_32dp, R.string.NotificationBarManager__end_call));
+    }
+=======
+      builder.setStyle(NotificationCompat.CallStyle.forOngoingCall(
+          ConversationUtil.buildPersonWithoutIcon(context, recipient),
+          getServicePendingIntent(context, WebRtcCallService.hangupIntent(context))
+      ));
+
+      builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+      builder.setCategory(NotificationCompat.CATEGORY_CALL);
+    }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
       Person person = skipPersonIcon ? ConversationUtil.buildPersonWithoutIcon(context, recipient)
                                      : ConversationUtil.buildPerson(context.getApplicationContext(), recipient);
@@ -153,6 +224,7 @@ public class CallNotificationBuilder {
     }
   }
 
+<<<<<<< HEAD
   public static @NonNull Notification getStartingNotification(@NonNull Context context) {
     return new NotificationCompat.Builder(context, NotificationChannels.getInstance().CALL_STATUS)
         .setSmallIcon(R.drawable.ic_call_secure_white_24dp)
@@ -162,6 +234,23 @@ public class CallNotificationBuilder {
         .build();
   }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  public static @NonNull Notification getStartingNotification(@NonNull Context context) {
+    Intent contentIntent = new Intent(context, MainActivity.class);
+    contentIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, contentIntent, PendingIntentFlags.mutable());
+
+    return new NotificationCompat.Builder(context, NotificationChannels.getInstance().CALL_STATUS).setSmallIcon(R.drawable.ic_call_secure_white_24dp)
+                                                                                                  .setContentIntent(pendingIntent)
+                                                                                                  .setOngoing(true)
+                                                                                                  .setContentTitle(context.getString(R.string.NotificationBarManager__starting_signal_call_service))
+                                                                                                  .setPriority(NotificationCompat.PRIORITY_MIN)
+                                                                                                  .build();
+  }
+
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   public static @NonNull Notification getStoppingNotification(@NonNull Context context) {
     Intent contentIntent = new Intent(context, MainActivity.class);
     contentIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -213,14 +302,43 @@ public class CallNotificationBuilder {
     }
   }
 
+<<<<<<< HEAD
   private static NotificationCompat.Action getServiceNotificationAction(Context context, PendingIntent intent, int iconResId, int titleResId) {
     return new NotificationCompat.Action(iconResId, context.getString(titleResId), intent);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private static NotificationCompat.Action getServiceNotificationAction(Context context, Intent intent, int iconResId, int titleResId) {
+    PendingIntent pendingIntent = Build.VERSION.SDK_INT >= 26 ? PendingIntent.getForegroundService(context, 0, intent, PendingIntentFlags.mutable())
+                                                              : PendingIntent.getService(context, 0, intent, PendingIntentFlags.mutable());
+
+    return new NotificationCompat.Action(iconResId, context.getString(titleResId), pendingIntent);
+=======
+  private static PendingIntent getServicePendingIntent(@NonNull Context context, @NonNull Intent intent) {
+    return Build.VERSION.SDK_INT >= 26 ? PendingIntent.getForegroundService(context, 0, intent, PendingIntentFlags.mutable())
+                                       : PendingIntent.getService(context, 0, intent, PendingIntentFlags.mutable());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
+<<<<<<< HEAD
   private static PendingIntent getActivityPendingIntent(@NonNull Context context, @NonNull LaunchCallScreenIntentState launchCallScreenIntentState) {
     CallIntent.Builder builder = new CallIntent.Builder(context);
     builder.withAction(launchCallScreenIntentState.action);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private static NotificationCompat.Action getActivityNotificationAction(@NonNull Context context, @NonNull String action,
+                                                                         @DrawableRes int iconResId, @StringRes int titleResId)
+  {
+    Intent intent = new Intent(context, WebRtcCallActivity.class);
+    intent.setAction(action);
+=======
+  private static NotificationCompat.Action getServiceNotificationAction(Context context, Intent intent, int iconResId, int titleResId) {
+    return new NotificationCompat.Action(iconResId, context.getString(titleResId), getServicePendingIntent(context, intent));
+  }
 
+  private static PendingIntent getActivityPendingIntent(@NonNull Context context, @NonNull String action) {
+    Intent intent = new Intent(context, WebRtcCallActivity.class);
+    intent.setAction(action);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+
+<<<<<<< HEAD
     if (launchCallScreenIntentState == LaunchCallScreenIntentState.CONTENT) {
       builder.withIntentFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
     }
@@ -229,9 +347,24 @@ public class CallNotificationBuilder {
     builder.withEnableVideoIfAvailable(false);
 
     return PendingIntent.getActivity(context, launchCallScreenIntentState.requestCode, builder.build(), PendingIntentFlags.updateCurrent());
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntentFlags.mutable());
+
+    return new NotificationCompat.Action(iconResId, context.getString(titleResId), pendingIntent);
+=======
+    return PendingIntent.getActivity(context, 0, intent, PendingIntentFlags.mutable());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
+<<<<<<< HEAD
   private static boolean deviceVersionSupportsIncomingCallStyle() {
     return Build.VERSION.SDK_INT >= API_LEVEL_CALL_STYLE;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private static boolean callActivityRestricted() {
+    return Build.VERSION.SDK_INT >= 29 && !ApplicationDependencies.getAppForegroundObserver().isForegrounded();
+=======
+  private static boolean callActivityRestricted() {
+    return Build.VERSION.SDK_INT >= API_LEVEL_CALL_STYLE;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 }

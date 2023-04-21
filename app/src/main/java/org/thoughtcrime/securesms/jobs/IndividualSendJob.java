@@ -139,6 +139,7 @@ public class IndividualSendJob extends PushSendJob {
   public void onPushSend()
       throws IOException, MmsException, NoSuchMessageException, UndeliverableMessageException, RetryLaterException
   {
+<<<<<<< HEAD
     SignalLocalMetrics.IndividualMessageSend.onJobStarted(messageId);
 
     ExpiringMessageManager expirationManager = AppDependencies.getExpiringMessageManager();
@@ -146,6 +147,18 @@ public class IndividualSendJob extends PushSendJob {
     OutgoingMessage message               = database.getOutgoingMessage(messageId);
     long            threadId              = database.getMessageRecord(messageId).getThreadId();
     MessageRecord   originalEditedMessage = message.getMessageToEdit() > 0 ? SignalDatabase.messages().getMessageRecordOrNull(message.getMessageToEdit()) : null;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    ExpiringMessageManager expirationManager = ApplicationDependencies.getExpiringMessageManager();
+    MessageTable    database = SignalDatabase.messages();
+    OutgoingMessage message  = database.getOutgoingMessage(messageId);
+    long            threadId = database.getMessageRecord(messageId).getThreadId();
+=======
+    ExpiringMessageManager expirationManager = ApplicationDependencies.getExpiringMessageManager();
+    MessageTable    database              = SignalDatabase.messages();
+    OutgoingMessage message               = database.getOutgoingMessage(messageId);
+    long            threadId              = database.getMessageRecord(messageId).getThreadId();
+    MessageRecord   originalEditedMessage = message.getMessageToEdit() > 0 ? SignalDatabase.messages().getMessageRecordOrNull(message.getMessageToEdit()) : null;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     if (database.isSent(messageId)) {
       warn(TAG, String.valueOf(message.getSentTimeMillis()), "Message " + messageId + " was already sent. Ignoring.");
@@ -153,7 +166,13 @@ public class IndividualSendJob extends PushSendJob {
     }
 
     try {
+<<<<<<< HEAD
       log(TAG, String.valueOf(message.getSentTimeMillis()), "Sending message: " + messageId + ", Recipient: " + message.getThreadRecipient().getId() + ", Thread: " + threadId + ", Attachments: " + buildAttachmentString(message.getAttachments()) + ", Editing: " + (originalEditedMessage != null ? originalEditedMessage.getDateSent() : "N/A"));
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      log(TAG, String.valueOf(message.getSentTimeMillis()), "Sending message: " + messageId + ", Recipient: " + message.getRecipient().getId() + ", Thread: " + threadId + ", Attachments: " + buildAttachmentString(message.getAttachments()));
+=======
+      log(TAG, String.valueOf(message.getSentTimeMillis()), "Sending message: " + messageId + ", Recipient: " + message.getThreadRecipient().getId() + ", Thread: " + threadId + ", Attachments: " + buildAttachmentString(message.getAttachments()));
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
       RecipientUtil.shareProfileIfFirstSecureMessage(message.getThreadRecipient());
 
@@ -234,8 +253,16 @@ public class IndividualSendJob extends PushSendJob {
     notifyMediaMessageDeliveryFailed(context, messageId);
   }
 
+<<<<<<< HEAD
   private boolean deliver(OutgoingMessage message, MessageRecord originalEditedMessage)
       throws IOException, UnregisteredUserException, UntrustedIdentityException, UndeliverableMessageException
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private boolean deliver(OutgoingMessage message)
+      throws IOException, InsecureFallbackApprovalException, UntrustedIdentityException, UndeliverableMessageException
+=======
+  private boolean deliver(OutgoingMessage message, MessageRecord originalEditedMessage)
+      throws IOException, InsecureFallbackApprovalException, UntrustedIdentityException, UndeliverableMessageException
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   {
     if (message.getThreadRecipient() == null) {
       throw new UndeliverableMessageException("No destination address.");
@@ -304,6 +331,7 @@ public class IndividualSendJob extends PushSendJob {
 
       SignalServiceDataMessage mediaMessage = mediaMessageBuilder.build();
 
+<<<<<<< HEAD
       if (originalEditedMessage != null) {
         if (Util.equals(SignalStore.account().getAci(), address.getServiceId())) {
           SendMessageResult                result     = messageSender.sendSelfSyncEditMessage(new SignalServiceEditMessage(originalEditedMessage.getDateSent(), mediaMessage));
@@ -323,6 +351,18 @@ public class IndividualSendJob extends PushSendJob {
           return result.getSuccess().isUnidentified();
         }
       } else if (Util.equals(SignalStore.account().getAci(), address.getServiceId())) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (Util.equals(SignalStore.account().getAci(), address.getServiceId())) {
+        Optional<UnidentifiedAccessPair> syncAccess = UnidentifiedAccessUtil.getAccessForSync(context);
+=======
+      if (originalEditedMessage != null) {
+        SendMessageResult result = messageSender.sendEditMessage(address, UnidentifiedAccessUtil.getAccessFor(context, messageRecipient), ContentHint.RESENDABLE, mediaMessage, IndividualSendEvents.EMPTY, message.isUrgent(), originalEditedMessage.getDateSent());
+        SignalDatabase.messageLog().insertIfPossible(messageRecipient.getId(), message.getSentTimeMillis(), result, ContentHint.RESENDABLE, new MessageId(messageId), false);
+
+        return result.getSuccess().isUnidentified();
+      } else if (Util.equals(SignalStore.account().getAci(), address.getServiceId())) {
+        Optional<UnidentifiedAccessPair> syncAccess = UnidentifiedAccessUtil.getAccessForSync(context);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         SendMessageResult                result     = messageSender.sendSyncMessage(mediaMessage);
         SignalDatabase.messageLog().insertIfPossible(messageRecipient.getId(), message.getSentTimeMillis(), result, ContentHint.RESENDABLE, new MessageId(messageId), false);
         return SealedSenderAccessUtil.getSealedSenderCertificate() != null;

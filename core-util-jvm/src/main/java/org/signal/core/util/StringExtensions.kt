@@ -30,6 +30,7 @@ fun String.asListContains(item: String): Boolean {
       .any { item.startsWith(it) }
 }
 
+<<<<<<< HEAD:core-util-jvm/src/main/java/org/signal/core/util/StringExtensions.kt
 fun String?.emptyIfNull(): String {
   return this ?: ""
 }
@@ -69,4 +70,28 @@ fun CharSequence?.isNotNullOrBlank(): Boolean {
     returns(true) implies (this@isNotNullOrBlank != null)
   }
   return !this.isNullOrBlank()
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.):core-util/src/main/java/org/signal/core/util/StringExtensions.kt
+/**
+ * Turns a multi-line string into a single-line string stripped of indentation, separated by spaces instead of newlines.
+ *
+ * e.g.
+ *
+ * a
+ *   b
+ * c
+ *
+ * turns into
+ *
+ * a b c
+ */
+fun String.toSingleLine(): String {
+  return this.trimIndent().split("\n").joinToString(separator = " ")
+}
+
+fun String?.emptyIfNull(): String {
+  return this ?: ""
+=======
+fun String?.emptyIfNull(): String {
+  return this ?: ""
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.):core-util/src/main/java/org/signal/core/util/StringExtensions.kt
 }

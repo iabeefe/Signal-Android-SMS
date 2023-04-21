@@ -154,6 +154,7 @@ fun MessageRecord.isScheduled(): Boolean {
 fun MessageRecord.getRecordQuoteType(): QuoteModel.Type {
   return if (hasGiftBadge()) QuoteModel.Type.GIFT_BADGE else QuoteModel.Type.NORMAL
 }
+<<<<<<< HEAD
 
 fun MessageRecord.isEditMessage(): Boolean {
   return this is MmsMessageRecord && isEditMessage
@@ -165,3 +166,10 @@ fun MessageRecord.isEditMessage(): Boolean {
 fun MessageRecord.isValidReactionTarget(): Boolean {
   return isSecure && !isPending && !isFailed && !isRemoteDelete && !isUpdate
 }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+
+fun MessageRecord.isEditMessage(): Boolean {
+  return this is MediaMmsMessageRecord && isEditMessage
+}
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)

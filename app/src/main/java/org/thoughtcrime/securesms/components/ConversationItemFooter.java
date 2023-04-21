@@ -28,8 +28,13 @@ import com.airbnb.lottie.model.KeyPath;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.animation.AnimationCompleteListener;
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode;
 import org.thoughtcrime.securesms.conversation.v2.computed.FormattedDate;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord;
@@ -320,6 +325,7 @@ public class ConversationItemFooter extends ConstraintLayout {
     } else if (MessageRecordUtil.isScheduled(messageRecord)) {
       dateView.setText(DateUtils.getOnlyTimeString(getContext(), ((MmsMessageRecord) messageRecord).getScheduledDate()));
     } else {
+<<<<<<< HEAD
       long timestamp = messageRecord.getTimestamp();
       FormattedDate date = DateUtils.getDatelessRelativeTimeSpanFormattedDate(getContext(), locale, timestamp);
       String dateLabel = date.getValue();
@@ -333,6 +339,15 @@ public class ConversationItemFooter extends ConstraintLayout {
         }
       }
       dateView.setText(dateLabel);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      dateView.setText(DateUtils.getSimpleRelativeTimeSpanString(getContext(), locale, messageRecord.getTimestamp()));
+=======
+      String date = DateUtils.getSimpleRelativeTimeSpanString(getContext(), locale, messageRecord.getTimestamp());
+      if (displayMode != ConversationItemDisplayMode.DETAILED && messageRecord instanceof MediaMmsMessageRecord && ((MediaMmsMessageRecord) messageRecord).isEditMessage()) {
+        date = getContext().getString(R.string.ConversationItem_edited_timestamp_footer, date);
+      }
+      dateView.setText(date);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
   }
 
@@ -376,8 +391,21 @@ public class ConversationItemFooter extends ConstraintLayout {
           boolean mms = messageRecord.isMms();
           long    now = System.currentTimeMillis();
 
+<<<<<<< HEAD
           SignalDatabase.messages().markExpireStarted(id, now);
           AppDependencies.getExpiringMessageManager().scheduleDeletion(id, mms, now, messageRecord.getExpiresIn());
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          if (mms) {
+            SignalDatabase.messages().markExpireStarted(id);
+          } else {
+            SignalDatabase.messages().markExpireStarted(id);
+          }
+
+          expirationManager.scheduleDeletion(id, mms, messageRecord.getExpiresIn());
+=======
+          SignalDatabase.messages().markExpireStarted(id, now);
+          ApplicationDependencies.getExpiringMessageManager().scheduleDeletion(id, mms, now, messageRecord.getExpiresIn());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         });
       }
     } else {
@@ -436,7 +464,13 @@ public class ConversationItemFooter extends ConstraintLayout {
       if (mmsMessageRecord.getSlideDeck().getAudioSlide() != null) {
         showAudioDurationViews();
 
+<<<<<<< HEAD
         if (messageRecord.isViewed() || (messageRecord.isOutgoing() && Objects.equals(messageRecord.getToRecipient(), Recipient.self()))) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        if (messageRecord.getViewedReceiptCount() > 0 || (messageRecord.isOutgoing() && Objects.equals(messageRecord.getRecipient(), Recipient.self()))) {
+=======
+        if (messageRecord.getViewedReceiptCount() > 0 || (messageRecord.isOutgoing() && Objects.equals(messageRecord.getToRecipient(), Recipient.self()))) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           revealDot.setProgress(1f);
         } else {
           revealDot.setProgress(0f);

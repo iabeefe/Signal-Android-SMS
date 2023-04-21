@@ -77,6 +77,7 @@ public class MmsMessageRecord extends MessageRecord {
   private final MessageId      latestRevisionId;
   private final boolean        isRead;
 
+<<<<<<< HEAD
   public MmsMessageRecord(long id,
                           Recipient fromRecipient,
                           int fromDeviceId,
@@ -119,11 +120,50 @@ public class MmsMessageRecord extends MessageRecord {
                           int revisionNumber,
                           boolean isRead,
                           @Nullable MessageExtras messageExtras)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  MmsMessageRecord(long id, String body, Recipient conversationRecipient,
+                   Recipient individualRecipient, int recipientDeviceId, long dateSent,
+                   long dateReceived, long dateServer, long threadId, int deliveryStatus, int deliveryReceiptCount,
+                   long type, Set<IdentityKeyMismatch> mismatches,
+                   Set<NetworkFailure> networkFailures, int subscriptionId, long expiresIn,
+                   long expireStarted, boolean viewOnce,
+                   @NonNull SlideDeck slideDeck, int readReceiptCount,
+                   @Nullable Quote quote, @NonNull List<Contact> contacts,
+                   @NonNull List<LinkPreview> linkPreviews, boolean unidentified,
+                   @NonNull List<ReactionRecord> reactions, boolean remoteDelete, long notifiedTimestamp,
+                   int viewedReceiptCount, long receiptTimestamp, @NonNull StoryType storyType,
+                   @Nullable ParentStoryId parentStoryId, @Nullable GiftBadge giftBadge)
+=======
+  MmsMessageRecord(long id, String body, Recipient fromRecipient, int fromDeviceId, Recipient toRecipient, long dateSent,
+                   long dateReceived, long dateServer, long threadId, int deliveryStatus, int deliveryReceiptCount,
+                   long type, Set<IdentityKeyMismatch> mismatches,
+                   Set<NetworkFailure> networkFailures, int subscriptionId, long expiresIn,
+                   long expireStarted, boolean viewOnce,
+                   @NonNull SlideDeck slideDeck, int readReceiptCount,
+                   @Nullable Quote quote, @NonNull List<Contact> contacts,
+                   @NonNull List<LinkPreview> linkPreviews, boolean unidentified,
+                   @NonNull List<ReactionRecord> reactions, boolean remoteDelete, long notifiedTimestamp,
+                   int viewedReceiptCount, long receiptTimestamp, @NonNull StoryType storyType,
+                   @Nullable ParentStoryId parentStoryId, @Nullable GiftBadge giftBadge, @Nullable MessageId originalMessageId,
+                   int revisionNumber)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   {
+<<<<<<< HEAD
     super(id, body, fromRecipient, fromDeviceId, toRecipient,
           dateSent, dateReceived, dateServer, threadId, Status.STATUS_NONE, hasDeliveryReceipt,
           mailbox, mismatches, failures, subscriptionId, expiresIn, expireStarted, expireTimerVersion, hasReadReceipt,
           unidentified, reactions, remoteDelete, notifiedTimestamp, viewed, receiptTimestamp, originalMessageId, revisionNumber, messageExtras);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    super(id, body, conversationRecipient, individualRecipient, recipientDeviceId,
+          dateSent, dateReceived, dateServer, threadId, deliveryStatus, deliveryReceiptCount,
+          type, mismatches, networkFailures, subscriptionId, expiresIn, expireStarted, readReceiptCount,
+          unidentified, reactions, remoteDelete, notifiedTimestamp, viewedReceiptCount, receiptTimestamp);
+=======
+    super(id, body, fromRecipient, fromDeviceId, toRecipient,
+          dateSent, dateReceived, dateServer, threadId, deliveryStatus, deliveryReceiptCount,
+          type, mismatches, networkFailures, subscriptionId, expiresIn, expireStarted, readReceiptCount,
+          unidentified, reactions, remoteDelete, notifiedTimestamp, viewedReceiptCount, receiptTimestamp, originalMessageId, revisionNumber);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     this.slideDeck        = slideDeck;
     this.quote            = quote;

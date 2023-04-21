@@ -230,12 +230,20 @@ public class MessageSender {
       Recipient recipient         = message.getThreadRecipient();
       long      messageId         = database.insertMessageOutbox(applyUniversalExpireTimerIfNecessary(context, recipient, message, allocatedThreadId), allocatedThreadId, sendType != SendType.SIGNAL, insertListener);
 
+<<<<<<< HEAD
       if (message.getThreadRecipient().isGroup()) {
         if (message.getAttachments().isEmpty() && message.getLinkPreviews().isEmpty() && message.getSharedContacts().isEmpty()) {
           SignalLocalMetrics.GroupMessageSend.onInsertedIntoDatabase(messageId, metricId);
         } else {
           SignalLocalMetrics.GroupMessageSend.cancel(messageId);
         }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (message.getRecipient().isGroup() && message.getAttachments().isEmpty() && message.getLinkPreviews().isEmpty() && message.getSharedContacts().isEmpty()) {
+        SignalLocalMetrics.GroupMessageSend.onInsertedIntoDatabase(messageId, metricId);
+=======
+      if (message.getThreadRecipient().isGroup() && message.getAttachments().isEmpty() && message.getLinkPreviews().isEmpty() && message.getSharedContacts().isEmpty()) {
+        SignalLocalMetrics.GroupMessageSend.onInsertedIntoDatabase(messageId, metricId);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       } else {
         SignalLocalMetrics.IndividualMessageSend.onInsertedIntoDatabase(messageId, metricId);
       }
@@ -251,12 +259,30 @@ public class MessageSender {
     }
   }
 
+<<<<<<< HEAD
   public static boolean sendPushWithPreUploadedMedia(final Context context,
                                                      final OutgoingMessage message,
                                                      final Collection<PreUploadResult> preUploadResults,
                                                      final long threadId,
                                                      final MessageTable.InsertListener insertListener)  {
     Log.i(TAG, "Sending media message with pre-uploads to " + message.getThreadRecipient().getId() + ", thread: " + threadId + ", pre-uploads: " + preUploadResults);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  public static long sendPushWithPreUploadedMedia(final Context context,
+                                                  final OutgoingMessage message,
+                                                  final Collection<PreUploadResult> preUploadResults,
+                                                  final long threadId,
+                                                  final MessageTable.InsertListener insertListener)
+  {
+    Log.i(TAG, "Sending media message with pre-uploads to " + message.getRecipient().getId() + ", thread: " + threadId + ", pre-uploads: " +  preUploadResults);
+=======
+  public static long sendPushWithPreUploadedMedia(final Context context,
+                                                  final OutgoingMessage message,
+                                                  final Collection<PreUploadResult> preUploadResults,
+                                                  final long threadId,
+                                                  final MessageTable.InsertListener insertListener)
+  {
+    Log.i(TAG, "Sending media message with pre-uploads to " + message.getThreadRecipient().getId() + ", thread: " + threadId + ", pre-uploads: " + preUploadResults);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     Preconditions.checkArgument(message.getAttachments().isEmpty(), "If the media is pre-uploaded, there should be no attachments on the message.");
 
     try {
@@ -264,8 +290,24 @@ public class MessageSender {
       MessageTable    mmsDatabase        = SignalDatabase.messages();
       AttachmentTable attachmentDatabase = SignalDatabase.attachments();
 
+<<<<<<< HEAD
       Recipient recipient         = message.getThreadRecipient();
       long      allocatedThreadId = threadTable.getOrCreateValidThreadId(message.getThreadRecipient(), threadId);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      Recipient recipient         = message.getRecipient();
+      long      allocatedThreadId = threadTable.getOrCreateValidThreadId(message.getRecipient(), threadId);
+      long      messageId         = mmsDatabase.insertMessageOutbox(applyUniversalExpireTimerIfNecessary(context, recipient, message, allocatedThreadId),
+                                                                    allocatedThreadId,
+                                                                    false,
+                                                                    insertListener);
+=======
+      Recipient recipient         = message.getThreadRecipient();
+      long      allocatedThreadId = threadTable.getOrCreateValidThreadId(message.getThreadRecipient(), threadId);
+      long      messageId         = mmsDatabase.insertMessageOutbox(applyUniversalExpireTimerIfNecessary(context, recipient, message, allocatedThreadId),
+                                                                    allocatedThreadId,
+                                                                    false,
+                                                                    insertListener);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
       List<AttachmentId> attachmentIds = Stream.of(preUploadResults).map(PreUploadResult::getAttachmentId).toList();
       List<String>       jobIds        = Stream.of(preUploadResults).map(PreUploadResult::getJobIds).flatMap(Stream::of).toList();

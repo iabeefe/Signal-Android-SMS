@@ -109,6 +109,7 @@ class InternalSettingsViewModel(private val repository: InternalSettingsReposito
     refresh()
   }
 
+<<<<<<< HEAD
   fun setInternalCallingEnableOboeAdm(enabled: Boolean) {
     preferenceDataStore.putBoolean(InternalValues.CALLING_ENABLE_OBOE_ADM, enabled)
     refresh()
@@ -124,6 +125,14 @@ class InternalSettingsViewModel(private val repository: InternalSettingsReposito
     refresh()
   }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  fun setUseConversationFragmentV2(enabled: Boolean) {
+    SignalStore.internalValues().setUseConversationFragmentV2(enabled)
+    refresh()
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   fun addSampleReleaseNote() {
     repository.addSampleReleaseNote()
   }
@@ -158,6 +167,7 @@ class InternalSettingsViewModel(private val repository: InternalSettingsReposito
     callingEnableOboeAdm = SignalStore.internal.callingEnableOboeAdm(),
     useBuiltInEmojiSet = SignalStore.internal.forceBuiltInEmoji(),
     emojiVersion = null,
+<<<<<<< HEAD
     removeSenderKeyMinimium = SignalStore.internal.removeSenderKeyMinimum(),
     delayResends = SignalStore.internal.delayResends(),
     disableStorageService = SignalStore.internal.storageServiceDisabled(),
@@ -167,6 +177,20 @@ class InternalSettingsViewModel(private val repository: InternalSettingsReposito
     hasPendingOneTimeDonation = SignalStore.inAppPayments.getPendingOneTimeDonation() != null,
     hevcEncoding = SignalStore.internal.hevcEncoding,
     newCallingUi = SignalStore.internal.newCallingUi
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    removeSenderKeyMinimium = SignalStore.internalValues().removeSenderKeyMinimum(),
+    delayResends = SignalStore.internalValues().delayResends(),
+    disableStorageService = SignalStore.internalValues().storageServiceDisabled(),
+    canClearOnboardingState = SignalStore.storyValues().hasDownloadedOnboardingStory && Stories.isFeatureEnabled(),
+    pnpInitialized = SignalStore.misc().hasPniInitializedDevices()
+=======
+    removeSenderKeyMinimium = SignalStore.internalValues().removeSenderKeyMinimum(),
+    delayResends = SignalStore.internalValues().delayResends(),
+    disableStorageService = SignalStore.internalValues().storageServiceDisabled(),
+    canClearOnboardingState = SignalStore.storyValues().hasDownloadedOnboardingStory && Stories.isFeatureEnabled(),
+    pnpInitialized = SignalStore.misc().hasPniInitializedDevices(),
+    useConversationFragmentV2 = SignalStore.internalValues().useConversationFragmentV2()
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   )
 
   fun onClearOnboardingState() {

@@ -29,10 +29,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
 
-<!-- JW: override for Android 10. For Android 11 we switch to the MANAGE_EXTERNAL_STORAGE permission.
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-                     android:maxSdkVersion="28" />
--->
+    <!-- JW: override for Android 10. For Android 11 we switch to the MANAGE_EXTERNAL_STORAGE permission. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
@@ -649,7 +646,23 @@
         </intent-filter>
     </activity>
 
+<<<<<<< HEAD
     <activity android:name=".conversation.v2.ConversationActivity"
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <activity android:name=".conversation.ConversationActivity"
+=======
+    <activity android:name=".conversation.v2.ConversationActivity"
+              android:windowSoftInputMode="stateUnchanged"
+              android:launchMode="singleTask"
+              android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"
+              android:parentActivityName=".MainActivity">
+        <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.thoughtcrime.securesms.MainActivity" />
+    </activity>
+
+    <activity android:name=".conversation.ConversationActivity"
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
               android:windowSoftInputMode="stateUnchanged"
               android:launchMode="singleTask"
               android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize|uiMode"

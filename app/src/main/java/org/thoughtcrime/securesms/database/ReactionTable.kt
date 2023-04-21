@@ -38,12 +38,18 @@ class ReactionTable(context: Context, databaseHelper: SignalDatabase) : Database
         $DATE_RECEIVED INTEGER NOT NULL,
         UNIQUE($MESSAGE_ID, $AUTHOR_ID) ON CONFLICT REPLACE
       )
+<<<<<<< HEAD
     """
 
     @JvmField
     val CREATE_INDEXES = arrayOf(
       "CREATE INDEX IF NOT EXISTS reaction_author_id_index ON $TABLE_NAME ($AUTHOR_ID)"
     )
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    """.trimIndent()
+=======
+    """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     private fun readReaction(cursor: Cursor): ReactionRecord {
       return ReactionRecord(

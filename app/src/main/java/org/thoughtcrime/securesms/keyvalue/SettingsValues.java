@@ -65,6 +65,7 @@ public final class SettingsValues extends SignalStoreValues {
   private static final String SENT_MEDIA_QUALITY                      = "settings.sentMediaQuality";
   private static final String CENSORSHIP_CIRCUMVENTION_ENABLED        = "settings.censorshipCircumventionEnabled";
   private static final String KEEP_MUTED_CHATS_ARCHIVED               = "settings.keepMutedChatsArchived";
+<<<<<<< HEAD
   private static final String USE_COMPACT_NAVIGATION_BAR              = "settings.useCompactNavigationBar";
   private static final String THREAD_TRIM_SYNC_TO_LINKED_DEVICES      = "settings.storage.syncThreadTrimDeletes";
   private static final String PASSPHRASE_DISABLED                     = "settings.passphrase.disabled";
@@ -75,6 +76,10 @@ public final class SettingsValues extends SignalStoreValues {
 
   public static final int BACKUP_DEFAULT_HOUR   = 2;
   public static final int BACKUP_DEFAULT_MINUTE = 0;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  private static final String USE_COMPACT_NAVIGATION_BAR              = "settings.useCompactNavigationBar";
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
   private final SingleLiveEvent<String> onConfigurationSettingChanged = new SingleLiveEvent<>();
 
@@ -138,6 +143,7 @@ public final class SettingsValues extends SignalStoreValues {
                          NOTIFY_WHEN_CONTACT_JOINS_SIGNAL,
                          UNIVERSAL_EXPIRE_TIMER,
                          SENT_MEDIA_QUALITY,
+<<<<<<< HEAD
                          KEEP_MUTED_CHATS_ARCHIVED,
                          USE_COMPACT_NAVIGATION_BAR,
                          THREAD_TRIM_SYNC_TO_LINKED_DEVICES,
@@ -146,6 +152,12 @@ public final class SettingsValues extends SignalStoreValues {
                          PASSPHRASE_TIMEOUT,
                          SCREEN_LOCK_ENABLED,
                          SCREEN_LOCK_TIMEOUT);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                         KEEP_MUTED_CHATS_ARCHIVED);
+=======
+                         KEEP_MUTED_CHATS_ARCHIVED,
+                         USE_COMPACT_NAVIGATION_BAR);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   public @NonNull LiveData<String> getOnConfigurationSettingChanged() {
@@ -477,6 +489,7 @@ public final class SettingsValues extends SignalStoreValues {
     return getBoolean(KEEP_MUTED_CHATS_ARCHIVED, false);
   }
 
+<<<<<<< HEAD
   public void setUseCompactNavigationBar(boolean enabled) {
     putBoolean(USE_COMPACT_NAVIGATION_BAR, enabled);
   }
@@ -525,6 +538,17 @@ public final class SettingsValues extends SignalStoreValues {
     return getLong(SCREEN_LOCK_TIMEOUT, 0);
   }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  public void setUseCompactNavigationBar(boolean enabled) {
+    putBoolean(USE_COMPACT_NAVIGATION_BAR, enabled);
+  }
+
+  public boolean getUseCompactNavigationBar() {
+    return getBoolean(USE_COMPACT_NAVIGATION_BAR, false);
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private @Nullable Uri getUri(@NonNull String key) {
     String uri = getString(key, "");
 

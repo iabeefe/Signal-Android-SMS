@@ -10,10 +10,23 @@ sealed class ConversationItemDisplayMode(val scheduleMessageMode: Boolean = fals
   /** Smaller bubbles, always singular bubbles, with a footer. Used for edit message history. */
   object EditHistory : ConversationItemDisplayMode()
 
+  /** Smaller bubbles, no footers */
+  EXTRA_CONDENSED,
+
   /** Less length restrictions. Used to show more info in message details. */
+<<<<<<< HEAD
   object Detailed : ConversationItemDisplayMode()
 
   fun displayWallpaper(): Boolean {
     return this == Standard || this == Detailed
   }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  DETAILED
+=======
+  DETAILED;
+
+  fun displayWallpaper(): Boolean {
+    return this == STANDARD || this == DETAILED
+  }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 }

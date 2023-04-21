@@ -3,7 +3,16 @@ package org.thoughtcrime.securesms.mediasend;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
+<<<<<<< HEAD
 import android.widget.Toast;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import android.view.Window;
+import android.view.WindowManager;
+=======
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Toast;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

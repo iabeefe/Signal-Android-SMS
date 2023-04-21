@@ -95,8 +95,16 @@ sealed class NotificationItem(val threadRecipient: Recipient, protected val reco
       context.getString(R.string.SingleRecipientNotificationBuilder_new_message)
     } else {
       SpannableStringBuilder().apply {
+<<<<<<< HEAD
         append(Util.getBoldedString(authorRecipient.getShortDisplayName(context)))
         if (threadRecipient != authorRecipient) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        append(Util.getBoldedString(individualRecipient.getShortDisplayNameIncludingUsername(context)))
+        if (threadRecipient != individualRecipient) {
+=======
+        append(Util.getBoldedString(authorRecipient.getShortDisplayNameIncludingUsername(context)))
+        if (threadRecipient != authorRecipient) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           append(Util.getBoldedString("@${threadRecipient.getDisplayName(context)}"))
         }
         append(": ")
@@ -106,8 +114,16 @@ sealed class NotificationItem(val threadRecipient: Recipient, protected val reco
   }
 
   fun getPersonName(context: Context): CharSequence {
+<<<<<<< HEAD
     return if (SignalStore.settings.messageNotificationsPrivacy.isDisplayContact) {
       authorRecipient.getDisplayName(context)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    return if (SignalStore.settings().messageNotificationsPrivacy.isDisplayContact) {
+      individualRecipient.getDisplayName(context)
+=======
+    return if (SignalStore.settings().messageNotificationsPrivacy.isDisplayContact) {
+      authorRecipient.getDisplayName(context)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     } else {
       context.getString(R.string.SingleRecipientNotificationBuilder_signal)
     }
@@ -117,17 +133,37 @@ sealed class NotificationItem(val threadRecipient: Recipient, protected val reco
     return timestamp.compareTo(other.timestamp)
   }
 
+<<<<<<< HEAD
   fun getPersonUri(context: Context): String? {
     return if (SignalStore.settings.messageNotificationsPrivacy.isDisplayContact && authorRecipient.isSystemContact && Permissions.hasAny(context, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS)) {
       authorRecipient.contactUri.toString()
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  fun getPersonUri(): String? {
+    return if (SignalStore.settings().messageNotificationsPrivacy.isDisplayContact && individualRecipient.isSystemContact) {
+      individualRecipient.contactUri.toString()
+=======
+  fun getPersonUri(): String? {
+    return if (SignalStore.settings().messageNotificationsPrivacy.isDisplayContact && authorRecipient.isSystemContact) {
+      authorRecipient.contactUri.toString()
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     } else {
       null
     }
   }
 
+<<<<<<< HEAD
   fun getPersonIcon(context: Context): IconCompat? {
     return if (SignalStore.settings.messageNotificationsPrivacy.isDisplayContact) {
       AvatarUtil.getIconCompat(context, authorRecipient)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  fun getPersonIcon(context: Context): Bitmap? {
+    return if (SignalStore.settings().messageNotificationsPrivacy.isDisplayContact) {
+      individualRecipient.getContactDrawable(context).toLargeBitmap(context)
+=======
+  fun getPersonIcon(context: Context): Bitmap? {
+    return if (SignalStore.settings().messageNotificationsPrivacy.isDisplayContact) {
+      authorRecipient.getContactDrawable(context).toLargeBitmap(context)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     } else {
       null
     }
@@ -210,9 +246,17 @@ sealed class NotificationItem(val threadRecipient: Recipient, protected val reco
  */
 class MessageNotification(threadRecipient: Recipient, record: MessageRecord) : NotificationItem(threadRecipient, record) {
   override val timestamp: Long = record.timestamp
+<<<<<<< HEAD
   override val authorRecipient: Recipient = record.fromRecipient.resolve()
   override val isNewNotification: Boolean = notifiedTimestamp == 0L && !record.isEditMessage
   val hasSelfMention = record.hasSelfMention()
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  override val individualRecipient: Recipient = if (record.isOutgoing) Recipient.self() else record.individualRecipient.resolve()
+  override val isNewNotification: Boolean = notifiedTimestamp == 0L
+=======
+  override val authorRecipient: Recipient = record.fromRecipient.resolve()
+  override val isNewNotification: Boolean = notifiedTimestamp == 0L
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
   private var thumbnailInfo: ThumbnailInfo = NotificationThumbnails.getWithoutModifying(this)
 

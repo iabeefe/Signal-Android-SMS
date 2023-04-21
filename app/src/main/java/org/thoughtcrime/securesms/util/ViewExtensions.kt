@@ -7,10 +7,15 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+<<<<<<< HEAD
 import androidx.core.view.doOnNextLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.Lifecycle
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import androidx.core.view.doOnNextLayout
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
 var View.visible: Boolean
   get() {

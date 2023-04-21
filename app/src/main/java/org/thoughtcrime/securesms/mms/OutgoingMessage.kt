@@ -51,11 +51,18 @@ data class OutgoingMessage(
   val isEndSession: Boolean = false,
   val isIdentityVerified: Boolean = false,
   val isIdentityDefault: Boolean = false,
+<<<<<<< HEAD
   val scheduledDate: Long = -1,
   val messageToEdit: Long = 0,
   val isReportSpam: Boolean = false,
   val isMessageRequestAccept: Boolean = false,
   val messageExtras: MessageExtras? = null
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  val scheduledDate: Long = -1
+=======
+  val scheduledDate: Long = -1,
+  val messageToEdit: Long = 0
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ) {
 
   val isV2Group: Boolean = messageGroupContext != null && GroupV2UpdateMessageUtil.isGroupV2(messageGroupContext)
@@ -178,7 +185,13 @@ data class OutgoingMessage(
      * A literal, insecure SMS message.
      */
     @JvmStatic
+<<<<<<< HEAD
     fun sms(threadRecipient: Recipient, body: String): OutgoingMessage {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    fun sms(recipient: Recipient, body: String, subscriptionId: Int): OutgoingMessage {
+=======
+    fun sms(threadRecipient: Recipient, body: String, subscriptionId: Int): OutgoingMessage {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       return OutgoingMessage(
         threadRecipient = threadRecipient,
         sentTimeMillis = System.currentTimeMillis(),
@@ -235,12 +248,28 @@ data class OutgoingMessage(
      * Helper for creating a group update message when a state change occurs and needs to be sent to others.
      */
     @JvmStatic
+<<<<<<< HEAD
     fun groupUpdateMessage(threadRecipient: Recipient, update: GV2UpdateDescription, sentTimeMillis: Long): OutgoingMessage {
       val messageExtras = MessageExtras(gv2UpdateDescription = update)
       val groupContext = MessageGroupContext(update.gv2ChangeDescription!!)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    fun groupUpdateMessage(recipient: Recipient, group: DecryptedGroupV2Context, sentTimeMillis: Long): OutgoingMessage {
+      val groupContext = MessageGroupContext(group)
+=======
+    fun groupUpdateMessage(threadRecipient: Recipient, group: DecryptedGroupV2Context, sentTimeMillis: Long): OutgoingMessage {
+      val groupContext = MessageGroupContext(group)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
       return OutgoingMessage(
+<<<<<<< HEAD
         threadRecipient = threadRecipient,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        recipient = recipient,
+        body = groupContext.encodedGroupContext,
+=======
+        threadRecipient = threadRecipient,
+        body = groupContext.encodedGroupContext,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         sentTimeMillis = sentTimeMillis,
         messageGroupContext = groupContext,
         isGroup = true,
@@ -267,7 +296,15 @@ data class OutgoingMessage(
       mentions: List<Mention> = emptyList()
     ): OutgoingMessage {
       return OutgoingMessage(
+<<<<<<< HEAD
         threadRecipient = threadRecipient,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        recipient = recipient,
+        body = groupContext.encodedGroupContext,
+=======
+        threadRecipient = threadRecipient,
+        body = groupContext.encodedGroupContext,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         isGroup = true,
         isGroupUpdate = true,
         messageGroupContext = groupContext,
@@ -356,7 +393,13 @@ data class OutgoingMessage(
      * Helper for creating expiration update messages.
      */
     @JvmStatic
+<<<<<<< HEAD
     fun expirationUpdateMessage(threadRecipient: Recipient, sentTimeMillis: Long, expiresIn: Long, expireTimerVersion: Int): OutgoingMessage {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    fun expirationUpdateMessage(recipient: Recipient, sentTimeMillis: Long, expiresIn: Long): OutgoingMessage {
+=======
+    fun expirationUpdateMessage(threadRecipient: Recipient, sentTimeMillis: Long, expiresIn: Long): OutgoingMessage {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       return OutgoingMessage(
         threadRecipient = threadRecipient,
         sentTimeMillis = sentTimeMillis,

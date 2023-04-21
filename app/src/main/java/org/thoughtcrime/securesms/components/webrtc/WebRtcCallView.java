@@ -1036,6 +1036,7 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 
     if (webRtcControls.displayAudioToggle()) {
       audioToggle.setControlAvailability(webRtcControls.isEarpieceAvailableForAudioToggle(),
+<<<<<<< HEAD
                                          webRtcControls.isBluetoothHeadsetAvailableForAudioToggle(),
                                          webRtcControls.isWiredHeadsetAvailableForAudioToggle());
 
@@ -1045,6 +1046,12 @@ public class WebRtcCallView extends InsetAwareConstraintLayout {
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
       audioToggle.setControlAvailability(webRtcControls.enableHandsetInAudioToggle(),
                                          webRtcControls.enableHeadsetInAudioToggle());
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                                         webRtcControls.isBluetoothHeadsetAvailableForAudioToggle());
+=======
+                                         webRtcControls.isBluetoothHeadsetAvailableForAudioToggle(),
+                                         webRtcControls.isWiredHeadsetAvailableForAudioToggle());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
       audioToggle.setAudioOutput(webRtcControls.getAudioOutput(), false);
 =======

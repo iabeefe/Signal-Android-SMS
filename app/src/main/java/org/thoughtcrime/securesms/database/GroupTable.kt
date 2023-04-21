@@ -167,6 +167,34 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
       .map { columnName: String -> "$TABLE_NAME.$columnName" }
       .toList()
 
+<<<<<<< HEAD
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    //language=sql
+    private val JOINED_GROUP_SELECT = """
+      SELECT 
+        DISTINCT $TABLE_NAME.*, 
+        (
+            SELECT GROUP_CONCAT(${MembershipTable.TABLE_NAME}.${MembershipTable.RECIPIENT_ID})
+            FROM ${MembershipTable.TABLE_NAME} 
+            WHERE ${MembershipTable.TABLE_NAME}.${MembershipTable.GROUP_ID} = $TABLE_NAME.$GROUP_ID
+        ) as $MEMBER_GROUP_CONCAT
+      FROM $TABLE_NAME          
+    """.toSingleLine()
+
+=======
+    //language=sql
+    private val JOINED_GROUP_SELECT = """
+      SELECT 
+        DISTINCT $TABLE_NAME.*, 
+        (
+            SELECT GROUP_CONCAT(${MembershipTable.TABLE_NAME}.${MembershipTable.RECIPIENT_ID})
+            FROM ${MembershipTable.TABLE_NAME} 
+            WHERE ${MembershipTable.TABLE_NAME}.${MembershipTable.GROUP_ID} = $TABLE_NAME.$GROUP_ID
+        ) as $MEMBER_GROUP_CONCAT
+      FROM $TABLE_NAME          
+    """
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     val CREATE_TABLES = arrayOf(CREATE_TABLE, MembershipTable.CREATE_TABLE)
   }
 
@@ -188,11 +216,17 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
             $ENDORSEMENT BLOB DEFAULT NULL,
             UNIQUE($GROUP_ID, $RECIPIENT_ID)
         )
+<<<<<<< HEAD
       """
 
       val CREATE_INDEXES = arrayOf(
         "CREATE INDEX IF NOT EXISTS group_membership_recipient_id ON $TABLE_NAME ($RECIPIENT_ID)"
       )
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.toSingleLine()
+=======
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
   }
 
@@ -361,21 +395,137 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
     val statement = """
       ${joinedGroupSelect(inputQuery)}
       WHERE ${query.where}
+<<<<<<< HEAD
       ORDER BY $TITLE_SEARCH_RANK DESC, $TITLE COLLATE NOCASE ASC
     """
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      ORDER BY $TITLE COLLATE NOCASE ASC
+    """.trimIndent()
+=======
+      ORDER BY $TITLE COLLATE NOCASE ASC
+    """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     val cursor = databaseHelper.signalReadableDatabase.query(statement, query.whereArgs)
     return Reader(cursor)
   }
 
+<<<<<<< HEAD
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  fun queryGroupsByMembership(recipientIds: Set<RecipientId>, includeInactive: Boolean, excludeV1: Boolean, excludeMms: Boolean): Reader {
+    var recipientIds = recipientIds
+    if (recipientIds.isEmpty()) {
+      return Reader(null)
+    }
+
+    if (recipientIds.size > 30) {
+      Log.w(TAG, "[queryGroupsByMembership] Large set of recipientIds (${recipientIds.size})! Using the first 30.")
+      recipientIds = recipientIds.take(30).toSet()
+    }
+
+    val membershipQuery = SqlUtil.buildSingleCollectionQuery("${MembershipTable.TABLE_NAME}.${MembershipTable.RECIPIENT_ID}", recipientIds)
+
+    var query: String
+    val queryArgs: Array<String>
+
+    if (includeInactive) {
+      query = "${membershipQuery.where} AND ($ACTIVE = ? OR $TABLE_NAME.$RECIPIENT_ID IN (SELECT ${ThreadTable.RECIPIENT_ID} FROM ${ThreadTable.TABLE_NAME}))"
+      queryArgs = membershipQuery.whereArgs + buildArgs(1)
+    } else {
+      query = "${membershipQuery.where} AND $ACTIVE = ?"
+      queryArgs = membershipQuery.whereArgs + buildArgs(1)
+    }
+
+    if (excludeV1) {
+      query += " AND $EXPECTED_V2_ID IS NULL"
+    }
+
+    if (excludeMms) {
+      query += " AND $MMS = 0"
+    }
+
+    val selection = """
+      SELECT DISTINCT
+                $TABLE_NAME.*, 
+                (
+                    SELECT GROUP_CONCAT(${MembershipTable.TABLE_NAME}.${MembershipTable.RECIPIENT_ID})
+                    FROM ${MembershipTable.TABLE_NAME} 
+                    WHERE ${MembershipTable.TABLE_NAME}.${MembershipTable.GROUP_ID} = $TABLE_NAME.$GROUP_ID
+                ) as $MEMBER_GROUP_CONCAT
+      FROM ${MembershipTable.TABLE_NAME}
+      INNER JOIN $TABLE_NAME ON ${MembershipTable.TABLE_NAME}.${MembershipTable.GROUP_ID} = $TABLE_NAME.$GROUP_ID
+      WHERE $query
+    """.trimIndent()
+
+    return Reader(readableDatabase.query(selection, queryArgs))
+  }
+
+=======
+  fun queryGroupsByMembership(recipientIds: Set<RecipientId>, includeInactive: Boolean, excludeV1: Boolean, excludeMms: Boolean): Reader {
+    var recipientIds = recipientIds
+    if (recipientIds.isEmpty()) {
+      return Reader(null)
+    }
+
+    if (recipientIds.size > 30) {
+      Log.w(TAG, "[queryGroupsByMembership] Large set of recipientIds (${recipientIds.size})! Using the first 30.")
+      recipientIds = recipientIds.take(30).toSet()
+    }
+
+    val membershipQuery = SqlUtil.buildSingleCollectionQuery("${MembershipTable.TABLE_NAME}.${MembershipTable.RECIPIENT_ID}", recipientIds)
+
+    var query: String
+    val queryArgs: Array<String>
+
+    if (includeInactive) {
+      query = "${membershipQuery.where} AND ($ACTIVE = ? OR $TABLE_NAME.$RECIPIENT_ID IN (SELECT ${ThreadTable.RECIPIENT_ID} FROM ${ThreadTable.TABLE_NAME}))"
+      queryArgs = membershipQuery.whereArgs + buildArgs(1)
+    } else {
+      query = "${membershipQuery.where} AND $ACTIVE = ?"
+      queryArgs = membershipQuery.whereArgs + buildArgs(1)
+    }
+
+    if (excludeV1) {
+      query += " AND $EXPECTED_V2_ID IS NULL"
+    }
+
+    if (excludeMms) {
+      query += " AND $MMS = 0"
+    }
+
+    val selection = """
+      SELECT DISTINCT
+                $TABLE_NAME.*, 
+                (
+                    SELECT GROUP_CONCAT(${MembershipTable.TABLE_NAME}.${MembershipTable.RECIPIENT_ID})
+                    FROM ${MembershipTable.TABLE_NAME} 
+                    WHERE ${MembershipTable.TABLE_NAME}.${MembershipTable.GROUP_ID} = $TABLE_NAME.$GROUP_ID
+                ) as $MEMBER_GROUP_CONCAT
+      FROM ${MembershipTable.TABLE_NAME}
+      INNER JOIN $TABLE_NAME ON ${MembershipTable.TABLE_NAME}.${MembershipTable.GROUP_ID} = $TABLE_NAME.$GROUP_ID
+      WHERE $query
+    """
+
+    return Reader(readableDatabase.query(selection, queryArgs))
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private fun queryGroupsByRecency(groupQuery: GroupQuery): Reader {
     val query = getGroupQueryWhereStatement(groupQuery.searchQuery, groupQuery.includeInactive, !groupQuery.includeV1, !groupQuery.includeMms)
     val sql = """
       ${joinedGroupSelect(groupQuery.searchQuery)}
       INNER JOIN ${ThreadTable.TABLE_NAME} ON ${ThreadTable.TABLE_NAME}.${ThreadTable.RECIPIENT_ID} = $TABLE_NAME.$RECIPIENT_ID
       WHERE ${query.where} 
+<<<<<<< HEAD
       ORDER BY  $TITLE_SEARCH_RANK DESC, ${ThreadTable.TABLE_NAME}.${ThreadTable.DATE} DESC
     """
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      ORDER BY ${ThreadTable.TABLE_NAME}.${ThreadTable.DATE} DESC
+    """.toSingleLine()
+=======
+      ORDER BY ${ThreadTable.TABLE_NAME}.${ThreadTable.DATE} DESC
+    """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     return Reader(databaseHelper.signalReadableDatabase.rawQuery(sql, query.whereArgs))
   }
@@ -452,6 +602,80 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
       }
   }
 
+<<<<<<< HEAD
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  fun getOrCreateMmsGroupForMembers(members: Set<RecipientId>): GroupId.Mms {
+    val joinedTestMembers = members
+      .toList()
+      .map { it.toLong() }
+      .sorted()
+      .joinToString(separator = ",")
+
+    //language=sql
+    val statement = """
+      SELECT 
+        $TABLE_NAME.$GROUP_ID as gid,
+        (
+            SELECT GROUP_CONCAT(${MembershipTable.RECIPIENT_ID}, ',')
+            FROM (
+              SELECT ${MembershipTable.TABLE_NAME}.${MembershipTable.RECIPIENT_ID}
+              FROM ${MembershipTable.TABLE_NAME}
+              WHERE ${MembershipTable.TABLE_NAME}.${MembershipTable.GROUP_ID} = $TABLE_NAME.$GROUP_ID
+              ORDER BY ${MembershipTable.TABLE_NAME}.${MembershipTable.RECIPIENT_ID} ASC
+            )
+        ) as $MEMBER_GROUP_CONCAT
+        FROM $TABLE_NAME
+        WHERE $MEMBER_GROUP_CONCAT = ?
+    """.toSingleLine()
+
+    return readableDatabase.rawQuery(statement, buildArgs(joinedTestMembers)).use { cursor ->
+      if (cursor.moveToNext()) {
+        return GroupId.parseOrThrow(cursor.requireNonNullString("gid")).requireMms()
+      } else {
+        val groupId = GroupId.createMms(SecureRandom())
+        create(groupId, null, members)
+        groupId
+      }
+    }
+  }
+
+=======
+  fun getOrCreateMmsGroupForMembers(members: Set<RecipientId>): GroupId.Mms {
+    val joinedTestMembers = members
+      .toList()
+      .map { it.toLong() }
+      .sorted()
+      .joinToString(separator = ",")
+
+    //language=sql
+    val statement = """
+      SELECT 
+        $TABLE_NAME.$GROUP_ID as gid,
+        (
+            SELECT GROUP_CONCAT(${MembershipTable.RECIPIENT_ID}, ',')
+            FROM (
+              SELECT ${MembershipTable.TABLE_NAME}.${MembershipTable.RECIPIENT_ID}
+              FROM ${MembershipTable.TABLE_NAME}
+              WHERE ${MembershipTable.TABLE_NAME}.${MembershipTable.GROUP_ID} = $TABLE_NAME.$GROUP_ID
+              ORDER BY ${MembershipTable.TABLE_NAME}.${MembershipTable.RECIPIENT_ID} ASC
+            )
+        ) as $MEMBER_GROUP_CONCAT
+        FROM $TABLE_NAME
+        WHERE $MEMBER_GROUP_CONCAT = ?
+    """
+
+    return readableDatabase.rawQuery(statement, buildArgs(joinedTestMembers)).use { cursor ->
+      if (cursor.moveToNext()) {
+        return GroupId.parseOrThrow(cursor.requireNonNullString("gid")).requireMms()
+      } else {
+        val groupId = GroupId.createMms(SecureRandom())
+        create(groupId, null, members)
+        groupId
+      }
+    }
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   @WorkerThread
   fun getPushGroupNamesContainingMember(recipientId: RecipientId): List<String> {
     return getPushGroupsContainingMember(recipientId)

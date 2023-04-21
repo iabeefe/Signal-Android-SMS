@@ -116,6 +116,7 @@ class ShareActivity : PassphraseRequiredActivity(), MultiselectForwardFragment.C
       }
     }
 
+<<<<<<< HEAD
     val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
 
     if (intent?.getBooleanExtra(EXTRA_NAVIGATION, false) == true) {
@@ -127,6 +128,10 @@ class ShareActivity : PassphraseRequiredActivity(), MultiselectForwardFragment.C
     }
 
     lifecycleDisposable.bindTo(this)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    lifecycleDisposable.bindTo(this)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     lifecycleDisposable += viewModel.events.subscribe { shareEvent ->
       when (shareEvent) {
         is ShareEvent.OpenConversation -> openConversation(shareEvent)

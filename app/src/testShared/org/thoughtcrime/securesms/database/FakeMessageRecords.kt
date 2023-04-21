@@ -200,12 +200,21 @@ object FakeMessageRecords {
       giftBadge,
       payment,
       call,
+<<<<<<< HEAD:app/src/testShared/org/thoughtcrime/securesms/database/FakeMessageRecords.kt
       -1,
       null,
       null,
       0,
       false,
       null
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.):app/src/test/java/org/thoughtcrime/securesms/database/FakeMessageRecords.kt
+      -1
+=======
+      -1,
+      null,
+      null,
+      0
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.):app/src/test/java/org/thoughtcrime/securesms/database/FakeMessageRecords.kt
     )
   }
 }

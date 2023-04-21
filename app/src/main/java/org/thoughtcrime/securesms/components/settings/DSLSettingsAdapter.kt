@@ -223,6 +223,14 @@ class SwitchPreferenceViewHolder(itemView: View) : PreferenceViewHolder<SwitchPr
       model.onClick()
     }
 
+    if (payload.contains(SwitchPreference.PAYLOAD_CHECKED)) {
+      return
+    }
+
+    super.bind(model)
+
+    switchWidget.isEnabled = model.isEnabled
+
     itemView.setOnClickListener {
       model.onClick()
     }

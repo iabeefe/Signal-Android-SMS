@@ -1048,10 +1048,13 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
   }
 
   public void retrieveTurnServers(@NonNull RemotePeer remotePeer) {
+    List<PeerConnection.IceServer> iceServers = new LinkedList<>();
+
     networkExecutor.execute(() -> {
       try {
         TurnServerInfo turnServerInfo = AppDependencies.getSignalServiceAccountManager().getTurnServerInfo();
 
+<<<<<<< HEAD
         List<PeerConnection.IceServer> iceServers = new LinkedList<>();
         for (String url : ListUtil.emptyIfNull(turnServerInfo.getUrlsWithIps())) {
           if (url.startsWith("turn")) {
@@ -1067,6 +1070,12 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
           }
         }
         for (String url : ListUtil.emptyIfNull(turnServerInfo.getUrls())) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        List<PeerConnection.IceServer> iceServers = new LinkedList<>();
+        for (String url : turnServerInfo.getUrls()) {
+=======
+        for (String url : turnServerInfo.getUrls()) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           if (url.startsWith("turn")) {
             iceServers.add(PeerConnection.IceServer.builder(url)
                                                    .setUsername(turnServerInfo.getUsername())
@@ -1076,6 +1085,16 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
             iceServers.add(PeerConnection.IceServer.builder(url).createIceServer());
           }
         }
+<<<<<<< HEAD
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        iceServers.add(PeerConnection.IceServer.builder("stun:stun1.l.google.com:19302").createIceServer());
+=======
+      } catch (IOException e) {
+        Log.w(TAG, "Using fallback. Unable to retrieve turn servers: " + e);
+      } finally {
+        // Append fallback stun server
+        iceServers.add(PeerConnection.IceServer.builder("stun:stun1.l.google.com:19302").createIceServer());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
         process((s, p) -> {
           RemotePeer activePeer = s.getCallInfoState().getActivePeer();
@@ -1086,9 +1105,6 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
           Log.w(TAG, "Ignoring received turn servers for incorrect call id. requesting_call_id: " + remotePeer.getCallId() + " current_call_id: " + (activePeer != null ? activePeer.getCallId() : "null"));
           return s;
         });
-      } catch (IOException e) {
-        Log.w(TAG, "Unable to retrieve turn servers: ", e);
-        process((s, p) -> p.handleSetupFailure(s, remotePeer.getCallId()));
       }
     });
   }

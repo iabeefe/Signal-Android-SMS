@@ -83,8 +83,16 @@ open class StoryViewerPageRepository(context: Context, private val storyViewStat
           id = record.id,
           sender = record.fromRecipient,
           group = if (recipient.isGroup) recipient else null,
+<<<<<<< HEAD
           distributionList = if (record.toRecipient.isDistributionList) record.toRecipient else null,
           viewCount = viewedCount,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          distributionList = if (record.recipient.isDistributionList) record.recipient else null,
+          viewCount = record.viewedReceiptCount,
+=======
+          distributionList = if (record.toRecipient.isDistributionList) record.toRecipient else null,
+          viewCount = record.viewedReceiptCount,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           replyCount = SignalDatabase.messages.getNumberOfStoryReplies(record.id),
           dateInMilliseconds = record.dateSent,
           content = getContent(record as MmsMessageRecord),

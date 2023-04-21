@@ -91,8 +91,18 @@ class ScheduledMessagesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment
 
     val colorizer = Colorizer()
 
+<<<<<<< HEAD
     messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, Glide.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient.hasWallpaper, colorizer).apply {
       setCondensedMode(ConversationItemDisplayMode.Condensed(scheduleMessageMode = true))
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, GlideApp.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient, colorizer).apply {
+      setCondensedMode(true)
+      setScheduledMessagesMode(true)
+=======
+    messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, GlideApp.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient, colorizer).apply {
+      setCondensedMode(ConversationItemDisplayMode.CONDENSED)
+      setScheduledMessagesMode(true)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
 
     val list: RecyclerView = view.findViewById<RecyclerView>(R.id.scheduled_list).apply {
@@ -273,11 +283,16 @@ class ScheduledMessagesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment
     override fun onViewGiftBadgeClicked(messageRecord: MessageRecord) = Unit
     override fun onActivatePaymentsClicked() = Unit
     override fun onSendPaymentClicked(recipientId: RecipientId) = Unit
+<<<<<<< HEAD
     override fun onEditedIndicatorClicked(conversationMessage: ConversationMessage) = Unit
     override fun onShowSafetyTips(forGroup: Boolean) = Unit
     override fun onReportSpamLearnMoreClicked() = Unit
     override fun onMessageRequestAcceptOptionsClicked() = Unit
     override fun onItemDoubleClick(item: MultiselectPart) = Unit
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    override fun onEditedIndicatorClicked(messageRecord: MessageRecord) = Unit
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   companion object {

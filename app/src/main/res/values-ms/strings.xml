@@ -241,6 +241,7 @@
     <string name="BucketedThreadMedia_Medium">Sederhana</string>
     <string name="BucketedThreadMedia_Small">Kecil</string>
 
+<<<<<<< HEAD
     <!-- CallInfoView -->
     <!-- Unknown people row text when the only people in the call are unknowns -->
     <plurals name="CallInfoView__d_people">
@@ -261,6 +262,13 @@
     <!-- Toasted when user device does not support video recording -->
     <string name="CameraFragment__video_recording_is_not_supported_on_your_device">Rakaman video tidak disokong pada peranti anda</string>
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- CameraFragment -->
+    <!-- Toasted when user device does not support video recording -->
+    <string name="CameraFragment__video_recording_is_not_supported_on_your_device">Video recording is not supported on your device</string>
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- CameraXFragment -->
     <string name="CameraXFragment_tap_for_photo_hold_for_video">Ketik untuk foto, tekan untuk video</string>
     <string name="CameraXFragment_capture_description">Tangkap</string>
@@ -423,6 +431,7 @@
     <string name="ConversationItem_cant_download_image_you_will_need_to_send_it_again">Tidak dapat memuat turun imej. Anda perlu menghantarnya semula.</string>
     <!-- Dialog error message shown when user can\'t download a their own video message via a linked device due to a permanent failure (e.g., unable to decrypt) -->
     <string name="ConversationItem_cant_download_video_you_will_need_to_send_it_again">Tidak dapat memuat turun video. Anda perlu menghantarnya semula.</string>
+<<<<<<< HEAD
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp represents a message that has been edited within the last minute. -->
     <string name="ConversationItem_edited_now_timestamp_footer">Diedit Sekarang</string>
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. This is displayed when the edit has occurred between 1-59 minutes ago. -->
@@ -431,16 +440,30 @@
     <string name="ConversationItem_edited_absolute_timestamp_footer">Diedit %1$s</string>
     <!-- Displayed if the link preview in the conversation item is for a call link call -->
     <string name="ConversationItem__join_call">Sertai panggilan</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp will go from \'11m\' to \'edited 11m\' -->
+    <string name="ConversationItem_edited_timestamp_footer">edited %1$s</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- ConversationActivity -->
     <string name="ConversationActivity_add_attachment">Tambah lampiran</string>
+<<<<<<< HEAD
     <!-- Accessibility text associated with image button to send an edited message. -->
     <string name="ConversationActivity_send_edit">Edit hantar</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ConversationActivity_select_contact_info">Pilih maklumat kenalan</string>
+=======
+    <!-- Accessibility text associated with image button to send an edited message. -->
+    <string name="ConversationActivity_send_edit">Send edit</string>
+    <string name="ConversationActivity_select_contact_info">Pilih maklumat kenalan</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ConversationActivity_compose_message">Karang mesej</string>
     <string name="ConversationActivity_sorry_there_was_an_error_setting_your_attachment">Maaf, terdapat ralat menetapkan lampiran anda.</string>
     <string name="ConversationActivity_recipient_is_not_a_valid_sms_or_email_address_exclamation">Penerima bukan SMS atau alamat emel yang sah!</string>
     <string name="ConversationActivity_message_is_empty_exclamation">Mesej kosong!</string>
     <string name="ConversationActivity_group_members">Ahli kumpulan</string>
+<<<<<<< HEAD
     <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
     <plurals name="ConversationActivity_edit_message_too_old">
         <item quantity="other">Edit hanya boleh dibuat dalam masa %1$d jam dari masa anda menghantar mesej ini.</item>
@@ -449,6 +472,17 @@
     <plurals name="ConversationActivity_edit_message_too_many_edits">
         <item quantity="other">Hanya %1$d edit boleh dibuat pada mesej ini.</item>
     </plurals>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ConversationActivity__tap_here_to_start_a_group_call">Tekan disini untuk memulakan panggilan group</string>
+=======
+    <string name="ConversationActivity__tap_here_to_start_a_group_call">Tekan disini untuk memulakan panggilan group</string>
+    <!-- Warning toast shown to user if they somehow try to edit an sms/mms message -->
+    <string name="ConversationActivity_edit_sms_message_error">Unable to edit SMS messages</string>
+    <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
+    <plurals name="ConversationActivity_edit_message_too_old">
+        <item quantity="other">Edits can only be applied within %1$d hours from the time you sent this message.</item>
+    </plurals>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <string name="ConversationActivity_invalid_recipient">Penerima tidak sah!</string>
     <string name="ConversationActivity_added_to_home_screen">Ditambah ke skrin utama</string>
@@ -1445,6 +1479,7 @@
     <string name="ImageEditorHud_draw_to_blur_additional_faces_or_areas">Lukis untuk mengaburkan wajah atau kawasan tambahan</string>
 
     <!-- InputPanel -->
+<<<<<<< HEAD
     <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">Ketik dan tekan rekod mesej audio, lepas untuk hantar</string>
     <!-- When editing a message, label shown above the text input field in the composer -->
     <string name="InputPanel_edit_message">Edit mesej</string>
@@ -1454,6 +1489,17 @@
     <string name="InputPanel__this_action_cant_be_undone">Tindakan ini tidak boleh dibatalkan.</string>
     <!-- Button inside an alert dialog confirming the deletion of their draft -->
     <string name="InputPanel__discard">Buang</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">Ketik dan tekan untuk rekod mesej audio, lepas untuk hantar</string>
+    <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
+    <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">Pemesejan SMS tidak lagi disokong dalam Signal.</string>
+=======
+    <string name="InputPanel_tap_and_hold_to_record_a_voice_message_release_to_send">Ketik dan tekan untuk rekod mesej audio, lepas untuk hantar</string>
+    <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
+    <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">Pemesejan SMS tidak lagi disokong dalam Signal.</string>
+    <!-- When editing a message, label shown above the text input field in the composer -->
+    <string name="InputPanel_edit_message">Edit message</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- InviteActivity -->
     <string name="InviteActivity_share">Kongsi</string>
@@ -2359,6 +2405,7 @@
     <string name="RegistrationActivity_invalid_number">Nombor tidak sah</string>
     <string name="RegistrationActivity_the_number_you_specified_s_is_invalid">Nombor yang anda nyatakan (%1$s) adalah tidak sah.
     </string>
+<<<<<<< HEAD
 
     <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
     <string name="RegistrationActivity_phone_number_verification_dialog_title">Adakah nombor telefon di bawah ini betul?</string>
@@ -2366,6 +2413,17 @@
     <string name="RegistrationActivity_additional_verification_required">Pengesahan tambahan diperlukan</string>
     <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
     <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">Kod pengesahan akan dihantar ke nombor ini. Kadar pembawa mungkin dikenakan.</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to">Kod pengesahan akan dihantar kepada:</string>
+=======
+
+    <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
+    <string name="RegistrationActivity_phone_number_verification_dialog_title">Is the phone number below correct?</string>
+    <!-- Dialog title shown when re-registering and skip sms flow failed or was aborted and now need perform additional verification via sms and warn about carrier charges -->
+    <string name="RegistrationActivity_additional_verification_required">Additional verification required</string>
+    <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">A verification code will be sent to this number. Carrier rates may apply.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="RegistrationActivity_you_will_receive_a_call_to_verify_this_number">Anda akan menerima panggilan untuk mengesahkan nombor ini.</string>
     <string name="RegistrationActivity_edit_number">Edit nombor</string>
     <string name="RegistrationActivity_missing_google_play_services">Kehilangan Perkhidmatan Google Play</string>
@@ -2417,10 +2475,20 @@
     <string name="RegistrationActivity_next">Seterusnya</string>
     <string name="RegistrationActivity_continue">Teruskan</string>
     <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Bawa privasi bersama anda.\nMenjadi diri anda dalam setiap mesej.</string>
+<<<<<<< HEAD
     <!-- Title of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_phone_number">Nombor telefon</string>
     <!-- Subtitle of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Masukkan nombor telefon anda untuk bermula.</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="RegistrationActivity_enter_your_phone_number">Masukkan nombor telefon anda</string>
+    <string name="RegistrationActivity_you_will_receive_a_verification_code">Anda akan terima satu kod pengesahan.\nKadar caj telekomunikasi mungkin dikenakan.</string>
+=======
+    <!-- Title of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_phone_number">Phone number</string>
+    <!-- Subtitle of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Enter your phone number to get started.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="RegistrationActivity_enter_the_code_we_sent_to_s">Masukkan kod yang kami hantar ke %1$s</string>
 
     <string name="RegistrationActivity_phone_number_description">Nombor telefon</string>
@@ -2586,8 +2654,14 @@
 ||||||| parent of f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
 =======
     <!-- Thread preview for a recipient that has been hidden -->
+<<<<<<< HEAD
     <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    <string name="ThreadRecord_hidden_recipient">You have hidden this person, message them again to add them back to your list.</string>
+=======
+    <string name="ThreadRecord_hidden_recipient">Anda telah menyembunyikan orang ini, hantar mesej kepada mereka sekali lagi akan menambahkan mereka kembali ke senarai anda.</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ThreadRecord_photo">Foto</string>
     <string name="ThreadRecord_gif">GIF</string>
     <string name="ThreadRecord_voice_message">Mesej Suara</string>
@@ -3361,8 +3435,14 @@
     <!-- message_Details_recipient -->
     <string name="message_details_recipient__failed_to_send">Gagal untuk dihantar</string>
     <string name="message_details_recipient__new_safety_number">Nombor keselamatan baru</string>
+<<<<<<< HEAD
     <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
     <string name="MessageDetails__view_edit_history">Lihat sejarah edit</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
+    <string name="MessageDetails__view_edit_history">View edit history</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     <!-- AndroidManifest.xml -->
     <string name="AndroidManifest__create_passphrase">Cipta frasa laluan</string>
@@ -3672,12 +3752,22 @@
     <string name="preferences_success">Berjaya</string>
     <string name="preferences_failed_to_connect">Gagal untuk menyambung</string>
     <string name="preferences_enter_proxy_address">Masukkan alamat proksi</string>
+<<<<<<< HEAD
     <!-- Preference title for changing navigation (bottom) bar size -->
     <string name="preferences_navigation_bar_size">Saiz bar navigasi</string>
     <!-- Preference summary for normal navigation bar size -->
     <string name="preferences_normal">Biasa</string>
     <!-- Preference summary for compact navigation bar size -->
     <string name="preferences_compact">Padat</string>
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- Preference title for changing navigation (bottom) bar size -->
+    <string name="preferences_navigation_bar_size">Navigation bar size</string>
+    <!-- Preference summary for normal navigation bar size -->
+    <string name="preferences_normal">Normal</string>
+    <!-- Preference summary for compact navigation bar size -->
+    <string name="preferences_compact">Compact</string>
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
 
     <string name="configurable_single_select__customize_option">Sesuaikan pilihan</string>
@@ -7682,7 +7772,7 @@
     <!-- Button text to dismiss the sheet and add it as an upcoming call -->
     <string name="CreateCallLinkBottomSheetDialogFragment__done">Selesai</string>
     <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Gagal untuk membuka skrin kongsi.</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Unable to share call link.</string>
     <!-- Displayed when we copy the call link to the clipboard -->
     <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">Disalin ke papan klip</string>
 
@@ -7694,6 +7784,21 @@
     <!-- Placeholder text on input field when editing call name -->
     <string name="EditCallLinkNameDialogFragment__call_name">Nama panggilan</string>
 
+<<<<<<< HEAD
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    <!-- ChooseNavigationBarStyleFragment -->
+    <!-- Dialog title, displayed below the header image -->
+    <string name="ChooseNavigationBarStyleFragment__navigation_bar_size">Navigation bar size</string>
+    <!-- Toggle button label for normal size -->
+    <string name="ChooseNavigationBarStyleFragment__normal">Normal</string>
+    <!-- Toggle button label for compact size -->
+    <string name="ChooseNavigationBarStyleFragment__compact">Compact</string>
+
+    <!-- Title shown at top of bottom sheet dialog for displaying a message\'s edit history -->
+    <string name="EditMessageHistoryDialog_title">Edit history</string>
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- EOF -->
 </resources>

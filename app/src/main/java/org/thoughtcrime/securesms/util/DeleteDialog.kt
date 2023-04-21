@@ -54,6 +54,7 @@ object DeleteDialog {
         R.string.ConversationFragment_delete_for_me
       }
 
+<<<<<<< HEAD
       builder.setPositiveButton(positiveButton) { _, _ ->
         DeleteProgressDialogAsyncTask(context, messageRecords) {
           emitter.onSuccess(Pair(true, it))
@@ -64,6 +65,13 @@ object DeleteDialog {
 
       if (MessageConstraintsUtil.isValidRemoteDeleteSend(messageRecords, System.currentTimeMillis()) && (!isNoteToSelfDelete || canDeleteForEveryoneInNoteToSelf)) {
         builder.setNeutralButton(if (isNoteToSelfDelete) R.string.ConversationFragment_delete_everywhere else R.string.ConversationFragment_delete_for_everyone) { _, _ -> handleDeleteForEveryone(context, messageRecords, emitter) }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (RemoteDeleteUtil.isValidSend(messageRecords, System.currentTimeMillis())) {
+        builder.setNeutralButton(R.string.ConversationFragment_delete_for_everyone) { _, _ -> handleDeleteForEveryone(context, messageRecords, emitter) }
+=======
+      if (MessageConstraintsUtil.isValidRemoteDeleteSend(messageRecords, System.currentTimeMillis())) {
+        builder.setNeutralButton(R.string.ConversationFragment_delete_for_everyone) { _, _ -> handleDeleteForEveryone(context, messageRecords, emitter) }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       }
     }
 

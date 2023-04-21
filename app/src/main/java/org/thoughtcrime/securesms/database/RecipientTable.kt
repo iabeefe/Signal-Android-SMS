@@ -34,7 +34,12 @@ import org.signal.core.util.requireLong
 import org.signal.core.util.requireNonNullString
 import org.signal.core.util.requireString
 import org.signal.core.util.select
+<<<<<<< HEAD
 import org.signal.core.util.toInt
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import org.signal.core.util.toSingleLine
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.signal.core.util.update
 import org.signal.core.util.updateAll
 import org.signal.core.util.withinTransaction
@@ -1208,8 +1213,16 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
               WHERE (${CallLinkTable.ADMIN_KEY} NOT NULL OR ${CallLinkTable.DELETION_TIMESTAMP} > 0) AND ${CallLinkTable.ROOT_KEY} NOT NULL
             )
         )
+<<<<<<< HEAD
         """,
         RecipientType.INDIVIDUAL.id,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        """.toSingleLine(),
+        GroupType.NONE.id,
+=======
+        """,
+        GroupType.NONE.id,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         Recipient.self().id,
         RecipientType.GV1.id
       )
@@ -3536,8 +3549,16 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
           ${ContactSearchSelection.E164_SEARCH} OR 
           $EMAIL GLOB ?
         )
+<<<<<<< HEAD
       """
     val args = SqlUtil.buildArgs(0, query, query, query, query)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.trimIndent()
+    val args = SqlUtil.buildArgs(0, 0, query, query, query, query)
+=======
+      """
+    val args = SqlUtil.buildArgs(0, 0, query, query, query, query)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     return readableDatabase.query(TABLE_NAME, SEARCH_PROJECTION, selection, args, null, null, null)
   }
 
@@ -4628,8 +4649,14 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
             INNER JOIN ${GroupTable.TABLE_NAME} ON ${GroupTable.TABLE_NAME}.${GroupTable.GROUP_ID} = ${GroupTable.MembershipTable.TABLE_NAME}.${GroupTable.MembershipTable.GROUP_ID}
             WHERE ${GroupTable.MembershipTable.TABLE_NAME}.${GroupTable.MembershipTable.RECIPIENT_ID} = $TABLE_NAME.$ID AND ${GroupTable.TABLE_NAME}.${GroupTable.ACTIVE} = 1 AND ${GroupTable.TABLE_NAME}.${GroupTable.MMS} = 0
         )
+<<<<<<< HEAD
       """
       val E164_SEARCH = "(($PHONE_NUMBER_SHARING != ${PhoneNumberSharingState.DISABLED.id} OR $SYSTEM_CONTACT_URI NOT NULL) AND $E164 GLOB ?)"
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.toSingleLine()
+=======
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       const val FILTER_GROUPS = " AND $GROUP_ID IS NULL"
       const val FILTER_ID = " AND $ID != ?"
       const val FILTER_BLOCKED = " AND $BLOCKED = ?"

@@ -105,6 +105,7 @@ public class ConversationAdapter
   private final Set<MultiselectPart>         selected;
   private final Calendar                     calendar;
 
+<<<<<<< HEAD
   private String                      searchQuery;
   private ConversationMessage         recordToPulse;
   private View                        typingView;
@@ -117,6 +118,35 @@ public class ConversationAdapter
   private boolean                     isTypingViewEnabled;
   private ConversationItemDisplayMode displayMode;
   private PulseRequest                pulseRequest;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private String              searchQuery;
+  private ConversationMessage recordToPulse;
+  private View                typingView;
+  private View                footerView;
+  private PagingController    pagingController;
+  private boolean             hasWallpaper;
+  private boolean             isMessageRequestAccepted;
+  private ConversationMessage inlineContent;
+  private Colorizer           colorizer;
+  private boolean             isTypingViewEnabled;
+  private boolean             condensedMode;
+  private boolean             scheduledMessagesMode;
+  private PulseRequest        pulseRequest;
+=======
+  private String                      searchQuery;
+  private ConversationMessage         recordToPulse;
+  private View                        typingView;
+  private View                        footerView;
+  private PagingController            pagingController;
+  private boolean                     hasWallpaper;
+  private boolean                     isMessageRequestAccepted;
+  private ConversationMessage         inlineContent;
+  private Colorizer                   colorizer;
+  private boolean                     isTypingViewEnabled;
+  private ConversationItemDisplayMode condensedMode;
+  private boolean                     scheduledMessagesMode;
+  private PulseRequest                pulseRequest;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
   public ConversationAdapter(@NonNull Context context,
                       @NonNull LifecycleOwner lifecycleOwner,
@@ -251,8 +281,26 @@ public class ConversationAdapter
     }
   }
 
+<<<<<<< HEAD
   public void setCondensedMode(ConversationItemDisplayMode condensedMode) {
     this.displayMode = condensedMode;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  public void setCondensedMode(boolean condensedMode) {
+    this.condensedMode = condensedMode;
+    notifyDataSetChanged();
+  }
+
+  public void setScheduledMessagesMode(boolean scheduledMessagesMode) {
+    this.scheduledMessagesMode = scheduledMessagesMode;
+=======
+  public void setCondensedMode(ConversationItemDisplayMode condensedMode) {
+    this.condensedMode = condensedMode;
+    notifyDataSetChanged();
+  }
+
+  public void setScheduledMessagesMode(boolean scheduledMessagesMode) {
+    this.scheduledMessagesMode = scheduledMessagesMode;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     notifyDataSetChanged();
   }
 
@@ -271,7 +319,13 @@ public class ConversationAdapter
         ConversationMessage previousMessage = adapterPosition < getItemCount() - 1  && !isFooterPosition(adapterPosition + 1) ? getItem(adapterPosition + 1) : null;
         ConversationMessage nextMessage     = adapterPosition > 0                   && !isHeaderPosition(adapterPosition - 1) ? getItem(adapterPosition - 1) : null;
 
+<<<<<<< HEAD
         ConversationItemDisplayMode itemDisplayMode = displayMode != null ? displayMode : ConversationItemDisplayMode.Standard.INSTANCE;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        ConversationItemDisplayMode displayMode = condensedMode ? ConversationItemDisplayMode.CONDENSED : ConversationItemDisplayMode.STANDARD;
+=======
+        ConversationItemDisplayMode displayMode = condensedMode != null ? condensedMode : ConversationItemDisplayMode.STANDARD;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
         conversationViewHolder.getBindable().bind(lifecycleOwner,
                                                   conversationMessage,
@@ -283,7 +337,13 @@ public class ConversationAdapter
                                                   conversationMessage.getThreadRecipient(),
                                                   searchQuery,
                                                   conversationMessage == recordToPulse,
+<<<<<<< HEAD
                                                   hasWallpaper && itemDisplayMode.displayWallpaper(),
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                                                  hasWallpaper && !condensedMode,
+=======
+                                                  hasWallpaper && displayMode.displayWallpaper(),
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                                                   isMessageRequestAccepted,
                                                   conversationMessage == inlineContent,
                                                   colorizer,

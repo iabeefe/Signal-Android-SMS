@@ -182,6 +182,7 @@ public final class WebRtcControls {
     return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || isBluetoothHeadsetAvailableForAudioToggle() || isWiredHeadsetAvailableForAudioToggle());
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   boolean displayAudioToggle() {
+<<<<<<< HEAD
     return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || enableHeadsetInAudioToggle());
 =======
   boolean displayAudioToggle() {
@@ -193,6 +194,11 @@ public final class WebRtcControls {
 =======
     return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || isBluetoothHeadsetAvailableForAudioToggle());
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || isBluetoothHeadsetAvailableForAudioToggle());
+=======
+    return (isPreJoin() || isAtLeastOutgoing()) && (!isLocalVideoEnabled || isBluetoothHeadsetAvailableForAudioToggle() || isWiredHeadsetAvailableForAudioToggle());
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   public boolean displayCameraToggle() {
@@ -243,11 +249,21 @@ public final class WebRtcControls {
     return availableDevices.contains(SignalAudioManager.AudioDevice.BLUETOOTH);
   }
 
+<<<<<<< HEAD
   public boolean isWiredHeadsetAvailableForAudioToggle() {
     return availableDevices.contains(SignalAudioManager.AudioDevice.WIRED_HEADSET);
   }
 
   public boolean isFadeOutEnabled() {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  boolean isFadeOutEnabled() {
+=======
+  boolean isWiredHeadsetAvailableForAudioToggle() {
+    return availableDevices.contains(SignalAudioManager.AudioDevice.BLUETOOTH);
+  }
+
+  boolean isFadeOutEnabled() {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     return isAtLeastOutgoing() && isRemoteVideoEnabled && callState != CallState.RECONNECTING;
   }
 

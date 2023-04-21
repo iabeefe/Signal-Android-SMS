@@ -6,7 +6,14 @@ import android.database.Cursor
 import androidx.compose.runtime.Immutable
 import org.signal.core.util.requireInt
 import org.signal.core.util.requireLong
+<<<<<<< HEAD
 import org.signal.core.util.requireString
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import org.signal.core.util.requireNonNullString
+import org.signal.core.util.toSingleLine
+=======
+import org.signal.core.util.requireNonNullString
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.util.MediaUtil
@@ -94,14 +101,23 @@ class MediaTable internal constructor(context: Context?, databaseHelper: SignalD
         WHERE 
           ${AttachmentTable.STICKER_PACK_ID} IS NULL AND 
           ${AttachmentTable.TRANSFER_STATE} = ${AttachmentTable.TRANSFER_PROGRESS_DONE} 
+<<<<<<< HEAD
         GROUP BY ${AttachmentTable.DATA_FILE}
       """
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        GROUP BY ${AttachmentTable.DATA}
+      """.toSingleLine()
+=======
+        GROUP BY ${AttachmentTable.DATA}
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
     private val GALLERY_MEDIA_QUERY = String.format(
       BASE_MEDIA_QUERY,
       """
         ${AttachmentTable.DATA_FILE} IS NOT NULL AND
         ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'image/svg%' AND 
+<<<<<<< HEAD
         (${AttachmentTable.CONTENT_TYPE} LIKE 'image/%' OR ${AttachmentTable.CONTENT_TYPE} LIKE 'video/%') AND
         ${MessageTable.LINK_PREVIEWS} IS NULL
       """
@@ -132,6 +148,13 @@ class MediaTable internal constructor(context: Context?, databaseHelper: SignalD
         ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'text/x-signal-plain' AND
         ${MessageTable.LINK_PREVIEWS} IS NULL
       """
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        (${AttachmentTable.CONTENT_TYPE} LIKE 'image/%' OR ${AttachmentTable.CONTENT_TYPE} LIKE 'video/%')
+      """.toSingleLine()
+=======
+        (${AttachmentTable.CONTENT_TYPE} LIKE 'image/%' OR ${AttachmentTable.CONTENT_TYPE} LIKE 'video/%')
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     )
 
     private val DOCUMENT_MEDIA_QUERY = String.format(
@@ -139,6 +162,7 @@ class MediaTable internal constructor(context: Context?, databaseHelper: SignalD
       """
         ${AttachmentTable.DATA_FILE} IS NOT NULL AND
         (
+<<<<<<< HEAD
           ${AttachmentTable.CONTENT_TYPE} LIKE 'image/svg%' OR 
           (
             ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'image/%' AND 
@@ -147,6 +171,19 @@ class MediaTable internal constructor(context: Context?, databaseHelper: SignalD
             ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'text/x-signal-plain'
           )
         )"""
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'image/%' AND 
+          ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'video/%' AND 
+          ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'audio/%' AND 
+          ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'text/x-signal-plain'
+        )""".toSingleLine()
+=======
+          ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'image/%' AND 
+          ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'video/%' AND 
+          ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'audio/%' AND 
+          ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'text/x-signal-plain'
+        )"""
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     )
 
     private fun applyEqualityOperator(threadId: Long, query: String): String {
@@ -266,15 +303,31 @@ class MediaTable internal constructor(context: Context?, databaseHelper: SignalD
       """
         ${AttachmentTable.TABLE_NAME}.${AttachmentTable.MESSAGE_ID} DESC, 
         ${AttachmentTable.TABLE_NAME}.${AttachmentTable.DISPLAY_ORDER} DESC, 
+<<<<<<< HEAD
         ${AttachmentTable.TABLE_NAME}.${AttachmentTable.ID} DESC
       """
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        ${AttachmentTable.TABLE_NAME}.${AttachmentTable.ROW_ID} DESC
+      """.toSingleLine()
+=======
+        ${AttachmentTable.TABLE_NAME}.${AttachmentTable.ROW_ID} DESC
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     ),
     Oldest(
       """
         ${AttachmentTable.TABLE_NAME}.${AttachmentTable.MESSAGE_ID} ASC, 
         ${AttachmentTable.TABLE_NAME}.${AttachmentTable.DISPLAY_ORDER} DESC, 
+<<<<<<< HEAD
         ${AttachmentTable.TABLE_NAME}.${AttachmentTable.ID} ASC
       """
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        ${AttachmentTable.TABLE_NAME}.${AttachmentTable.ROW_ID} ASC
+      """.toSingleLine()
+=======
+        ${AttachmentTable.TABLE_NAME}.${AttachmentTable.ROW_ID} ASC
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     ),
     Largest(
       """

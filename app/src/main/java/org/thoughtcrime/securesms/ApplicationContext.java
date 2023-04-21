@@ -16,7 +16,12 @@
  */
 package org.thoughtcrime.securesms;
 
+<<<<<<< HEAD
 import android.app.Application;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import android.annotation.SuppressLint;
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -99,7 +104,14 @@ import org.thoughtcrime.securesms.storage.StorageSyncHelper;
 import org.thoughtcrime.securesms.util.AppForegroundObserver;
 import org.thoughtcrime.securesms.util.AppStartup;
 import org.thoughtcrime.securesms.util.DynamicTheme;
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.RemoteConfig;
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import org.thoughtcrime.securesms.util.Environment;
+import org.thoughtcrime.securesms.util.FeatureFlags;
+=======
+import org.thoughtcrime.securesms.util.FeatureFlags;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.util.SignalLocalMetrics;
 import org.thoughtcrime.securesms.util.SignalUncaughtExceptionHandler;
 import org.thoughtcrime.securesms.util.TextSecurePreferences;
@@ -180,9 +192,16 @@ public class ApplicationContext extends Application implements AppForegroundObse
                             .addBlocking("remote-config", RemoteConfig::init)
                             .addBlocking("ring-rtc", this::initializeRingRtc)
                             .addBlocking("glide", () -> SignalGlideModule.setRegisterGlideComponents(new SignalGlideComponents()))
+<<<<<<< HEAD
                             .addBlocking("tracer", this::initializeTracer)
                             .addNonBlocking(() -> RegistrationUtil.maybeMarkRegistrationComplete())
                             .addNonBlocking(() -> Glide.get(this))
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                            .addNonBlocking(() -> GlideApp.get(this))
+                            .addNonBlocking(this::checkIsGooglePayReady)
+=======
+                            .addNonBlocking(() -> GlideApp.get(this))
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                             .addNonBlocking(this::cleanAvatarStorage)
                             .addNonBlocking(this::initializeRevealableMessageManager)
                             .addNonBlocking(this::initializePendingRetryReceiptManager)

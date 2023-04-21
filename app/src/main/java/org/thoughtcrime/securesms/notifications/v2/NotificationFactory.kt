@@ -128,7 +128,13 @@ object NotificationFactory {
           conversation = conversation,
           targetThread = targetThread,
           defaultBubbleState = defaultBubbleState,
+<<<<<<< HEAD
           shouldAlert = shouldAlert
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          shouldAlert = (conversation.hasNewNotifications() || alertOverrides.contains(conversation.thread)) && !conversation.mostRecentNotification.individualRecipient.isSelf
+=======
+          shouldAlert = (conversation.hasNewNotifications() || alertOverrides.contains(conversation.thread)) && !conversation.mostRecentNotification.authorRecipient.isSelf
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         )
         if (conversation.hasNewNotifications()) {
           threadsThatNewlyAlerted += conversation.thread
@@ -184,7 +190,13 @@ object NotificationFactory {
             conversation = conversation,
             targetThread = targetThread,
             defaultBubbleState = defaultBubbleState,
+<<<<<<< HEAD
             shouldAlert = shouldAlert
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+            shouldAlert = (conversation.hasNewNotifications() || alertOverrides.contains(conversation.thread)) && !conversation.mostRecentNotification.individualRecipient.isSelf
+=======
+            shouldAlert = (conversation.hasNewNotifications() || alertOverrides.contains(conversation.thread)) && !conversation.mostRecentNotification.authorRecipient.isSelf
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           )
         } catch (e: SecurityException) {
           Log.w(TAG, "Too many pending intents device quirk", e)

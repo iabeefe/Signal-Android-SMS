@@ -330,7 +330,14 @@ public class SearchRepository {
           CharSequence updatedBody    = MentionUtil.updateBodyAndMentionsWithDisplayNames(context, body, mentions).getBody();
           CharSequence updatedSnippet = makeSnippet(cleanQueries, Objects.requireNonNull(updatedBody));
 
+<<<<<<< HEAD
           results.add(new MessageResult(record.getFromRecipient(), record.getToRecipient(), updatedBody, updatedSnippet, record.getThreadId(), record.getId(), record.getDateReceived(), true));
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          //noinspection ConstantConditions
+          results.add(new MessageResult(threadTable.getRecipientForThreadId(record.getThreadId()), record.getRecipient(), updatedBody, updatedSnippet, record.getThreadId(), record.getId(), record.getDateReceived(), true));
+=======
+          results.add(new MessageResult(record.getToRecipient(), record.getFromRecipient(), updatedBody, updatedSnippet, record.getThreadId(), record.getId(), record.getDateReceived(), true));
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         }
       }
     }

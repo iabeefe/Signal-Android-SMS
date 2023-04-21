@@ -133,6 +133,7 @@ class IncomingMessageObserver(private val context: Application) {
   private val keepAlivePurgeCallbacks: MutableMap<String, MutableList<Runnable>> = mutableMapOf()
 
   private val lock: ReentrantLock = ReentrantLock()
+<<<<<<< HEAD
   private val connectionNecessarySemaphore = Semaphore(0)
   private val networkConnectionListener = NetworkConnectionListener(context) { isNetworkUnavailable ->
     lock.withLock {
@@ -146,6 +147,11 @@ class IncomingMessageObserver(private val context: Application) {
   }
 
   private val messageContentProcessor = MessageContentProcessor(context)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private val condition: Condition = lock.newCondition()
+=======
+  private val connectionNecessarySemaphore = Semaphore(0)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
   private var appVisible = false
   private var lastInteractionTime: Long = System.currentTimeMillis()
@@ -189,7 +195,39 @@ class IncomingMessageObserver(private val context: Application) {
       }
     })
 
+<<<<<<< HEAD
     networkConnectionListener.register()
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    connectionReceiver = object : BroadcastReceiver() {
+      override fun onReceive(context: Context, intent: Intent) {
+        lock.withLock {
+          if (!NetworkConstraint.isMet(context)) {
+            Log.w(TAG, "Lost network connection. Shutting down our websocket connections and resetting the drained state.")
+            decryptionDrained = false
+            disconnect()
+          }
+          condition.signalAll()
+        }
+      }
+    }
+
+    context.registerReceiver(connectionReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+=======
+    connectionReceiver = object : BroadcastReceiver() {
+      override fun onReceive(context: Context, intent: Intent) {
+        lock.withLock {
+          if (!NetworkConstraint.isMet(context)) {
+            Log.w(TAG, "Lost network connection. Shutting down our websocket connections and resetting the drained state.")
+            decryptionDrained = false
+            disconnect()
+          }
+          connectionNecessarySemaphore.release()
+        }
+      }
+    }
+
+    context.registerReceiver(connectionReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   fun notifyRegistrationChanged() {
@@ -207,6 +245,38 @@ class IncomingMessageObserver(private val context: Application) {
     decryptionDrainedListeners.remove(listener)
   }
 
+<<<<<<< HEAD
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  fun notifyDecryptionsDrained() {
+    if (ApplicationDependencies.getJobManager().isQueueEmpty(PushDecryptMessageJob.QUEUE)) {
+      Log.i(TAG, "Queue was empty when notified. Signaling change.")
+      lock.withLock {
+        condition.signalAll()
+      }
+    } else {
+      Log.i(TAG, "Queue still had items when notified. Registering listener to signal change.")
+      ApplicationDependencies.getJobManager().addListener(
+        { it.parameters.queue == PushDecryptMessageJob.QUEUE },
+        DecryptionDrainedQueueListener()
+      )
+    }
+  }
+
+=======
+  fun notifyDecryptionsDrained() {
+    if (ApplicationDependencies.getJobManager().isQueueEmpty(PushDecryptMessageJob.QUEUE)) {
+      Log.i(TAG, "Queue was empty when notified. Signaling change.")
+      connectionNecessarySemaphore.release()
+    } else {
+      Log.i(TAG, "Queue still had items when notified. Registering listener to signal change.")
+      ApplicationDependencies.getJobManager().addListener(
+        { it.parameters.queue == PushDecryptMessageJob.QUEUE },
+        DecryptionDrainedQueueListener()
+      )
+    }
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private fun onAppForegrounded() {
     lock.withLock {
       appVisible = true
@@ -459,8 +529,16 @@ class IncomingMessageObserver(private val context: Application) {
     val senderId = RecipientId.from(serviceId)
 
     Log.i(TAG, "Received server receipt. Sender: $senderId, Device: ${envelope.sourceDevice}, Timestamp: ${envelope.timestamp}")
+<<<<<<< HEAD
     SignalDatabase.messages.incrementDeliveryReceiptCount(envelope.timestamp!!, senderId, System.currentTimeMillis())
     SignalDatabase.messageLog.deleteEntryForRecipient(envelope.timestamp!!, senderId, envelope.sourceDevice!!)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    SignalDatabase.messages.incrementDeliveryReceiptCount(MessageTable.SyncMessageId(senderId, envelope.timestamp), System.currentTimeMillis())
+    SignalDatabase.messageLog.deleteEntryForRecipient(envelope.timestamp, senderId, envelope.sourceDevice)
+=======
+    SignalDatabase.messages.incrementDeliveryReceiptCount(envelope.timestamp, senderId, System.currentTimeMillis())
+    SignalDatabase.messageLog.deleteEntryForRecipient(envelope.timestamp, senderId, envelope.sourceDevice)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   private fun MessageDecryptor.Result.toMessageState(): MessageState {
@@ -631,6 +709,42 @@ class IncomingMessageObserver(private val context: Application) {
     }
   }
 
+<<<<<<< HEAD
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private inner class DecryptionDrainedQueueListener : JobListener {
+    @SuppressLint("WrongThread")
+    override fun onStateChanged(job: Job, jobState: JobTracker.JobState) {
+      if (jobState.isComplete) {
+        if (ApplicationDependencies.getJobManager().isQueueEmpty(PushDecryptMessageJob.QUEUE)) {
+          Log.i(TAG, "Queue is now empty. Signaling change.")
+          lock.withLock {
+            condition.signalAll()
+          }
+          ApplicationDependencies.getJobManager().removeListener(this)
+        } else {
+          Log.i(TAG, "Item finished in queue, but it's still not empty. Waiting to signal change.")
+        }
+      }
+    }
+  }
+
+=======
+  private inner class DecryptionDrainedQueueListener : JobListener {
+    @SuppressLint("WrongThread")
+    override fun onStateChanged(job: Job, jobState: JobTracker.JobState) {
+      if (jobState.isComplete) {
+        if (ApplicationDependencies.getJobManager().isQueueEmpty(PushDecryptMessageJob.QUEUE)) {
+          Log.i(TAG, "Queue is now empty. Signaling change.")
+          connectionNecessarySemaphore.release()
+          ApplicationDependencies.getJobManager().removeListener(this)
+        } else {
+          Log.i(TAG, "Item finished in queue, but it's still not empty. Waiting to signal change.")
+        }
+      }
+    }
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   class ForegroundService : Service() {
     override fun onBind(intent: Intent?): IBinder? {
       return null

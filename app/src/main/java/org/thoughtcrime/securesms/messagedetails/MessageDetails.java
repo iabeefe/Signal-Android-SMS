@@ -38,7 +38,13 @@ public final class MessageDetails {
     viewed    = new TreeSet<>(RECIPIENT_COMPARATOR);
     skipped   = new TreeSet<>(RECIPIENT_COMPARATOR);
 
+<<<<<<< HEAD
     if (conversationMessage.getMessageRecord().getFromRecipient().isSelf() && conversationMessage.getMessageRecord().getToRecipient().isSelf()) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (conversationMessage.getMessageRecord().getRecipient().isSelf()) {
+=======
+    if (conversationMessage.getMessageRecord().getToRecipient().isSelf()) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       read.addAll(recipients);
     } else if (conversationMessage.getMessageRecord().isOutgoing()) {
       for (RecipientDeliveryStatus status : recipients) {

@@ -61,6 +61,54 @@ class LogDatabase private constructor(
     private const val DATABASE_VERSION = 4
     private const val DATABASE_NAME = "signal-logs.db"
 
+<<<<<<< HEAD
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    private const val TABLE_NAME = "log"
+    private const val ID = "_id"
+    private const val CREATED_AT = "created_at"
+    private const val KEEP_LONGER = "keep_longer"
+    private const val BODY = "body"
+    private const val SIZE = "size"
+
+    private val CREATE_TABLE = """
+      CREATE TABLE $TABLE_NAME (
+        $ID INTEGER PRIMARY KEY,
+        $CREATED_AT INTEGER, 
+        $KEEP_LONGER INTEGER DEFAULT 0,
+        $BODY TEXT,
+        $SIZE INTEGER
+      )
+    """.trimIndent()
+
+    private val CREATE_INDEXES = arrayOf(
+      "CREATE INDEX keep_longer_index ON $TABLE_NAME ($KEEP_LONGER)",
+      "CREATE INDEX log_created_at_keep_longer_index ON $TABLE_NAME ($CREATED_AT, $KEEP_LONGER)"
+    )
+
+=======
+    private const val TABLE_NAME = "log"
+    private const val ID = "_id"
+    private const val CREATED_AT = "created_at"
+    private const val KEEP_LONGER = "keep_longer"
+    private const val BODY = "body"
+    private const val SIZE = "size"
+
+    private val CREATE_TABLE = """
+      CREATE TABLE $TABLE_NAME (
+        $ID INTEGER PRIMARY KEY,
+        $CREATED_AT INTEGER, 
+        $KEEP_LONGER INTEGER DEFAULT 0,
+        $BODY TEXT,
+        $SIZE INTEGER
+      )
+    """
+
+    private val CREATE_INDEXES = arrayOf(
+      "CREATE INDEX keep_longer_index ON $TABLE_NAME ($KEEP_LONGER)",
+      "CREATE INDEX log_created_at_keep_longer_index ON $TABLE_NAME ($CREATED_AT, $KEEP_LONGER)"
+    )
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     @SuppressLint("StaticFieldLeak") // We hold an Application context, not a view context
     @Volatile
     private var instance: LogDatabase? = null
