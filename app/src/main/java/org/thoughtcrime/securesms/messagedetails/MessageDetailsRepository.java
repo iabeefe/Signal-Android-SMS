@@ -79,7 +79,13 @@ public final class MessageDetailsRepository {
     if (!messageRecord.getToRecipient().isGroup() && !messageRecord.getToRecipient().isDistributionList()) {
       recipients.add(new RecipientDeliveryStatus(messageRecord,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                  messageRecord.isOutgoing() ? messageRecord.getToRecipient() : messageRecord.getFromRecipient(),
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                                                 messageRecord.getRecipient(),
+=======
+                                                 messageRecord.getToRecipient(),
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                                                  messageRecord.getRecipient(),
 =======

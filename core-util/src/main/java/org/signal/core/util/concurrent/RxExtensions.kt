@@ -4,6 +4,7 @@ package org.signal.core.util.concurrent
 
 import android.annotation.SuppressLint
 <<<<<<< HEAD
+<<<<<<< HEAD
 import androidx.lifecycle.LifecycleOwner
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
@@ -14,13 +15,24 @@ import androidx.lifecycle.LifecycleOwner
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import androidx.lifecycle.LifecycleOwner
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Flowable
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import io.reactivex.rxjava3.core.Single
+<<<<<<< HEAD
 <<<<<<< HEAD
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.Subject
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import io.reactivex.rxjava3.kotlin.subscribeBy
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import java.lang.RuntimeException
 =======
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -47,6 +59,7 @@ fun <T : Any> Single<T>.safeBlockingGet(): T {
     }
   }
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 fun <T : Any> Flowable<T>.observe(viewLifecycleOwner: LifecycleOwner, onNext: (T) -> Unit) {
@@ -88,6 +101,21 @@ fun <S : Subject<T>, T : Any> Single<T>.subscribeWithSubject(
 
   return subject
 }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+
+fun <T : Any> Flowable<T>.observe(viewLifecycleOwner: LifecycleOwner, onNext: (T) -> Unit) {
+  val lifecycleDisposable = LifecycleDisposable()
+  lifecycleDisposable.bindTo(viewLifecycleOwner)
+  lifecycleDisposable += subscribeBy(onNext = onNext)
+}
+
+fun Completable.observe(viewLifecycleOwner: LifecycleOwner, onComplete: () -> Unit) {
+  val lifecycleDisposable = LifecycleDisposable()
+  lifecycleDisposable.bindTo(viewLifecycleOwner)
+  lifecycleDisposable += subscribeBy(onComplete = onComplete)
+}
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 

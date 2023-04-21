@@ -78,6 +78,7 @@ public class MmsMessageRecord extends MessageRecord {
   private final boolean        isRead;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   public MmsMessageRecord(long id,
                           Recipient fromRecipient,
                           int fromDeviceId,
@@ -123,6 +124,12 @@ public class MmsMessageRecord extends MessageRecord {
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   MmsMessageRecord(long id, String body, Recipient conversationRecipient,
                    Recipient individualRecipient, int recipientDeviceId, long dateSent,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  MmsMessageRecord(long id, String body, Recipient conversationRecipient,
+                   Recipient individualRecipient, int recipientDeviceId, long dateSent,
+=======
+  MmsMessageRecord(long id, String body, Recipient fromRecipient, int fromDeviceId, Recipient toRecipient, long dateSent,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                    long dateReceived, long dateServer, long threadId, int deliveryStatus, int deliveryReceiptCount,
                    long type, Set<IdentityKeyMismatch> mismatches,
                    Set<NetworkFailure> networkFailures, int subscriptionId, long expiresIn,
@@ -132,6 +139,7 @@ public class MmsMessageRecord extends MessageRecord {
                    @NonNull List<LinkPreview> linkPreviews, boolean unidentified,
                    @NonNull List<ReactionRecord> reactions, boolean remoteDelete, long notifiedTimestamp,
                    int viewedReceiptCount, long receiptTimestamp, @NonNull StoryType storyType,
+<<<<<<< HEAD
                    @Nullable ParentStoryId parentStoryId, @Nullable GiftBadge giftBadge)
 =======
   MmsMessageRecord(long id, String body, Recipient fromRecipient, int fromDeviceId, Recipient toRecipient, long dateSent,
@@ -147,7 +155,14 @@ public class MmsMessageRecord extends MessageRecord {
                    @Nullable ParentStoryId parentStoryId, @Nullable GiftBadge giftBadge, @Nullable MessageId originalMessageId,
                    int revisionNumber)
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                   @Nullable ParentStoryId parentStoryId, @Nullable GiftBadge giftBadge)
+=======
+                   @Nullable ParentStoryId parentStoryId, @Nullable GiftBadge giftBadge, @Nullable MessageId originalMessageId,
+                   int revisionNumber)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   {
+<<<<<<< HEAD
 <<<<<<< HEAD
     super(id, body, fromRecipient, fromDeviceId, toRecipient,
           dateSent, dateReceived, dateServer, threadId, Status.STATUS_NONE, hasDeliveryReceipt,
@@ -155,13 +170,24 @@ public class MmsMessageRecord extends MessageRecord {
           unidentified, reactions, remoteDelete, notifiedTimestamp, viewed, receiptTimestamp, originalMessageId, revisionNumber, messageExtras);
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     super(id, body, conversationRecipient, individualRecipient, recipientDeviceId,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    super(id, body, conversationRecipient, individualRecipient, recipientDeviceId,
+=======
+    super(id, body, fromRecipient, fromDeviceId, toRecipient,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           dateSent, dateReceived, dateServer, threadId, deliveryStatus, deliveryReceiptCount,
           type, mismatches, networkFailures, subscriptionId, expiresIn, expireStarted, readReceiptCount,
+<<<<<<< HEAD
           unidentified, reactions, remoteDelete, notifiedTimestamp, viewedReceiptCount, receiptTimestamp);
 =======
     super(id, body, fromRecipient, fromDeviceId, toRecipient,
           dateSent, dateReceived, dateServer, threadId, deliveryStatus, deliveryReceiptCount,
           type, mismatches, networkFailures, subscriptionId, expiresIn, expireStarted, readReceiptCount,
+          unidentified, reactions, remoteDelete, notifiedTimestamp, viewedReceiptCount, receiptTimestamp, originalMessageId, revisionNumber);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          unidentified, reactions, remoteDelete, notifiedTimestamp, viewedReceiptCount, receiptTimestamp);
+=======
           unidentified, reactions, remoteDelete, notifiedTimestamp, viewedReceiptCount, receiptTimestamp, originalMessageId, revisionNumber);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 

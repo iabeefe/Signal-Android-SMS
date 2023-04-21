@@ -2022,6 +2022,24 @@ public class ConversationParentFragment extends Fragment
                   ));
                   messageEditResult.addListener(listener);
                   break;
+                case Draft.MESSAGE_EDIT:
+                  SettableFuture<Boolean> messageEditResult = new SettableFuture<>();
+                  disposables.add(draftViewModel.loadDraftEditMessage(draft.getValue()).subscribe(
+                      conversationMessage -> {
+                        inputPanel.enterEditMessageMode(glideRequests, conversationMessage, true);
+                        messageEditResult.set(true);
+                      },
+                      err -> {
+                        Log.e(TAG, "Failed to restore message edit from a draft.", err);
+                        messageEditResult.set(false);
+                      },
+                      () -> {
+                        Log.e(TAG, "Failed to load message edit. No matching message record.");
+                        messageEditResult.set(false);
+                      }
+                  ));
+                  messageEditResult.addListener(listener);
+                  break;
                 case Draft.VOICE_NOTE:
                 case Draft.BODY_RANGES:
                   listener.onSuccess(true);
@@ -3349,7 +3367,7 @@ public class ConversationParentFragment extends Fragment
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (SignalStore.uiHints().hasNotSeenTextFormattingAlert() && styling != null && styling.getRangesCount() > 0) {
       final String finalBody = body;
-      Dialogs.showFormattedTextDialog(requireContext(), () -> sendMediaMessage(recipientId, sendType, finalBody, slideDeck, quote, contacts, previews, mentions, styling, expiresIn, viewOnce, initiating, clearComposeBox, metricId, scheduledDate));
+      Dialogs.showFormattedTextDialog(requireContext(), () -> sendMediaMessage(recipientId, sendType, finalBody, slideDeck, quote, contacts, previews, mentions, styling, expiresIn, viewOnce, initiating, clearComposeBox, metricId, scheduledDate, editMessageId));
       return new SettableFuture<>(null);
     }
 

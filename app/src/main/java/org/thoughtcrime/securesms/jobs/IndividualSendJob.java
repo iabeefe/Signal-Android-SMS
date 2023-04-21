@@ -149,11 +149,22 @@ public class IndividualSendJob extends PushSendJob {
     MessageRecord   originalEditedMessage = message.getMessageToEdit() > 0 ? SignalDatabase.messages().getMessageRecordOrNull(message.getMessageToEdit()) : null;
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     ExpiringMessageManager expirationManager = ApplicationDependencies.getExpiringMessageManager();
+<<<<<<< HEAD
     MessageTable    database = SignalDatabase.messages();
     OutgoingMessage message  = database.getOutgoingMessage(messageId);
     long            threadId = database.getMessageRecord(messageId).getThreadId();
 =======
     ExpiringMessageManager expirationManager = ApplicationDependencies.getExpiringMessageManager();
+    MessageTable    database              = SignalDatabase.messages();
+    OutgoingMessage message               = database.getOutgoingMessage(messageId);
+    long            threadId              = database.getMessageRecord(messageId).getThreadId();
+    MessageRecord   originalEditedMessage = message.getMessageToEdit() > 0 ? SignalDatabase.messages().getMessageRecordOrNull(message.getMessageToEdit()) : null;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    MessageTable    database = SignalDatabase.messages();
+    OutgoingMessage message  = database.getOutgoingMessage(messageId);
+    long            threadId = database.getMessageRecord(messageId).getThreadId();
+=======
     MessageTable    database              = SignalDatabase.messages();
     OutgoingMessage message               = database.getOutgoingMessage(messageId);
     long            threadId              = database.getMessageRecord(messageId).getThreadId();
@@ -167,7 +178,13 @@ public class IndividualSendJob extends PushSendJob {
 
     try {
 <<<<<<< HEAD
+<<<<<<< HEAD
       log(TAG, String.valueOf(message.getSentTimeMillis()), "Sending message: " + messageId + ", Recipient: " + message.getThreadRecipient().getId() + ", Thread: " + threadId + ", Attachments: " + buildAttachmentString(message.getAttachments()) + ", Editing: " + (originalEditedMessage != null ? originalEditedMessage.getDateSent() : "N/A"));
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      log(TAG, String.valueOf(message.getSentTimeMillis()), "Sending message: " + messageId + ", Recipient: " + message.getRecipient().getId() + ", Thread: " + threadId + ", Attachments: " + buildAttachmentString(message.getAttachments()));
+=======
+      log(TAG, String.valueOf(message.getSentTimeMillis()), "Sending message: " + messageId + ", Recipient: " + message.getThreadRecipient().getId() + ", Thread: " + threadId + ", Attachments: " + buildAttachmentString(message.getAttachments()));
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       log(TAG, String.valueOf(message.getSentTimeMillis()), "Sending message: " + messageId + ", Recipient: " + message.getRecipient().getId() + ", Thread: " + threadId + ", Attachments: " + buildAttachmentString(message.getAttachments()));
 =======
@@ -254,10 +271,16 @@ public class IndividualSendJob extends PushSendJob {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   private boolean deliver(OutgoingMessage message, MessageRecord originalEditedMessage)
       throws IOException, UnregisteredUserException, UntrustedIdentityException, UndeliverableMessageException
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private boolean deliver(OutgoingMessage message)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private boolean deliver(OutgoingMessage message)
+=======
+  private boolean deliver(OutgoingMessage message, MessageRecord originalEditedMessage)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       throws IOException, InsecureFallbackApprovalException, UntrustedIdentityException, UndeliverableMessageException
 =======
   private boolean deliver(OutgoingMessage message, MessageRecord originalEditedMessage)
@@ -332,6 +355,7 @@ public class IndividualSendJob extends PushSendJob {
       SignalServiceDataMessage mediaMessage = mediaMessageBuilder.build();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       if (originalEditedMessage != null) {
         if (Util.equals(SignalStore.account().getAci(), address.getServiceId())) {
           SendMessageResult                result     = messageSender.sendSelfSyncEditMessage(new SignalServiceEditMessage(originalEditedMessage.getDateSent(), mediaMessage));
@@ -353,6 +377,16 @@ public class IndividualSendJob extends PushSendJob {
       } else if (Util.equals(SignalStore.account().getAci(), address.getServiceId())) {
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       if (Util.equals(SignalStore.account().getAci(), address.getServiceId())) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      if (Util.equals(SignalStore.account().getAci(), address.getServiceId())) {
+=======
+      if (originalEditedMessage != null) {
+        SendMessageResult result = messageSender.sendEditMessage(address, UnidentifiedAccessUtil.getAccessFor(context, messageRecipient), ContentHint.RESENDABLE, mediaMessage, IndividualSendEvents.EMPTY, message.isUrgent(), originalEditedMessage.getDateSent());
+        SignalDatabase.messageLog().insertIfPossible(messageRecipient.getId(), message.getSentTimeMillis(), result, ContentHint.RESENDABLE, new MessageId(messageId), false);
+
+        return result.getSuccess().isUnidentified();
+      } else if (Util.equals(SignalStore.account().getAci(), address.getServiceId())) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         Optional<UnidentifiedAccessPair> syncAccess = UnidentifiedAccessUtil.getAccessForSync(context);
 =======
       if (originalEditedMessage != null) {

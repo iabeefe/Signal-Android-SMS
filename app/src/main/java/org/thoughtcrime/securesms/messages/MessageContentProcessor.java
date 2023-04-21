@@ -1069,6 +1069,7 @@ public class MessageContentProcessor {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (targetMessage != null && MessageConstraintsUtil.isValidRemoteDeleteReceive(targetMessage, senderRecipient.getId(), content.getServerReceivedTimestamp())) {
 ||||||| parent of 66c339aa35 (Added extra options)
 ||||||| parent of 775ec008cc (Added extra options)
@@ -1102,6 +1103,11 @@ public class MessageContentProcessor {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
     if (targetMessage != null && RemoteDeleteUtil.isValidReceive(targetMessage, senderRecipient, content.getServerReceivedTimestamp())) {
 >>>>>>> 66c339aa35 (Added extra options)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    if (targetMessage != null && RemoteDeleteUtil.isValidReceive(targetMessage, senderRecipient, content.getServerReceivedTimestamp())) {
+=======
+    if (targetMessage != null && MessageConstraintsUtil.isValidRemoteDeleteReceive(targetMessage, senderRecipient.getId(), content.getServerReceivedTimestamp())) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       MessageTable db = targetMessage.isMms() ? SignalDatabase.messages() : SignalDatabase.messages();
       db.markAsRemoteDelete(targetMessage.getId());
       if (MessageRecordUtil.isStory(targetMessage)) {
@@ -2335,9 +2341,16 @@ public class MessageContentProcessor {
                                                          -1);
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                                                          bodyRanges,
+<<<<<<< HEAD
                                                          -1);
 =======
                                                          bodyRanges,
+                                                         -1,
+                                                         0);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                                                         -1);
+=======
                                                          -1,
                                                          0);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -2464,9 +2477,16 @@ public class MessageContentProcessor {
                                                        -1);
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                                                        bodyRanges,
+<<<<<<< HEAD
                                                        -1);
 =======
                                                        bodyRanges,
+                                                       -1,
+                                                       0);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                                                       -1);
+=======
                                                        -1,
                                                        0);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -2627,9 +2647,16 @@ public class MessageContentProcessor {
                                                        -1);
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                                                        bodyRanges,
+<<<<<<< HEAD
                                                        -1);
 =======
                                                        bodyRanges,
+                                                       -1,
+                                                       0);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                                                       -1);
+=======
                                                        -1,
                                                        0);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)

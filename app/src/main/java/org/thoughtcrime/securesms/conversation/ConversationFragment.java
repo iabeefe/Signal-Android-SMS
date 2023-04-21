@@ -835,6 +835,7 @@ public class ConversationFragment extends LoggingFragment implements Multiselect
       }));
     }
 
+<<<<<<< HEAD
     if (menuState.shouldShowEditAction() && FeatureFlags.editMessageSending()) {
       items.add(new ActionItem(R.drawable.symbol_edit_24, getResources().getString(R.string.conversation_selection__menu_edit), () -> {
         handleEditMessage(getSelectedConversationMessage());
@@ -844,6 +845,18 @@ public class ConversationFragment extends LoggingFragment implements Multiselect
       }));
     }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    if (menuState.shouldShowEditAction()) {
+      items.add(new ActionItem(R.drawable.symbol_edit_24, getResources().getString(R.string.conversation_selection__menu_edit), () -> {
+        handleEditMessage(getSelectedConversationMessage());
+        if (actionMode != null) {
+          actionMode.finish();
+        }
+      }));
+    }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     if (menuState.shouldShowForwardAction()) {
       items.add(new ActionItem(R.drawable.symbol_forward_24, getResources().getString(R.string.conversation_selection__menu_forward), () -> handleForwardMessageParts(selectedParts)));
     }

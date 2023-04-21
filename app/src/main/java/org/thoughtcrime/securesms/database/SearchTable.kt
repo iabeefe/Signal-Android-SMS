@@ -194,7 +194,7 @@ class SearchTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
             WHERE 
               ${MessageTable.ID} >= $i AND
               ${MessageTable.ID} < ${i + batchSize}
-        """.trimIndent()
+        """
       )
 =======
     for (i in 1..maxId step batchSize) {

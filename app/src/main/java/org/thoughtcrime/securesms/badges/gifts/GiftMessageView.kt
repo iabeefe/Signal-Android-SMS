@@ -51,7 +51,13 @@ class GiftMessageView @JvmOverloads constructor(
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   fun setGiftBadge(requestManager: RequestManager, giftBadge: GiftBadge, isOutgoing: Boolean, callback: Callback, fromRecipient: Recipient, toRecipient: Recipient) {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  fun setGiftBadge(glideRequests: GlideRequests, giftBadge: GiftBadge, isOutgoing: Boolean, callback: Callback, recipient: Recipient) {
+=======
+  fun setGiftBadge(glideRequests: GlideRequests, giftBadge: GiftBadge, isOutgoing: Boolean, callback: Callback, fromRecipient: Recipient, toRecipient: Recipient) {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   fun setGiftBadge(glideRequests: GlideRequests, giftBadge: GiftBadge, isOutgoing: Boolean, callback: Callback, recipient: Recipient) {
 =======

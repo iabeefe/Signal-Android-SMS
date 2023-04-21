@@ -1080,6 +1080,7 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
         TurnServerInfo turnServerInfo = AppDependencies.getSignalServiceAccountManager().getTurnServerInfo();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         List<PeerConnection.IceServer> iceServers = new LinkedList<>();
         for (String url : ListUtil.emptyIfNull(turnServerInfo.getUrlsWithIps())) {
           if (url.startsWith("turn")) {
@@ -1097,6 +1098,10 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
         for (String url : ListUtil.emptyIfNull(turnServerInfo.getUrls())) {
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         List<PeerConnection.IceServer> iceServers = new LinkedList<>();
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        List<PeerConnection.IceServer> iceServers = new LinkedList<>();
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         for (String url : turnServerInfo.getUrls()) {
 =======
         for (String url : turnServerInfo.getUrls()) {
@@ -1111,7 +1116,15 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
           }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+      } catch (IOException e) {
+        Log.w(TAG, "Using fallback. Unable to retrieve turn servers: " + e);
+      } finally {
+        // Append fallback stun server
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         iceServers.add(PeerConnection.IceServer.builder("stun:stun1.l.google.com:19302").createIceServer());
 =======
       } catch (IOException e) {

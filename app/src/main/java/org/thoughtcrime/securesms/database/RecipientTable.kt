@@ -35,7 +35,12 @@ import org.signal.core.util.requireNonNullString
 import org.signal.core.util.requireString
 import org.signal.core.util.select
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.signal.core.util.toInt
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import org.signal.core.util.toSingleLine
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.signal.core.util.toSingleLine
 =======
@@ -1214,10 +1219,16 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
             )
         )
 <<<<<<< HEAD
+<<<<<<< HEAD
         """,
         RecipientType.INDIVIDUAL.id,
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         """.toSingleLine(),
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        """.toSingleLine(),
+=======
+        """,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         GroupType.NONE.id,
 =======
         """,
@@ -3550,10 +3561,16 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
           $EMAIL GLOB ?
         )
 <<<<<<< HEAD
+<<<<<<< HEAD
       """
     val args = SqlUtil.buildArgs(0, query, query, query, query)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       """.trimIndent()
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.trimIndent()
+=======
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     val args = SqlUtil.buildArgs(0, 0, query, query, query, query)
 =======
       """
@@ -4650,8 +4667,14 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
             WHERE ${GroupTable.MembershipTable.TABLE_NAME}.${GroupTable.MembershipTable.RECIPIENT_ID} = $TABLE_NAME.$ID AND ${GroupTable.TABLE_NAME}.${GroupTable.ACTIVE} = 1 AND ${GroupTable.TABLE_NAME}.${GroupTable.MMS} = 0
         )
 <<<<<<< HEAD
+<<<<<<< HEAD
       """
       val E164_SEARCH = "(($PHONE_NUMBER_SHARING != ${PhoneNumberSharingState.DISABLED.id} OR $SYSTEM_CONTACT_URI NOT NULL) AND $E164 GLOB ?)"
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.toSingleLine()
+=======
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       """.toSingleLine()
 =======

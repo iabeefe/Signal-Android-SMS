@@ -464,9 +464,14 @@ message SyncMessage {
     optional StoryMessage               storyMessage             = 8;
     repeated StoryMessageRecipient      storyMessageRecipients   = 9;
 <<<<<<< HEAD:libsignal-service/src/main/protowire/SignalService.proto
+<<<<<<< HEAD:libsignal-service/src/main/protowire/SignalService.proto
     optional EditMessage                editMessage              = 10;
     reserved                            /*destinationPni*/         11;
     // NEXT ID: 12
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.):libsignal/service/src/main/proto/SignalService.proto
+=======
+    optional EditMessage                editMessage              = 10;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.):libsignal/service/src/main/proto/SignalService.proto
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.):libsignal/service/src/main/proto/SignalService.proto
 =======
     optional EditMessage                editMessage              = 10;

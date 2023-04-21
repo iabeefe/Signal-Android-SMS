@@ -717,10 +717,18 @@ public final class ConversationReactionOverlay extends FrameLayout {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (menuState.shouldShowEditAction()) {
       items.add(new ActionItem(R.drawable.symbol_edit_24, getResources().getString(R.string.conversation_selection__menu_edit), () -> handleActionItemClicked(Action.EDIT)));
     }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    if (FeatureFlags.editMessageSending() && menuState.shouldShowEditAction()) {
+      items.add(new ActionItem(R.drawable.symbol_edit_24, getResources().getString(R.string.conversation_selection__menu_edit), () -> handleActionItemClicked(Action.EDIT)));
+    }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     if (FeatureFlags.editMessageSending() && menuState.shouldShowEditAction()) {

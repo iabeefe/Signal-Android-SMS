@@ -30,11 +30,16 @@ public final class InternalValues extends SignalStoreValues {
   public static final String FORCE_WEBSOCKET_MODE                 = "internal.force_websocket_mode";
   public static final String LAST_SCROLL_POSITION                 = "internal.last_scroll_position";
 <<<<<<< HEAD
+<<<<<<< HEAD
   public static final String CONVERSATION_ITEM_V2_MEDIA           = "internal.conversation_item_v2_media";
   public static final String FORCE_ENTER_RESTORE_V2_FLOW          = "internal.force_enter_restore_v2_flow";
   public static final String WEB_SOCKET_SHADOWING_STATS           = "internal.web_socket_shadowing_stats";
   public static final String ENCODE_HEVC                          = "internal.hevc_encoding";
   public static final String NEW_CALL_UI                          = "internal.new.call.ui";
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  public static final String CONVERSATION_FRAGMENT_V2             = "internal.conversation_fragment_v2";
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
   public static final String CONVERSATION_FRAGMENT_V2             = "internal.conversation_fragment_v2";
@@ -214,6 +219,7 @@ public final class InternalValues extends SignalStoreValues {
     return getInteger(LAST_SCROLL_POSITION, 0);
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   public void setUseConversationItemV2Media(boolean useConversationFragmentV2Media) {
     putBoolean(CONVERSATION_ITEM_V2_MEDIA, useConversationFragmentV2Media);
@@ -231,6 +237,17 @@ public final class InternalValues extends SignalStoreValues {
     return getBlob(WEB_SOCKET_SHADOWING_STATS, defaultValue);
   }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+
+  public void setUseConversationFragmentV2(boolean useConversationFragmentV2) {
+    putBoolean(CONVERSATION_FRAGMENT_V2, useConversationFragmentV2);
+  }
+
+  public boolean useConversationFragmentV2() {
+    return FeatureFlags.internalUser() && getBoolean(CONVERSATION_FRAGMENT_V2, false);
+  }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 

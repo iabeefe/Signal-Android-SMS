@@ -13,9 +13,14 @@ import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.ThreadTable;
 import org.thoughtcrime.securesms.database.model.GroupRecord;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.database.model.MessageRecord;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
 =======
 import org.thoughtcrime.securesms.database.model.MessageRecord;
@@ -33,6 +38,7 @@ import org.whispersystems.signalservice.api.push.ServiceId;
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.util.BubbleUtil;
 import org.thoughtcrime.securesms.util.ConversationUtil;
+import org.thoughtcrime.securesms.util.MessageRecordUtil;
 import org.thoughtcrime.securesms.util.Util;
 =======
 import org.thoughtcrime.securesms.util.BubbleUtil;
@@ -49,8 +55,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import io.reactivex.rxjava3.core.Observable;
 =======
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -66,10 +77,16 @@ public class ConversationRepository {
   private final Context  context;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   public ConversationRepository() {
     this.context = AppDependencies.getApplication();
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   ConversationRepository() {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  ConversationRepository() {
+=======
+  public ConversationRepository() {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     this.context = ApplicationDependencies.getApplication();
   }
 
@@ -242,6 +259,28 @@ public class ConversationRepository {
                                           true,
                                           hasUnexportedInsecureMessages);
     }).subscribeOn(Schedulers.io());
+  }
+
+  @NonNull
+  public Single<ConversationMessage> resolveMessageToEdit(@NonNull ConversationMessage message) {
+    return Single.fromCallable(() -> {
+                   MessageRecord messageRecord = message.getMessageRecord();
+                   if (MessageRecordUtil.hasTextSlide(messageRecord)) {
+                     TextSlide textSlide = MessageRecordUtil.requireTextSlide(messageRecord);
+                     if (textSlide.getUri() == null) {
+                       return message;
+                     }
+
+                     try (InputStream stream = PartAuthority.getAttachmentStream(context, textSlide.getUri())) {
+                       String body = StreamUtil.readFullyAsString(stream);
+                       return ConversationMessage.ConversationMessageFactory.createWithUnresolvedData(context, messageRecord, body);
+                     } catch (IOException e) {
+                       Log.w(TAG, "Failed to read text slide data.");
+                     }
+                   }
+                   return message;
+                 }).subscribeOn(Schedulers.io())
+                 .observeOn(AndroidSchedulers.mainThread());
   }
 
   Observable<Integer> getUnreadCount(long threadId, long afterTime) {

@@ -96,7 +96,7 @@ class ScheduledMessagesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment
       setCondensedMode(ConversationItemDisplayMode.Condensed(scheduleMessageMode = true))
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, GlideApp.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient, colorizer).apply {
-      setCondensedMode(true)
+      setCondensedMode(ConversationItemDisplayMode.CONDENSED)
       setScheduledMessagesMode(true)
 =======
     messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, GlideApp.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient, colorizer).apply {
@@ -284,11 +284,16 @@ class ScheduledMessagesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment
     override fun onActivatePaymentsClicked() = Unit
     override fun onSendPaymentClicked(recipientId: RecipientId) = Unit
 <<<<<<< HEAD
+<<<<<<< HEAD
     override fun onEditedIndicatorClicked(conversationMessage: ConversationMessage) = Unit
     override fun onShowSafetyTips(forGroup: Boolean) = Unit
     override fun onReportSpamLearnMoreClicked() = Unit
     override fun onMessageRequestAcceptOptionsClicked() = Unit
     override fun onItemDoubleClick(item: MultiselectPart) = Unit
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    override fun onEditedIndicatorClicked(messageRecord: MessageRecord) = Unit
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     override fun onEditedIndicatorClicked(messageRecord: MessageRecord) = Unit

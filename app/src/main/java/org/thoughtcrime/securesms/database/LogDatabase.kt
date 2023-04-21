@@ -78,7 +78,7 @@ class LogDatabase private constructor(
         $BODY TEXT,
         $SIZE INTEGER
       )
-    """.trimIndent()
+    """
 
     private val CREATE_INDEXES = arrayOf(
       "CREATE INDEX keep_longer_index ON $TABLE_NAME ($KEEP_LONGER)",

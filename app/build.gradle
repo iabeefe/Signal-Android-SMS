@@ -93,6 +93,7 @@ ktlint {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 def canonicalVersionCode = 1232
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -454,6 +455,13 @@ def canonicalVersionName = "6.18.1.0-JW-JK"
 def canonicalVersionCode = 1245
 def canonicalVersionName = "6.18.2.0-JW-JK"
 >>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+def canonicalVersionCode = 1245
+def canonicalVersionName = "6.18.2.0-JW-JK"
+=======
+def canonicalVersionCode = 1248
+def canonicalVersionName = "6.19.0.0-JW-JK"
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
 def postFixSize = 100
 def abiPostFix = ['universal'   : 0,
@@ -578,7 +586,7 @@ android {
         multiDexEnabled true
 
         vectorDrawables.useSupportLibrary = true
-        project.ext.set("archivesBaseName", "Signal-Android") // JW: change basename
+        project.ext.set("archivesBaseName", "Signal")
 
         manifestPlaceholders = [mapsKey:"AIzaSyCSx9xea86GwDKGznCAULE9Y5a8b-TfN9U"]
 
@@ -937,8 +945,13 @@ dependencies {
     implementation libs.androidx.core.ktx
 =======
     implementation 'net.lingala.zip4j:zip4j:2.11.5' // JW: added
+<<<<<<< HEAD
     implementation libs.androidx.core.ktx
 >>>>>>> 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    implementation libs.androidx.core.ktx
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     implementation libs.androidx.fragment.ktx
     lintChecks project(':lintchecks')
 

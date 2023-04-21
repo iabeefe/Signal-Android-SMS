@@ -77,6 +77,7 @@ public final class MenuState {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   public boolean shouldShowEditAction() {
     return edit;
   }
@@ -95,6 +96,13 @@ public final class MenuState {
     return edit;
   }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  boolean shouldShowEditAction() {
+    return edit;
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   static MenuState getMenuState(@NonNull Recipient conversationRecipient,
                                 @NonNull Set<MultiselectPart> selectedParts,
                                 boolean shouldShowMessageRequest,
@@ -195,11 +203,19 @@ public final class MenuState {
              .shouldShowDetailsAction(!actionMessage && !conversationRecipient.isReleaseNotes())
              .shouldShowReplyAction(canReplyToMessage(conversationRecipient, actionMessage, messageRecord, shouldShowMessageRequest, isNonAdminInAnnouncementGroup));
 <<<<<<< HEAD
+<<<<<<< HEAD
 
       builder.shouldShowEdit(!actionMessage &&
                              hasText &&
                              !multiSelectRecord.getConversationMessage().getOriginalMessage().isFailed() &&
                              MessageConstraintsUtil.isValidEditMessageSend(multiSelectRecord.getConversationMessage().getOriginalMessage(), System.currentTimeMillis()));
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+
+      builder.shouldShowEdit(!actionMessage &&
+                             hasText &&
+                             MessageConstraintsUtil.isValidEditMessageSend(messageRecord, System.currentTimeMillis()));
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 
@@ -246,6 +262,7 @@ public final class MenuState {
     return messageRecord.isInMemoryMessageRecord() || messageRecord.isUpdate();
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   static boolean isActionMessage(@NonNull MessageRecord messageRecord) {
+<<<<<<< HEAD
     return messageRecord.isGroupAction() ||
            messageRecord.isCallLog() ||
            messageRecord.isJoined() ||
@@ -265,6 +282,27 @@ public final class MenuState {
            messageRecord.isSmsExportType();
 =======
   static boolean isActionMessage(@NonNull MessageRecord messageRecord) {
+    return messageRecord.isInMemoryMessageRecord() || messageRecord.isUpdate();
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    return messageRecord.isGroupAction() ||
+           messageRecord.isCallLog() ||
+           messageRecord.isJoined() ||
+           messageRecord.isExpirationTimerUpdate() ||
+           messageRecord.isEndSession() ||
+           messageRecord.isIdentityUpdate() ||
+           messageRecord.isIdentityVerified() ||
+           messageRecord.isIdentityDefault() ||
+           messageRecord.isProfileChange() ||
+           messageRecord.isGroupV1MigrationEvent() ||
+           messageRecord.isChatSessionRefresh() ||
+           messageRecord.isInMemoryMessageRecord() ||
+           messageRecord.isChangeNumber() ||
+           messageRecord.isBoostRequest() ||
+           messageRecord.isPaymentsRequestToActivate() ||
+           messageRecord.isPaymentsActivated() ||
+           messageRecord.isSmsExportType();
+=======
     return messageRecord.isInMemoryMessageRecord() || messageRecord.isUpdate();
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }

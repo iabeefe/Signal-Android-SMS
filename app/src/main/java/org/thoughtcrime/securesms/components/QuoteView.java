@@ -188,10 +188,15 @@ public class QuoteView extends ConstraintLayout implements RecipientForeverObser
 
     thumbnailView.setLayoutParams(params);
 <<<<<<< HEAD
+<<<<<<< HEAD
     dismissStub.setVisibility(messageType == MessageType.PREVIEW ? View.VISIBLE : View.GONE);
     if (dismissStub.resolved()) {
       dismissStub.get().setOnClickListener(view -> setVisibility(GONE));
     }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    dismissView.setVisibility(messageType == MessageType.PREVIEW ? View.VISIBLE : View.GONE);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     dismissView.setVisibility(messageType == MessageType.PREVIEW ? View.VISIBLE : View.GONE);

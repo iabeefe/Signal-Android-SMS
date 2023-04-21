@@ -89,6 +89,7 @@ class ConversationListTabsFragment : Fragment(R.layout.conversation_list_tabs) {
 
   private fun updateTabsVisibility() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (SignalStore.settings.useCompactNavigationBar) {
       smallConstraintSet.applyTo(binding.root)
       binding.root.minHeight = 48.dp
@@ -97,6 +98,17 @@ class ConversationListTabsFragment : Fragment(R.layout.conversation_list_tabs) {
       binding.root.minHeight = 80.dp
     }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    if (SignalStore.settings().useCompactNavigationBar) {
+      smallConstraintSet.applyTo(binding.root)
+      binding.root.minHeight = 48.dp
+    } else {
+      largeConstraintSet.applyTo(binding.root)
+      binding.root.minHeight = 80.dp
+    }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     if (SignalStore.settings().useCompactNavigationBar) {
@@ -131,6 +143,7 @@ class ConversationListTabsFragment : Fragment(R.layout.conversation_list_tabs) {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (SignalStore.settings.useCompactNavigationBar) {
       listOf(
         binding.callsTabLabel,
@@ -141,6 +154,19 @@ class ConversationListTabsFragment : Fragment(R.layout.conversation_list_tabs) {
       }
     }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    if (SignalStore.settings().useCompactNavigationBar) {
+      listOf(
+        binding.callsTabLabel,
+        binding.chatsTabLabel,
+        binding.storiesTabLabel
+      ).forEach {
+        it.visible = false
+      }
+    }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     if (SignalStore.settings().useCompactNavigationBar) {

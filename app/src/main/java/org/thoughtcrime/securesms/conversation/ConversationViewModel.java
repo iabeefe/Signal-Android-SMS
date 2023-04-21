@@ -446,6 +446,11 @@ public class ConversationViewModel extends ViewModel {
     return conversationRepository.resolveMessageToEdit(message);
   }
 
+  @NonNull
+  public Single<ConversationMessage> resolveMessageToEdit(@NonNull ConversationMessage message) {
+    return conversationRepository.resolveMessageToEdit(message);
+  }
+
   void setArgs(@NonNull ConversationIntents.Args args) {
     this.args = args;
   }

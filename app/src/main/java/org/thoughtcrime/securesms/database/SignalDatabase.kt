@@ -171,9 +171,14 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
     Log.i(TAG, "Upgrading database: $oldVersion, $newVersion")
     val startTime = System.currentTimeMillis()
 <<<<<<< HEAD
+<<<<<<< HEAD
     db.setForeignKeyConstraintsEnabled(false)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     db.setForeignKeyConstraintsEnabled(false)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    db.setForeignKeyConstraintsEnabled(false)
+=======
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     db.beginTransaction()
 =======
     db.beginTransaction()
@@ -186,9 +191,14 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
       db.setForeignKeyConstraintsEnabled(true)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       db.endTransaction()
+<<<<<<< HEAD
       db.setForeignKeyConstraintsEnabled(true)
 =======
       db.endTransaction()
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      db.setForeignKeyConstraintsEnabled(true)
+=======
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
       // We have to re-begin the transaction for the calling code (see comment at start of method)

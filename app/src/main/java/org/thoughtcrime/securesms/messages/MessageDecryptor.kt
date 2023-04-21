@@ -150,7 +150,13 @@ object MessageDecryptor {
       }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       Log.d(TAG, "${logPrefix(envelope, cipherResult)} Successfully decrypted the envelope in ${(endTimeNanos - startTimeNanos).nanoseconds.toDouble(DurationUnit.MILLISECONDS).roundedString(2)} ms  (GUID ${envelope.serverGuid}). Delivery latency: ${serverDeliveredTimestamp - envelope.serverTimestamp!!} ms, Urgent: ${envelope.urgent}")
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      Log.d(TAG, "${logPrefix(envelope, cipherResult)} Successfully decrypted the envelope.")
+=======
+      Log.d(TAG, "${logPrefix(envelope, cipherResult)} Successfully decrypted the envelope (GUID ${envelope.serverGuid}).")
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       Log.d(TAG, "${logPrefix(envelope, cipherResult)} Successfully decrypted the envelope.")
 =======

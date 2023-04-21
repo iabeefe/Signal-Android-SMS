@@ -550,8 +550,16 @@ public class AttachmentUtil {
       MessageRecord message = SignalDatabase.messages().getMessageRecord(attachment.mmsId);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       Recipient fromRecipient = message.getFromRecipient();
       Recipient toRecipient   = SignalDatabase.threads().getRecipientForThreadId(message.getThreadId());
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      Recipient individualRecipient = message.getRecipient();
+      Recipient threadRecipient     = SignalDatabase.threads().getRecipientForThreadId(message.getThreadId());
+=======
+      Recipient fromRecipient = message.getFromRecipient();
+      Recipient toRecipient   = message.getToRecipient();
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       Recipient individualRecipient = message.getRecipient();
       Recipient threadRecipient     = SignalDatabase.threads().getRecipientForThreadId(message.getThreadId());

@@ -61,6 +61,7 @@ object TestSms {
   ): Long {
     val values = ContentValues().apply {
 <<<<<<< HEAD
+<<<<<<< HEAD
       put(MessageTable.FROM_RECIPIENT_ID, message.from.serialize())
       put(MessageTable.TO_RECIPIENT_ID, message.from.serialize())
       put(MessageTable.DATE_RECEIVED, message.receivedTimeMillis)
@@ -69,6 +70,14 @@ object TestSms {
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       put(MessageTable.RECIPIENT_ID, message.sender.serialize())
       put(MessageTable.RECIPIENT_DEVICE_ID, message.senderDeviceId)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      put(MessageTable.RECIPIENT_ID, message.sender.serialize())
+      put(MessageTable.RECIPIENT_DEVICE_ID, message.senderDeviceId)
+=======
+      put(MessageTable.FROM_RECIPIENT_ID, message.authorId.serialize())
+      put(MessageTable.FROM_DEVICE_ID, message.authorDeviceId)
+      put(MessageTable.TO_RECIPIENT_ID, message.authorId.serialize())
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       put(MessageTable.DATE_RECEIVED, message.receivedTimestampMillis)
       put(MessageTable.DATE_SENT, message.sentTimestampMillis)
       put(MessageTable.DATE_SERVER, message.serverTimestampMillis)

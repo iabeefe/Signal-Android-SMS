@@ -138,7 +138,13 @@ public class LongMessageFragment extends FullScreenDialogFragment {
         text.setMentionBackgroundTint(ContextCompat.getColor(requireContext(), R.color.transparent_black_40));
       }
 <<<<<<< HEAD
+<<<<<<< HEAD
       footer.setMessageRecord(message.get().getMessageRecord(), Locale.getDefault(), ConversationItemDisplayMode.Standard.INSTANCE);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      footer.setMessageRecord(message.get().getMessageRecord(), Locale.getDefault());
+=======
+      footer.setMessageRecord(message.get().getMessageRecord(), Locale.getDefault(), ConversationItemDisplayMode.STANDARD);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       footer.setMessageRecord(message.get().getMessageRecord(), Locale.getDefault());
 =======

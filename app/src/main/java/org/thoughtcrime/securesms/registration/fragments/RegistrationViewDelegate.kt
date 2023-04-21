@@ -51,6 +51,7 @@ object RegistrationViewDelegate {
       }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     MaterialAlertDialogBuilder(context).apply {
       if (title != null) {
@@ -61,6 +62,18 @@ object RegistrationViewDelegate {
       setNegativeButton(R.string.RegistrationActivity_edit_number) { _, _ -> onEditNumber.run() }
       setOnCancelListener { onEditNumber.run() }
     }.show()
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+
+    MaterialAlertDialogBuilder(context).apply {
+      if (title != null) {
+        setTitle(title)
+      }
+      setMessage(message)
+      setPositiveButton(android.R.string.ok) { _, _ -> onConfirmed.run() }
+      setNegativeButton(R.string.RegistrationActivity_edit_number) { _, _ -> onEditNumber.run() }
+    }.show()
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
 

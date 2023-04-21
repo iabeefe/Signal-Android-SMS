@@ -8,9 +8,14 @@ import android.widget.Toast;
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import android.view.Window;
 import android.view.WindowManager;
+<<<<<<< HEAD
 =======
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
 import android.widget.Toast;
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 

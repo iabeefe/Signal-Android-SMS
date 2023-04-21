@@ -52,11 +52,18 @@ data class OutgoingMessage(
   val isIdentityVerified: Boolean = false,
   val isIdentityDefault: Boolean = false,
 <<<<<<< HEAD
+<<<<<<< HEAD
   val scheduledDate: Long = -1,
   val messageToEdit: Long = 0,
   val isReportSpam: Boolean = false,
   val isMessageRequestAccept: Boolean = false,
   val messageExtras: MessageExtras? = null
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  val scheduledDate: Long = -1
+=======
+  val scheduledDate: Long = -1,
+  val messageToEdit: Long = 0
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   val scheduledDate: Long = -1
 =======
@@ -186,7 +193,13 @@ data class OutgoingMessage(
      */
     @JvmStatic
 <<<<<<< HEAD
+<<<<<<< HEAD
     fun sms(threadRecipient: Recipient, body: String): OutgoingMessage {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    fun sms(recipient: Recipient, body: String, subscriptionId: Int): OutgoingMessage {
+=======
+    fun sms(threadRecipient: Recipient, body: String, subscriptionId: Int): OutgoingMessage {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     fun sms(recipient: Recipient, body: String, subscriptionId: Int): OutgoingMessage {
 =======
@@ -249,11 +262,17 @@ data class OutgoingMessage(
      */
     @JvmStatic
 <<<<<<< HEAD
+<<<<<<< HEAD
     fun groupUpdateMessage(threadRecipient: Recipient, update: GV2UpdateDescription, sentTimeMillis: Long): OutgoingMessage {
       val messageExtras = MessageExtras(gv2UpdateDescription = update)
       val groupContext = MessageGroupContext(update.gv2ChangeDescription!!)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     fun groupUpdateMessage(recipient: Recipient, group: DecryptedGroupV2Context, sentTimeMillis: Long): OutgoingMessage {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    fun groupUpdateMessage(recipient: Recipient, group: DecryptedGroupV2Context, sentTimeMillis: Long): OutgoingMessage {
+=======
+    fun groupUpdateMessage(threadRecipient: Recipient, group: DecryptedGroupV2Context, sentTimeMillis: Long): OutgoingMessage {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       val groupContext = MessageGroupContext(group)
 =======
     fun groupUpdateMessage(threadRecipient: Recipient, group: DecryptedGroupV2Context, sentTimeMillis: Long): OutgoingMessage {
@@ -262,9 +281,15 @@ data class OutgoingMessage(
 
       return OutgoingMessage(
 <<<<<<< HEAD
+<<<<<<< HEAD
         threadRecipient = threadRecipient,
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         recipient = recipient,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        recipient = recipient,
+=======
+        threadRecipient = threadRecipient,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         body = groupContext.encodedGroupContext,
 =======
         threadRecipient = threadRecipient,
@@ -297,9 +322,15 @@ data class OutgoingMessage(
     ): OutgoingMessage {
       return OutgoingMessage(
 <<<<<<< HEAD
+<<<<<<< HEAD
         threadRecipient = threadRecipient,
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         recipient = recipient,
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        recipient = recipient,
+=======
+        threadRecipient = threadRecipient,
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         body = groupContext.encodedGroupContext,
 =======
         threadRecipient = threadRecipient,
@@ -394,7 +425,13 @@ data class OutgoingMessage(
      */
     @JvmStatic
 <<<<<<< HEAD
+<<<<<<< HEAD
     fun expirationUpdateMessage(threadRecipient: Recipient, sentTimeMillis: Long, expiresIn: Long, expireTimerVersion: Int): OutgoingMessage {
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    fun expirationUpdateMessage(recipient: Recipient, sentTimeMillis: Long, expiresIn: Long): OutgoingMessage {
+=======
+    fun expirationUpdateMessage(threadRecipient: Recipient, sentTimeMillis: Long, expiresIn: Long): OutgoingMessage {
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     fun expirationUpdateMessage(recipient: Recipient, sentTimeMillis: Long, expiresIn: Long): OutgoingMessage {
 =======

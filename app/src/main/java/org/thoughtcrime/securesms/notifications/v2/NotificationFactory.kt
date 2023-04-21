@@ -129,7 +129,13 @@ object NotificationFactory {
           targetThread = targetThread,
           defaultBubbleState = defaultBubbleState,
 <<<<<<< HEAD
+<<<<<<< HEAD
           shouldAlert = shouldAlert
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          shouldAlert = (conversation.hasNewNotifications() || alertOverrides.contains(conversation.thread)) && !conversation.mostRecentNotification.individualRecipient.isSelf
+=======
+          shouldAlert = (conversation.hasNewNotifications() || alertOverrides.contains(conversation.thread)) && !conversation.mostRecentNotification.authorRecipient.isSelf
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           shouldAlert = (conversation.hasNewNotifications() || alertOverrides.contains(conversation.thread)) && !conversation.mostRecentNotification.individualRecipient.isSelf
 =======
@@ -191,7 +197,13 @@ object NotificationFactory {
             targetThread = targetThread,
             defaultBubbleState = defaultBubbleState,
 <<<<<<< HEAD
+<<<<<<< HEAD
             shouldAlert = shouldAlert
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+            shouldAlert = (conversation.hasNewNotifications() || alertOverrides.contains(conversation.thread)) && !conversation.mostRecentNotification.individualRecipient.isSelf
+=======
+            shouldAlert = (conversation.hasNewNotifications() || alertOverrides.contains(conversation.thread)) && !conversation.mostRecentNotification.authorRecipient.isSelf
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
             shouldAlert = (conversation.hasNewNotifications() || alertOverrides.contains(conversation.thread)) && !conversation.mostRecentNotification.individualRecipient.isSelf
 =======

@@ -185,9 +185,15 @@ public class MultiDeviceContactUpdateJob extends BaseJob {
                  BlobProvider.getInstance().getStream(context, updateUri),
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       sendUpdate(ApplicationDependencies.getSignalServiceMessageSender(),
+<<<<<<< HEAD
                  BlobProvider.getInstance().getStream(context, writeDetails.uri),
 =======
       sendUpdate(ApplicationDependencies.getSignalServiceMessageSender(),
+                 BlobProvider.getInstance().getStream(context, updateUri),
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                 BlobProvider.getInstance().getStream(context, writeDetails.uri),
+=======
                  BlobProvider.getInstance().getStream(context, updateUri),
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                  length,
@@ -272,11 +278,19 @@ public class MultiDeviceContactUpdateJob extends BaseJob {
       out.close();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       updateUri = writeDetails.getUri();
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       long length = BlobProvider.getInstance().calculateFileSize(context, writeDetails.uri);
 =======
       updateUri = writeDetails.getUri();
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      long length = BlobProvider.getInstance().calculateFileSize(context, writeDetails.uri);
+=======
+      updateUri = writeDetails.getUri();
+
+      long length = BlobProvider.getInstance().calculateFileSize(context, updateUri);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
       long length = BlobProvider.getInstance().calculateFileSize(context, updateUri);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -288,9 +302,15 @@ public class MultiDeviceContactUpdateJob extends BaseJob {
                  BlobProvider.getInstance().getStream(context, updateUri),
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       sendUpdate(ApplicationDependencies.getSignalServiceMessageSender(),
+<<<<<<< HEAD
                  BlobProvider.getInstance().getStream(context, writeDetails.uri),
 =======
       sendUpdate(ApplicationDependencies.getSignalServiceMessageSender(),
+                 BlobProvider.getInstance().getStream(context, updateUri),
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                 BlobProvider.getInstance().getStream(context, writeDetails.uri),
+=======
                  BlobProvider.getInstance().getStream(context, updateUri),
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                  length,

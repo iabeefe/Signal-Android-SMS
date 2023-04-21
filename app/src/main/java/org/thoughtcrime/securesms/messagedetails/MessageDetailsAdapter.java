@@ -18,8 +18,13 @@ import org.thoughtcrime.securesms.conversation.ConversationMessage;
 import org.thoughtcrime.securesms.conversation.colors.Colorizer;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.databinding.MessageDetailsViewEditHistoryBinding;
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.databinding.MessageDetailsViewEditHistoryBinding;
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.mms.GlideRequests;
 =======
 import org.thoughtcrime.securesms.databinding.MessageDetailsViewEditHistoryBinding;
@@ -138,8 +143,13 @@ final class MessageDetailsAdapter extends ListAdapter<MessageDetailsAdapter.Mess
   interface Callbacks extends BindableConversationItem.EventListener {
     void onErrorClicked(@NonNull MessageRecord messageRecord);
 <<<<<<< HEAD
+<<<<<<< HEAD
     void onViewEditHistoryClicked(MessageRecord record);
     void onInternalDetailsClicked(MessageRecord record);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+    void onViewEditHistoryClicked(MessageRecord record);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     void onViewEditHistoryClicked(MessageRecord record);

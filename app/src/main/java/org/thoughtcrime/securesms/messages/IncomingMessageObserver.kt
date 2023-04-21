@@ -158,6 +158,7 @@ class IncomingMessageObserver(private val context: Application) {
 
   private val lock: ReentrantLock = ReentrantLock()
 <<<<<<< HEAD
+<<<<<<< HEAD
   private val connectionNecessarySemaphore = Semaphore(0)
   private val networkConnectionListener = NetworkConnectionListener(context) { isNetworkUnavailable ->
     lock.withLock {
@@ -171,6 +172,11 @@ class IncomingMessageObserver(private val context: Application) {
   }
 
   private val messageContentProcessor = MessageContentProcessor(context)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  private val condition: Condition = lock.newCondition()
+=======
+  private val connectionNecessarySemaphore = Semaphore(0)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   private val condition: Condition = lock.newCondition()
 =======
@@ -230,7 +236,7 @@ class IncomingMessageObserver(private val context: Application) {
             decryptionDrained = false
             disconnect()
           }
-          condition.signalAll()
+          connectionNecessarySemaphore.release()
         }
       }
     }
@@ -274,9 +280,7 @@ class IncomingMessageObserver(private val context: Application) {
   fun notifyDecryptionsDrained() {
     if (ApplicationDependencies.getJobManager().isQueueEmpty(PushDecryptMessageJob.QUEUE)) {
       Log.i(TAG, "Queue was empty when notified. Signaling change.")
-      lock.withLock {
-        condition.signalAll()
-      }
+      connectionNecessarySemaphore.release()
     } else {
       Log.i(TAG, "Queue still had items when notified. Registering listener to signal change.")
       ApplicationDependencies.getJobManager().addListener(
@@ -632,10 +636,16 @@ class IncomingMessageObserver(private val context: Application) {
 
     Log.i(TAG, "Received server receipt. Sender: $senderId, Device: ${envelope.sourceDevice}, Timestamp: ${envelope.timestamp}")
 <<<<<<< HEAD
+<<<<<<< HEAD
     SignalDatabase.messages.incrementDeliveryReceiptCount(envelope.timestamp!!, senderId, System.currentTimeMillis())
     SignalDatabase.messageLog.deleteEntryForRecipient(envelope.timestamp!!, senderId, envelope.sourceDevice!!)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     SignalDatabase.messages.incrementDeliveryReceiptCount(MessageTable.SyncMessageId(senderId, envelope.timestamp), System.currentTimeMillis())
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    SignalDatabase.messages.incrementDeliveryReceiptCount(MessageTable.SyncMessageId(senderId, envelope.timestamp), System.currentTimeMillis())
+=======
+    SignalDatabase.messages.incrementDeliveryReceiptCount(envelope.timestamp, senderId, System.currentTimeMillis())
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     SignalDatabase.messageLog.deleteEntryForRecipient(envelope.timestamp, senderId, envelope.sourceDevice)
 =======
     SignalDatabase.messages.incrementDeliveryReceiptCount(envelope.timestamp, senderId, System.currentTimeMillis())
@@ -846,9 +856,7 @@ class IncomingMessageObserver(private val context: Application) {
       if (jobState.isComplete) {
         if (ApplicationDependencies.getJobManager().isQueueEmpty(PushDecryptMessageJob.QUEUE)) {
           Log.i(TAG, "Queue is now empty. Signaling change.")
-          lock.withLock {
-            condition.signalAll()
-          }
+          connectionNecessarySemaphore.release()
           ApplicationDependencies.getJobManager().removeListener(this)
         } else {
           Log.i(TAG, "Item finished in queue, but it's still not empty. Waiting to signal change.")

@@ -86,11 +86,18 @@ object TestMms {
       put(MessageTable.EXPIRE_TIMER_VERSION, message.expireTimerVersion)
       put(MessageTable.VIEW_ONCE, message.isViewOnce)
 <<<<<<< HEAD
+<<<<<<< HEAD
       put(MessageTable.FROM_RECIPIENT_ID, recipientId.serialize())
       put(MessageTable.TO_RECIPIENT_ID, recipientId.serialize())
       put(MessageTable.HAS_DELIVERY_RECEIPT, 0)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       put(MessageTable.RECIPIENT_ID, recipientId.serialize())
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      put(MessageTable.RECIPIENT_ID, recipientId.serialize())
+=======
+      put(MessageTable.FROM_RECIPIENT_ID, recipientId.serialize())
+      put(MessageTable.TO_RECIPIENT_ID, recipientId.serialize())
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       put(MessageTable.DELIVERY_RECEIPT_COUNT, 0)
 =======
       put(MessageTable.FROM_RECIPIENT_ID, recipientId.serialize())

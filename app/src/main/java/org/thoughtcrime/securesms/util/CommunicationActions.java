@@ -173,6 +173,7 @@ public class CommunicationActions {
         ConversationIntents.Builder builder = ConversationIntents.createBuilderSync(context, recipient.getId(), Objects.requireNonNull(threadId));
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       protected void onPostExecute(@Nullable Long threadId) {
+        // TODO [alex] -- ThreadID should *always* exist
         ConversationIntents.Builder builder = ConversationIntents.createBuilder(context, recipient.getId(), threadId != null ? threadId : -1);
 =======
       protected void onPostExecute(@Nullable Long threadId) {

@@ -59,7 +59,15 @@ public class InMemoryMessageRecord extends MessageRecord {
           null,
           0,
 <<<<<<< HEAD
+<<<<<<< HEAD
           null);
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          -1);
+=======
+          -1,
+          null,
+          0);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           -1);
 =======

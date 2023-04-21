@@ -108,8 +108,15 @@ class CallLogAdapter(
     rows: List<CallLogRow?>,
     selectionState: CallLogSelectionState,
 <<<<<<< HEAD
+<<<<<<< HEAD
     localCallRecipientId: RecipientId,
     onCommit: () -> Unit
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    stagedDeletion: CallLogStagedDeletion?
+=======
+    stagedDeletion: CallLogStagedDeletion?,
+    onCommit: () -> Unit
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     stagedDeletion: CallLogStagedDeletion?
 =======

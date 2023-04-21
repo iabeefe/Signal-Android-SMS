@@ -51,6 +51,7 @@ import org.thoughtcrime.securesms.database.helpers.migration.V183_CallLinkTableM
 <<<<<<< HEAD
 import org.thoughtcrime.securesms.database.helpers.migration.V184_CallLinkReplaceIndexMigration
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.database.helpers.migration.V185_MessageRecipientsAndEditMessageMigration
 import org.thoughtcrime.securesms.database.helpers.migration.V186_ForeignKeyIndicesMigration
 import org.thoughtcrime.securesms.database.helpers.migration.V187_MoreForeignKeyIndexesMigration
@@ -144,6 +145,10 @@ import org.thoughtcrime.securesms.database.helpers.migration.V183_CallLinkTableM
 =======
 import org.thoughtcrime.securesms.database.helpers.migration.V184_CallLinkReplaceIndexMigration
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+import org.thoughtcrime.securesms.database.helpers.migration.V185_MessageRecipientsAndEditMessageMigration
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
 /**
  * Contains all of the database migrations for [SignalDatabase]. Broken into a separate file for cleanliness.
@@ -152,6 +157,7 @@ object SignalDatabaseMigrations {
 
   val TAG: String = Log.tag(SignalDatabaseMigrations.javaClass)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -301,6 +307,11 @@ object SignalDatabaseMigrations {
 =======
   const val DATABASE_VERSION = 184
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+  const val DATABASE_VERSION = 184
+=======
+  const val DATABASE_VERSION = 185
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
   @JvmStatic
   fun migrate(context: Application, db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -623,6 +634,7 @@ object SignalDatabaseMigrations {
       V184_CallLinkReplaceIndexMigration.migrate(context, db, oldVersion, newVersion)
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
@@ -652,6 +664,13 @@ object SignalDatabaseMigrations {
       V184_CallLinkReplaceIndexMigration.migrate(context, db, oldVersion, newVersion)
     }
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+
+    if (oldVersion < 185) {
+      V185_MessageRecipientsAndEditMessageMigration.migrate(context, db, oldVersion, newVersion)
+    }
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
   }
 
   @JvmStatic

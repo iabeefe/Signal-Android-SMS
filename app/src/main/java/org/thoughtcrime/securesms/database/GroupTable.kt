@@ -179,7 +179,7 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
             WHERE ${MembershipTable.TABLE_NAME}.${MembershipTable.GROUP_ID} = $TABLE_NAME.$GROUP_ID
         ) as $MEMBER_GROUP_CONCAT
       FROM $TABLE_NAME          
-    """.toSingleLine()
+    """
 
 =======
     //language=sql
@@ -217,11 +217,17 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
             UNIQUE($GROUP_ID, $RECIPIENT_ID)
         )
 <<<<<<< HEAD
+<<<<<<< HEAD
       """
 
       val CREATE_INDEXES = arrayOf(
         "CREATE INDEX IF NOT EXISTS group_membership_recipient_id ON $TABLE_NAME ($RECIPIENT_ID)"
       )
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.toSingleLine()
+=======
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       """.toSingleLine()
 =======
@@ -400,9 +406,15 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
     """
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       ORDER BY $TITLE COLLATE NOCASE ASC
+<<<<<<< HEAD
     """.trimIndent()
 =======
       ORDER BY $TITLE COLLATE NOCASE ASC
+    """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    """.trimIndent()
+=======
     """
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
@@ -455,7 +467,7 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
       FROM ${MembershipTable.TABLE_NAME}
       INNER JOIN $TABLE_NAME ON ${MembershipTable.TABLE_NAME}.${MembershipTable.GROUP_ID} = $TABLE_NAME.$GROUP_ID
       WHERE $query
-    """.trimIndent()
+    """
 
     return Reader(readableDatabase.query(selection, queryArgs))
   }
@@ -521,9 +533,15 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
     """
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       ORDER BY ${ThreadTable.TABLE_NAME}.${ThreadTable.DATE} DESC
+<<<<<<< HEAD
     """.toSingleLine()
 =======
       ORDER BY ${ThreadTable.TABLE_NAME}.${ThreadTable.DATE} DESC
+    """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    """.toSingleLine()
+=======
     """
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
@@ -626,7 +644,7 @@ class GroupTable(context: Context?, databaseHelper: SignalDatabase?) : DatabaseT
         ) as $MEMBER_GROUP_CONCAT
         FROM $TABLE_NAME
         WHERE $MEMBER_GROUP_CONCAT = ?
-    """.toSingleLine()
+    """
 
     return readableDatabase.rawQuery(statement, buildArgs(joinedTestMembers)).use { cursor ->
       if (cursor.moveToNext()) {

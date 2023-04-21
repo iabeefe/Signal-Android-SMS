@@ -34,10 +34,16 @@ class ViewSentGiftBottomSheet : DSLSettingsBottomSheetFragment() {
       ViewSentGiftBottomSheet().apply {
         arguments = Bundle().apply {
 <<<<<<< HEAD
+<<<<<<< HEAD
           putParcelable(ARG_SENT_TO, messageRecord.toRecipient.id)
           putByteArray(ARG_GIFT_BADGE, messageRecord.giftBadge!!.encode())
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           putParcelable(ARG_SENT_TO, messageRecord.recipient.id)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+          putParcelable(ARG_SENT_TO, messageRecord.recipient.id)
+=======
+          putParcelable(ARG_SENT_TO, messageRecord.toRecipient.id)
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
           putByteArray(ARG_GIFT_BADGE, messageRecord.giftBadge!!.toByteArray())
 =======
           putParcelable(ARG_SENT_TO, messageRecord.toRecipient.id)

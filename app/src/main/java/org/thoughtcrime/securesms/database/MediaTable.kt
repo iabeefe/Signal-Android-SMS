@@ -10,9 +10,14 @@ import org.signal.core.util.requireLong
 import org.signal.core.util.requireString
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.signal.core.util.requireNonNullString
+<<<<<<< HEAD
 import org.signal.core.util.toSingleLine
 =======
 import org.signal.core.util.requireNonNullString
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+import org.signal.core.util.toSingleLine
+=======
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment
 import org.thoughtcrime.securesms.recipients.RecipientId
@@ -106,9 +111,15 @@ class MediaTable internal constructor(context: Context?, databaseHelper: SignalD
       """
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         GROUP BY ${AttachmentTable.DATA}
+<<<<<<< HEAD
       """.toSingleLine()
 =======
         GROUP BY ${AttachmentTable.DATA}
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.toSingleLine()
+=======
       """
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
@@ -117,6 +128,7 @@ class MediaTable internal constructor(context: Context?, databaseHelper: SignalD
       """
         ${AttachmentTable.DATA_FILE} IS NOT NULL AND
         ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'image/svg%' AND 
+<<<<<<< HEAD
 <<<<<<< HEAD
         (${AttachmentTable.CONTENT_TYPE} LIKE 'image/%' OR ${AttachmentTable.CONTENT_TYPE} LIKE 'video/%') AND
         ${MessageTable.LINK_PREVIEWS} IS NULL
@@ -155,6 +167,13 @@ class MediaTable internal constructor(context: Context?, databaseHelper: SignalD
         (${AttachmentTable.CONTENT_TYPE} LIKE 'image/%' OR ${AttachmentTable.CONTENT_TYPE} LIKE 'video/%')
       """
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        (${AttachmentTable.CONTENT_TYPE} LIKE 'image/%' OR ${AttachmentTable.CONTENT_TYPE} LIKE 'video/%')
+      """.toSingleLine()
+=======
+        (${AttachmentTable.CONTENT_TYPE} LIKE 'image/%' OR ${AttachmentTable.CONTENT_TYPE} LIKE 'video/%')
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     )
 
     private val DOCUMENT_MEDIA_QUERY = String.format(
@@ -176,12 +195,18 @@ class MediaTable internal constructor(context: Context?, databaseHelper: SignalD
           ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'video/%' AND 
           ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'audio/%' AND 
           ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'text/x-signal-plain'
+<<<<<<< HEAD
         )""".toSingleLine()
 =======
           ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'image/%' AND 
           ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'video/%' AND 
           ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'audio/%' AND 
           ${AttachmentTable.CONTENT_TYPE} NOT LIKE 'text/x-signal-plain'
+        )"""
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+        )""".toSingleLine()
+=======
         )"""
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     )
@@ -308,9 +333,15 @@ class MediaTable internal constructor(context: Context?, databaseHelper: SignalD
       """
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         ${AttachmentTable.TABLE_NAME}.${AttachmentTable.ROW_ID} DESC
+<<<<<<< HEAD
       """.toSingleLine()
 =======
         ${AttachmentTable.TABLE_NAME}.${AttachmentTable.ROW_ID} DESC
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.toSingleLine()
+=======
       """
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     ),
@@ -323,9 +354,15 @@ class MediaTable internal constructor(context: Context?, databaseHelper: SignalD
       """
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
         ${AttachmentTable.TABLE_NAME}.${AttachmentTable.ROW_ID} ASC
+<<<<<<< HEAD
       """.toSingleLine()
 =======
         ${AttachmentTable.TABLE_NAME}.${AttachmentTable.ROW_ID} ASC
+      """
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+      """.toSingleLine()
+=======
       """
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     ),

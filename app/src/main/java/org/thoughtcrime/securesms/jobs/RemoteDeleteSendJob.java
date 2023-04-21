@@ -222,12 +222,19 @@ public class RemoteDeleteSendJob extends BaseJob {
                                                                                    dataMessage,
                                                                                    true,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                                                    isForStory,
                                                                                    null);
 
     if (conversationRecipient.isSelf()) {
       AppDependencies.getSignalServiceMessageSender().sendSyncMessage(dataMessage);
     }
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+                                                                                   isForStory);
+=======
+                                                                                   isForStory,
+                                                                                   null);
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
                                                                                    isForStory);
 =======

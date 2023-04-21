@@ -635,6 +635,7 @@ import org.thoughtcrime.securesms.util.Util
 import org.whispersystems.signalservice.api.crypto.EnvelopeMetadata
 import org.whispersystems.signalservice.api.push.DistributionId
 import org.whispersystems.signalservice.api.push.ServiceId
+import org.whispersystems.signalservice.api.push.SignalServiceAddress
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.Content
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.Envelope
@@ -704,6 +705,8 @@ open class MessageContentProcessorV2(private val context: Context) {
         getGroupRecipient(content.storyMessage.group, sender)
       } else if (content.dataMessage.hasGroupContext) {
         getGroupRecipient(content.dataMessage.groupV2, sender)
+      } else if (content.editMessage.dataMessage.hasGroupContext) {
+        getGroupRecipient(content.editMessage.dataMessage.groupV2, sender)
       } else {
         sender
       }
@@ -872,7 +875,7 @@ open class MessageContentProcessorV2(private val context: Context) {
    */
   @JvmOverloads
   open fun process(envelope: Envelope, content: Content, metadata: EnvelopeMetadata, serverDeliveredTimestamp: Long, processingEarlyContent: Boolean = false) {
-    val senderRecipient = Recipient.externalPush(metadata.sourceServiceId)
+    val senderRecipient = Recipient.externalPush(SignalServiceAddress(metadata.sourceServiceId, metadata.sourceE164))
 
     handleMessage(senderRecipient, envelope, content, metadata, serverDeliveredTimestamp, processingEarlyContent)
 
@@ -971,6 +974,21 @@ open class MessageContentProcessorV2(private val context: Context) {
       }
       content.hasDecryptionErrorMessage() -> {
         handleRetryReceipt(envelope, metadata, content.decryptionErrorMessage!!.toDecryptionErrorMessage(metadata), senderRecipient)
+      }
+      content.hasEditMessage() -> {
+        if (FeatureFlags.editMessageReceiving()) {
+          EditMessageProcessor.process(
+            context,
+            senderRecipient,
+            threadRecipient,
+            envelope,
+            content,
+            metadata,
+            if (processingEarlyContent) null else EarlyMessageCacheEntry(envelope, content, metadata, serverDeliveredTimestamp)
+          )
+        } else {
+          warn(envelope.timestamp, "Got message edit, but processing is disabled")
+        }
       }
       content.hasSenderKeyDistributionMessage() || content.hasPniSignatureMessage() -> {
         // Already handled, here in order to prevent unrecognized message log

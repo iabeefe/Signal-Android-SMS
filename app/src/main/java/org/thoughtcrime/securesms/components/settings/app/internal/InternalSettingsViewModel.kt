@@ -110,6 +110,7 @@ class InternalSettingsViewModel(private val repository: InternalSettingsReposito
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   fun setInternalCallingEnableOboeAdm(enabled: Boolean) {
     preferenceDataStore.putBoolean(InternalValues.CALLING_ENABLE_OBOE_ADM, enabled)
     refresh()
@@ -125,6 +126,14 @@ class InternalSettingsViewModel(private val repository: InternalSettingsReposito
     refresh()
   }
 
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+=======
+  fun setUseConversationFragmentV2(enabled: Boolean) {
+    SignalStore.internalValues().setUseConversationFragmentV2(enabled)
+    refresh()
+  }
+
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
   fun setUseConversationFragmentV2(enabled: Boolean) {
@@ -182,12 +191,19 @@ class InternalSettingsViewModel(private val repository: InternalSettingsReposito
     delayResends = SignalStore.internalValues().delayResends(),
     disableStorageService = SignalStore.internalValues().storageServiceDisabled(),
     canClearOnboardingState = SignalStore.storyValues().hasDownloadedOnboardingStory && Stories.isFeatureEnabled(),
+<<<<<<< HEAD
     pnpInitialized = SignalStore.misc().hasPniInitializedDevices()
 =======
     removeSenderKeyMinimium = SignalStore.internalValues().removeSenderKeyMinimum(),
     delayResends = SignalStore.internalValues().delayResends(),
     disableStorageService = SignalStore.internalValues().storageServiceDisabled(),
     canClearOnboardingState = SignalStore.storyValues().hasDownloadedOnboardingStory && Stories.isFeatureEnabled(),
+    pnpInitialized = SignalStore.misc().hasPniInitializedDevices(),
+    useConversationFragmentV2 = SignalStore.internalValues().useConversationFragmentV2()
+>>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+    pnpInitialized = SignalStore.misc().hasPniInitializedDevices()
+=======
     pnpInitialized = SignalStore.misc().hasPniInitializedDevices(),
     useConversationFragmentV2 = SignalStore.internalValues().useConversationFragmentV2()
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
