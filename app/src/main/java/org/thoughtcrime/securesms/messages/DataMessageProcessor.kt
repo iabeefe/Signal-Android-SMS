@@ -90,7 +90,7 @@ import org.thoughtcrime.securesms.util.Base64
 import org.thoughtcrime.securesms.util.EarlyMessageCacheEntry
 import org.thoughtcrime.securesms.util.LinkUtil
 import org.thoughtcrime.securesms.util.MediaUtil
-import org.thoughtcrime.securesms.util.RemoteDeleteUtil
+import org.thoughtcrime.securesms.util.MessageConstraintsUtil
 import org.thoughtcrime.securesms.util.TextSecurePreferences
 import org.thoughtcrime.securesms.util.isStory
 import org.whispersystems.signalservice.api.crypto.EnvelopeMetadata
@@ -319,7 +319,7 @@ object DataMessageProcessor {
    * Inserts an expiration update if the message timer doesn't match the thread timer.
    */
   @Throws(StorageFailedException::class)
-  private fun handlePossibleExpirationUpdate(
+  fun handlePossibleExpirationUpdate(
     envelope: Envelope,
     metadata: EnvelopeMetadata,
     senderRecipientId: RecipientId,
@@ -484,7 +484,7 @@ object DataMessageProcessor {
       return null
     }
 
-    val targetMessageId = MessageId(targetMessage.id)
+    val targetMessageId = (targetMessage as? MediaMmsMessageRecord)?.latestRevisionId ?: MessageId(targetMessage.id)
 
     if (isRemove) {
       SignalDatabase.reactions.deleteReaction(targetMessageId, senderRecipientId)
@@ -518,7 +518,7 @@ object DataMessageProcessor {
     // JW: set a reaction to indicate the message was attempted to be remote deleted. Sender is myself, emoji is an exclamation.
     if (TextSecurePreferences.isIgnoreRemoteDelete(context)) { setMessageReaction(context, message, targetMessage, "\u2757"); return null; }
 
-    return if (targetMessage != null && RemoteDeleteUtil.isValidReceive(targetMessage, senderRecipientId, envelope.serverTimestamp)) {
+    return if (targetMessage != null && MessageConstraintsUtil.isValidRemoteDeleteReceive(targetMessage, senderRecipientId, envelope.serverTimestamp)) {
       SignalDatabase.messages.markAsRemoteDelete(targetMessage.id)
       if (targetMessage.isStory()) {
         SignalDatabase.messages.deleteRemotelyDeletedStory(targetMessage.id)
@@ -536,7 +536,7 @@ object DataMessageProcessor {
 
       null
     } else {
-      warn(envelope.timestamp, "[handleRemoteDelete] Invalid remote delete! deleteTime: ${envelope.serverTimestamp}, targetTime: ${targetMessage.serverTimestamp}, deleteAuthor: $senderRecipientId, targetAuthor: ${targetMessage.recipient.id}")
+      warn(envelope.timestamp, "[handleRemoteDelete] Invalid remote delete! deleteTime: ${envelope.serverTimestamp}, targetTime: ${targetMessage.serverTimestamp}, deleteAuthor: $senderRecipientId, targetAuthor: ${targetMessage.fromRecipient.id}")
       null
     }
   }
@@ -966,7 +966,7 @@ object DataMessageProcessor {
     GroupCallPeekJob.enqueue(groupRecipientId)
   }
 
-  private fun notifyTypingStoppedFromIncomingMessage(context: Context, senderRecipient: Recipient, threadRecipientId: RecipientId, device: Int) {
+  fun notifyTypingStoppedFromIncomingMessage(context: Context, senderRecipient: Recipient, threadRecipientId: RecipientId, device: Int) {
     val threadId = SignalDatabase.threads.getThreadIdIfExistsFor(threadRecipientId)
 
     if (threadId > 0 && TextSecurePreferences.isTypingIndicatorsEnabled(context)) {

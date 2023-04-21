@@ -7,7 +7,6 @@ import net.zetetic.database.sqlcipher.SQLiteStatement;
 
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.util.FileUtilsJW;
 import org.thoughtcrime.securesms.util.StorageUtil;
 import org.thoughtcrime.securesms.util.TextSecurePreferences;
@@ -24,15 +23,16 @@ public class PlaintextBackupImporter {
 
   public static SQLiteStatement createMessageInsertStatement(SQLiteDatabase database) {
     return database.compileStatement("INSERT INTO " + MessageTable.TABLE_NAME + " (" +
-                                     MessageTable.RECIPIENT_ID + ", " +
+                                     MessageTable.FROM_RECIPIENT_ID + ", " +
                                      MessageTable.DATE_SENT + ", " +
                                      MessageTable.DATE_RECEIVED + ", " +
                                      MessageTable.READ + ", " +
                                      MessageTable.MMS_STATUS + ", " +
                                      MessageTable.TYPE + ", " +
                                      MessageTable.BODY + ", " +
-                                     MessageTable.THREAD_ID + ") " +
-                                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                                     MessageTable.THREAD_ID +  ", " +
+                                     MessageTable.TO_RECIPIENT_ID +  ") " +
+                                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
   }
 
   public static void importPlaintextFromSd(Context context) throws NoExternalStorageException, IOException
@@ -73,6 +73,7 @@ public class PlaintextBackupImporter {
         addTranslatedTypeToStatement(statement, 6, item.getType());
         addStringToStatement(statement, 7, item.getBody());
         addLongToStatement(statement, 8, threadId);
+        addLongToStatement(statement, 9, item.getRecipient());
         modifiedThreads.add(threadId);
         //statement.execute();
         long rowId = statement.executeInsert();
