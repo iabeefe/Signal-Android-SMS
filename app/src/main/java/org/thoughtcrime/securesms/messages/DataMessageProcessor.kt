@@ -2069,6 +2069,7 @@ object DataMessageProcessor {
         serverTimeMillis = envelope.serverTimestamp,
         receivedTimeMillis = receivedTime,
         expiresIn = message.expireTimer.seconds.inWholeMilliseconds,
+<<<<<<< HEAD
         isViewOnce = viewOnce, // JW
         isUnidentified = metadata.sealedSender,
         body = message.body.ifEmpty { null },
@@ -3469,6 +3470,11 @@ object DataMessageProcessor {
         receivedTimeMillis = receivedTime,
         expiresIn = message.expireTimer.seconds.inWholeMilliseconds,
         isViewOnce = viewOnce, // JW
+||||||| parent of c5d82267d1 (Added extra options)
+        isViewOnce = message.isViewOnce,
+=======
+        isViewOnce = viewOnce, // JW
+>>>>>>> c5d82267d1 (Added extra options)
         isUnidentified = metadata.sealedSender,
         body = message.body.ifEmpty { null },
         groupId = groupId,
