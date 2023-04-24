@@ -439,6 +439,7 @@ public class ConversationViewModel extends ViewModel {
                                                                                           .map(profiles -> Optional.ofNullable(NotificationProfiles.getActiveProfile(profiles)));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     return LiveDataReactiveStreams.fromPublisher(activeProfile);
   }
 
@@ -455,6 +456,11 @@ public class ConversationViewModel extends ViewModel {
   @NonNull
   public Single<ConversationMessage> resolveMessageToEdit(@NonNull ConversationMessage message) {
     return conversationRepository.resolveMessageToEdit(message);
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    return LiveDataReactiveStreams.fromPublisher(activeProfile.toFlowable(BackpressureStrategy.LATEST));
+=======
+    return LiveDataReactiveStreams.fromPublisher(activeProfile);
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
   }
 
   @NonNull

@@ -42,11 +42,17 @@ import java.util.concurrent.TimeUnit;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+=======
+import io.reactivex.rxjava3.disposables.Disposable;
+
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 =======
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -97,6 +103,7 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
   private Notification                    lastNotification;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private long                            lastNotificationRequestTime;
   private Disposable                      lastNotificationDisposable = Disposable.disposed();
   private boolean                         stopping                   = false;
@@ -111,6 +118,12 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
 
       return;
     }
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+  private boolean                         isGroup = true;
+=======
+  private boolean                         isGroup                = true;
+  private Disposable                      notificationDisposable = Disposable.empty();
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
   private boolean                         isGroup = true;
 =======
@@ -327,6 +340,7 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
   public void setCallInProgressNotification(int type, @NonNull RecipientId id) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     lastNotificationId = CallNotificationBuilder.getNotificationId(type);
     lastNotification   = CallNotificationBuilder.getCallInProgressNotification(this, type, Recipient.resolved(id));
 =======
@@ -347,7 +361,18 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
                                                       lastNotificationId = CallNotificationBuilder.getNotificationId(type);
                                                       lastNotification   = notification;
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    lastNotificationId = CallNotificationBuilder.getNotificationId(type);
+    lastNotification   = CallNotificationBuilder.getCallInProgressNotification(this, type, Recipient.resolved(id));
+=======
+    notificationDisposable.dispose();
+    notificationDisposable = CallNotificationBuilder.getCallInProgressNotification(this, type, Recipient.resolved(id))
+                                                    .subscribe(notification -> {
+                                                      lastNotificationId = CallNotificationBuilder.getNotificationId(type);
+                                                      lastNotification   = notification;
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     startForegroundCompat(lastNotificationId, lastNotification);
@@ -365,6 +390,12 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
             startForegroundCompat(lastNotificationId, lastNotification);
           });
     }
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    startForegroundCompat(lastNotificationId, lastNotification);
+=======
+                                                      startForegroundCompat(lastNotificationId, lastNotification);
+                                                    });
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     startForegroundCompat(lastNotificationId, lastNotification);
 =======

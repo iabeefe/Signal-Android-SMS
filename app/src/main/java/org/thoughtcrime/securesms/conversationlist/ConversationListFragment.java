@@ -189,11 +189,16 @@ import org.thoughtcrime.securesms.util.ConversationUtil;
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.FeatureFlags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.LifecycleDisposable;
 =======
 import org.signal.core.util.concurrent.LifecycleDisposable;
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+import org.signal.core.util.concurrent.LifecycleDisposable;
+=======
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 import org.thoughtcrime.securesms.util.PlayStoreUtil;
 =======
 import org.thoughtcrime.securesms.util.FeatureFlags;

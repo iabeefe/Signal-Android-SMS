@@ -109,8 +109,14 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
   private static final String CALLS_TAB                         = "android.calls.tab";
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+  private static final String CALLS_TAB                         = "android.calls.tab";
+=======
+  private static final String CALLS_TAB                         = "android.calls.tab.2";
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
   private static final String CALLS_TAB                         = "android.calls.tab";
 =======
