@@ -103,6 +103,7 @@ public final class AppInitialization {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     SignalStore.settings().setPassphraseDisabled(true);
 =======
     // TextSecurePreferences.setPasswordDisabled(context, true); // JW: don't do this
@@ -452,6 +453,11 @@ public final class AppInitialization {
 =======
     // TextSecurePreferences.setPasswordDisabled(context, true); // JW: don't do this
 >>>>>>> 246bbae757 (Added extra options)
+||||||| parent of c5d82267d1 (Added extra options)
+    TextSecurePreferences.setPasswordDisabled(context, true);
+=======
+    // TextSecurePreferences.setPasswordDisabled(context, true); // JW: don't do this
+>>>>>>> c5d82267d1 (Added extra options)
     TextSecurePreferences.setReadReceiptsEnabled(context, true);
     TextSecurePreferences.setTypingIndicatorsEnabled(context, true);
     TextSecurePreferences.setHasSeenWelcomeScreen(context, false);
@@ -561,6 +567,7 @@ public final class AppInitialization {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     SignalStore.settings().setPassphraseDisabled(true);
     AppDependencies.getMegaphoneRepository().onFirstEverAppLaunch();
 =======
@@ -910,6 +917,11 @@ public final class AppInitialization {
 =======
     // TextSecurePreferences.setPasswordDisabled(context, true); // JW: don't do this
 >>>>>>> 246bbae757 (Added extra options)
+||||||| parent of c5d82267d1 (Added extra options)
+    TextSecurePreferences.setPasswordDisabled(context, true);
+=======
+    // TextSecurePreferences.setPasswordDisabled(context, true); // JW: don't do this
+>>>>>>> c5d82267d1 (Added extra options)
     ApplicationDependencies.getMegaphoneRepository().onFirstEverAppLaunch();
 >>>>>>> 66c339aa35 (Added extra options)
     SignalStore.onFirstEverAppLaunch();
