@@ -40,9 +40,14 @@ import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.webrtc.v2.CallIntent;
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 import org.thoughtcrime.securesms.WebRtcCallActivity;
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
 =======
 import org.thoughtcrime.securesms.WebRtcCallActivity;
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+=======
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 import org.thoughtcrime.securesms.notifications.NotificationChannels;
 import org.thoughtcrime.securesms.recipients.Recipient;
@@ -50,6 +55,7 @@ import org.thoughtcrime.securesms.service.webrtc.WebRtcCallService;
 <<<<<<< HEAD
 import org.thoughtcrime.securesms.util.ConversationUtil;
 
+<<<<<<< HEAD
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -58,6 +64,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.thoughtcrime.securesms.util.ConversationUtil;
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+=======
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 /**
  * Manages the state of the WebRtc items in the Android notification bar.
  *
@@ -146,6 +159,7 @@ public class CallNotificationBuilder {
    */
   public static final int API_LEVEL_CALL_STYLE = 29;
 
+<<<<<<< HEAD
   /**
    * Gets the Notification for the current in-progress call.
    *
@@ -163,6 +177,23 @@ public class CallNotificationBuilder {
       boolean skipPersonIcon
   ) {
     PendingIntent pendingIntent = getActivityPendingIntent(context, LaunchCallScreenIntentState.CONTENT);
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+  public static Notification getCallInProgressNotification(Context context, int type, Recipient recipient) {
+    Intent contentIntent = new Intent(context, WebRtcCallActivity.class);
+    contentIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    contentIntent.putExtra(WebRtcCallActivity.EXTRA_STARTED_FROM_FULLSCREEN, true);
+
+    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, contentIntent, PendingIntentFlags.mutable());
+
+=======
+  public static Single<Notification> getCallInProgressNotification(Context context, int type, Recipient recipient) {
+    Intent contentIntent = new Intent(context, WebRtcCallActivity.class);
+    contentIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    contentIntent.putExtra(WebRtcCallActivity.EXTRA_STARTED_FROM_FULLSCREEN, true);
+
+    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, contentIntent, PendingIntentFlags.mutable());
+
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     NotificationCompat.Builder builder = new NotificationCompat.Builder(context, getNotificationChannel(type))
         .setSmallIcon(R.drawable.ic_call_secure_white_24dp)
         .setContentIntent(pendingIntent)
@@ -174,7 +205,12 @@ public class CallNotificationBuilder {
       builder.setPriority(NotificationCompat.PRIORITY_MIN);
       builder.setContentIntent(null);
 <<<<<<< HEAD
+<<<<<<< HEAD
       return builder.build();
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+=======
+      return Single.just(builder.build());
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 =======
       return Single.just(builder.build());
@@ -187,6 +223,7 @@ public class CallNotificationBuilder {
       builder.setFullScreenIntent(pendingIntent, true);
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
       builder.setContentText(context.getString(recipient.isGroup() ? R.string.NotificationBarManager__incoming_signal_group_call : R.string.NotificationBarManager__incoming_signal_call));
+<<<<<<< HEAD
 <<<<<<< HEAD
       builder.addAction(getServiceNotificationAction(context, WebRtcCallService.denyCallIntent(context), R.drawable.ic_close_grey600_32dp, R.string.NotificationBarManager__decline_call));
       builder.addAction(getActivityNotificationAction(context, WebRtcCallActivity.ANSWER_ACTION, R.drawable.ic_phone_grey600_32dp, recipient.isGroup() ? R.string.NotificationBarManager__join_call : R.string.NotificationBarManager__answer_call));
@@ -242,8 +279,18 @@ public class CallNotificationBuilder {
 
 =======
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+      builder.setStyle(NotificationCompat.CallStyle.forIncomingCall(
+          ConversationUtil.buildPersonWithoutIcon(context, recipient),
+          getServicePendingIntent(context, WebRtcCallService.denyCallIntent(context)),
+          getActivityPendingIntent(context, WebRtcCallActivity.ANSWER_ACTION)
+      ));
+
+=======
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
       builder.setPriority(NotificationCompat.PRIORITY_HIGH);
       builder.setCategory(NotificationCompat.CATEGORY_CALL);
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
@@ -273,6 +320,23 @@ public class CallNotificationBuilder {
       builder.setPriority(NotificationCompat.PRIORITY_HIGH);
       builder.setCategory(NotificationCompat.CATEGORY_CALL);
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+=======
+
+      return Single.fromCallable(() -> ConversationUtil.buildPerson(context, recipient))
+                   .subscribeOn(Schedulers.io())
+                   .observeOn(AndroidSchedulers.mainThread())
+                   .map(person -> {
+                     builder.setStyle(NotificationCompat.CallStyle.forIncomingCall(
+                         person,
+                         getServicePendingIntent(context, WebRtcCallService.denyCallIntent(context)),
+                         getActivityPendingIntent(context, WebRtcCallActivity.ANSWER_ACTION)
+                     ));
+                     return builder.build();
+                   });
+
+
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     } else if (type == TYPE_OUTGOING_RINGING) {
       builder.setContentText(context.getString(R.string.NotificationBarManager__establishing_signal_call));
 <<<<<<< HEAD
@@ -280,13 +344,19 @@ public class CallNotificationBuilder {
       return builder.build();
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
       builder.addAction(getServiceNotificationAction(context, WebRtcCallService.hangupIntent(context), R.drawable.ic_call_end_grey600_32dp, R.string.NotificationBarManager__cancel_call));
+<<<<<<< HEAD
 =======
       builder.addAction(getServiceNotificationAction(context, WebRtcCallService.hangupIntent(context), R.drawable.ic_call_end_grey600_32dp, R.string.NotificationBarManager__cancel_call));
+      return Single.just(builder.build());
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+=======
       return Single.just(builder.build());
 >>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     } else {
       builder.setContentText(getOngoingCallContentText(context, recipient, isVideoCall));
       builder.setOnlyAlertOnce(true);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -302,8 +372,17 @@ public class CallNotificationBuilder {
           getServicePendingIntent(context, WebRtcCallService.hangupIntent(context))
       ));
 
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+      builder.setStyle(NotificationCompat.CallStyle.forOngoingCall(
+          ConversationUtil.buildPersonWithoutIcon(context, recipient),
+          getServicePendingIntent(context, WebRtcCallService.hangupIntent(context))
+      ));
+
+=======
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
       builder.setPriority(NotificationCompat.PRIORITY_HIGH);
       builder.setCategory(NotificationCompat.CATEGORY_CALL);
+<<<<<<< HEAD
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     }
 =======
@@ -311,7 +390,12 @@ public class CallNotificationBuilder {
           ConversationUtil.buildPersonWithoutIcon(context, recipient),
           getServicePendingIntent(context, WebRtcCallService.hangupIntent(context))
       ));
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    }
+=======
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 
+<<<<<<< HEAD
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
       builder.setStyle(NotificationCompat.CallStyle.forOngoingCall(
           ConversationUtil.buildPersonWithoutIcon(context, recipient),
@@ -345,6 +429,21 @@ public class CallNotificationBuilder {
 
       return builder.build();
     }
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    return builder.build();
+=======
+      return Single.fromCallable(() -> ConversationUtil.buildPerson(context, recipient))
+                   .subscribeOn(Schedulers.io())
+                   .observeOn(AndroidSchedulers.mainThread())
+                   .map(person -> {
+                     builder.setStyle(NotificationCompat.CallStyle.forOngoingCall(
+                         person,
+                         getServicePendingIntent(context, WebRtcCallService.hangupIntent(context))
+                     ));
+                     return builder.build();
+                   });
+    }
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 ||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     return builder.build();
 =======
