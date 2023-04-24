@@ -182,7 +182,6 @@ import org.thoughtcrime.securesms.util.LifecycleDisposable;
 import org.thoughtcrime.securesms.util.PlayStoreUtil;
 =======
 import org.thoughtcrime.securesms.util.FeatureFlags;
-import org.signal.core.util.concurrent.LifecycleDisposable;
 import org.thoughtcrime.securesms.util.PlayStoreUtil;
 >>>>>>> e5a36ea5ee (Bumped to upstream version 6.18.1.0-JW.)
 import org.thoughtcrime.securesms.util.ServiceUtil;

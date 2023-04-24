@@ -2483,10 +2483,16 @@
     <string name="RegistrationActivity_you_will_receive_a_verification_code">你將收到驗證碼。各電信公司的收費費率可能有所不同。</string>
 =======
     <!-- Title of registration screen when asking for the users phone number -->
-    <string name="RegistrationActivity_phone_number">Phone number</string>
+    <string name="RegistrationActivity_phone_number">電話號碼</string>
     <!-- Subtitle of registration screen when asking for the users phone number -->
+<<<<<<< HEAD
     <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Enter your phone number to get started.</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Enter your phone number to get started.</string>
+=======
+    <string name="RegistrationActivity_enter_your_phone_number_to_get_started">輸入你的電話號碼以便開始使用。</string>
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     <string name="RegistrationActivity_enter_the_code_we_sent_to_s">輸入我們傳送給 %1$s 的驗證碼</string>
 
     <string name="RegistrationActivity_phone_number_description">電話號碼</string>
@@ -3762,7 +3768,7 @@
     <!-- Preference title for changing navigation (bottom) bar size -->
     <string name="preferences_navigation_bar_size">Navigation bar size</string>
     <!-- Preference summary for normal navigation bar size -->
-    <string name="preferences_normal">Normal</string>
+    <string name="preferences_normal">正常</string>
     <!-- Preference summary for compact navigation bar size -->
     <string name="preferences_compact">Compact</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
@@ -4062,8 +4068,14 @@
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
+<<<<<<< HEAD
     <string name="conversation_selection__menu_edit">Edit</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    <string name="conversation_selection__menu_edit">Edit</string>
+=======
+    <string name="conversation_selection__menu_edit">編輯</string>
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     <!-- Button to save a message attachment (image, file etc.); Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
     <string name="conversation_selection__menu_save">儲存</string>
     <!-- Button to retry sending a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
@@ -7804,12 +7816,12 @@
     <!-- Dialog title, displayed below the header image -->
     <string name="ChooseNavigationBarStyleFragment__navigation_bar_size">Navigation bar size</string>
     <!-- Toggle button label for normal size -->
-    <string name="ChooseNavigationBarStyleFragment__normal">Normal</string>
+    <string name="ChooseNavigationBarStyleFragment__normal">正常</string>
     <!-- Toggle button label for compact size -->
     <string name="ChooseNavigationBarStyleFragment__compact">Compact</string>
 
     <!-- Title shown at top of bottom sheet dialog for displaying a message\'s edit history -->
-    <string name="EditMessageHistoryDialog_title">Edit history</string>
+    <string name="EditMessageHistoryDialog_title">編輯歷史記錄</string>
 
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- EOF -->

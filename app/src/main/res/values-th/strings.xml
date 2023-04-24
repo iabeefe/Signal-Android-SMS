@@ -266,7 +266,7 @@
 =======
     <!-- CameraFragment -->
     <!-- Toasted when user device does not support video recording -->
-    <string name="CameraFragment__video_recording_is_not_supported_on_your_device">Video recording is not supported on your device</string>
+    <string name="CameraFragment__video_recording_is_not_supported_on_your_device">อุปกรณ์ของคุณไม่รองรับการบันทึกวิดีโอ</string>
 
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- CameraXFragment -->
@@ -443,8 +443,14 @@
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Display as the timestamp footer in a message bubble in a conversation when a message has been edited. The timestamp will go from \'11m\' to \'edited 11m\' -->
+<<<<<<< HEAD
     <string name="ConversationItem_edited_timestamp_footer">edited %1$s</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    <string name="ConversationItem_edited_timestamp_footer">edited %1$s</string>
+=======
+    <string name="ConversationItem_edited_timestamp_footer">แก้ไข %1$s</string>
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 
     <!-- ConversationActivity -->
     <string name="ConversationActivity_add_attachment">เพิ่มแฟ้มแนบ</string>
@@ -455,7 +461,7 @@
     <string name="ConversationActivity_select_contact_info">เลือกข้อมูลผู้ติดต่อ</string>
 =======
     <!-- Accessibility text associated with image button to send an edited message. -->
-    <string name="ConversationActivity_send_edit">Send edit</string>
+    <string name="ConversationActivity_send_edit">ส่งที่แก้ไขแล้ว</string>
     <string name="ConversationActivity_select_contact_info">เลือกข้อมูลผู้ติดต่อ</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <string name="ConversationActivity_compose_message">เขียนข้อความ</string>
@@ -477,10 +483,10 @@
 =======
     <string name="ConversationActivity__tap_here_to_start_a_group_call">แตะที่นี่เพื่อเริ่มโทรแบบกลุ่ม</string>
     <!-- Warning toast shown to user if they somehow try to edit an sms/mms message -->
-    <string name="ConversationActivity_edit_sms_message_error">Unable to edit SMS messages</string>
+    <string name="ConversationActivity_edit_sms_message_error">ไม่สามารถแก้ไขข้อความ SMS ได้</string>
     <!-- Warning dialog text shown to user if they try to send a message edit that is too old where %1$d is replaced with the amount of hours, e.g. 3 -->
     <plurals name="ConversationActivity_edit_message_too_old">
-        <item quantity="other">Edits can only be applied within %1$d hours from the time you sent this message.</item>
+        <item quantity="other">สามารถแก้ไขข้อความนี้ได้ภายใน %1$d ชั่วโมงนับจากเวลาที่คุณส่ง</item>
     </plurals>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 
@@ -623,9 +629,19 @@
     <string name="ConversationFragment_failed_to_open_message">การเปิดข้อความล้มเหลว</string>
     <string name="ConversationFragment_you_can_swipe_to_the_right_reply">คุณสามารถปัดด้านขวาเพื่อตอบข้อความอย่างรวดเร็ว</string>
     <string name="ConversationFragment_you_can_swipe_to_the_left_reply">คุณสามารถปัดด้านซ้ายเพื่อตอบข้อความอย่างรวดเร็ว</string>
+<<<<<<< HEAD
     <string name="ConversationFragment_view_once_media_is_deleted_after_sending">ไฟล์สื่อแบบที่ดูได้ครั้งเดียวจะถูกลบหลังการส่ง</string>
     <string name="ConversationFragment_you_already_viewed_this_message">คุณเปิดดูข้อความนี้แล้ว</string>
     <string name="ConversationFragment__you_can_add_notes_for_yourself_in_this_conversation">คุณสามารถเพิ่มบันทึกถึงตัวเองได้ในแชทนี้ และหากบัญชีของคุณมีอุปกรณ์ที่เชื่อมโยงอยู่ บันทึกใหม่ก็จะถูกซิงค์ด้วยเช่นกัน</string>
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    <string name="ConversationFragment_outgoing_view_once_media_files_are_automatically_removed">ไฟล์สื่อแบบที่ดูได้ครั้งเดียวขาออกจะถูกลบอัตโนมัติหลังจากส่งแล้ว</string>
+    <string name="ConversationFragment_you_already_viewed_this_message">คุณเห็นข้อความนี้แล้ว</string>
+    <string name="ConversationFragment__you_can_add_notes_for_yourself_in_this_conversation">คุณสามารถเพิ่มบันทึกสำหรับตัวคุณเองในบทสนทนานี้\nหากบัญชีของคุณมีอุปกรณ์ใดเชื่อมโยงอยู่ บันทึกใหม่จะถูกปรับประสานถึงกัน</string>
+=======
+    <string name="ConversationFragment_outgoing_view_once_media_files_are_automatically_removed">ไฟล์สื่อแบบที่ดูได้ครั้งเดียวขาออกจะถูกลบอัตโนมัติหลังจากส่งแล้ว</string>
+    <string name="ConversationFragment_you_already_viewed_this_message">คุณเปิดดูข้อความนี้แล้ว</string>
+    <string name="ConversationFragment__you_can_add_notes_for_yourself_in_this_conversation">คุณสามารถเพิ่มบันทึกสำหรับตัวคุณเองในบทสนทนานี้\nหากบัญชีของคุณมีอุปกรณ์ใดเชื่อมโยงอยู่ บันทึกใหม่จะถูกปรับประสานถึงกัน</string>
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     <string name="ConversationFragment__d_group_members_have_the_same_name">สมาชิกกลุ่ม %1$d คนมีชื่อเหมือนกัน</string>
     <string name="ConversationFragment__tap_to_review">แตะเพื่อทบทวน</string>
     <!-- The body of a banner that can show up at the top of a chat, letting the user know that you have two contacts with the same name -->
@@ -1498,8 +1514,14 @@
     <!-- Message shown if the user tries to switch a conversation from Signal to SMS -->
     <string name="InputPanel__sms_messaging_is_no_longer_supported_in_signal">Signal ไม่รองรับการส่งข้อความ SMS อีกต่อไป</string>
     <!-- When editing a message, label shown above the text input field in the composer -->
+<<<<<<< HEAD
     <string name="InputPanel_edit_message">Edit message</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    <string name="InputPanel_edit_message">Edit message</string>
+=======
+    <string name="InputPanel_edit_message">แก้ไขข้อความ</string>
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 
     <!-- InviteActivity -->
     <string name="InviteActivity_share">แบ่งปัน</string>
@@ -2418,12 +2440,18 @@
 =======
 
     <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
-    <string name="RegistrationActivity_phone_number_verification_dialog_title">Is the phone number below correct?</string>
+    <string name="RegistrationActivity_phone_number_verification_dialog_title">โปรดตรวจสอบว่าหมายเลขโทรศัพท์ด้านล่างนี้ถูกต้องหรือไม่</string>
     <!-- Dialog title shown when re-registering and skip sms flow failed or was aborted and now need perform additional verification via sms and warn about carrier charges -->
-    <string name="RegistrationActivity_additional_verification_required">Additional verification required</string>
+    <string name="RegistrationActivity_additional_verification_required">ต้องมีการตรวจยืนยันเพิ่มเติม</string>
     <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
+<<<<<<< HEAD
     <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">A verification code will be sent to this number. Carrier rates may apply.</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">A verification code will be sent to this number. Carrier rates may apply.</string>
+=======
+    <string name="RegistrationActivity_a_verification_code_will_be_sent_to_this_number">รหัสยืนยันจะถูกส่งไปยังหมายเลขโทรศัพท์นี้ อาจมีค่าบริการจากผู้ให้บริการโทรศัพท์</string>
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     <string name="RegistrationActivity_you_will_receive_a_call_to_verify_this_number">คุณจะได้รับสายโทรเข้าเพื่อยืนยันหมายเลขนี้</string>
     <string name="RegistrationActivity_edit_number">แก้ไขหมายเลข</string>
     <string name="RegistrationActivity_missing_google_play_services">ไม่พบ Google Play Services</string>
@@ -2485,10 +2513,16 @@
     <string name="RegistrationActivity_you_will_receive_a_verification_code">คุณจะได้รับรหัสยืนยัน\nซึ่งอาจมีค่าบริการจากผู้ให้บริการโทรศัพท์</string>
 =======
     <!-- Title of registration screen when asking for the users phone number -->
-    <string name="RegistrationActivity_phone_number">Phone number</string>
+    <string name="RegistrationActivity_phone_number">หมายเลขโทรศัพท์</string>
     <!-- Subtitle of registration screen when asking for the users phone number -->
+<<<<<<< HEAD
     <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Enter your phone number to get started.</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    <string name="RegistrationActivity_enter_your_phone_number_to_get_started">Enter your phone number to get started.</string>
+=======
+    <string name="RegistrationActivity_enter_your_phone_number_to_get_started">ใส่หมายเลขโทรศัพท์ของคุณเพื่อเริ่มต้นใช้งาน</string>
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     <string name="RegistrationActivity_enter_the_code_we_sent_to_s">ใส่รหัสที่เราส่งไปให้ %1$s</string>
 
     <string name="RegistrationActivity_phone_number_description">หมายเลขโทรศัพท์</string>
@@ -3441,8 +3475,14 @@
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Button text shown in message details when the message has an edit history and this will let them view the history -->
+<<<<<<< HEAD
     <string name="MessageDetails__view_edit_history">View edit history</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    <string name="MessageDetails__view_edit_history">View edit history</string>
+=======
+    <string name="MessageDetails__view_edit_history">ดูประวัติการแก้ไข</string>
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 
     <!-- AndroidManifest.xml -->
     <string name="AndroidManifest__create_passphrase">สร้างวลีรหัสผ่าน</string>
@@ -3762,12 +3802,18 @@
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Preference title for changing navigation (bottom) bar size -->
-    <string name="preferences_navigation_bar_size">Navigation bar size</string>
+    <string name="preferences_navigation_bar_size">ขนาดของแถบนำทาง</string>
     <!-- Preference summary for normal navigation bar size -->
-    <string name="preferences_normal">Normal</string>
+    <string name="preferences_normal">ปกติ</string>
     <!-- Preference summary for compact navigation bar size -->
+<<<<<<< HEAD
     <string name="preferences_compact">Compact</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    <string name="preferences_compact">Compact</string>
+=======
+    <string name="preferences_compact">กะทัดรัด</string>
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 
 
     <string name="configurable_single_select__customize_option">กำหนดการตั้งค่า</string>
@@ -4064,8 +4110,14 @@
 ||||||| parent of d983349636 (Bumped to upstream version 6.19.0.0-JW.)
 =======
     <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
+<<<<<<< HEAD
     <string name="conversation_selection__menu_edit">Edit</string>
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    <string name="conversation_selection__menu_edit">Edit</string>
+=======
+    <string name="conversation_selection__menu_edit">แก้ไข</string>
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     <!-- Button to save a message attachment (image, file etc.); Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
     <string name="conversation_selection__menu_save">บันทึก</string>
     <!-- Button to retry sending a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
@@ -7792,7 +7844,7 @@
     <!-- Button text to dismiss the sheet and add it as an upcoming call -->
     <string name="CreateCallLinkBottomSheetDialogFragment__done">เสร็จสิ้น</string>
     <!-- Displayed when we can\'t find a suitable way to open the system share picker -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">Unable to share call link.</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__failed_to_open_share_sheet">ไม่สามารถแชร์ลิงก์การโทร</string>
     <!-- Displayed when we copy the call link to the clipboard -->
     <string name="CreateCallLinkBottomSheetDialogFragment__copied_to_clipboard">คัดลอกไปยังคลิปบอร์ดแล้ว</string>
 
@@ -7810,14 +7862,14 @@
 =======
     <!-- ChooseNavigationBarStyleFragment -->
     <!-- Dialog title, displayed below the header image -->
-    <string name="ChooseNavigationBarStyleFragment__navigation_bar_size">Navigation bar size</string>
+    <string name="ChooseNavigationBarStyleFragment__navigation_bar_size">ขนาดของแถบนำทาง</string>
     <!-- Toggle button label for normal size -->
-    <string name="ChooseNavigationBarStyleFragment__normal">Normal</string>
+    <string name="ChooseNavigationBarStyleFragment__normal">ปกติ</string>
     <!-- Toggle button label for compact size -->
-    <string name="ChooseNavigationBarStyleFragment__compact">Compact</string>
+    <string name="ChooseNavigationBarStyleFragment__compact">กะทัดรัด</string>
 
     <!-- Title shown at top of bottom sheet dialog for displaying a message\'s edit history -->
-    <string name="EditMessageHistoryDialog_title">Edit history</string>
+    <string name="EditMessageHistoryDialog_title">ประวัติการแก้ไข</string>
 
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
     <!-- EOF -->

@@ -2288,7 +2288,7 @@ object SyncMessageProcessor {
   }
 
   @Throws(MmsException::class)
-  private fun handleSynchronizeSentExpirationUpdate(sent: Sent): Long {
+  private fun handleSynchronizeSentExpirationUpdate(sent: Sent, sideEffect: Boolean = false): Long {
     log(sent.timestamp, "Synchronize sent expiration update.")
 
     val groupId: GroupId? = getSyncMessageDestination(sent).groupId.orNull()
@@ -2299,7 +2299,7 @@ object SyncMessageProcessor {
     }
 
     val recipient: Recipient = getSyncMessageDestination(sent)
-    val expirationUpdateMessage: OutgoingMessage = expirationUpdateMessage(recipient, sent.timestamp, sent.message.expireTimer.seconds.inWholeMilliseconds)
+    val expirationUpdateMessage: OutgoingMessage = expirationUpdateMessage(recipient, if (sideEffect) sent.timestamp - 1 else sent.timestamp, sent.message.expireTimer.seconds.inWholeMilliseconds)
     val threadId: Long = SignalDatabase.threads.getOrCreateThreadIdFor(recipient)
     val messageId: Long = SignalDatabase.messages.insertMessageOutbox(expirationUpdateMessage, threadId, false, null)
 
@@ -2370,7 +2370,7 @@ object SyncMessageProcessor {
       )
 
       if (recipient.expiresInSeconds != sent.message.expireTimer) {
-        handleSynchronizeSentExpirationUpdate(sent)
+        handleSynchronizeSentExpirationUpdate(sent, sideEffect = true)
       }
 
       val threadId = SignalDatabase.threads.getOrCreateThreadIdFor(recipient)
@@ -2441,7 +2441,7 @@ object SyncMessageProcessor {
     )
 
     if (recipient.expiresInSeconds != sent.message.expireTimer) {
-      handleSynchronizeSentExpirationUpdate(sent)
+      handleSynchronizeSentExpirationUpdate(sent, sideEffect = true)
     }
 
     val threadId = SignalDatabase.threads.getOrCreateThreadIdFor(recipient)
@@ -2498,7 +2498,7 @@ object SyncMessageProcessor {
     val bodyRanges = sent.message.bodyRangesList.filterNot { it.hasMentionUuid() }.toBodyRangeList()
 
     if (recipient.expiresInSeconds != sent.message.expireTimer) {
-      handleSynchronizeSentExpirationUpdate(sent)
+      handleSynchronizeSentExpirationUpdate(sent, sideEffect = true)
     }
 
     val threadId = SignalDatabase.threads.getOrCreateThreadIdFor(recipient)

@@ -40,11 +40,17 @@ import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
+<<<<<<< HEAD
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+=======
+import io.reactivex.rxjava3.disposables.Disposable;
+
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 /**
  * Provide a foreground service for {@link SignalCallManager} to leverage to run in the background when necessary. Also
  * provides devices listeners needed for during a call (i.e., bluetooth, power button).
@@ -83,6 +89,7 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
   private SignalAudioManager              signalAudioManager;
   private int                             lastNotificationId;
   private Notification                    lastNotification;
+<<<<<<< HEAD
   private long                            lastNotificationRequestTime;
   private Disposable                      lastNotificationDisposable = Disposable.disposed();
   private boolean                         stopping                   = false;
@@ -97,6 +104,12 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
 
       return;
     }
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+  private boolean                         isGroup = true;
+=======
+  private boolean                         isGroup                = true;
+  private Disposable                      notificationDisposable = Disposable.empty();
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 
     Intent intent = new Intent(context, WebRtcCallService.class);
     intent.setAction(ACTION_UPDATE)
@@ -203,6 +216,8 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
     Log.v(TAG, "onDestroy");
     super.onDestroy();
 
+    notificationDisposable.dispose();
+
     if (uncaughtExceptionHandlerManager != null) {
       uncaughtExceptionHandlerManager.unregister();
     }
@@ -288,6 +303,7 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
     }
   }
 
+<<<<<<< HEAD
   public void setCallInProgressNotification(int type, @NonNull RecipientId id, boolean isVideoCall) {
     lastNotificationDisposable.dispose();
 
@@ -295,7 +311,20 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
 
     lastNotificationId = CallNotificationBuilder.getNotificationId(type);
     lastNotification   = CallNotificationBuilder.getCallInProgressNotification(this, type, Recipient.resolved(id), isVideoCall, requiresAsyncNotificationLoad);
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+  public void setCallInProgressNotification(int type, @NonNull RecipientId id) {
+    lastNotificationId = CallNotificationBuilder.getNotificationId(type);
+    lastNotification   = CallNotificationBuilder.getCallInProgressNotification(this, type, Recipient.resolved(id));
+=======
+  public void setCallInProgressNotification(int type, @NonNull RecipientId id) {
+    notificationDisposable.dispose();
+    notificationDisposable = CallNotificationBuilder.getCallInProgressNotification(this, type, Recipient.resolved(id))
+                                                    .subscribe(notification -> {
+                                                      lastNotificationId = CallNotificationBuilder.getNotificationId(type);
+                                                      lastNotification   = notification;
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
 
+<<<<<<< HEAD
     startForegroundCompat(lastNotificationId, lastNotification);
 
     if (requiresAsyncNotificationLoad) {
@@ -311,6 +340,12 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
             startForegroundCompat(lastNotificationId, lastNotification);
           });
     }
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+    startForegroundCompat(lastNotificationId, lastNotification);
+=======
+                                                      startForegroundCompat(lastNotificationId, lastNotification);
+                                                    });
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
   }
 
   private synchronized void startForegroundCompat(int notificationId, Notification notification) {

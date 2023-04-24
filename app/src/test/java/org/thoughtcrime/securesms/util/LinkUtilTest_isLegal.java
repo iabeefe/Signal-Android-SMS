@@ -37,6 +37,7 @@ public class LinkUtilTest_isLegal {
         { "кц.рф\u2500",                           false },
         { "кц.рф\u25AA",                           false },
         { "кц.рф\u25FF",                           false },
+<<<<<<< HEAD
         { "",                                      false },
         { "cool.example",                          true },
         { "cool.example.com",                      true },
@@ -48,6 +49,20 @@ public class LinkUtilTest_isLegal {
         { "https://localhost",                     true },
         { "cool.test",                             true },
         { "https://github.com/signalapp/Signal-Android/compare/v6.23.2...v6.23.3", true }
+||||||| parent of 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
+        { "",                                      false }
+=======
+        { "",                                      false },
+        { "cool.example",                          true },
+        { "cool.example.com",                      true },
+        { "cool.example.net",                      true },
+        { "cool.example.org",                      true },
+        { "cool.invalid",                          true },
+        { "cool.localhost",                        true },
+        { "localhost",                             true },
+        { "https://localhost",                     true },
+        { "cool.test",                             true }
+>>>>>>> 2c7a921f07 (Bumped to upstream version 6.19.1.0-JW.)
     });
   }
 
