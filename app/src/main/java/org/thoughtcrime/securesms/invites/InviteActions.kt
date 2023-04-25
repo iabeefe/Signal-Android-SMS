@@ -35,7 +35,7 @@ object InviteActions {
     )
 
     //if (appendInviteToComposer != null && Util.isDefaultSmsProvider(context) && SignalStore.misc().smsExportPhase.isSmsSupported()) {
-    if (appendInviteToComposer != null && Util.isDefaultSmsProvider(context)) {
+    if (appendInviteToCom1poser != null && Util.isDefaultSmsProvider(context)) {
       appendInviteToComposer(inviteText)
     } else if (recipient.hasSmsAddress()) {
       launchIntent(

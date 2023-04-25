@@ -56,6 +56,7 @@ import org.signal.core.util.requireNonNullString
 import org.signal.core.util.requireString
 import org.signal.core.util.select
 import org.signal.core.util.toOptional
+import org.signal.core.util.toSingleLine
 import org.signal.core.util.update
 import org.signal.core.util.withinTransaction
 import org.signal.libsignal.protocol.IdentityKey
@@ -373,7 +374,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
             '${AttachmentTable.UPLOAD_TIMESTAMP}', ${AttachmentTable.TABLE_NAME}.${AttachmentTable.UPLOAD_TIMESTAMP}
           )
         ) AS ${AttachmentTable.ATTACHMENT_JSON_ALIAS}
-      """
+      """.toSingleLine()
 
     private const val IS_STORY_CLAUSE = "$STORY_TYPE > 0 AND $REMOTE_DELETED = 0"
     private const val RAW_ID_WHERE = "$TABLE_NAME.$ID = ?"
@@ -1881,7 +1882,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         $where 
       GROUP BY 
         $TABLE_NAME.$ID
-    """
+    """.toSingleLine()
 
     if (reverse) {
       rawQueryString += " ORDER BY $TABLE_NAME.$ID DESC"
@@ -2593,7 +2594,8 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     }
 
     if (retrieved.attachments.isEmpty() && editedMessage?.id != null && attachments.getAttachmentsForMessage(editedMessage.id).isNotEmpty()) {
-      attachments.duplicateAttachmentsForMessage(messageId, editedMessage.id)
+      val linkPreviewAttachmentIds = editedMessage.linkPreviews.mapNotNull { it.attachmentId?.rowId }.toSet()
+      attachments.duplicateAttachmentsForMessage(messageId, editedMessage.id, linkPreviewAttachmentIds)
     }
 
     val isNotStoryGroupReply = retrieved.parentStoryId == null || !retrieved.parentStoryId.isGroupReply()
@@ -3022,7 +3024,9 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         contentValues.put(QUOTE_BODY_RANGES, quoteBodyRanges.build().toByteArray())
       }
 
-      quoteAttachments += message.outgoingQuote.attachments
+      if (editedMessage == null) {
+        quoteAttachments += message.outgoingQuote.attachments
+      }
     }
 
     val updatedBodyAndMentions = MentionUtil.updateBodyAndMentionsWithPlaceholders(message.body, message.mentions)
@@ -3076,6 +3080,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         .values(LATEST_REVISION_ID to messageId)
         .where("$ID_WHERE OR $LATEST_REVISION_ID = ?", message.messageToEdit, message.messageToEdit)
         .run()
+
+      val textAttachments = (editedMessage as? MediaMmsMessageRecord)?.slideDeck?.asAttachments()?.filter { it.contentType == MediaUtil.LONG_TEXT }?.mapNotNull { (it as? DatabaseAttachment)?.attachmentId?.rowId } ?: emptyList()
+      val linkPreviewAttachments = (editedMessage as? MediaMmsMessageRecord)?.linkPreviews?.mapNotNull { it.attachmentId?.rowId } ?: emptyList()
+      val excludeIds = HashSet<Long>()
+      excludeIds += textAttachments
+      excludeIds += linkPreviewAttachments
+      attachments.duplicateAttachmentsForMessage(messageId, message.messageToEdit, excludeIds)
 
       reactions.moveReactionsToNewMessage(messageId, message.messageToEdit)
     }
@@ -5272,7 +5283,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
           val updated: UpdatedBodyAndMentions = MentionUtil.updateBodyAndMentionsWithDisplayNames(context, quoteText, quoteMentions)
           val styledText = SpannableString(updated.body)
 
-          MessageStyler.style(id = quoteId, messageRanges = bodyRanges.adjustBodyRanges(updated.bodyAdjustments), span = styledText)
+          MessageStyler.style(id = "${MessageStyler.QUOTE_ID}$quoteId", messageRanges = bodyRanges.adjustBodyRanges(updated.bodyAdjustments), span = styledText)
 
           quoteText = styledText
           quoteMentions = updated.mentions
