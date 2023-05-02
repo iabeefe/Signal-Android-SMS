@@ -435,6 +435,7 @@ public class Util {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     // JW never expire builds. This is an ugly hack but it prevents me from making changes all over the code with each new release.
     return Integer.MAX_VALUE;
 >>>>>>> 66c339aa35 (Added extra options)
@@ -1737,6 +1738,25 @@ public class Util {
     // JW never expire builds. This is an ugly hack but it prevents me from making changes all over the code with each new release.
     return Integer.MAX_VALUE;
 >>>>>>> c5d82267d1 (Added extra options)
+||||||| parent of 19863d0faa (Added extra options)
+    if (SignalStore.misc().isClientDeprecated()) {
+      return 0;
+    }
+
+    long buildAge                   = System.currentTimeMillis() - BuildConfig.BUILD_TIMESTAMP;
+    long timeUntilBuildDeprecation  = BUILD_LIFESPAN - buildAge;
+    long timeUntilRemoteDeprecation = RemoteDeprecation.getTimeUntilDeprecation();
+
+    if (timeUntilRemoteDeprecation != -1) {
+      long timeUntilDeprecation = Math.min(timeUntilBuildDeprecation, timeUntilRemoteDeprecation);
+      return Math.max(timeUntilDeprecation, 0);
+    } else {
+      return Math.max(timeUntilBuildDeprecation, 0);
+    }
+=======
+    // JW never expire builds. This is an ugly hack but it prevents me from making changes all over the code with each new release.
+    return Integer.MAX_VALUE;
+>>>>>>> 19863d0faa (Added extra options)
   }
 
   public static boolean isMmsCapable(Context context) {
