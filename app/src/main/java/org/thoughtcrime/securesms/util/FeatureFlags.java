@@ -630,6 +630,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
 ||||||| parent of 6d8fef5835 (Added extra options)
     return getBoolean(TEXT_FORMATTING, false);
@@ -648,6 +649,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> 19863d0faa (Added extra options)
+||||||| parent of 55729c14e3 (Added extra options)
+    return getBoolean(TEXT_FORMATTING, false);
+=======
+    return true; // JW
+>>>>>>> 55729c14e3 (Added extra options)
   }
 
   /**
