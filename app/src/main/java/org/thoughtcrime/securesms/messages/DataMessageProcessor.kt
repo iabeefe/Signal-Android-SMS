@@ -2071,6 +2071,7 @@ object DataMessageProcessor {
         expiresIn = message.expireTimer.seconds.inWholeMilliseconds,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         isViewOnce = viewOnce, // JW
         isUnidentified = metadata.sealedSender,
         body = message.body.ifEmpty { null },
@@ -3481,6 +3482,11 @@ object DataMessageProcessor {
 =======
         isViewOnce = viewOnce, // JW
 >>>>>>> 19863d0faa (Added extra options)
+||||||| parent of 55729c14e3 (Added extra options)
+        isViewOnce = message.isViewOnce,
+=======
+        isViewOnce = viewOnce, // JW
+>>>>>>> 55729c14e3 (Added extra options)
         isUnidentified = metadata.sealedSender,
         body = message.body.ifEmpty { null },
         groupId = groupId,

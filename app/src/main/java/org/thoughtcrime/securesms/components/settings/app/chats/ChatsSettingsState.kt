@@ -52,6 +52,7 @@ data class ChatsSettingsState(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   // JW: added extra preferences
   ,
   val chatBackupsLocation: Boolean,
@@ -610,4 +611,18 @@ data class ChatsSettingsState(
   val googleMapType: String,
   val whoCanAddYouToGroups: String
 >>>>>>> 19863d0faa (Added extra options)
+||||||| parent of 55729c14e3 (Added extra options)
+=======
+  // JW: added extra preferences
+  ,
+  val chatBackupsLocation: Boolean,
+  val chatBackupsLocationApi30: String,
+  val chatBackupZipfile: Boolean,
+  val chatBackupZipfilePlain: Boolean,
+  val keepViewOnceMessages: Boolean,
+  val ignoreRemoteDelete: Boolean,
+  val deleteMediaOnly: Boolean,
+  val googleMapType: String,
+  val whoCanAddYouToGroups: String
+>>>>>>> 55729c14e3 (Added extra options)
 )
