@@ -2072,7 +2072,13 @@ object DataMessageProcessor {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         isViewOnce = viewOnce, // JW
+||||||| parent of f050803628 (Added extra options)
+        isViewOnce = message.isViewOnce,
+=======
+        isViewOnce = viewOnce, // JW
+>>>>>>> f050803628 (Added extra options)
         isUnidentified = metadata.sealedSender,
         body = message.body.ifEmpty { null },
         groupId = groupId,
