@@ -635,6 +635,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
 ||||||| parent of 6d8fef5835 (Added extra options)
     return getBoolean(TEXT_FORMATTING, false);
@@ -695,6 +696,11 @@ public final class FeatureFlags {
   public static boolean textFormattingSpoilerSend() {
     return getBoolean(TEXT_FORMATTING_SPOILER_SEND, false);
 >>>>>>> 6d8fef5835 (Added extra options)
+||||||| parent of efc40a1af7 (Added extra options)
+    return getBoolean(TEXT_FORMATTING, false);
+=======
+    return true; // JW
+>>>>>>> efc40a1af7 (Added extra options)
   }
 
   /**
