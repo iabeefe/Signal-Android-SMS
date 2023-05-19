@@ -72,7 +72,7 @@ import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.isPaymentActiv
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.isPaymentActivationRequest
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.isStoryReaction
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.toPointer
-import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.toPointers
+import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.toPointersWithinLimit
 import org.thoughtcrime.securesms.mms.IncomingMediaMessage
 import org.thoughtcrime.securesms.mms.MmsException
 import org.thoughtcrime.securesms.mms.QuoteModel
@@ -111,6 +111,8 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 object DataMessageProcessor {
+
+  private const val BODY_RANGE_PROCESSING_LIMIT = 250
 
   fun process(
     context: Context,
@@ -851,10 +853,10 @@ object DataMessageProcessor {
       val quote: QuoteModel? = getValidatedQuote(context, envelope.timestamp, message)
       val contacts: List<Contact> = getContacts(message)
       val linkPreviews: List<LinkPreview> = getLinkPreviews(message.previewList, message.body ?: "", false)
-      val mentions: List<Mention> = getMentions(message.bodyRangesList)
+      val mentions: List<Mention> = getMentions(message.bodyRangesList.take(BODY_RANGE_PROCESSING_LIMIT))
       val sticker: Attachment? = getStickerAttachment(envelope.timestamp, message)
-      val attachments: List<Attachment> = message.attachmentsList.toPointers()
-      val messageRanges: BodyRangeList? = if (message.bodyRangesCount > 0) message.bodyRangesList.filter { it.hasStyle() }.toList().toBodyRangeList() else null
+      val attachments: List<Attachment> = message.attachmentsList.toPointersWithinLimit()
+      val messageRanges: BodyRangeList? = if (message.bodyRangesCount > 0) message.bodyRangesList.asSequence().take(BODY_RANGE_PROCESSING_LIMIT).filter { it.hasStyle() }.toList().toBodyRangeList() else null
 
       handlePossibleExpirationUpdate(envelope, metadata, senderRecipient.id, threadRecipient, groupId, message.expireTimer.seconds, receivedTime)
 
