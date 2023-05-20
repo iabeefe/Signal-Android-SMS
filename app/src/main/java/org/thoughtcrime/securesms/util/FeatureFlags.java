@@ -620,6 +620,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
 ||||||| parent of 66c339aa35 (Added extra options)
     return getBoolean(HIDE_CONTACTS, false);
@@ -681,6 +682,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> 36da7332d2 (Added extra options)
+||||||| parent of e4396c39f9 (Added extra options)
+    return getBoolean(HIDE_CONTACTS, false);
+=======
+    return true; // JW
+>>>>>>> e4396c39f9 (Added extra options)
   }
 
   /**
@@ -773,6 +779,7 @@ public final class FeatureFlags {
    * Whether or not we should show text formatting options.
    */
   public static boolean textFormatting() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -992,6 +999,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> 36da7332d2 (Added extra options)
+||||||| parent of e4396c39f9 (Added extra options)
+    return getBoolean(TEXT_FORMATTING, false);
+=======
+    return true; // JW
+>>>>>>> e4396c39f9 (Added extra options)
   }
 
   /**

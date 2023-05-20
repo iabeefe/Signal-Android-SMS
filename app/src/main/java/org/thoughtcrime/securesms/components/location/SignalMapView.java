@@ -66,6 +66,7 @@ import org.thoughtcrime.securesms.R;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 32b4182676 (Added extra options)
 ||||||| parent of d8cd38511b (Added extra options)
 =======
@@ -192,6 +193,11 @@ import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies; // JW: added
 import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 >>>>>>> 36da7332d2 (Added extra options)
+||||||| parent of e4396c39f9 (Added extra options)
+=======
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies; // JW: added
+import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
+>>>>>>> e4396c39f9 (Added extra options)
 import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
 import org.thoughtcrime.securesms.util.concurrent.SettableFuture;
 =======
@@ -359,6 +365,7 @@ public class SignalMapView extends LinearLayout {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   // JW: set the maptype
   public void setGoogleMapType(GoogleMap googleMap) {
     String mapType = TextSecurePreferences.getGoogleMapType(ApplicationDependencies.getApplication());
@@ -788,6 +795,22 @@ public class SignalMapView extends LinearLayout {
   }
 
 >>>>>>> 36da7332d2 (Added extra options)
+||||||| parent of e4396c39f9 (Added extra options)
+=======
+  // JW: set the maptype
+  public void setGoogleMapType(GoogleMap googleMap) {
+    String mapType = TextSecurePreferences.getGoogleMapType(ApplicationDependencies.getApplication());
+
+    if (googleMap != null) {
+      if      (mapType.equals("hybrid"))    { googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); }
+      else if (mapType.equals("satellite")) { googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE); }
+      else if (mapType.equals("terrain"))   { googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); }
+      else if (mapType.equals("none"))      { googleMap.setMapType(GoogleMap.MAP_TYPE_NONE); }
+      else                                  { googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL); }
+    }
+  }
+
+>>>>>>> e4396c39f9 (Added extra options)
   public ListenableFuture<Bitmap> display(final SignalPlace place) {
     final SettableFuture<Bitmap> future = new SettableFuture<>();
 
