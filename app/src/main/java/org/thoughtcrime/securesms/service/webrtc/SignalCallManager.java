@@ -9,7 +9,6 @@ import android.os.ResultReceiver;
 import androidx.annotation.AnyThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import com.annimon.stream.Stream;
 

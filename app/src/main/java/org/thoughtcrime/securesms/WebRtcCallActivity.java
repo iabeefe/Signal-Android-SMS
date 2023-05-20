@@ -35,7 +35,6 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Consumer;
 import androidx.lifecycle.ViewModelProvider;
