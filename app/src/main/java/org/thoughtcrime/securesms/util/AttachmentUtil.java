@@ -80,7 +80,6 @@ public class AttachmentUtil {
     }
   }
 
-
   private static boolean isNonDocumentType(String contentType) {
     return
         MediaUtil.isImageType(contentType) ||
