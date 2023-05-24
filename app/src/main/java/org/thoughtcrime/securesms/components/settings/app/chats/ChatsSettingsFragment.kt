@@ -83,6 +83,7 @@ import android.content.Intent
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.os.Build // JW: added
 >>>>>>> 66c339aa35 (Added extra options)
 ||||||| parent of 775ec008cc (Added extra options)
@@ -401,6 +402,10 @@ import android.os.Build // JW: added
 =======
 import android.os.Build // JW: added
 >>>>>>> e4396c39f9 (Added extra options)
+||||||| parent of e64c4c41bb (Added extra options)
+=======
+import android.os.Build // JW: added
+>>>>>>> e64c4c41bb (Added extra options)
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -412,6 +417,7 @@ import org.thoughtcrime.securesms.components.settings.DSLSettingsFragment
 import org.thoughtcrime.securesms.components.settings.DSLSettingsText
 import org.thoughtcrime.securesms.components.settings.app.subscription.MessageBackupsCheckoutLauncher.createBackupsCheckoutLauncher
 import org.thoughtcrime.securesms.components.settings.configure
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -891,8 +897,14 @@ import org.thoughtcrime.securesms.util.TextSecurePreferences // JW: added
 import org.thoughtcrime.securesms.service.LocalBackupListener // JW: added
 import org.thoughtcrime.securesms.util.TextSecurePreferences // JW: added
 >>>>>>> e4396c39f9 (Added extra options)
+||||||| parent of e64c4c41bb (Added extra options)
+=======
+import org.thoughtcrime.securesms.service.LocalBackupListener // JW: added
+import org.thoughtcrime.securesms.util.TextSecurePreferences // JW: added
+>>>>>>> e64c4c41bb (Added extra options)
 import org.thoughtcrime.securesms.exporter.flow.SmsExportActivity
 import org.thoughtcrime.securesms.exporter.flow.SmsExportDialogs
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1290,6 +1302,10 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore // JW: added
 =======
 import org.thoughtcrime.securesms.keyvalue.SignalStore // JW: added
 >>>>>>> e4396c39f9 (Added extra options)
+||||||| parent of e64c4c41bb (Added extra options)
+=======
+import org.thoughtcrime.securesms.keyvalue.SignalStore // JW: added
+>>>>>>> e64c4c41bb (Added extra options)
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
 import org.thoughtcrime.securesms.util.UriUtils // JW: added
@@ -1380,6 +1396,7 @@ class ChatsSettingsFragment : DSLSettingsFragment(R.string.preferences_chats__ch
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private val mapLabels by lazy { resources.getStringArray(R.array.pref_map_type_entries) } // JW: added
   private val mapValues by lazy { resources.getStringArray(R.array.pref_map_type_values) }  // JW: added
   private val groupAddLabels by lazy { resources.getStringArray(R.array.pref_group_add_entries) } // JW: added
@@ -2018,6 +2035,14 @@ class ChatsSettingsFragment : DSLSettingsFragment(R.string.preferences_chats__ch
   private val groupAddValues by lazy { resources.getStringArray(R.array.pref_group_add_values) }  // JW: added
   val CHOOSE_BACKUPS_LOCATION_REQUEST_CODE = 1201 // JW: added
 >>>>>>> e4396c39f9 (Added extra options)
+||||||| parent of e64c4c41bb (Added extra options)
+=======
+  private val mapLabels by lazy { resources.getStringArray(R.array.pref_map_type_entries) } // JW: added
+  private val mapValues by lazy { resources.getStringArray(R.array.pref_map_type_values) }  // JW: added
+  private val groupAddLabels by lazy { resources.getStringArray(R.array.pref_group_add_entries) } // JW: added
+  private val groupAddValues by lazy { resources.getStringArray(R.array.pref_group_add_values) }  // JW: added
+  val CHOOSE_BACKUPS_LOCATION_REQUEST_CODE = 1201 // JW: added
+>>>>>>> e64c4c41bb (Added extra options)
 
   override fun onResume() {
     super.onResume()
