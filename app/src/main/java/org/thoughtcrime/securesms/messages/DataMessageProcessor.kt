@@ -2099,6 +2099,7 @@ object DataMessageProcessor {
 
       forceStickerDownloadIfNecessary(context, insertResult.messageId, stickerAttachments)
 
+<<<<<<< HEAD
       for (attachment in attachments) {
         ApplicationDependencies.getJobManager().add(AttachmentDownloadJob(insertResult.messageId, attachment.attachmentId, false))
       }
@@ -2113,6 +2114,20 @@ object DataMessageProcessor {
       }
       if (viewOnce) { // JW
         ApplicationDependencies.getViewOnceMessageManager().scheduleIfNecessary()
+||||||| parent of e64c4c41bb (Added extra options)
+        if (message.isViewOnce) {
+          ApplicationDependencies.getViewOnceMessageManager().scheduleIfNecessary()
+        }
+=======
+      // JW: add a [1] reaction to indicate the message was sent as viewOnce.
+      if (TextSecurePreferences.isKeepViewOnceMessages(context) && message.isViewOnce) {
+        val targetMessage = SignalDatabase.messages.getMessageRecordOrNull(insertResult.messageId)
+        setMessageReaction(context, message, targetMessage, "\u0031\uFE0F\u20E3")
+      }
+      if (viewOnce) { // JW
+          ApplicationDependencies.getViewOnceMessageManager().scheduleIfNecessary()
+        }
+>>>>>>> e64c4c41bb (Added extra options)
       }
 
       MessageId(insertResult.messageId)
