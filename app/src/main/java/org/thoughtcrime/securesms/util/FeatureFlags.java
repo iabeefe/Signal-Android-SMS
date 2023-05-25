@@ -700,6 +700,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
 ||||||| parent of 66c339aa35 (Added extra options)
     return getBoolean(HIDE_CONTACTS, false);
@@ -911,6 +912,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> e64c4c41bb (Added extra options)
+||||||| parent of e26890a182 (Added extra options)
+    return getBoolean(HIDE_CONTACTS, false);
+=======
+    return true; // JW
+>>>>>>> e26890a182 (Added extra options)
   }
 
   /**
@@ -1088,6 +1094,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
 ||||||| parent of 6d8fef5835 (Added extra options)
     return getBoolean(TEXT_FORMATTING, false);
@@ -1403,6 +1410,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> e64c4c41bb (Added extra options)
+||||||| parent of e26890a182 (Added extra options)
+    return getBoolean(TEXT_FORMATTING, false);
+=======
+    return true; // JW
+>>>>>>> e26890a182 (Added extra options)
   }
 
   /**
