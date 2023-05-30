@@ -234,6 +234,7 @@ public final class Megaphones {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       //put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER); // JW
 >>>>>>> 66c339aa35 (Added extra options)
@@ -715,6 +716,13 @@ public final class Megaphones {
       //put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER); // JW
       //put(Event.REMOTE_MEGAPHONE, shouldShowRemoteMegaphone(records) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(1)) : NEVER); // JW
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| parent of 8a72cb26f4 (Added extra options)
+      put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER);
+      put(Event.REMOTE_MEGAPHONE, shouldShowRemoteMegaphone(records) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(1)) : NEVER);
+=======
+      //put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER); // JW
+      //put(Event.REMOTE_MEGAPHONE, shouldShowRemoteMegaphone(records) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(1)) : NEVER); // JW
+>>>>>>> 8a72cb26f4 (Added extra options)
       put(Event.PIN_REMINDER, new SignalPinReminderSchedule());
       put(Event.SET_UP_YOUR_USERNAME, shouldShowSetUpYourUsernameMegaphone(records) ? ALWAYS : NEVER);
 
@@ -750,6 +758,7 @@ public final class Megaphones {
         return buildNotificationsMegaphone(context);
       case ADD_A_PROFILE_PHOTO:
         return buildAddAProfilePhotoMegaphone(context);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1741,6 +1750,17 @@ public final class Megaphones {
 //      case DONATE_Q2_2022:
 //        return buildDonateQ2Megaphone(context);
 >>>>>>> f611d03385 (Added extra options)
+||||||| parent of 8a72cb26f4 (Added extra options)
+      case BECOME_A_SUSTAINER:
+        return buildBecomeASustainerMegaphone(context);
+      case DONATE_Q2_2022:
+        return buildDonateQ2Megaphone(context);
+=======
+//      case BECOME_A_SUSTAINER:                             // JW I see these way too often
+//        return buildBecomeASustainerMegaphone(context);
+//      case DONATE_Q2_2022:
+//        return buildDonateQ2Megaphone(context);
+>>>>>>> 8a72cb26f4 (Added extra options)
       case TURN_OFF_CENSORSHIP_CIRCUMVENTION:
         return buildTurnOffCircumventionMegaphone(context);
 <<<<<<< HEAD
