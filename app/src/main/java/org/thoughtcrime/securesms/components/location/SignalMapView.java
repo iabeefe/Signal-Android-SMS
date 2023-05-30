@@ -37,6 +37,7 @@ import org.thoughtcrime.securesms.R;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import java.util.concurrent.ExecutionException;
 =======
@@ -122,6 +123,11 @@ import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies; // JW: added
 import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 >>>>>>> f611d03385 (Added extra options)
+||||||| parent of 8a72cb26f4 (Added extra options)
+=======
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies; // JW: added
+import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
+>>>>>>> 8a72cb26f4 (Added extra options)
 import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
 import org.thoughtcrime.securesms.util.concurrent.SettableFuture;
 >>>>>>> 66c339aa35 (Added extra options)
