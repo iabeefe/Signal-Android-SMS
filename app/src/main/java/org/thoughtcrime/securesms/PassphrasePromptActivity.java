@@ -84,6 +84,7 @@ import android.view.View.OnClickListener;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import android.view.WindowManager; // JW: added
 ||||||| parent of 775ec008cc (Added extra options)
@@ -286,6 +287,10 @@ import android.view.WindowManager; // JW: added
 =======
 import android.view.WindowManager; // JW: added
 >>>>>>> 8a72cb26f4 (Added extra options)
+||||||| parent of 81d0aef821 (Added extra options)
+=======
+import android.view.WindowManager; // JW: added
+>>>>>>> 81d0aef821 (Added extra options)
 import android.view.animation.Animation;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -528,6 +533,7 @@ public class PassphrasePromptActivity extends PassphraseActivity {
   private void setLockTypeVisibility() {
     if (SignalStore.settings().getScreenLockEnabled()) {
       passphraseAuthContainer.setVisibility(View.GONE);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -837,6 +843,11 @@ public class PassphrasePromptActivity extends PassphraseActivity {
       // JW: to override setSoftInputMode it has to be defined in the manifest file
       getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); // JW
 >>>>>>> 8a72cb26f4 (Added extra options)
+||||||| parent of 81d0aef821 (Added extra options)
+=======
+      // JW: to override setSoftInputMode it has to be defined in the manifest file
+      getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); // JW
+>>>>>>> 81d0aef821 (Added extra options)
       fingerprintPrompt.setVisibility(biometricManager.canAuthenticate(BiometricDeviceAuthentication.BIOMETRIC_AUTHENTICATORS) == BiometricManager.BIOMETRIC_SUCCESS ? View.VISIBLE
                                                                                                                                        : View.GONE);
       lockScreenButton.setVisibility(View.VISIBLE);
