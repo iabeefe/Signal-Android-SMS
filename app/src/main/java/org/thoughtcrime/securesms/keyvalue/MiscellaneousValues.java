@@ -115,6 +115,7 @@ public final class MiscellaneousValues extends SignalStoreValues {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return false; // JW
     //return getBoolean(CLIENT_DEPRECATED, false);
 ||||||| parent of efc40a1af7 (Added extra options)
@@ -332,6 +333,11 @@ public final class MiscellaneousValues extends SignalStoreValues {
 =======
     return false; // JW
 >>>>>>> 81d0aef821 (Added extra options)
+||||||| parent of 7fa5495175 (Added extra options)
+    return getBoolean(CLIENT_DEPRECATED, false);
+=======
+    return false; // JW
+>>>>>>> 7fa5495175 (Added extra options)
   }
 
   public void markClientDeprecated() {
