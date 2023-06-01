@@ -42,6 +42,7 @@ import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
 >>>>>>> 66c339aa35 (Added extra options)
 ||||||| parent of 775ec008cc (Added extra options)
@@ -116,6 +117,10 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
 =======
 import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
 >>>>>>> 81d0aef821 (Added extra options)
+||||||| parent of 7fa5495175 (Added extra options)
+=======
+import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
+>>>>>>> 7fa5495175 (Added extra options)
 import org.thoughtcrime.securesms.permissions.Permissions;
 import org.thoughtcrime.securesms.util.UriUtils; // JW: added
 
@@ -243,6 +248,7 @@ public class StorageUtil {
     return backups;
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -595,6 +601,22 @@ public class StorageUtil {
 
 =======
 >>>>>>> 81d0aef821 (Added extra options)
+||||||| parent of 7fa5495175 (Added extra options)
+  public static File getBackupDirectory() throws NoExternalStorageException {
+    File storage = Environment.getExternalStorageDirectory();
+    File signal  = new File(storage, "Signal");
+    File backups = new File(signal, "Backups");
+
+    //noinspection ConstantConditions
+    if (BuildConfig.APPLICATION_ID.startsWith(PRODUCTION_PACKAGE_ID + ".")) {
+      backups = new File(backups, BuildConfig.APPLICATION_ID.substring(PRODUCTION_PACKAGE_ID.length() + 1));
+    }
+
+    return backups;
+  }
+
+=======
+>>>>>>> 7fa5495175 (Added extra options)
   @RequiresApi(24)
   public static @NonNull String getDisplayPath(@NonNull Context context, @NonNull Uri uri) {
     String lastPathSegment = Objects.requireNonNull(uri.getLastPathSegment());
@@ -636,6 +658,7 @@ public class StorageUtil {
     return context.getExternalCacheDir();
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -899,6 +922,19 @@ public class StorageUtil {
   }
 
 >>>>>>> 81d0aef821 (Added extra options)
+||||||| parent of 7fa5495175 (Added extra options)
+=======
+  // JW: re-added
+  private static @Nullable File getNonEmulated(File[] directories) {
+    return Stream.of(directories)
+            .withoutNulls()
+            .filterNot(f -> f.getAbsolutePath().contains("emulated"))
+            .limit(1)
+            .findSingle()
+            .orElse(null);
+  }
+
+>>>>>>> 7fa5495175 (Added extra options)
   private static File getSignalStorageDir() throws NoExternalStorageException {
     final File storage = Environment.getExternalStorageDirectory();
 
