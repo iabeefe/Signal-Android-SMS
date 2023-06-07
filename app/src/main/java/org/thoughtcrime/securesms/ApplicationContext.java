@@ -437,6 +437,7 @@ public class ApplicationContext extends Application implements AppForegroundObse
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     } else if (!SignalStore.settings().getPassphraseDisabled() && VersionTracker.getDaysSinceFirstInstalled(this) < 90) {
 =======
 // JW: this code bluntly removes the password setting and makes password protected installs crash.
@@ -536,6 +537,11 @@ public class ApplicationContext extends Application implements AppForegroundObse
 // JW: this code bluntly removes the password setting and makes password protected installs crash.
 /*
 >>>>>>> 7fa5495175 (Added extra options)
+||||||| parent of 32b4182676 (Added extra options)
+=======
+// JW: this code bluntly removes the password setting and makes password protected installs crash.
+/*
+>>>>>>> 32b4182676 (Added extra options)
     } else if (!TextSecurePreferences.isPasswordDisabled(this) && VersionTracker.getDaysSinceFirstInstalled(this) < 90) {
 >>>>>>> 66c339aa35 (Added extra options)
       Log.i(TAG, "Detected a new install that doesn't have passphrases disabled -- assuming bad initialization.");
@@ -546,6 +552,7 @@ public class ApplicationContext extends Application implements AppForegroundObse
       SignalStore.settings().setPassphraseDisabled(true);
 =======
       TextSecurePreferences.setPasswordDisabled(this, true);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -643,6 +650,10 @@ public class ApplicationContext extends Application implements AppForegroundObse
 =======
 */
 >>>>>>> 7fa5495175 (Added extra options)
+||||||| parent of 32b4182676 (Added extra options)
+=======
+*/
+>>>>>>> 32b4182676 (Added extra options)
     }
   }
 

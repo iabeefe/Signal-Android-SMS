@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,7 +26,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -37,11 +34,19 @@ import org.signal.core.util.concurrent.ListenableFuture;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.R;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.components.location.SignalMapView;
 import org.thoughtcrime.securesms.providers.BlobProvider;
 import org.thoughtcrime.securesms.util.BitmapUtil;
+||||||| parent of 32b4182676 (Added extra options)
+import org.thoughtcrime.securesms.components.location.SignalMapView;
+import org.thoughtcrime.securesms.providers.BlobProvider;
+import org.thoughtcrime.securesms.util.BitmapUtil;
+=======
+>>>>>>> 32b4182676 (Added extra options)
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme;
 import org.thoughtcrime.securesms.util.DynamicTheme;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -142,11 +147,17 @@ import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 =======
 import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 >>>>>>> 7fa5495175 (Added extra options)
+||||||| parent of 32b4182676 (Added extra options)
+import org.thoughtcrime.securesms.util.MediaUtil;
+import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
+import org.thoughtcrime.securesms.util.views.SimpleProgressDialog;
+=======
+import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
+>>>>>>> 32b4182676 (Added extra options)
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Allows selection of an address from a google map.
@@ -341,29 +352,9 @@ public final class PlacePickerActivity extends AppCompatActivity {
     String      address      = currentAddress != null && currentAddress.getAddressLine(0) != null ? currentAddress.getAddressLine(0) : "";
     AddressData addressData  = new AddressData(currentLocation.latitude, currentLocation.longitude, address);
 
-    SimpleProgressDialog.DismissibleDialog dismissibleDialog = SimpleProgressDialog.showDelayed(this);
-    MapView mapView = findViewById(R.id.map_view);
-    SignalMapView.snapshot(currentLocation, mapView).addListener(new ListenableFuture.Listener<>() {
-      @Override
-      public void onSuccess(Bitmap result) {
-        dismissibleDialog.dismiss();
-        byte[] blob = BitmapUtil.toByteArray(result);
-        Uri uri = BlobProvider.getInstance()
-                              .forData(blob)
-                              .withMimeType(MediaUtil.IMAGE_JPEG)
-                              .createForSingleSessionInMemory();
-        returnIntent.putExtra(ADDRESS_INTENT, addressData);
-        returnIntent.setData(uri);
-        setResult(RESULT_OK, returnIntent);
-        finish();
-      }
-
-      @Override
-      public void onFailure(ExecutionException e) {
-        dismissibleDialog.dismiss();
-        Log.e(TAG, "Failed to generate snapshot", e);
-      }
-    });
+    returnIntent.putExtra(ADDRESS_INTENT, addressData);
+    setResult(RESULT_OK, returnIntent);
+    finish();
   }
 
   private void enableMyLocationButtonIfHaveThePermission(GoogleMap googleMap) {
