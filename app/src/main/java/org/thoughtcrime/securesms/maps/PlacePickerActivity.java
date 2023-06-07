@@ -53,6 +53,7 @@ import org.thoughtcrime.securesms.R;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.components.location.SignalMapView;
 import org.thoughtcrime.securesms.providers.BlobProvider;
 import org.thoughtcrime.securesms.util.BitmapUtil;
@@ -158,6 +159,12 @@ import org.thoughtcrime.securesms.providers.BlobProvider;
 import org.thoughtcrime.securesms.util.BitmapUtil;
 =======
 >>>>>>> 17c88722b3 (Added extra options)
+||||||| parent of 32b4182676 (Added extra options)
+import org.thoughtcrime.securesms.components.location.SignalMapView;
+import org.thoughtcrime.securesms.providers.BlobProvider;
+import org.thoughtcrime.securesms.util.BitmapUtil;
+=======
+>>>>>>> 32b4182676 (Added extra options)
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme;
 import org.thoughtcrime.securesms.util.DynamicTheme;
 <<<<<<< HEAD
@@ -233,6 +240,7 @@ import org.thoughtcrime.securesms.util.DynamicTheme;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.MediaUtil;
 import org.thoughtcrime.securesms.util.views.SimpleProgressDialog;
 =======
@@ -599,6 +607,13 @@ import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 =======
 import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 >>>>>>> 7fa5495175 (Added extra options)
+||||||| parent of 32b4182676 (Added extra options)
+import org.thoughtcrime.securesms.util.MediaUtil;
+import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
+import org.thoughtcrime.securesms.util.views.SimpleProgressDialog;
+=======
+import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
+>>>>>>> 32b4182676 (Added extra options)
 
 import java.io.IOException;
 import java.util.List;
