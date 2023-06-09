@@ -122,6 +122,7 @@ public class AttachmentUtil {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       deletedMessageRecord = SignalDatabase.messages().getMessageRecordOrNull(mmsId);
       SignalDatabase.messages().deleteMessage(mmsId);
 =======
@@ -332,6 +333,16 @@ public class AttachmentUtil {
         SignalDatabase.messages().deleteAttachmentsOnly(mmsId);
       }
 >>>>>>> 32b4182676 (Added extra options)
+||||||| parent of d8cd38511b (Added extra options)
+      SignalDatabase.messages().deleteMessage(mmsId);
+=======
+      // JW: changed
+      if (!TextSecurePreferences.isDeleteMediaOnly(context)) {
+        SignalDatabase.messages().deleteMessage(mmsId);
+      }  else {
+        SignalDatabase.messages().deleteAttachmentsOnly(mmsId);
+      }
+>>>>>>> d8cd38511b (Added extra options)
     } else {
       SignalDatabase.attachments().deleteAttachment(attachmentId);
       if (Recipient.self().getDeleteSyncCapability().isSupported()) {

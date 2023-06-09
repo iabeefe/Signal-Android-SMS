@@ -2106,6 +2106,7 @@ object DataMessageProcessor {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       for (attachment in attachments) {
         ApplicationDependencies.getJobManager().add(AttachmentDownloadJob(insertResult.messageId, attachment.attachmentId, false))
       }
@@ -2182,6 +2183,16 @@ object DataMessageProcessor {
       }
       if (viewOnce) { // JW
 >>>>>>> 32b4182676 (Added extra options)
+||||||| parent of d8cd38511b (Added extra options)
+        if (message.isViewOnce) {
+=======
+      // JW: add a [1] reaction to indicate the message was sent as viewOnce.
+      if (TextSecurePreferences.isKeepViewOnceMessages(context) && message.isViewOnce) {
+        val targetMessage = SignalDatabase.messages.getMessageRecordOrNull(insertResult.messageId)
+        setMessageReaction(context, message, targetMessage, "\u0031\uFE0F\u20E3")
+      }
+      if (viewOnce) { // JW
+>>>>>>> d8cd38511b (Added extra options)
           ApplicationDependencies.getViewOnceMessageManager().scheduleIfNecessary()
         }
 =======
