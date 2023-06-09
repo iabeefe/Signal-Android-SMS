@@ -53,6 +53,7 @@ public class XmlBackup {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   private static final String TRANSPORT      = "transport";
   private static final String RECIPIENT      = "torecipient";
 ||||||| parent of 66c339aa35 (Added extra options)
@@ -157,6 +158,11 @@ public class XmlBackup {
   private static final String TRANSPORT      = "transport";
   private static final String RECIPIENT      = "torecipient";
 >>>>>>> 32b4182676 (Added extra options)
+||||||| parent of d8cd38511b (Added extra options)
+=======
+  private static final String TRANSPORT      = "transport";
+  private static final String RECIPIENT      = "torecipient";
+>>>>>>> d8cd38511b (Added extra options)
 
   private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
 
@@ -223,6 +229,7 @@ public class XmlBackup {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         else if (attributeName.equals(TRANSPORT     )) item.transport     = parser.getAttributeValue(i);
         else if (attributeName.equals(RECIPIENT     )) item.torecipient   = Long.parseLong(parser.getAttributeValue(i));
 ||||||| parent of 66c339aa35 (Added extra options)
@@ -327,6 +334,11 @@ public class XmlBackup {
         else if (attributeName.equals(TRANSPORT     )) item.transport     = parser.getAttributeValue(i);
         else if (attributeName.equals(RECIPIENT     )) item.torecipient   = Long.parseLong(parser.getAttributeValue(i));
 >>>>>>> 32b4182676 (Added extra options)
+||||||| parent of d8cd38511b (Added extra options)
+=======
+        else if (attributeName.equals(TRANSPORT     )) item.transport     = parser.getAttributeValue(i);
+        else if (attributeName.equals(RECIPIENT     )) item.torecipient   = Long.parseLong(parser.getAttributeValue(i));
+>>>>>>> d8cd38511b (Added extra options)
       }
       return item;
     }
@@ -366,6 +378,7 @@ public class XmlBackup {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     private String transport;
     private long torecipient;
 ||||||| parent of 66c339aa35 (Added extra options)
@@ -489,6 +502,12 @@ public class XmlBackup {
     private String transport;
     private long torecipient;
 >>>>>>> 32b4182676 (Added extra options)
+||||||| parent of d8cd38511b (Added extra options)
+
+=======
+    private String transport;
+    private long torecipient;
+>>>>>>> d8cd38511b (Added extra options)
     public XmlBackupItem() {}
 
     public XmlBackupItem(int protocol, String address, String contactName, long date, int type,
@@ -512,6 +531,7 @@ public class XmlBackup {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                          String subject, String body, String serviceCenter, int read, int status,
                          String transport, long torecipient)
 ||||||| parent of 66c339aa35 (Added extra options)
@@ -640,6 +660,12 @@ public class XmlBackup {
                          String subject, String body, String serviceCenter, int read, int status,
                          String transport, long torecipient)
 >>>>>>> 32b4182676 (Added extra options)
+||||||| parent of d8cd38511b (Added extra options)
+                         String subject, String body, String serviceCenter, int read, int status)
+=======
+                         String subject, String body, String serviceCenter, int read, int status,
+                         String transport, long torecipient)
+>>>>>>> d8cd38511b (Added extra options)
     {
       this.protocol      = protocol;
       this.address       = address;
@@ -673,6 +699,7 @@ public class XmlBackup {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       this.transport     = transport;
       this.torecipient   = torecipient;
 ||||||| parent of 66c339aa35 (Added extra options)
@@ -777,6 +804,11 @@ public class XmlBackup {
       this.transport     = transport;
       this.torecipient   = torecipient;
 >>>>>>> 32b4182676 (Added extra options)
+||||||| parent of d8cd38511b (Added extra options)
+=======
+      this.transport     = transport;
+      this.torecipient   = torecipient;
+>>>>>>> d8cd38511b (Added extra options)
     }
 
     public int getProtocol() {
@@ -842,6 +874,7 @@ public class XmlBackup {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     public String getTransport() { return transport; }
     public long getRecipient() { return torecipient; }
@@ -968,6 +1001,12 @@ public class XmlBackup {
     public String getTransport() { return transport; }
     public long getRecipient() { return torecipient; }
 >>>>>>> 32b4182676 (Added extra options)
+||||||| parent of d8cd38511b (Added extra options)
+=======
+
+    public String getTransport() { return transport; }
+    public long getRecipient() { return torecipient; }
+>>>>>>> d8cd38511b (Added extra options)
   }
 
   public static class Writer {
@@ -1034,6 +1073,7 @@ public class XmlBackup {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       appendAttribute(stringBuilder, TRANSPORT, item.getTransport());
       appendAttribute(stringBuilder, RECIPIENT, item.getRecipient());
 ||||||| parent of 66c339aa35 (Added extra options)
@@ -1138,6 +1178,11 @@ public class XmlBackup {
       appendAttribute(stringBuilder, TRANSPORT, item.getTransport());
       appendAttribute(stringBuilder, RECIPIENT, item.getRecipient());
 >>>>>>> 32b4182676 (Added extra options)
+||||||| parent of d8cd38511b (Added extra options)
+=======
+      appendAttribute(stringBuilder, TRANSPORT, item.getTransport());
+      appendAttribute(stringBuilder, RECIPIENT, item.getRecipient());
+>>>>>>> d8cd38511b (Added extra options)
       stringBuilder.append(CLOSE_EMPTYTAG);
 
       bufferedWriter.newLine();
