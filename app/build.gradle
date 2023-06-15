@@ -75,6 +75,7 @@ ktlint {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 def canonicalVersionCode = 1232
 def canonicalVersionName = "6.14.5.0-JW-JK"
 ||||||| parent of 775ec008cc (Added extra options)
@@ -280,6 +281,13 @@ def canonicalVersionName = "6.23.1"
 def canonicalVersionCode = 1274
 def canonicalVersionName = "6.23.1.0-JW"
 >>>>>>> d8cd38511b (Added extra options)
+||||||| parent of 664145031f (Added extra options)
+def canonicalVersionCode = 1278
+def canonicalVersionName = "6.23.5"
+=======
+def canonicalVersionCode = 1278
+def canonicalVersionName = "6.23.5.0-JW"
+>>>>>>> 664145031f (Added extra options)
 
 def postFixSize = 100
 def abiPostFix = ['universal'   : 0,
@@ -420,6 +428,7 @@ android {
         buildConfigField "String", "SIGNAL_KEY_BACKUP_URL", "\"https://api.backup.signal.org\""
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 32b4182676 (Added extra options)
         buildConfigField "String", "SIGNAL_SVR2_URL", "\"https://svr2.signal.org\""
 =======
@@ -430,6 +439,11 @@ android {
 =======
         buildConfigField "String", "SIGNAL_SVR2_URL", "\"https://svr2.staging.signal.org\""
 >>>>>>> d8cd38511b (Added extra options)
+||||||| parent of 664145031f (Added extra options)
+        buildConfigField "String", "SIGNAL_SVR2_URL", "\"https://svr2.signal.org\""
+=======
+        buildConfigField "String", "SIGNAL_SVR2_URL", "\"https://svr2.staging.signal.org\""
+>>>>>>> 664145031f (Added extra options)
         buildConfigField "String", "SIGNAL_SFU_URL", "\"https://sfu.voip.signal.org\""
         buildConfigField "String", "SIGNAL_STAGING_SFU_URL", "\"https://sfu.staging.voip.signal.org\""
         buildConfigField "String[]", "SIGNAL_SFU_INTERNAL_NAMES", "new String[]{\"Test\", \"Staging\", \"Development\"}"
@@ -448,6 +462,7 @@ android {
         buildConfigField "String", "CDSI_MRENCLAVE", "\"0f6fd79cdfdaa5b2e6337f534d3baf999318b0c462a7ac1f41297a3e4b424a57\""
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 32b4182676 (Added extra options)
         buildConfigField "String", "SVR2_MRENCLAVE", "\"6ee1042f9e20f880326686dd4ba50c25359f01e9f733eeba4382bca001d45094\""
 =======
@@ -458,6 +473,11 @@ android {
 =======
         buildConfigField "String", "SVR2_MRENCLAVE", "\"dc9fd472a5a9c871a3c7f76f1af60aa9c1f314abf2e8d1e0c4ba25c8aaa2848c\""
 >>>>>>> d8cd38511b (Added extra options)
+||||||| parent of 664145031f (Added extra options)
+        buildConfigField "String", "SVR2_MRENCLAVE", "\"6ee1042f9e20f880326686dd4ba50c25359f01e9f733eeba4382bca001d45094\""
+=======
+        buildConfigField "String", "SVR2_MRENCLAVE", "\"dc9fd472a5a9c871a3c7f76f1af60aa9c1f314abf2e8d1e0c4ba25c8aaa2848c\""
+>>>>>>> 664145031f (Added extra options)
         buildConfigField "org.thoughtcrime.securesms.KbsEnclave", "KBS_ENCLAVE", "new org.thoughtcrime.securesms.KbsEnclave(\"e18376436159cda3ad7a45d9320e382e4a497f26b0dca34d8eab0bd0139483b5\", " +
                                                                                                                            "\"3a485adb56e2058ef7737764c738c4069dd62bc457637eafb6bbce1ce29ddb89\", " +
                                                                                                                            "\"45627094b2ea4a66f4cf0b182858a8dcf4b8479122c3820fe7fd0551a6d4cf5c\")"
