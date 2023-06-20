@@ -630,6 +630,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
 ||||||| parent of 66c339aa35 (Added extra options)
     return getBoolean(HIDE_CONTACTS, false);
@@ -741,6 +742,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> 664145031f (Added extra options)
+||||||| parent of 01ee01cd2c (Added extra options)
+    return getBoolean(HIDE_CONTACTS, false);
+=======
+    return true; // JW
+>>>>>>> 01ee01cd2c (Added extra options)
   }
 
   /**
@@ -833,6 +839,7 @@ public final class FeatureFlags {
    * Whether or not we should show text formatting options.
    */
   public static boolean textFormatting() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1112,6 +1119,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> 664145031f (Added extra options)
+||||||| parent of 01ee01cd2c (Added extra options)
+    return getBoolean(TEXT_FORMATTING, false);
+=======
+    return true; // JW
+>>>>>>> 01ee01cd2c (Added extra options)
   }
 
   /**
@@ -1132,7 +1144,7 @@ public final class FeatureFlags {
   }
 
   public static boolean editMessageSending() {
-    return getBoolean(EDIT_MESSAGE_SEND, false);
+    return true; // JW
   }
 
 >>>>>>> d983349636 (Bumped to upstream version 6.19.0.0-JW.)
