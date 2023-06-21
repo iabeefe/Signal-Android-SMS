@@ -538,7 +538,7 @@ object DataMessageProcessor {
     if (TextSecurePreferences.isIgnoreRemoteDelete(context)) { setMessageReaction(context, message, targetMessage, "\u2757"); return null; }
 
     return if (targetMessage != null && MessageConstraintsUtil.isValidRemoteDeleteReceive(targetMessage, senderRecipientId, envelope.serverTimestamp)) {
-      SignalDatabase.messages.markAsRemoteDelete(targetMessage.id)
+      SignalDatabase.messages.markAsRemoteDelete(targetMessage)
       if (targetMessage.isStory()) {
         SignalDatabase.messages.deleteRemotelyDeletedStory(targetMessage.id)
       }
