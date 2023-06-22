@@ -807,6 +807,7 @@ public final class FeatureFlags {
   }
 
   public static boolean editMessageSending() {
+<<<<<<< HEAD
     return true; // JW
   }
 
@@ -816,6 +817,11 @@ public final class FeatureFlags {
    */
   public static boolean callsTab() {
     return getBoolean(CALLS_TAB, false);
+||||||| parent of 76bcf0c877 (Added extra options)
+    return getBoolean(EDIT_MESSAGE_SEND, false);
+=======
+    return true; // JW
+>>>>>>> 76bcf0c877 (Added extra options)
   }
 
   /**
