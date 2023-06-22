@@ -709,6 +709,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
 ||||||| parent of 66c339aa35 (Added extra options)
     return getBoolean(HIDE_CONTACTS, false);
@@ -965,6 +966,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> 01ee01cd2c (Added extra options)
+||||||| parent of 76bcf0c877 (Added extra options)
+    return getBoolean(HIDE_CONTACTS, false);
+=======
+    return true; // JW
+>>>>>>> 76bcf0c877 (Added extra options)
   }
 
   /**
@@ -1538,6 +1544,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return getBoolean(EDIT_MESSAGE_SEND, false);
 =======
   public static boolean editMessageSending() {
@@ -1573,6 +1580,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> 39e2fc1d92 (Added extra options)
+||||||| parent of 76bcf0c877 (Added extra options)
+    return getBoolean(EDIT_MESSAGE_SEND, false);
+=======
+    return true; // JW
+>>>>>>> 76bcf0c877 (Added extra options)
   }
 
   public static boolean editMessageSending() {
