@@ -808,6 +808,7 @@ public final class FeatureFlags {
 
   public static boolean editMessageSending() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
   }
 
@@ -822,6 +823,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> 76bcf0c877 (Added extra options)
+||||||| parent of 42175ada7f (Added extra options)
+    return getBoolean(EDIT_MESSAGE_SEND, false);
+=======
+    return true; // JW
+>>>>>>> 42175ada7f (Added extra options)
   }
 
   /**
