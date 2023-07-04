@@ -939,6 +939,8 @@
     <string name="LinkPreviewView_no_link_preview_available">Nuorodos peržiūra neprieinama</string>
     <string name="LinkPreviewView_this_group_link_is_not_active">Šios grupės nuoroda nėra aktyvi</string>
     <string name="LinkPreviewView_domain_date">%1$s · %2$s</string>
+    <!-- Description for Call Link url previews -->
+    <string name="LinkPreviewView__use_this_link_to_join_a_signal_call">Use this link to join a Signal Call</string>
 
     <!-- LinkPreviewRepository -->
     <plurals name="LinkPreviewRepository_d_members">
@@ -1744,8 +1746,8 @@
         <item quantity="other">Jums liko %1$d bandymas. Jei išnaudosite visus bandymus, galėsite susikurti naują PIN kodą. Galėsite registruotis ir naudotis savo paskyra, bet prarasite kai kuriuos įrašytus nustatymus, kaip pavyzdžiui, profilio informaciją.</item>
     </plurals>
     <string name="PinRestoreEntryFragment_signal_registration_need_help_with_pin">Signal Registracija - Reikia pagalbos su PIN kodu „Android“ įrenginyje</string>
-    <string name="PinRestoreEntryFragment_enter_alphanumeric_pin">Įvesti tekstinį PIN kodą</string>
-    <string name="PinRestoreEntryFragment_enter_numeric_pin">Įvesti skaitinį PIN kodą</string>
+    <!-- Button label to prompt the user to switch between an alphanumeric and numeric-only keyboards -->
+    <string name="PinRestoreEntryFragment_switch_keyboard">Switch keyboard</string>
 
     <!-- PinRestoreLockedFragment -->
     <string name="PinRestoreLockedFragment_create_your_pin">Susikurti PIN kodą</string>
@@ -2453,7 +2455,8 @@
 
     <!-- WebRtcCallActivity -->
     <string name="WebRtcCallActivity_to_answer_the_call_give_signal_access_to_your_microphone">Norėdami atsiliepti, suteikite Signal prieigą prie mikrofono.</string>
-    <string name="WebRtcCallActivity_to_answer_the_call_from_s_give_signal_access_to_your_microphone">Norėdami atsiliepti į skambutį nuo %1$s, suteikite Signal prieigą prie mikrofono.</string>
+    <!-- Message shown in permission dialog when attempting to answer a video call without camera or microphone permissions already granted. -->
+    <string name="WebRtcCallActivity_to_answer_the_call_give_signal_access_to_your_microphone_and_camera">To answer the video call, give Signal access to your microphone and camera.</string>
     <string name="WebRtcCallActivity_signal_requires_microphone_and_camera_permissions_in_order_to_make_or_receive_calls">Norint skambinti ar gauti skambučius, Signal reikia mikrofono ir kameros leidimo, tačiau jis buvo visam laikui uždraustas. Pereikite į programėlės nustatymus, pasirinkite „Leidimai“ ir įjunkite „Mikrofoną“ ir „Kamerą“.</string>
     <string name="WebRtcCallActivity__answered_on_a_linked_device">Atsiliepta susietame įrenginyje.</string>
     <string name="WebRtcCallActivity__declined_on_a_linked_device">Atmesta susietame įrenginyje.</string>
@@ -3509,7 +3512,7 @@
     <string name="conversation__menu_add_shortcut">Pridėti į pradžios ekraną</string>
     <string name="conversation__menu_create_bubble">Sukurti burbulą</string>
     <!-- Overflow menu option that allows formatting of text -->
-    <string name="conversation__menu_format_text">Format text</string>
+    <string name="conversation__menu_format_text">Formatuoti tekstą</string>
 
     <!-- conversation_popup -->
     <string name="conversation_popup__menu_expand_popup">Išskleisti iškylantįjį langą</string>
@@ -3610,7 +3613,9 @@
 
     <!-- BaseKbsPinFragment -->
     <string name="BaseKbsPinFragment__next">Kitas</string>
+    <!-- Button label to prompt them to create a password ("PIN") using numbers and letters rather than only numbers. -->
     <string name="BaseKbsPinFragment__create_alphanumeric_pin">Sukurti tekstinį PIN kodą</string>
+    <!-- Button label to prompt them to return to creating a numbers-only password ("PIN") -->
     <string name="BaseKbsPinFragment__create_numeric_pin">Sukurti skaitinį PIN kodą</string>
   <!-- Removed by excludeNonTranslatables <string name="BaseKbsPinFragment__learn_more_url" translatable="false">https://support.signal.org/hc/articles/360007059792</string> -->
 
@@ -3676,8 +3681,8 @@
     <string name="RegistrationLockFragment__enter_the_pin_you_created">Įveskite savo paskyrai sukurtą PIN kodą. Tai yra kas kita, nei jūsų SMS patvirtinimo kodas.</string>
     <!-- Info text shown above a pin entry text box describing what pin they should be entering. -->
     <string name="RegistrationLockFragment__enter_the_pin_you_created_for_your_account">Įvesk PIN kodą, kurį susikūrei savo paskyrai.</string>
-    <string name="RegistrationLockFragment__enter_alphanumeric_pin">Įvesti tekstinį PIN kodą</string>
-    <string name="RegistrationLockFragment__enter_numeric_pin">Įvesti skaitinį PIN kodą</string>
+    <!-- Button label to prompt the user to switch between an alphanumeric and numeric-only keyboards -->
+    <string name="RegistrationLockFragment__switch_keyboard">Switch keyboard</string>
     <string name="RegistrationLockFragment__incorrect_pin_try_again">Neteisingas PIN kodas. Bandykite dar kartą.</string>
     <string name="RegistrationLockFragment__forgot_pin">Užmiršote PIN kodą?</string>
     <string name="RegistrationLockFragment__incorrect_pin">Neteisingas PIN</string>
@@ -6165,7 +6170,7 @@
     <!-- Popup menu label for applying spoiler style -->
     <string name="TextFormatting_spoiler">„Spoiler“</string>
     <!-- Popup menu label for clearing applied formatting -->
-    <string name="TextFormatting_clear_formatting">Clear formatting</string>
+    <string name="TextFormatting_clear_formatting">Išvalyti formatavimą</string>
 
     <!-- UsernameEducationFragment -->
     <!-- Continue button which takes the user to the add a username screen -->
@@ -6265,7 +6270,7 @@
     <string name="CallLogFragment__filtered_by_missed">Filtravimas pagal praleistus</string>
     <!-- Bottom bar option to select all call entries -->
     <string name="CallLogFragment__select_all">Žymėti visus</string>
-    <!-- Bottom bar option to delete all selected call entries -->
+    <!-- Bottom bar option to delete all selected call entries and dialog action to confirm deletion -->
     <string name="CallLogFragment__delete">Ištrinti</string>
     <plurals name="CallLogFragment__delete_d_calls">
         <item quantity="one">Ištrinti %1$d skambutį?</item>
@@ -6273,8 +6278,6 @@
         <item quantity="many">Ištrinti %1$d skambučio?</item>
         <item quantity="other">Ištrinti %1$d skambučių?</item>
     </plurals>
-    <!-- Positive action on multi-delete protection dialog -->
-    <string name="CallLogFragment__delete_for_me">Ištrinti man</string>
     <!-- Snackbar label after deleting call logs -->
     <plurals name="CallLogFragment__d_calls_deleted">
         <item quantity="one">Ištrintas %1$d skambutis</item>

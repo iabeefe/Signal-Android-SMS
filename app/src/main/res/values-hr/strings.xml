@@ -939,6 +939,8 @@
     <string name="LinkPreviewView_no_link_preview_available">Nema dostupnog pregleda poveznice</string>
     <string name="LinkPreviewView_this_group_link_is_not_active">Poveznica grupe nije aktivna</string>
     <string name="LinkPreviewView_domain_date">%1$s · %2$s</string>
+    <!-- Description for Call Link url previews -->
+    <string name="LinkPreviewView__use_this_link_to_join_a_signal_call">Use this link to join a Signal Call</string>
 
     <!-- LinkPreviewRepository -->
     <plurals name="LinkPreviewRepository_d_members">
@@ -1744,8 +1746,8 @@
         <item quantity="other">Preostalo vam je %1$d pokušaja. Ako vam ponestane pokušaja, možete stvoriti novi PIN. Možete registrirati i koristiti svoj račun, ali ćete izgubiti neke spremljene postavke poput podataka o vašem profilu.</item>
     </plurals>
     <string name="PinRestoreEntryFragment_signal_registration_need_help_with_pin">Registracija Signala - Trebate pomoć s PIN-om za Android</string>
-    <string name="PinRestoreEntryFragment_enter_alphanumeric_pin">Unesite alfanumerički PIN</string>
-    <string name="PinRestoreEntryFragment_enter_numeric_pin">Unesite numerički PIN</string>
+    <!-- Button label to prompt the user to switch between an alphanumeric and numeric-only keyboards -->
+    <string name="PinRestoreEntryFragment_switch_keyboard">Switch keyboard</string>
 
     <!-- PinRestoreLockedFragment -->
     <string name="PinRestoreLockedFragment_create_your_pin">Stvorite svoj PIN</string>
@@ -2453,7 +2455,8 @@
 
     <!-- WebRtcCallActivity -->
     <string name="WebRtcCallActivity_to_answer_the_call_give_signal_access_to_your_microphone">Da biste odgovorili na poziv, omogućite Signalu pristup vašem mikrofonu.</string>
-    <string name="WebRtcCallActivity_to_answer_the_call_from_s_give_signal_access_to_your_microphone">Da biste odgovorili na poziv od %1$s, omogućite Signalu pristup vašem mikrofonu.</string>
+    <!-- Message shown in permission dialog when attempting to answer a video call without camera or microphone permissions already granted. -->
+    <string name="WebRtcCallActivity_to_answer_the_call_give_signal_access_to_your_microphone_and_camera">To answer the video call, give Signal access to your microphone and camera.</string>
     <string name="WebRtcCallActivity_signal_requires_microphone_and_camera_permissions_in_order_to_make_or_receive_calls">Signal zahtijeva dopuštenja za mikrofon i kameru za upućivanje ili primanje poziva, ali ona su trajno odbijena. Otvorite postavke aplikacije, odaberite \"Dozvole\" i omogućite \"Mikrofon\" i \"Kamera\".</string>
     <string name="WebRtcCallActivity__answered_on_a_linked_device">Odgovoreno na povezanom uređaju.</string>
     <string name="WebRtcCallActivity__declined_on_a_linked_device">Odbijeno na povezanom uređaju.</string>
@@ -3509,7 +3512,7 @@
     <string name="conversation__menu_add_shortcut">Dodaj na početni zaslon</string>
     <string name="conversation__menu_create_bubble">Stvori oblačić</string>
     <!-- Overflow menu option that allows formatting of text -->
-    <string name="conversation__menu_format_text">Format text</string>
+    <string name="conversation__menu_format_text">Oblikuj tekst</string>
 
     <!-- conversation_popup -->
     <string name="conversation_popup__menu_expand_popup">Proširi skočni prozor</string>
@@ -3610,7 +3613,9 @@
 
     <!-- BaseKbsPinFragment -->
     <string name="BaseKbsPinFragment__next">Sljedeće</string>
+    <!-- Button label to prompt them to create a password ("PIN") using numbers and letters rather than only numbers. -->
     <string name="BaseKbsPinFragment__create_alphanumeric_pin">Stvorite alfanumerički PIN</string>
+    <!-- Button label to prompt them to return to creating a numbers-only password ("PIN") -->
     <string name="BaseKbsPinFragment__create_numeric_pin">Stvorite numerički PIN</string>
   <!-- Removed by excludeNonTranslatables <string name="BaseKbsPinFragment__learn_more_url" translatable="false">https://support.signal.org/hc/articles/360007059792</string> -->
 
@@ -3676,8 +3681,8 @@
     <string name="RegistrationLockFragment__enter_the_pin_you_created">Unesite PIN koji ste stvorili za svoj račun. To se razlikuje od vašeg SMS kôda za provjeru.</string>
     <!-- Info text shown above a pin entry text box describing what pin they should be entering. -->
     <string name="RegistrationLockFragment__enter_the_pin_you_created_for_your_account">Unesite PIN koji ste stvorili za svoj račun.</string>
-    <string name="RegistrationLockFragment__enter_alphanumeric_pin">Unesite alfanumerički PIN</string>
-    <string name="RegistrationLockFragment__enter_numeric_pin">Unesite numerički PIN</string>
+    <!-- Button label to prompt the user to switch between an alphanumeric and numeric-only keyboards -->
+    <string name="RegistrationLockFragment__switch_keyboard">Switch keyboard</string>
     <string name="RegistrationLockFragment__incorrect_pin_try_again">Nevažeći PIN. Pokušajte ponovno.</string>
     <string name="RegistrationLockFragment__forgot_pin">Zaboravili ste PIN?</string>
     <string name="RegistrationLockFragment__incorrect_pin">Nevažeći PIN</string>
@@ -6165,7 +6170,7 @@
     <!-- Popup menu label for applying spoiler style -->
     <string name="TextFormatting_spoiler">Spojler</string>
     <!-- Popup menu label for clearing applied formatting -->
-    <string name="TextFormatting_clear_formatting">Clear formatting</string>
+    <string name="TextFormatting_clear_formatting">Poništi oblikovanje teksta</string>
 
     <!-- UsernameEducationFragment -->
     <!-- Continue button which takes the user to the add a username screen -->
@@ -6265,7 +6270,7 @@
     <string name="CallLogFragment__filtered_by_missed">Filtar: propušteni pozivi</string>
     <!-- Bottom bar option to select all call entries -->
     <string name="CallLogFragment__select_all">Odaberi sve</string>
-    <!-- Bottom bar option to delete all selected call entries -->
+    <!-- Bottom bar option to delete all selected call entries and dialog action to confirm deletion -->
     <string name="CallLogFragment__delete">Izbriši</string>
     <plurals name="CallLogFragment__delete_d_calls">
         <item quantity="one">Izbrisati %1$d poziv?</item>
@@ -6273,8 +6278,6 @@
         <item quantity="many">Izbrisati %1$d poziva?</item>
         <item quantity="other">Izbrisati %1$d poziva?</item>
     </plurals>
-    <!-- Positive action on multi-delete protection dialog -->
-    <string name="CallLogFragment__delete_for_me">Izbriši za mene</string>
     <!-- Snackbar label after deleting call logs -->
     <plurals name="CallLogFragment__d_calls_deleted">
         <item quantity="one">%1$d izbrisan poziv</item>

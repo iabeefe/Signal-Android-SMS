@@ -58,6 +58,7 @@ import androidx.annotation.ColorRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
@@ -304,7 +305,6 @@ import org.whispersystems.signalservice.api.SignalSessionLock;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -513,7 +513,7 @@ public class ConversationParentFragment extends Fragment
 
     voiceNoteMediaController = new VoiceNoteMediaController(requireActivity(), true);
     voiceRecorderWakeLock    = new VoiceRecorderWakeLock(requireActivity());
-    bluetoothVoiceNoteUtil   = BluetoothVoiceNoteUtil.Companion.create(requireContext(), this::beginRecording, this::onBluetoothPermissionDenied);
+    bluetoothVoiceNoteUtil   = BluetoothVoiceNoteUtil.Companion.create(requireContext(), this::onBluetoothConnectionAttempt, this::onBluetoothPermissionDenied);
 
     // TODO [alex] LargeScreenSupport -- Should be removed once we move to multi-pane layout.
     new FullscreenHelper(requireActivity()).showSystemUI();
@@ -862,6 +862,7 @@ public class ConversationParentFragment extends Fragment
         }
 
         composeText.addTextChangedListener(typingTextWatcher);
+        composeText.setStylingChangedListener(typingTextWatcher);
         composeText.setSelection(composeText.length(), composeText.length());
       }
     });
@@ -2174,7 +2175,7 @@ public class ConversationParentFragment extends Fragment
   }
 
   private void initializeStickerObserver() {
-    StickerSearchRepository repository = new StickerSearchRepository(requireContext());
+    StickerSearchRepository repository = new StickerSearchRepository();
 
     stickerViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) new ConversationStickerViewModel.Factory(requireActivity().getApplication(), repository))
                                          .get(ConversationStickerViewModel.class);
@@ -2234,7 +2235,6 @@ public class ConversationParentFragment extends Fragment
     inlineQueryViewModel = new ViewModelProvider(requireActivity()).get(InlineQueryViewModel.class);
 
     inlineQueryResultsController = new InlineQueryResultsController(
-        requireContext(),
         inlineQueryViewModel,
         inputPanel,
         (ViewGroup) requireView(),
@@ -3305,6 +3305,11 @@ public class ConversationParentFragment extends Fragment
       }
   }
 
+  private Unit onBluetoothConnectionAttempt(Boolean success) {
+    beginRecording();
+    return Unit.INSTANCE;
+  }
+
   private Unit beginRecording() {
     Vibrator vibrator = ServiceUtil.getVibrator(requireContext());
     vibrator.vibrate(20);
@@ -3729,6 +3734,7 @@ public class ConversationParentFragment extends Fragment
     public void onError(Throwable t) {
       Toast.makeText(requireContext(), R.string.ConversationActivity_unable_to_record_audio, Toast.LENGTH_LONG).show();
       Log.e(TAG, "Error in RecordingSession.", t);
+      recordingSession.discardRecording();
       recordingSession.dispose();
       recordingSession = null;
     }
@@ -3865,7 +3871,7 @@ public class ConversationParentFragment extends Fragment
     }
   }
 
-  private class ComposeTextWatcher extends SimpleTextWatcher {
+  private class ComposeTextWatcher extends SimpleTextWatcher implements ComposeText.StylingChangedListener {
 
     private boolean typingStatusEnabled = true;
 
@@ -3905,6 +3911,11 @@ public class ConversationParentFragment extends Fragment
 
     public void setTypingStatusEnabled(boolean enabled) {
       this.typingStatusEnabled = enabled;
+    }
+
+    @Override
+    public void onStylingChanged() {
+      handleSaveDraftOnTextChange(composeText.getTextTrimmed());
     }
   }
 

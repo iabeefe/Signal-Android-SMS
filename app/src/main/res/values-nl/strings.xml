@@ -883,6 +883,8 @@
     <string name="LinkPreviewView_no_link_preview_available">Geen voorbeeldafbeelding beschikbaar</string>
     <string name="LinkPreviewView_this_group_link_is_not_active">Deze groepslink is niet actief</string>
     <string name="LinkPreviewView_domain_date">%1$s · %2$s</string>
+    <!-- Description for Call Link url previews -->
+    <string name="LinkPreviewView__use_this_link_to_join_a_signal_call">Use this link to join a Signal Call</string>
 
     <!-- LinkPreviewRepository -->
     <plurals name="LinkPreviewRepository_d_members">
@@ -990,7 +992,7 @@
     <string name="ManageProfileFragment_your_username">Je gebruikersnaam</string>
     <string name="ManageProfileFragment_failed_to_set_avatar">Instellen van profielfoto is mislukt</string>
     <string name="ManageProfileFragment_badges">Badges</string>
-    <string name="ManageProfileFragment__edit_photo">Profielfoto aanpassen</string>
+    <string name="ManageProfileFragment__edit_photo">Profielfoto bewerken</string>
     <!-- Snackbar message after creating username -->
     <string name="ManageProfileFragment__username_created">Gebruikersnaam gecreëerd.</string>
     <!-- Snackbar message after copying username -->
@@ -1626,8 +1628,8 @@
         <item quantity="other">Je hebt nog %1$d pogingen resterend. Wanneer je geen pogingen meer over hebt, dan kun je nog wel een nieuwe pincode aanmaken. Je kunt Signal dan wel weer registreren met dit telefoonnummer, maar sommige instellingen zoals je profielnaam, -foto en -omschrijving zullen dan verloren gaan.</item>
     </plurals>
     <string name="PinRestoreEntryFragment_signal_registration_need_help_with_pin">Signal-registratratie - Ik heb hulp nodig bij de Signal-pincode op een Android apparaat</string>
-    <string name="PinRestoreEntryFragment_enter_alphanumeric_pin">Een alfanumerieke pincode invoeren</string>
-    <string name="PinRestoreEntryFragment_enter_numeric_pin">Een numerieke pincode invoeren</string>
+    <!-- Button label to prompt the user to switch between an alphanumeric and numeric-only keyboards -->
+    <string name="PinRestoreEntryFragment_switch_keyboard">Switch keyboard</string>
 
     <!-- PinRestoreLockedFragment -->
     <string name="PinRestoreLockedFragment_create_your_pin">Pincode aanmaken</string>
@@ -1995,7 +1997,7 @@
     <string name="StickerPackPreviewActivity_failed_to_load_sticker_pack">Laden van stickerpakket mislukt</string>
 
     <!-- SubmitDebugLogActivity -->
-    <string name="SubmitDebugLogActivity_edit">Aanpassen</string>
+    <string name="SubmitDebugLogActivity_edit">Bewerken</string>
     <string name="SubmitDebugLogActivity_done">Klaar</string>
     <!-- Menu option to save a debug log file to disk. -->
     <string name="SubmitDebugLogActivity_save">Bijlage opslaan</string>
@@ -2313,7 +2315,8 @@
 
     <!-- WebRtcCallActivity -->
     <string name="WebRtcCallActivity_to_answer_the_call_give_signal_access_to_your_microphone">Je moet Signal toestaan om de microfoon te gebruiken voor je de oproep kunt beantwoorden.</string>
-    <string name="WebRtcCallActivity_to_answer_the_call_from_s_give_signal_access_to_your_microphone">Geef Signal toegang tot je microfoon om de oproep van %1$s te beantwoorden.</string>
+    <!-- Message shown in permission dialog when attempting to answer a video call without camera or microphone permissions already granted. -->
+    <string name="WebRtcCallActivity_to_answer_the_call_give_signal_access_to_your_microphone_and_camera">To answer the video call, give Signal access to your microphone and camera.</string>
     <string name="WebRtcCallActivity_signal_requires_microphone_and_camera_permissions_in_order_to_make_or_receive_calls">Signal heeft toegang nodig tot de microfoon en de camera om oproepen te maken of te ontvangen, maar deze toegang is pertinent geweigerd. Ga naar de instellingen voor deze app, tik op ‘Machtigingen’ en schakel ‘Microfoon’ en ‘Camera’ in.</string>
     <string name="WebRtcCallActivity__answered_on_a_linked_device">Beantwoord vanaf een gekoppeld apparaat.</string>
     <string name="WebRtcCallActivity__declined_on_a_linked_device">Geweigerd vanaf een gekoppeld apparaat.</string>
@@ -3291,7 +3294,7 @@
     <!-- Button to reply to a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
     <string name="conversation_selection__menu_reply">Reageren</string>
     <!-- Button to edit a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
-    <string name="conversation_selection__menu_edit">Aanpassen</string>
+    <string name="conversation_selection__menu_edit">Bewerken</string>
     <!-- Button to save a message attachment (image, file etc.); Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
     <string name="conversation_selection__menu_save">Bijlage opslaan</string>
     <!-- Button to retry sending a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
@@ -3343,7 +3346,7 @@
     <string name="conversation__menu_add_shortcut">Aan thuisscherm toevoegen</string>
     <string name="conversation__menu_create_bubble">Bubbel aanmaken</string>
     <!-- Overflow menu option that allows formatting of text -->
-    <string name="conversation__menu_format_text">Format text</string>
+    <string name="conversation__menu_format_text">Tekstopmaak</string>
 
     <!-- conversation_popup -->
     <string name="conversation_popup__menu_expand_popup">Pop-up vergroten</string>
@@ -3401,7 +3404,7 @@
 
     <!-- media_preview -->
     <string name="media_preview__save_title">Opslaan</string>
-    <string name="media_preview__edit_title">Aanpassen</string>
+    <string name="media_preview__edit_title">Bewerken</string>
 
 
     <!-- media_preview_activity -->
@@ -3442,7 +3445,9 @@
 
     <!-- BaseKbsPinFragment -->
     <string name="BaseKbsPinFragment__next">Volgende</string>
+    <!-- Button label to prompt them to create a password ("PIN") using numbers and letters rather than only numbers. -->
     <string name="BaseKbsPinFragment__create_alphanumeric_pin">Alfanumerieke pincode aanmaken</string>
+    <!-- Button label to prompt them to return to creating a numbers-only password ("PIN") -->
     <string name="BaseKbsPinFragment__create_numeric_pin">Numerieke pincode aanmaken</string>
   <!-- Removed by excludeNonTranslatables <string name="BaseKbsPinFragment__learn_more_url" translatable="false">https://support.signal.org/hc/articles/360007059792</string> -->
 
@@ -3504,8 +3509,8 @@
     <string name="RegistrationLockFragment__enter_the_pin_you_created">Voer de pincode in welke je eerder hebt aangemaakt om informatie versleuteld op te slaan op Signals servers. Dit is niet dezelfde code als de telefoonnummerverificatie-code die je per sms of telefoonoproep hebt ontvangen.</string>
     <!-- Info text shown above a pin entry text box describing what pin they should be entering. -->
     <string name="RegistrationLockFragment__enter_the_pin_you_created_for_your_account">Voer de pincode in die je voor je account hebt gemaakt.</string>
-    <string name="RegistrationLockFragment__enter_alphanumeric_pin">Een alfanumerieke pincode invoeren</string>
-    <string name="RegistrationLockFragment__enter_numeric_pin">Een numerieke pincode invoeren</string>
+    <!-- Button label to prompt the user to switch between an alphanumeric and numeric-only keyboards -->
+    <string name="RegistrationLockFragment__switch_keyboard">Switch keyboard</string>
     <string name="RegistrationLockFragment__incorrect_pin_try_again">Foutieve pincode, probeer het opnieuw.</string>
     <string name="RegistrationLockFragment__forgot_pin">Pincode vergeten?</string>
     <string name="RegistrationLockFragment__incorrect_pin">Foutieve pincode</string>
@@ -4091,7 +4096,7 @@
 
     <!-- PaymentsRecoveryPhraseFragment -->
     <string name="PaymentsRecoveryPhraseFragment__next">Volgende</string>
-    <string name="PaymentsRecoveryPhraseFragment__edit">Aanpassen</string>
+    <string name="PaymentsRecoveryPhraseFragment__edit">Bewerken</string>
     <string name="PaymentsRecoveryPhraseFragment__your_recovery_phrase">Jouw herstel-zin</string>
     <string name="PaymentsRecoveryPhraseFragment__write_down_the_following_d_words">Schrijf de volgende %1$d woorden op in dezelfde volgorde en bewaar ze op een veilige plaats.</string>
     <string name="PaymentsRecoveryPhraseFragment__make_sure_youve_entered">Ga na dat je je zin juist hebt ingevuld.</string>
@@ -4232,7 +4237,7 @@
     <!-- ChangeNumberConfirmFragment -->
     <string name="ChangeNumberConfirmFragment__change_number">Telefoonnummer wijzigen</string>
     <string name="ChangeNumberConfirmFragment__you_are_about_to_change_your_phone_number_from_s_to_s">Je staat op het punt het telefoonnummer waarmee je geregistreerd staat te wijzigen van %1$s naar %2$s.\n\nGa na dat het telefoonnummer hieronder juist is voordat je verder gaat.</string>
-    <string name="ChangeNumberConfirmFragment__edit_number">Onjuist telefoonnummer aanpassen</string>
+    <string name="ChangeNumberConfirmFragment__edit_number">Onjuist telefoonnummer bewerken</string>
 
     <!-- ChangeNumberRegistrationLockFragment -->
     <string name="ChangeNumberRegistrationLockFragment__signal_change_number_need_help_with_pin_for_android_v2_pin">Telefoonnummer voor Signal veranderen - Hulp nodig bij met de pincode (pincode-versie 2)</string>
@@ -4374,7 +4379,7 @@
     <string name="ChatColorSelectionFragment__auto">Auto</string>
     <string name="ChatColorSelectionFragment__use_custom_colors">Zelfgekozen kleur gebruiken</string>
     <string name="ChatColorSelectionFragment__chat_color">Chatkleur</string>
-    <string name="ChatColorSelectionFragment__edit">Aanpassen</string>
+    <string name="ChatColorSelectionFragment__edit">Bewerken</string>
     <string name="ChatColorSelectionFragment__duplicate">Kopie maken</string>
     <string name="ChatColorSelectionFragment__delete">Wissen</string>
     <string name="ChatColorSelectionFragment__delete_color">Kleur wissen</string>
@@ -4392,7 +4397,7 @@
 
     <!-- CustomChatColorCreatorFragmentPage -->
     <string name="CustomChatColorCreatorFragmentPage__save">Opslaan</string>
-    <string name="CustomChatColorCreatorFragmentPage__edit_color">Kleur aanpassen</string>
+    <string name="CustomChatColorCreatorFragmentPage__edit_color">Kleur bewerken</string>
     <plurals name="CustomChatColorCreatorFragmentPage__this_color_is_used">
         <item quantity="one">Deze kleur wordt in %1$d chat gebruikt. Wil je de wijziging ook op dat chat toepassen?</item>
         <item quantity="other">Deze kleur wordt in %1$d chats gebruikt. Wil je de wijziging ook op die chats toepassen?</item>
@@ -4646,7 +4651,7 @@
     <string name="ImageEditorHud__write_text">Schrijf tekst</string>
     <string name="ImageEditorHud__add_a_sticker">Een sticker toevoegen</string>
     <string name="ImageEditorHud__blur">Vervagen</string>
-    <string name="ImageEditorHud__done_editing">Aanpassingen klaar</string>
+    <string name="ImageEditorHud__done_editing">Bewerkingen klaar</string>
     <string name="ImageEditorHud__clear_all">Alles wissen</string>
     <string name="ImageEditorHud__undo">Ongedaan maken</string>
     <string name="ImageEditorHud__toggle_between_marker_and_highlighter">Schakelen tussen stift en markeerstift</string>
@@ -5919,7 +5924,7 @@
     <!-- Popup menu label for applying spoiler style -->
     <string name="TextFormatting_spoiler">Spoiler</string>
     <!-- Popup menu label for clearing applied formatting -->
-    <string name="TextFormatting_clear_formatting">Clear formatting</string>
+    <string name="TextFormatting_clear_formatting">Opmaak wissen</string>
 
     <!-- UsernameEducationFragment -->
     <!-- Continue button which takes the user to the add a username screen -->
@@ -6017,14 +6022,12 @@
     <string name="CallLogFragment__filtered_by_missed">Gefilterd op gemist</string>
     <!-- Bottom bar option to select all call entries -->
     <string name="CallLogFragment__select_all">Alles selecteren</string>
-    <!-- Bottom bar option to delete all selected call entries -->
+    <!-- Bottom bar option to delete all selected call entries and dialog action to confirm deletion -->
     <string name="CallLogFragment__delete">Wissen</string>
     <plurals name="CallLogFragment__delete_d_calls">
         <item quantity="one">%1$d oproep verwijderen?</item>
         <item quantity="other">%1$d oproepen verwijderen?</item>
     </plurals>
-    <!-- Positive action on multi-delete protection dialog -->
-    <string name="CallLogFragment__delete_for_me">Voor mij wissen</string>
     <!-- Snackbar label after deleting call logs -->
     <plurals name="CallLogFragment__d_calls_deleted">
         <item quantity="one">%1$d oproep verwijderd</item>
@@ -6115,7 +6118,7 @@
     <string name="ChooseNavigationBarStyleFragment__compact">Compact</string>
 
     <!-- Title shown at top of bottom sheet dialog for displaying a message\'s edit history -->
-    <string name="EditMessageHistoryDialog_title">Bewerkgeschiedenis</string>
+    <string name="EditMessageHistoryDialog_title">Bewerkingsgeschiedenis</string>
     <!-- Title of dialog shown alerting user that edit message is in beta only -->
     <string name="SendingEditMessageBetaOnlyDialog_title">Alleen Signal-bèta</string>
     <!-- Body of dialog shown alerting user that edit message is in beta only and only sent to beta users. -->
