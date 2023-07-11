@@ -811,6 +811,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
   }
 
@@ -840,6 +841,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> 17c88722b3 (Added extra options)
+||||||| parent of cdbbc46ede (Added extra options)
+    return getBoolean(EDIT_MESSAGE_SEND, false);
+=======
+    return true; // JW
+>>>>>>> cdbbc46ede (Added extra options)
   }
 
   /**
