@@ -558,6 +558,7 @@ public final class FeatureFlags {
    * Here be dragons.
    */
   public static boolean hideContacts() {
+<<<<<<< HEAD
     return true; // JW
   }
 
@@ -566,6 +567,11 @@ public final class FeatureFlags {
    */
   public static boolean creditCardPayments() {
     return getBoolean(CREDIT_CARD_PAYMENTS, Environment.IS_STAGING);
+||||||| parent of 83146b3342 (Added extra options)
+    return getBoolean(HIDE_CONTACTS, false);
+=======
+    return true; // JW
+>>>>>>> 83146b3342 (Added extra options)
   }
 
   /** Whether client supports sending a request to another to activate payments */
@@ -812,6 +818,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
   }
 
@@ -846,6 +853,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> cdbbc46ede (Added extra options)
+||||||| parent of 83146b3342 (Added extra options)
+    return getBoolean(EDIT_MESSAGE_SEND, false);
+=======
+    return true; // JW
+>>>>>>> 83146b3342 (Added extra options)
   }
 
   /**
