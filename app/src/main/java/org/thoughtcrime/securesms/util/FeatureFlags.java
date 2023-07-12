@@ -635,6 +635,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return true; // JW
 ||||||| parent of 66c339aa35 (Added extra options)
     return getBoolean(HIDE_CONTACTS, false);
@@ -803,6 +804,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| parent of 83146b3342 (Added extra options)
+    return getBoolean(HIDE_CONTACTS, false);
+=======
+    return true; // JW
+>>>>>>> 83146b3342 (Added extra options)
   }
 
   /** Whether client supports sending a request to another to activate payments */
@@ -1171,6 +1177,7 @@ public final class FeatureFlags {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     return getBoolean(EDIT_MESSAGE_SEND, false);
 =======
   public static boolean editMessageSending() {
@@ -1191,6 +1198,11 @@ public final class FeatureFlags {
 =======
     return true; // JW
 >>>>>>> 17c88722b3 (Added extra options)
+||||||| parent of 83146b3342 (Added extra options)
+    return getBoolean(EDIT_MESSAGE_SEND, false);
+=======
+    return true; // JW
+>>>>>>> 83146b3342 (Added extra options)
   }
 
   public static boolean editMessageSending() {
