@@ -552,6 +552,7 @@ import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 >>>>>>> d8cd38511b (Added extra options)
 ||||||| parent of 664145031f (Added extra options)
 import org.thoughtcrime.securesms.util.MediaUtil;
+import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
 import org.thoughtcrime.securesms.util.views.SimpleProgressDialog;
 =======
