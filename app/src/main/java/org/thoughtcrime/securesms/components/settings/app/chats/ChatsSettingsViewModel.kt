@@ -45,6 +45,7 @@ import org.thoughtcrime.securesms.util.Util
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.util.UriUtils // JW: added
 >>>>>>> 66c339aa35 (Added extra options)
 ||||||| parent of 775ec008cc (Added extra options)
@@ -163,6 +164,10 @@ import org.thoughtcrime.securesms.util.UriUtils // JW: added
 =======
 import org.thoughtcrime.securesms.util.UriUtils // JW: added
 >>>>>>> 83146b3342 (Added extra options)
+||||||| parent of 6eb21e79f1 (Added extra options)
+=======
+import org.thoughtcrime.securesms.util.UriUtils // JW: added
+>>>>>>> 6eb21e79f1 (Added extra options)
 import org.thoughtcrime.securesms.util.livedata.Store
 
 class ChatsSettingsViewModel @JvmOverloads constructor(
@@ -218,6 +223,7 @@ class ChatsSettingsViewModel @JvmOverloads constructor(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       // JW: added
       ,
       chatBackupsLocation = TextSecurePreferences.isBackupLocationRemovable(ApplicationDependencies.getApplication()),
@@ -636,6 +642,20 @@ class ChatsSettingsViewModel @JvmOverloads constructor(
       googleMapType = TextSecurePreferences.getGoogleMapType(ApplicationDependencies.getApplication()),
       whoCanAddYouToGroups = TextSecurePreferences.whoCanAddYouToGroups(ApplicationDependencies.getApplication())
 >>>>>>> 83146b3342 (Added extra options)
+||||||| parent of 6eb21e79f1 (Added extra options)
+=======
+      // JW: added
+      ,
+      chatBackupsLocation = TextSecurePreferences.isBackupLocationRemovable(ApplicationDependencies.getApplication()),
+      chatBackupsLocationApi30 = UriUtils.getFullPathFromTreeUri(ApplicationDependencies.getApplication(), SignalStore.settings().signalBackupDirectory),
+      chatBackupZipfile = TextSecurePreferences.isRawBackupInZipfile(ApplicationDependencies.getApplication()),
+      chatBackupZipfilePlain = TextSecurePreferences.isPlainBackupInZipfile(ApplicationDependencies.getApplication()),
+      keepViewOnceMessages = TextSecurePreferences.isKeepViewOnceMessages(ApplicationDependencies.getApplication()),
+      ignoreRemoteDelete = TextSecurePreferences.isIgnoreRemoteDelete(ApplicationDependencies.getApplication()),
+      deleteMediaOnly = TextSecurePreferences.isDeleteMediaOnly(ApplicationDependencies.getApplication()),
+      googleMapType = TextSecurePreferences.getGoogleMapType(ApplicationDependencies.getApplication()),
+      whoCanAddYouToGroups = TextSecurePreferences.whoCanAddYouToGroups(ApplicationDependencies.getApplication())
+>>>>>>> 6eb21e79f1 (Added extra options)
     )
   )
 

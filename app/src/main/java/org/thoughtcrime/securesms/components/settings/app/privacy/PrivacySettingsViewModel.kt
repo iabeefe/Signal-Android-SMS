@@ -157,6 +157,7 @@ class PrivacySettingsViewModel(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       // JW: added
       ,
       isProtectionMethodPassphrase = TextSecurePreferences.isProtectionMethodPassphrase(ApplicationDependencies.getApplication())
@@ -335,6 +336,12 @@ class PrivacySettingsViewModel(
       ,
       isProtectionMethodPassphrase = TextSecurePreferences.isProtectionMethodPassphrase(ApplicationDependencies.getApplication())
 >>>>>>> 83146b3342 (Added extra options)
+||||||| parent of 6eb21e79f1 (Added extra options)
+=======
+      // JW: added
+      ,
+      isProtectionMethodPassphrase = TextSecurePreferences.isProtectionMethodPassphrase(ApplicationDependencies.getApplication())
+>>>>>>> 6eb21e79f1 (Added extra options)
     )
   }
 

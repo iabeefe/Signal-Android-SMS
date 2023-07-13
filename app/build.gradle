@@ -83,6 +83,7 @@ ktlint {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 def canonicalVersionCode = 1232
 def canonicalVersionName = "6.14.5.0-JW-JK"
 ||||||| parent of 775ec008cc (Added extra options)
@@ -344,6 +345,13 @@ def canonicalVersionName = "6.26.0"
 def canonicalVersionCode = 1290
 def canonicalVersionName = "6.26.0.0-JW"
 >>>>>>> 83146b3342 (Added extra options)
+||||||| parent of 6eb21e79f1 (Added extra options)
+def canonicalVersionCode = 1291
+def canonicalVersionName = "6.26.1"
+=======
+def canonicalVersionCode = 1291
+def canonicalVersionName = "6.26.1.0-JW"
+>>>>>>> 6eb21e79f1 (Added extra options)
 
 def postFixSize = 100
 def abiPostFix = ['universal'   : 0,
