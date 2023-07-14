@@ -251,6 +251,10 @@
     <meta-data android:name="android.webkit.WebView.MetricsOptOut"
                android:value="true" />
 
+    <!-- JW: added. This is currently only relevant for captchas. -->
+    <meta-data android:name="android.webkit.WebView.MetricsOptOut"
+               android:value="true" />
+
     <activity android:name=".WebRtcCallActivity"
               android:theme="@style/TextSecure.DarkTheme.WebRTCCall"
               android:excludeFromRecents="true"
@@ -831,6 +835,7 @@
 ||||||| parent of 83146b3342 (Added extra options)
               android:theme="@style/TextSecure.LightIntroTheme"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
               android:theme="@style/TextSecure.LightIntroTheme"
               android:windowSoftInputMode="stateAlwaysVisible"
@@ -839,6 +844,10 @@
 =======
               android:windowSoftInputMode="stateAlwaysVisible"
 >>>>>>> 6eb21e79f1 (Added extra options)
+||||||| parent of 39e2fc1d92 (Added extra options)
+=======
+              android:windowSoftInputMode="stateAlwaysVisible"
+>>>>>>> 39e2fc1d92 (Added extra options)
               android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"
               android:exported="false"/>
 =======
@@ -846,6 +855,14 @@
               android:windowSoftInputMode="stateAlwaysVisible"
               android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"/>
 >>>>>>> 66c339aa35 (Added extra options)
+
+    <!-- JW: Add activity used in plaintext backup import / export -->
+    <activity android:name=".ImportExportActivity"
+              android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"/>
+
+    <!-- JW: Add activity used in encrypted backup import -->
+    <activity android:name=".ExitActivity"
+              android:theme="@android:style/Theme.NoDisplay" />
 
     <!-- JW: Add activity used in plaintext backup import / export -->
     <activity android:name=".ImportExportActivity"
