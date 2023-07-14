@@ -2094,6 +2094,7 @@ object DataMessageProcessor {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         isViewOnce = viewOnce, // JW
 ||||||| parent of f050803628 (Added extra options)
         isViewOnce = message.isViewOnce,
@@ -2205,6 +2206,11 @@ object DataMessageProcessor {
 =======
         isViewOnce = viewOnce, // JW
 >>>>>>> 6eb21e79f1 (Added extra options)
+||||||| parent of 39e2fc1d92 (Added extra options)
+        isViewOnce = message.isViewOnce,
+=======
+        isViewOnce = viewOnce, // JW
+>>>>>>> 39e2fc1d92 (Added extra options)
         isUnidentified = metadata.sealedSender,
         body = message.body.ifEmpty { null },
         groupId = groupId,
@@ -2235,6 +2241,7 @@ object DataMessageProcessor {
 
       forceStickerDownloadIfNecessary(context, insertResult.messageId, stickerAttachments)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2637,6 +2644,16 @@ object DataMessageProcessor {
       }
       if (viewOnce) { // JW
 >>>>>>> 6eb21e79f1 (Added extra options)
+||||||| parent of 39e2fc1d92 (Added extra options)
+        if (message.isViewOnce) {
+=======
+      // JW: add a [1] reaction to indicate the message was sent as viewOnce.
+      if (TextSecurePreferences.isKeepViewOnceMessages(context) && message.isViewOnce) {
+        val targetMessage = SignalDatabase.messages.getMessageRecordOrNull(insertResult.messageId)
+        setMessageReaction(context, message, targetMessage, "\u0031\uFE0F\u20E3")
+      }
+      if (viewOnce) { // JW
+>>>>>>> 39e2fc1d92 (Added extra options)
           ApplicationDependencies.getViewOnceMessageManager().scheduleIfNecessary()
         }
 =======

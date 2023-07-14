@@ -352,6 +352,7 @@ import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 >>>>>>> c58d43568c (Added extra options)
 ||||||| parent of 17c88722b3 (Added extra options)
 import org.thoughtcrime.securesms.util.MediaUtil;
+import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
 import org.thoughtcrime.securesms.util.views.SimpleProgressDialog;
 =======
