@@ -61,6 +61,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- JW: override for Android 10. For Android 11 we switch to the MANAGE_EXTERNAL_STORAGE permission. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
@@ -332,6 +333,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 >>>>>>> 20d7d2eb03 (Added extra options)
+||||||| parent of 6b57469a94 (Added extra options)
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+                     android:maxSdkVersion="28" />
+=======
+    <!-- JW: override for Android 10. For Android 11 we switch to the MANAGE_EXTERNAL_STORAGE permission. -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+>>>>>>> 6b57469a94 (Added extra options)
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -426,6 +435,10 @@
     <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
     <meta-data android:name="firebase_messaging_auto_init_enabled" android:value="false" />
     <meta-data android:name="android.webkit.WebView.MetricsOptOut" android:value="true" />
+
+    <!-- JW: added. This is currently only relevant for captchas. -->
+    <meta-data android:name="android.webkit.WebView.MetricsOptOut"
+               android:value="true" />
 
     <!-- JW: added. This is currently only relevant for captchas. -->
     <meta-data android:name="android.webkit.WebView.MetricsOptOut"
@@ -1315,6 +1328,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
               android:theme="@style/TextSecure.LightIntroTheme"
               android:windowSoftInputMode="stateAlwaysVisible"
@@ -1351,6 +1365,10 @@
 =======
               android:windowSoftInputMode="stateAlwaysVisible"
 >>>>>>> 20d7d2eb03 (Added extra options)
+||||||| parent of 6b57469a94 (Added extra options)
+=======
+              android:windowSoftInputMode="stateAlwaysVisible"
+>>>>>>> 6b57469a94 (Added extra options)
               android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"
               android:exported="false"/>
 =======
@@ -1466,6 +1484,14 @@
 >>>>>>> 17c88722b3 (Added extra options)
               android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"/>
 >>>>>>> 66c339aa35 (Added extra options)
+
+    <!-- JW: Add activity used in plaintext backup import / export -->
+    <activity android:name=".ImportExportActivity"
+              android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"/>
+
+    <!-- JW: Add activity used in encrypted backup import -->
+    <activity android:name=".ExitActivity"
+              android:theme="@android:style/Theme.NoDisplay" />
 
     <!-- JW: Add activity used in plaintext backup import / export -->
     <activity android:name=".ImportExportActivity"
