@@ -108,6 +108,7 @@ import org.whispersystems.signalservice.internal.push.SignalServiceProtos.StoryM
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.SyncMessage
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.SyncMessage.Blocked
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.SyncMessage.CallLinkUpdate
+import org.whispersystems.signalservice.internal.push.SignalServiceProtos.SyncMessage.CallLogEvent
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.SyncMessage.Configuration
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.SyncMessage.FetchLatest
 import org.whispersystems.signalservice.internal.push.SignalServiceProtos.SyncMessage.MessageRequestResponse
@@ -150,6 +151,7 @@ object SyncMessageProcessor {
       syncMessage.hasContacts() -> handleSynchronizeContacts(syncMessage.contacts, envelope.timestamp)
       syncMessage.hasCallEvent() -> handleSynchronizeCallEvent(syncMessage.callEvent, envelope.timestamp)
       syncMessage.hasCallLinkUpdate() -> handleSynchronizeCallLink(syncMessage.callLinkUpdate, envelope.timestamp)
+      syncMessage.hasCallLogEvent() -> handleSynchronizeCallLogEvent(syncMessage.callLogEvent, envelope.timestamp)
       else -> warn(envelope.timestamp, "Contains no known sync types...")
     }
   }
@@ -238,7 +240,7 @@ object SyncMessageProcessor {
     return if (message.message.hasGroupContext) {
       Recipient.externalPossiblyMigratedGroup(GroupId.v2(message.message.groupV2.groupMasterKey))
     } else {
-      Recipient.externalPush(SignalServiceAddress(ServiceId.parseOrThrow(message.destinationUuid), message.destinationE164))
+      Recipient.externalPush(SignalServiceAddress(ServiceId.parseOrThrow(message.destinationServiceId), message.destinationE164))
     }
   }
 
@@ -265,7 +267,7 @@ object SyncMessageProcessor {
       val toRecipient: Recipient = if (message.hasGroupContext) {
         Recipient.externalPossiblyMigratedGroup(GroupId.v2(message.groupV2.groupMasterKey))
       } else {
-        Recipient.externalPush(ServiceId.parseOrThrow(sent.destinationUuid))
+        Recipient.externalPush(ServiceId.parseOrThrow(sent.destinationServiceId))
       }
       if (message.isMediaMessage) {
         handleSynchronizeSentEditMediaMessage(context, targetMessage, toRecipient, sent, message, envelope.timestamp)
@@ -287,7 +289,7 @@ object SyncMessageProcessor {
     log(envelopeTimestamp, "Synchronize sent edit text message for message: ${targetMessage.id}")
 
     val body = message.body ?: ""
-    val bodyRanges = message.bodyRangesList.filterNot { it.hasMentionUuid() }.toBodyRangeList()
+    val bodyRanges = message.bodyRangesList.filterNot { it.hasMentionAci() }.toBodyRangeList()
 
     val threadId = SignalDatabase.threads.getOrCreateThreadIdFor(toRecipient)
     val isGroup = toRecipient.isGroup
@@ -637,7 +639,7 @@ object SyncMessageProcessor {
     try {
       val reaction: DataMessage.Reaction = sent.message.reaction
       val parentStoryId: ParentStoryId
-      val authorServiceId: ServiceId = ServiceId.parseOrThrow(sent.message.storyContext.authorUuid)
+      val authorServiceId: ServiceId = ServiceId.parseOrThrow(sent.message.storyContext.authorAci)
       val sentTimestamp: Long = sent.message.storyContext.sentTimestamp
       val recipient: Recipient = getSyncMessageDestination(sent)
       var quoteModel: QuoteModel? = null
@@ -812,7 +814,7 @@ object SyncMessageProcessor {
     val recipient = getSyncMessageDestination(sent)
     val body = sent.message.body ?: ""
     val expiresInMillis = sent.message.expireTimer.seconds.inWholeMilliseconds
-    val bodyRanges = sent.message.bodyRangesList.filterNot { it.hasMentionUuid() }.toBodyRangeList()
+    val bodyRanges = sent.message.bodyRangesList.filterNot { it.hasMentionAci() }.toBodyRangeList()
 
     if (recipient.expiresInSeconds != sent.message.expireTimer) {
       handleSynchronizeSentExpirationUpdate(sent, sideEffect = true)
@@ -923,7 +925,7 @@ object SyncMessageProcessor {
 
     val records = viewedMessages
       .mapNotNull { message ->
-        val author = Recipient.externalPush(ServiceId.parseOrThrow(message.senderUuid)).id
+        val author = Recipient.externalPush(ServiceId.parseOrThrow(message.senderAci)).id
         SignalDatabase.messages.getMessageFor(message.timestamp, author)
       }
 
@@ -951,7 +953,7 @@ object SyncMessageProcessor {
     if (TextSecurePreferences.isKeepViewOnceMessages(context)) return // JW
     log(envelopeTimestamp, "Handling a view-once open for message: " + openMessage.timestamp)
 
-    val author: RecipientId = Recipient.externalPush(ServiceId.parseOrThrow(openMessage.senderUuid)).id
+    val author: RecipientId = Recipient.externalPush(ServiceId.parseOrThrow(openMessage.senderAci)).id
     val timestamp: Long = openMessage.timestamp
     val record: MessageRecord? = SignalDatabase.messages.getMessageFor(timestamp, author)
 
@@ -1020,7 +1022,7 @@ object SyncMessageProcessor {
   }
 
   private fun handleSynchronizeBlockedListMessage(blockMessage: Blocked) {
-    val addresses: List<SignalServiceAddress> = blockMessage.uuidsList.mapNotNull { SignalServiceAddress.fromRaw(it, null).orNull() }
+    val addresses: List<SignalServiceAddress> = blockMessage.acisList.mapNotNull { SignalServiceAddress.fromRaw(it, null).orNull() }
     val groupIds: List<ByteArray> = blockMessage.groupIdsList.mapNotNull { it.toByteArray() }
 
     SignalDatabase.recipients.applyBlockedUpdate(addresses, groupIds)
@@ -1040,8 +1042,8 @@ object SyncMessageProcessor {
   private fun handleSynchronizeMessageRequestResponse(response: MessageRequestResponse, envelopeTimestamp: Long) {
     log(envelopeTimestamp, "Synchronize message request response.")
 
-    val recipient: Recipient = if (response.hasThreadUuid()) {
-      Recipient.externalPush(ServiceId.parseOrThrow(response.threadUuid))
+    val recipient: Recipient = if (response.hasThreadAci()) {
+      Recipient.externalPush(ServiceId.parseOrThrow(response.threadAci))
     } else if (response.hasGroupId()) {
       val groupId: GroupId = GroupId.push(response.groupId)
       Recipient.externalPossiblyMigratedGroup(groupId)
@@ -1084,7 +1086,7 @@ object SyncMessageProcessor {
       return
     }
 
-    var recipientId: RecipientId? = ServiceId.parseOrNull(outgoingPayment.recipientUuid)?.let { RecipientId.from(it) }
+    var recipientId: RecipientId? = ServiceId.parseOrNull(outgoingPayment.recipientServiceId)?.let { RecipientId.from(it) }
 
     var timestamp = outgoingPayment.mobileCoin.ledgerBlockTimestamp
     if (timestamp == 0L) {
@@ -1163,6 +1165,16 @@ object SyncMessageProcessor {
     }
   }
 
+  private fun handleSynchronizeCallLogEvent(callLogEvent: CallLogEvent, envelopeTimestamp: Long) {
+    if (callLogEvent.type != CallLogEvent.Type.CLEAR) {
+      log(envelopeTimestamp, "Synchronize call log event has an invalid type ${callLogEvent.type}, ignoring.")
+      return
+    }
+
+    SignalDatabase.calls.deleteNonAdHocCallEventsOnOrBefore(callLogEvent.timestamp)
+    SignalDatabase.callLinks.deleteNonAdminCallLinksOnOrBefore(callLogEvent.timestamp)
+  }
+
   private fun handleSynchronizeCallLink(callLinkUpdate: CallLinkUpdate, envelopeTimestamp: Long) {
     if (!callLinkUpdate.hasRootKey()) {
       log(envelopeTimestamp, "Synchronize call link missing root key, ignoring.")
@@ -1186,21 +1198,20 @@ object SyncMessageProcessor {
           callLinkUpdate.adminPassKey?.toByteArray()
         )
       )
-
-      return
-    }
-
-    SignalDatabase.callLinks.insertCallLink(
-      CallLinkTable.CallLink(
-        recipientId = RecipientId.UNKNOWN,
-        roomId = roomId,
-        credentials = CallLinkCredentials(
-          linkKeyBytes = callLinkRootKey.keyBytes,
-          adminPassBytes = callLinkUpdate.adminPassKey?.toByteArray()
-        ),
-        state = SignalCallLinkState()
+    } else {
+      log(envelopeTimestamp, "Synchronize call link for a link we do not know about. Inserting.")
+      SignalDatabase.callLinks.insertCallLink(
+        CallLinkTable.CallLink(
+          recipientId = RecipientId.UNKNOWN,
+          roomId = roomId,
+          credentials = CallLinkCredentials(
+            linkKeyBytes = callLinkRootKey.keyBytes,
+            adminPassBytes = callLinkUpdate.adminPassKey?.toByteArray()
+          ),
+          state = SignalCallLinkState()
+        )
       )
-    )
+    }
 
     ApplicationDependencies.getJobManager().add(RefreshCallLinkDetailsJob(callLinkUpdate))
   }
