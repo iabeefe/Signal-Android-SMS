@@ -403,6 +403,7 @@ def canonicalVersionName = "6.26.2.0-JW"
 >>>>>>> 39e2fc1d92 (Added extra options)
 ||||||| parent of 20d7d2eb03 (Added extra options)
 def canonicalVersionCode = 1298
+<<<<<<< HEAD
 def canonicalVersionName = "6.27.4"
 =======
 def canonicalVersionCode = 1298
@@ -626,6 +627,11 @@ def canonicalVersionName = "6.26.2"
 =======
 def canonicalVersionName = "6.26.2.0-JW"
 >>>>>>> 39e2fc1d92 (Added extra options)
+||||||| parent of 20d7d2eb03 (Added extra options)
+def canonicalVersionName = "6.27.4"
+=======
+def canonicalVersionName = "6.27.4.0-JW"
+>>>>>>> 20d7d2eb03 (Added extra options)
 
 def postFixSize = 100
 def abiPostFix = ['universal'   : 0,
@@ -754,6 +760,7 @@ android {
 
         manifestPlaceholders = [mapsKey:"AIzaSyCSx9xea86GwDKGznCAULE9Y5a8b-TfN9U"]
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1007,6 +1014,13 @@ android {
         buildConfigField "long", "BUILD_TIMESTAMP", "1000L" // JW: fixed time for reproducible builds, is not used anyway
         buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
 >>>>>>> 39e2fc1d92 (Added extra options)
+||||||| parent of 20d7d2eb03 (Added extra options)
+        buildConfigField "long", "BUILD_TIMESTAMP", getLastCommitTimestamp() + "L"
+        buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
+=======
+        buildConfigField "long", "BUILD_TIMESTAMP", "1000L" // JW: fixed time for reproducible builds, is not used anyway
+        buildConfigField "String", "GIT_HASH", "\"000000\"" // JW: empty string, I don't build from a repository
+>>>>>>> 20d7d2eb03 (Added extra options)
         buildConfigField "String", "SIGNAL_URL", "\"https://chat.signal.org\""
         buildConfigField "String", "STORAGE_URL", "\"https://storage.signal.org\""
         buildConfigField "String", "SIGNAL_CDN_URL", "\"https://cdn.signal.org\""
@@ -1374,6 +1388,7 @@ dependencies {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     implementation 'net.lingala.zip4j:zip4j:2.11.5' // JW: added
 ||||||| parent of 4783e1bcc9 (Bumped to upstream version 6.17.0.0-JW.)
     implementation libs.androidx.core.ktx
@@ -1490,6 +1505,10 @@ dependencies {
 =======
     implementation 'net.lingala.zip4j:zip4j:2.11.5' // JW: added
 >>>>>>> 39e2fc1d92 (Added extra options)
+||||||| parent of 20d7d2eb03 (Added extra options)
+=======
+    implementation 'net.lingala.zip4j:zip4j:2.11.5' // JW: added
+>>>>>>> 20d7d2eb03 (Added extra options)
     implementation libs.androidx.fragment.ktx
     lintChecks project(':lintchecks')
 

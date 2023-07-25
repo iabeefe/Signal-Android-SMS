@@ -50,6 +50,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- JW: added LinearLayout with buttons -->
     <LinearLayout
         android:layout_width="wrap_content"
@@ -1129,6 +1130,41 @@
     </LinearLayout>
 
 >>>>>>> 39e2fc1d92 (Added extra options)
+||||||| parent of 20d7d2eb03 (Added extra options)
+=======
+    <!-- JW: added LinearLayout with buttons -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="140dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/btnMapTypeNormal"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/preferences__map_normal" />
+
+        <Button
+            android:id="@+id/btnMapTypeSatellite"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/preferences__map_satellite" />
+
+        <Button
+            android:id="@+id/btnMapTypeTerrain"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/preferences__map_terrain" />
+    </LinearLayout>
+
+>>>>>>> 20d7d2eb03 (Added extra options)
     <ImageView
         android:id="@+id/marker_shadow_image_view"
         android:layout_width="wrap_content"
