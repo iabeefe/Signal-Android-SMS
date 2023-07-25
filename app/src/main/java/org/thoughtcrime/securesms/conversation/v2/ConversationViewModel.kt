@@ -48,6 +48,7 @@ import org.thoughtcrime.securesms.database.model.StoryViewState
 import org.thoughtcrime.securesms.database.model.databaseprotos.BodyRangeList
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
 import org.thoughtcrime.securesms.jobs.RetrieveProfileJob
+import org.thoughtcrime.securesms.keyboard.KeyboardUtil
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.linkpreview.LinkPreview
 import org.thoughtcrime.securesms.messagerequests.MessageRequestRepository
@@ -71,7 +72,7 @@ import kotlin.time.Duration
  * ConversationViewModel, which operates solely off of a thread id that never changes.
  */
 class ConversationViewModel(
-  private val threadId: Long,
+  val threadId: Long,
   requestedStartingPosition: Int,
   private val repository: ConversationRepository,
   recipientRepository: ConversationRecipientRepository,
@@ -88,6 +89,8 @@ class ConversationViewModel(
     .observeOn(AndroidSchedulers.mainThread())
   val showScrollButtonsSnapshot: Boolean
     get() = scrollButtonStateStore.state.showScrollButtons
+  val unreadCount: Int
+    get() = scrollButtonStateStore.state.unreadCount
 
   val recipient: Observable<Recipient> = recipientRepository.conversationRecipient
 
@@ -110,6 +113,9 @@ class ConversationViewModel(
   var recipientSnapshot: Recipient? = null
     private set
 
+  val isPushAvailable: Boolean
+    get() = recipientSnapshot?.isRegistered == true && Recipient.self().isRegistered
+
   val wallpaperSnapshot: ChatWallpaper?
     get() = recipientSnapshot?.wallpaper
 
@@ -124,7 +130,10 @@ class ConversationViewModel(
   val reminder: Observable<Optional<Reminder>>
 
   private val refreshIdentityRecords: Subject<Unit> = PublishSubject.create()
-  val identityRecords: Observable<IdentityRecordsState>
+  private val identityRecordsStore: RxStore<IdentityRecordsState> = RxStore(IdentityRecordsState())
+  val identityRecordsObservable: Observable<IdentityRecordsState> = identityRecordsStore.stateFlowable.toObservable()
+  val identityRecordsState: IdentityRecordsState
+    get() = identityRecordsStore.state
 
   private val _searchQuery = BehaviorSubject.createDefault("")
   val searchQuery: Observable<String> = _searchQuery
@@ -216,13 +225,17 @@ class ConversationViewModel(
       .flatMapMaybe { groupRecord -> repository.getReminder(groupRecord.orNull()) }
       .observeOn(AndroidSchedulers.mainThread())
 
-    identityRecords = Observable.combineLatest(
+    Observable.combineLatest(
       refreshIdentityRecords.startWithItem(Unit).observeOn(Schedulers.io()),
       recipient,
       recipientRepository.groupRecord
     ) { _, r, g -> Pair(r, g) }
+      .subscribeOn(Schedulers.io())
       .flatMapSingle { (r, g) -> repository.getIdentityRecords(r, g.orNull()) }
-      .distinctUntilChanged()
+      .subscribeBy { newState ->
+        identityRecordsStore.update { newState }
+      }
+      .addTo(disposables)
   }
 
   fun setSearchQuery(query: String?) {
@@ -251,8 +264,13 @@ class ConversationViewModel(
     return repository.getNextMentionPosition(threadId)
   }
 
+  fun moveToMessage(dateReceived: Long, author: RecipientId): Single<Int> {
+    return repository.getMessagePosition(threadId, dateReceived, author)
+      .observeOn(AndroidSchedulers.mainThread())
+  }
+
   fun moveToMessage(messageRecord: MessageRecord): Single<Int> {
-    return repository.getMessagePosition(threadId, messageRecord)
+    return repository.getMessagePosition(threadId, messageRecord.dateReceived, messageRecord.fromRecipient.id)
       .observeOn(AndroidSchedulers.mainThread())
   }
 
@@ -310,12 +328,17 @@ class ConversationViewModel(
     }
   }
 
+  fun getKeyboardImageDetails(uri: Uri): Maybe<KeyboardUtil.ImageDetails> {
+    return repository.getKeyboardImageDetails(uri)
+  }
+
   private fun MessageRecord.oldReactionRecord(): ReactionRecord? {
     return reactions.firstOrNull { it.author == Recipient.self().id }
   }
 
   fun sendMessage(
     metricId: String?,
+    threadRecipient: Recipient,
     body: String,
     slideDeck: SlideDeck?,
     scheduledDate: Long,
@@ -325,11 +348,12 @@ class ConversationViewModel(
     bodyRanges: BodyRangeList?,
     contacts: List<Contact>,
     linkPreviews: List<LinkPreview>,
-    preUploadResults: List<MessageSender.PreUploadResult>
+    preUploadResults: List<MessageSender.PreUploadResult>,
+    isViewOnce: Boolean
   ): Completable {
     return repository.sendMessage(
       threadId = threadId,
-      threadRecipient = recipientSnapshot,
+      threadRecipient = threadRecipient,
       metricId = metricId,
       body = body,
       slideDeck = slideDeck,
@@ -340,7 +364,8 @@ class ConversationViewModel(
       bodyRanges = bodyRanges,
       contacts = contacts,
       linkPreviews = linkPreviews,
-      preUploadResults = preUploadResults
+      preUploadResults = preUploadResults,
+      isViewOnce = isViewOnce
     ).observeOn(AndroidSchedulers.mainThread())
   }
 
@@ -351,8 +376,22 @@ class ConversationViewModel(
       }
   }
 
-  fun updateIdentityRecords() {
+  fun updateIdentityRecordsInBackground() {
     refreshIdentityRecords.onNext(Unit)
+  }
+
+  fun updateIdentityRecords(): Completable {
+    val state: IdentityRecordsState = identityRecordsStore.state
+    if (state.recipient == null) {
+      return Completable.error(IllegalStateException("No recipient in records store"))
+    }
+
+    return repository.getIdentityRecords(state.recipient, state.group)
+      .doOnSuccess { newState ->
+        identityRecordsStore.update { newState }
+      }
+      .flatMapCompletable { Completable.complete() }
+      .observeOn(AndroidSchedulers.mainThread())
   }
 
   fun getTemporaryViewOnceUri(mmsMessageRecord: MmsMessageRecord): Maybe<Uri> {
@@ -394,5 +433,9 @@ class ConversationViewModel(
     return scheduledMessagesRepository
       .getScheduledMessageCount(threadId)
       .observeOn(AndroidSchedulers.mainThread())
+  }
+
+  fun markLastSeen() {
+    repository.markLastSeen(threadId)
   }
 }
