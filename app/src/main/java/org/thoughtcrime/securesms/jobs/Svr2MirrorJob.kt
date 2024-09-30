@@ -6,17 +6,19 @@ package org.thoughtcrime.securesms.jobs
 
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.BuildConfig
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.JsonJobData
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.pin.Svr3Migration
 import org.thoughtcrime.securesms.pin.SvrRepository
-import org.thoughtcrime.securesms.util.FeatureFlags
+import org.whispersystems.signalservice.api.push.exceptions.NonSuccessfulResponseCodeException
 import org.whispersystems.signalservice.api.svr.SecureValueRecovery.BackupResponse
 import org.whispersystems.signalservice.api.svr.SecureValueRecovery.PinChangeSession
 import org.whispersystems.signalservice.api.svr.SecureValueRecoveryV2
 import kotlin.concurrent.withLock
+import kotlin.time.Duration.Companion.days
 
 /**
  * Ensures a user's SVR data is written to SVR2.
@@ -34,7 +36,7 @@ class Svr2MirrorJob private constructor(parameters: Parameters, private var seri
   constructor() : this(
     Parameters.Builder()
       .addConstraint(NetworkConstraint.KEY)
-      .setLifespan(Parameters.IMMORTAL)
+      .setLifespan(30.days.inWholeMilliseconds)
       .setMaxAttempts(Parameters.UNLIMITED)
       .setQueue("Svr2MirrorJob")
       .setMaxInstancesForFactory(1)
@@ -52,10 +54,15 @@ class Svr2MirrorJob private constructor(parameters: Parameters, private var seri
   override fun getFactoryKey(): String = KEY
 
   override fun run(): Result {
-    SvrRepository.operationLock.withLock {
-      val pin = SignalStore.svr().pin
+    if (!Svr3Migration.shouldWriteToSvr2) {
+      Log.w(TAG, "Writes to SVR2 are disabled. Skipping.")
+      return Result.success()
+    }
 
-      if (SignalStore.svr().hasOptedOut()) {
+    SvrRepository.operationLock.withLock {
+      val pin = SignalStore.svr.pin
+
+      if (SignalStore.svr.hasOptedOut()) {
         Log.w(TAG, "Opted out of SVR! Nothing to migrate.")
         return Result.success()
       }
@@ -65,29 +72,29 @@ class Svr2MirrorJob private constructor(parameters: Parameters, private var seri
         return Result.success()
       }
 
-      if (!FeatureFlags.svr2()) {
-        Log.w(TAG, "SVR2 was disabled! SKipping.")
-        return Result.success()
-      }
-
-      val svr2: SecureValueRecoveryV2 = ApplicationDependencies.getSignalServiceAccountManager().getSecureValueRecoveryV2(BuildConfig.SVR2_MRENCLAVE)
+      val svr2: SecureValueRecoveryV2 = AppDependencies.signalServiceAccountManager.getSecureValueRecoveryV2(BuildConfig.SVR2_MRENCLAVE)
 
       val session: PinChangeSession = serializedChangeSession?.let { session ->
-        svr2.resumePinChangeSession(pin, SignalStore.svr().getOrCreateMasterKey(), session)
-      } ?: svr2.setPin(pin, SignalStore.svr().getOrCreateMasterKey())
+        svr2.resumePinChangeSession(pin, SignalStore.svr.getOrCreateMasterKey(), session)
+      } ?: svr2.setPin(pin, SignalStore.svr.getOrCreateMasterKey())
 
       serializedChangeSession = session.serialize()
 
       return when (val response: BackupResponse = session.execute()) {
         is BackupResponse.Success -> {
-          Log.i(TAG, "Successfully migrated to SVR2!")
-          SignalStore.svr().appendAuthTokenToList(response.authorization.asBasic())
-          ApplicationDependencies.getJobManager().add(RefreshAttributesJob())
+          Log.i(TAG, "Successfully migrated to SVR2! $svr2")
+          SignalStore.svr.appendSvr2AuthTokenToList(response.authorization.asBasic())
+          AppDependencies.jobManager.add(RefreshAttributesJob())
           Result.success()
         }
         is BackupResponse.ApplicationError -> {
-          Log.w(TAG, "Hit an application error. Retrying.", response.exception)
-          Result.retry(defaultBackoff())
+          if (response.exception.isUnauthorized()) {
+            Log.w(TAG, "Unauthorized! Giving up.", response.exception)
+            Result.success()
+          } else {
+            Log.w(TAG, "Hit an application error. Retrying.", response.exception)
+            Result.retry(defaultBackoff())
+          }
         }
         BackupResponse.EnclaveNotFound -> {
           Log.w(TAG, "Could not find the enclave. Giving up.")
@@ -107,6 +114,10 @@ class Svr2MirrorJob private constructor(parameters: Parameters, private var seri
         }
       }
     }
+  }
+
+  private fun Throwable.isUnauthorized(): Boolean {
+    return this is NonSuccessfulResponseCodeException && this.code == 401
   }
 
   override fun onFailure() = Unit

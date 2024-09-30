@@ -20,7 +20,7 @@ import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.database.GroupTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.model.GroupRecord;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.groups.ui.GroupMemberEntry;
 import org.thoughtcrime.securesms.groups.v2.GroupInviteLinkUrl;
 import org.thoughtcrime.securesms.groups.v2.GroupLinkUrlAndStatus;
@@ -34,14 +34,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 public final class LiveGroup {
 
   private static final Comparator<GroupMemberEntry.FullMember>         LOCAL_FIRST       = (m1, m2) -> Boolean.compare(m2.getMember().isSelf(), m1.getMember().isSelf());
   private static final Comparator<GroupMemberEntry.FullMember>         ADMIN_FIRST       = (m1, m2) -> Boolean.compare(m2.isAdmin(), m1.isAdmin());
-  private static final Comparator<GroupMemberEntry.FullMember>         HAS_DISPLAY_NAME  = (m1, m2) -> Boolean.compare(m2.getMember().hasAUserSetDisplayName(ApplicationDependencies.getApplication()), m1.getMember().hasAUserSetDisplayName(ApplicationDependencies.getApplication()));
-  private static final Comparator<GroupMemberEntry.FullMember>         ALPHABETICAL      = (m1, m2) -> m1.getMember().getDisplayName(ApplicationDependencies.getApplication()).compareToIgnoreCase(m2.getMember().getDisplayName(ApplicationDependencies.getApplication()));
+  private static final Comparator<GroupMemberEntry.FullMember>         HAS_DISPLAY_NAME  = (m1, m2) -> Boolean.compare(m2.getMember().hasAUserSetDisplayName(AppDependencies.getApplication()), m1.getMember().hasAUserSetDisplayName(AppDependencies.getApplication()));
+  private static final Comparator<GroupMemberEntry.FullMember>         ALPHABETICAL      = (m1, m2) -> m1.getMember().getDisplayName(AppDependencies.getApplication()).compareToIgnoreCase(m2.getMember().getDisplayName(AppDependencies.getApplication()));
   private static final Comparator<? super GroupMemberEntry.FullMember> MEMBER_ORDER      = ComparatorCompat.chain(LOCAL_FIRST)
                                                                                                            .thenComparing(ADMIN_FIRST)
                                                                                                            .thenComparing(HAS_DISPLAY_NAME)
@@ -55,7 +54,7 @@ public final class LiveGroup {
   private final LiveData<GroupLinkUrlAndStatus>                   groupLink;
 
   public LiveGroup(@NonNull GroupId groupId) {
-    Context                        context       = ApplicationDependencies.getApplication();
+    Context                        context       = AppDependencies.getApplication();
     MutableLiveData<LiveRecipient> liveRecipient = new MutableLiveData<>();
 
     this.groupDatabase     = SignalDatabase.groups();
@@ -68,9 +67,9 @@ public final class LiveGroup {
       LiveData<GroupTable.V2GroupProperties> v2Properties = Transformations.map(this.groupRecord, GroupRecord::requireV2GroupProperties);
       this.groupLink = Transformations.map(v2Properties, g -> {
                          DecryptedGroup               group             = g.getDecryptedGroup();
-                         AccessControl.AccessRequired addFromInviteLink = group.getAccessControl().getAddFromInviteLink();
+                         AccessControl.AccessRequired addFromInviteLink = group.accessControl != null ? group.accessControl.addFromInviteLink : new AccessControl().addFromInviteLink;
 
-                         if (group.getInviteLinkPassword().isEmpty()) {
+                         if (group.inviteLinkPassword.size() == 0) {
                            return GroupLinkUrlAndStatus.NONE;
                          }
 
@@ -107,11 +106,11 @@ public final class LiveGroup {
                                    }
 
                                    boolean                         selfAdmin             = g.isAdmin(Recipient.self());
-                                   List<DecryptedRequestingMember> requestingMembersList = g.requireV2GroupProperties().getDecryptedGroup().getRequestingMembersList();
+                                   List<DecryptedRequestingMember> requestingMembersList = g.requireV2GroupProperties().getDecryptedGroup().requestingMembers;
 
                                    return Stream.of(requestingMembersList)
                                                 .map(requestingMember -> {
-                                                  Recipient recipient = Recipient.externalPush(ServiceId.fromByteString(requestingMember.getUuid()));
+                                                  Recipient recipient = Recipient.externalPush(ServiceId.parseOrThrow(requestingMember.aciBytes));
                                                   return new GroupMemberEntry.RequestingMember(recipient, selfAdmin);
                                                 })
                                                 .toList();
@@ -124,7 +123,7 @@ public final class LiveGroup {
       if (!TextUtils.isEmpty(title)) {
         return title;
       }
-      return recipient.getDisplayName(ApplicationDependencies.getApplication());
+      return recipient.getDisplayName(AppDependencies.getApplication());
     });
   }
 
@@ -144,7 +143,7 @@ public final class LiveGroup {
     return Transformations.map(groupRecord, g -> g.isAdmin(Recipient.self()));
   }
 
-  public LiveData<Set<UUID>> getBannedMembers() {
+  public LiveData<Set<ServiceId>> getBannedMembers() {
     return Transformations.map(groupRecord, g -> g.isV2Group() ? g.requireV2GroupProperties().getBannedMembers() : Collections.emptySet());
   }
 
@@ -157,7 +156,7 @@ public final class LiveGroup {
   }
 
   public LiveData<Integer> getPendingMemberCount() {
-    return Transformations.map(groupRecord, g -> g.isV2Group() ? g.requireV2GroupProperties().getDecryptedGroup().getPendingMembersCount() : 0);
+    return Transformations.map(groupRecord, g -> g.isV2Group() ? g.requireV2GroupProperties().getDecryptedGroup().pendingMembers.size() : 0);
   }
 
   public LiveData<Integer> getPendingAndRequestingMemberCount() {
@@ -165,7 +164,7 @@ public final class LiveGroup {
       if (g.isV2Group()) {
         DecryptedGroup decryptedGroup = g.requireV2GroupProperties().getDecryptedGroup();
 
-        return decryptedGroup.getPendingMembersCount() + decryptedGroup.getRequestingMembersCount();
+        return decryptedGroup.pendingMembers.size() + decryptedGroup.requestingMembers.size();
       }
       return 0;
     });

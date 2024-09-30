@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -14,7 +15,7 @@ import androidx.core.app.Person;
 import org.signal.core.util.PendingIntentFlags;
 import org.thoughtcrime.securesms.MainActivity;
 import org.thoughtcrime.securesms.R;
-import org.thoughtcrime.securesms.WebRtcCallActivity;
+import org.thoughtcrime.securesms.components.webrtc.v2.CallIntent;
 import org.thoughtcrime.securesms.notifications.NotificationChannels;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.service.webrtc.WebRtcCallService;
@@ -28,23 +29,32 @@ import org.thoughtcrime.securesms.util.ConversationUtil;
 
 public class CallNotificationBuilder {
 
-  private static final int WEBRTC_NOTIFICATION         = 313388;
-  private static final int WEBRTC_NOTIFICATION_RINGING = 313389;
+  public static final int WEBRTC_NOTIFICATION         = 313388;
+  public static final int WEBRTC_NOTIFICATION_RINGING = 313389;
 
   public static final int TYPE_INCOMING_RINGING    = 1;
   public static final int TYPE_OUTGOING_RINGING    = 2;
   public static final int TYPE_ESTABLISHED         = 3;
   public static final int TYPE_INCOMING_CONNECTING = 4;
 
+  @IntDef(value = {
+      TYPE_INCOMING_RINGING,
+      TYPE_OUTGOING_RINGING,
+      TYPE_ESTABLISHED,
+      TYPE_INCOMING_CONNECTING
+  })
+  public @interface CallNotificationType {
+  }
+
   private enum LaunchCallScreenIntentState {
     CONTENT(null, 0),
-    AUDIO(WebRtcCallActivity.ANSWER_ACTION, 1),
-    VIDEO(WebRtcCallActivity.ANSWER_VIDEO_ACTION, 2);
+    AUDIO(CallIntent.Action.ANSWER_AUDIO, 1),
+    VIDEO(CallIntent.Action.ANSWER_VIDEO, 2);
 
-    final @Nullable String action;
-    final int              requestCode;
+    final @Nullable CallIntent.Action action;
+    final           int               requestCode;
 
-    LaunchCallScreenIntentState(@Nullable String action, int requestCode) {
+    LaunchCallScreenIntentState(@Nullable CallIntent.Action action, int requestCode) {
       this.action      = action;
       this.requestCode = requestCode;
     }
@@ -61,9 +71,24 @@ public class CallNotificationBuilder {
    */
   public static final int API_LEVEL_CALL_STYLE = 29;
 
-  public static Notification getCallInProgressNotification(Context context, int type, Recipient recipient, boolean isVideoCall) {
-    PendingIntent              pendingIntent = getActivityPendingIntent(context, LaunchCallScreenIntentState.CONTENT);
-    NotificationCompat.Builder builder       = new NotificationCompat.Builder(context, getNotificationChannel(type))
+  /**
+   * Gets the Notification for the current in-progress call.
+   *
+   * @param context         Context, normally the service requesting this notification
+   * @param type            The type of notification desired
+   * @param recipient       The target of the call (group, call link, or 1:1 recipient)
+   * @param isVideoCall     Whether the call is a video call
+   * @param skipPersonIcon  Whether to skip loading the icon for a person, used to avoid blocking the UI thread on older apis.
+   */
+  public static Notification getCallInProgressNotification(
+      Context context,
+      @CallNotificationType int type,
+      Recipient recipient,
+      boolean isVideoCall,
+      boolean skipPersonIcon
+  ) {
+    PendingIntent pendingIntent = getActivityPendingIntent(context, LaunchCallScreenIntentState.CONTENT);
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(context, getNotificationChannel(type))
         .setSmallIcon(R.drawable.ic_call_secure_white_24dp)
         .setContentIntent(pendingIntent)
         .setOngoing(true)
@@ -80,11 +105,15 @@ public class CallNotificationBuilder {
       builder.setCategory(NotificationCompat.CATEGORY_CALL);
       builder.setFullScreenIntent(pendingIntent, true);
 
+      Person person = skipPersonIcon ? ConversationUtil.buildPersonWithoutIcon(context, recipient)
+                                     : ConversationUtil.buildPerson(context.getApplicationContext(), recipient);
+
+      builder.addPerson(person);
+
       if (deviceVersionSupportsIncomingCallStyle()) {
-        Person person = ConversationUtil.buildPerson(context, recipient);
         builder.setStyle(NotificationCompat.CallStyle.forIncomingCall(
             person,
-            getServicePendingIntent(context, WebRtcCallService.denyCallIntent(context)),
+            WebRtcCallService.denyCallIntent(context),
             getActivityPendingIntent(context, isVideoCall ? LaunchCallScreenIntentState.VIDEO : LaunchCallScreenIntentState.AUDIO)
         ).setIsVideo(isVideoCall));
       }
@@ -92,7 +121,7 @@ public class CallNotificationBuilder {
       return builder.build();
     } else if (type == TYPE_OUTGOING_RINGING) {
       builder.setContentText(context.getString(R.string.NotificationBarManager__establishing_signal_call));
-      builder.addAction(getServiceNotificationAction(context, WebRtcCallService.hangupIntent(context), R.drawable.ic_call_end_grey600_32dp, R.string.NotificationBarManager__cancel_call));
+      builder.addAction(getServiceNotificationAction(context, WebRtcCallService.hangupIntent(context), R.drawable.symbol_phone_down_fill_24, R.string.NotificationBarManager__cancel_call));
       return builder.build();
     } else {
       builder.setContentText(getOngoingCallContentText(context, recipient, isVideoCall));
@@ -100,11 +129,15 @@ public class CallNotificationBuilder {
       builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
       builder.setCategory(NotificationCompat.CATEGORY_CALL);
 
+      Person person = skipPersonIcon ? ConversationUtil.buildPersonWithoutIcon(context, recipient)
+                                     : ConversationUtil.buildPerson(context.getApplicationContext(), recipient);
+
+      builder.addPerson(person);
+
       if (deviceVersionSupportsIncomingCallStyle()) {
-        Person person = ConversationUtil.buildPerson(context, recipient);
         builder.setStyle(NotificationCompat.CallStyle.forOngoingCall(
             person,
-            getServicePendingIntent(context, WebRtcCallService.hangupIntent(context))
+            WebRtcCallService.hangupIntent(context)
         ).setIsVideo(isVideoCall));
       }
 
@@ -122,11 +155,11 @@ public class CallNotificationBuilder {
 
   public static @NonNull Notification getStartingNotification(@NonNull Context context) {
     return new NotificationCompat.Builder(context, NotificationChannels.getInstance().CALL_STATUS)
-                                 .setSmallIcon(R.drawable.ic_call_secure_white_24dp)
-                                 .setOngoing(true)
-                                 .setContentTitle(context.getString(R.string.NotificationBarManager__starting_signal_call_service))
-                                 .setPriority(NotificationCompat.PRIORITY_MIN)
-                                 .build();
+        .setSmallIcon(R.drawable.ic_call_secure_white_24dp)
+        .setOngoing(true)
+        .setContentTitle(context.getString(R.string.NotificationBarManager__starting_signal_call_service))
+        .setPriority(NotificationCompat.PRIORITY_MIN)
+        .build();
   }
 
   public static @NonNull Notification getStoppingNotification(@NonNull Context context) {
@@ -180,27 +213,22 @@ public class CallNotificationBuilder {
     }
   }
 
-  private static PendingIntent getServicePendingIntent(@NonNull Context context, @NonNull Intent intent) {
-    return Build.VERSION.SDK_INT >= 26 ? PendingIntent.getForegroundService(context, 0, intent, PendingIntentFlags.mutable())
-                                       : PendingIntent.getService(context, 0, intent, PendingIntentFlags.mutable());
-  }
-
-  private static NotificationCompat.Action getServiceNotificationAction(Context context, Intent intent, int iconResId, int titleResId) {
-    return new NotificationCompat.Action(iconResId, context.getString(titleResId), getServicePendingIntent(context, intent));
+  private static NotificationCompat.Action getServiceNotificationAction(Context context, PendingIntent intent, int iconResId, int titleResId) {
+    return new NotificationCompat.Action(iconResId, context.getString(titleResId), intent);
   }
 
   private static PendingIntent getActivityPendingIntent(@NonNull Context context, @NonNull LaunchCallScreenIntentState launchCallScreenIntentState) {
-    Intent intent = new Intent(context, WebRtcCallActivity.class);
-    intent.setAction(launchCallScreenIntentState.action);
+    CallIntent.Builder builder = new CallIntent.Builder(context);
+    builder.withAction(launchCallScreenIntentState.action);
 
     if (launchCallScreenIntentState == LaunchCallScreenIntentState.CONTENT) {
-      intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+      builder.withIntentFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
     }
 
-    intent.putExtra(WebRtcCallActivity.EXTRA_STARTED_FROM_FULLSCREEN, launchCallScreenIntentState == LaunchCallScreenIntentState.CONTENT);
-    intent.putExtra(WebRtcCallActivity.EXTRA_ENABLE_VIDEO_IF_AVAILABLE, false);
+    builder.withStartedFromFullScreen(launchCallScreenIntentState == LaunchCallScreenIntentState.CONTENT);
+    builder.withEnableVideoIfAvailable(false);
 
-    return PendingIntent.getActivity(context, launchCallScreenIntentState.requestCode, intent, PendingIntentFlags.updateCurrent());
+    return PendingIntent.getActivity(context, launchCallScreenIntentState.requestCode, builder.build(), PendingIntentFlags.updateCurrent());
   }
 
   private static boolean deviceVersionSupportsIncomingCallStyle() {

@@ -5,12 +5,10 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
 
-import com.annimon.stream.Stream;
-
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.ThreadTable;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.groups.GroupChangeException;
 import org.thoughtcrime.securesms.groups.GroupId;
 import org.thoughtcrime.securesms.groups.GroupManager;
@@ -50,7 +48,7 @@ class ReviewCardRepository {
     if (groupId != null) {
       loadRecipientsForGroup(groupId, onRecipientsLoadedListener);
     } else if (recipientId != null) {
-      loadSimilarRecipients(context, recipientId, onRecipientsLoadedListener);
+      loadSimilarRecipients(recipientId, onRecipientsLoadedListener);
     } else {
       throw new AssertionError();
     }
@@ -62,10 +60,6 @@ class ReviewCardRepository {
   }
 
   void block(@NonNull ReviewCard reviewCard, @NonNull Runnable onActionCompleteListener) {
-    if (recipientId == null) {
-      throw new UnsupportedOperationException();
-    }
-
     SignalExecutors.BOUNDED.execute(() -> {
       RecipientUtil.blockNonGroup(context, reviewCard.getReviewRecipient());
       onActionCompleteListener.run();
@@ -83,13 +77,13 @@ class ReviewCardRepository {
       if (resolved.isGroup()) throw new AssertionError();
 
       if (TextSecurePreferences.isMultiDevice(context)) {
-        ApplicationDependencies.getJobManager().add(MultiDeviceMessageRequestResponseJob.forDelete(recipientId));
+        AppDependencies.getJobManager().add(MultiDeviceMessageRequestResponseJob.forDelete(recipientId));
       }
 
       ThreadTable threadTable = SignalDatabase.threads();
       long        threadId    = Objects.requireNonNull(threadTable.getThreadIdFor(recipientId));
 
-      threadTable.deleteConversation(threadId);
+      threadTable.deleteConversation(threadId, false);
       onActionCompleteListener.run();
     });
   }
@@ -112,31 +106,21 @@ class ReviewCardRepository {
   private static void loadRecipientsForGroup(@NonNull GroupId.V2 groupId,
                                              @NonNull OnRecipientsLoadedListener onRecipientsLoadedListener)
   {
-    SignalExecutors.BOUNDED.execute(() -> onRecipientsLoadedListener.onRecipientsLoaded(ReviewUtil.getDuplicatedRecipients(groupId)));
+    SignalExecutors.BOUNDED.execute(() -> {
+      RecipientId groupRecipientId = SignalDatabase.recipients().getByGroupId(groupId).orElse(null);
+      if (groupRecipientId != null) {
+        onRecipientsLoadedListener.onRecipientsLoaded(SignalDatabase.nameCollisions().getCollisionsForThreadRecipientId(groupRecipientId));
+      } else {
+        onRecipientsLoadedListener.onRecipientsLoadFailed();
+      }
+    });
   }
 
-  private static void loadSimilarRecipients(@NonNull Context context,
-                                            @NonNull RecipientId recipientId,
+  private static void loadSimilarRecipients(@NonNull RecipientId recipientId,
                                             @NonNull OnRecipientsLoadedListener onRecipientsLoadedListener)
   {
     SignalExecutors.BOUNDED.execute(() -> {
-      Recipient resolved = Recipient.resolved(recipientId);
-
-      List<RecipientId> recipientIds = SignalDatabase.recipients()
-          .getSimilarRecipientIds(resolved);
-
-      if (recipientIds.isEmpty()) {
-        onRecipientsLoadedListener.onRecipientsLoadFailed();
-        return;
-      }
-
-      List<ReviewRecipient> recipients = Stream.of(recipientIds)
-          .map(Recipient::resolved)
-          .map(ReviewRecipient::new)
-          .sorted(new ReviewRecipient.Comparator(context, recipientId))
-          .toList();
-
-      onRecipientsLoadedListener.onRecipientsLoaded(recipients);
+      onRecipientsLoadedListener.onRecipientsLoaded(SignalDatabase.nameCollisions().getCollisionsForThreadRecipientId(recipientId));
     });
   }
 

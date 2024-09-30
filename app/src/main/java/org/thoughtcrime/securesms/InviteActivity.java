@@ -17,17 +17,16 @@ import android.widget.Toast;
 
 import androidx.annotation.AnimRes;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import org.signal.core.util.concurrent.ListenableFuture.Listener;
 import org.thoughtcrime.securesms.components.ContactFilterView;
 import org.thoughtcrime.securesms.components.ContactFilterView.OnFilterChangedListener;
 import org.thoughtcrime.securesms.contacts.ContactSelectionDisplayMode;
 import org.thoughtcrime.securesms.contacts.SelectedContact;
-import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.groups.SelectionLimits;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.mms.OutgoingMessage;
@@ -38,7 +37,6 @@ import org.thoughtcrime.securesms.util.DynamicNoActionBarInviteTheme;
 import org.thoughtcrime.securesms.util.DynamicTheme;
 import org.thoughtcrime.securesms.util.Util;
 import org.thoughtcrime.securesms.util.ViewUtil;
-import org.thoughtcrime.securesms.util.concurrent.ListenableFuture.Listener;
 import org.thoughtcrime.securesms.util.task.ProgressDialogAsyncTask;
 import org.thoughtcrime.securesms.util.text.AfterTextChanged;
 
@@ -121,6 +119,7 @@ public class InviteActivity extends PassphraseRequiredActivity implements Contac
     smsSendButton.setOnClickListener(new SmsSendClickListener());
     contactFilter.setOnFilterChangedListener(new ContactFilterChangedListener());
 
+<<<<<<< HEAD
     //if (Util.isDefaultSmsProvider(this) && SignalStore.misc().getSmsExportPhase().isSmsSupported()) {
     if (Util.isDefaultSmsProvider(this)) {
       shareButton.setOnClickListener(new ShareClickListener());
@@ -130,6 +129,11 @@ public class InviteActivity extends PassphraseRequiredActivity implements Contac
       shareText.setText(R.string.InviteActivity_share);
       shareButton.setOnClickListener(new ShareClickListener());
     }
+=======
+    smsButton.setVisibility(View.GONE);
+    shareText.setText(R.string.InviteActivity_share);
+    shareButton.setOnClickListener(new ShareClickListener());
+>>>>>>> upstream/main
   }
 
   private Animation loadAnimation(@AnimRes int animResId) {
@@ -203,13 +207,6 @@ public class InviteActivity extends PassphraseRequiredActivity implements Contac
     }
   }
 
-  private class SmsClickListener implements OnClickListener {
-    @Override
-    public void onClick(View v) {
-      ViewUtil.animateIn(smsSendFrame, slideInAnimation);
-    }
-  }
-
   private class SmsCancelClickListener implements OnClickListener {
     @Override
     public void onClick(View v) {
@@ -255,13 +252,8 @@ public class InviteActivity extends PassphraseRequiredActivity implements Contac
       for (SelectedContact contact : contacts) {
         RecipientId recipientId    = contact.getOrCreateRecipientId(context);
         Recipient   recipient      = Recipient.resolved(recipientId);
-        int         subscriptionId = recipient.getDefaultSubscriptionId().orElse(-1);
 
-        MessageSender.send(context, OutgoingMessage.sms(recipient, message, subscriptionId), -1L, MessageSender.SendType.SMS, null, null);
-
-        if (recipient.getContactUri() != null) {
-          SignalDatabase.recipients().setHasSentInvite(recipient.getId());
-        }
+        MessageSender.send(context, OutgoingMessage.sms(recipient, message), -1L, MessageSender.SendType.SMS, null, null);
       }
 
       return null;

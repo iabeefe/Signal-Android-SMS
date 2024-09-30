@@ -2,8 +2,12 @@ package org.thoughtcrime.securesms.database.helpers
 
 import android.app.Application
 import android.content.Context
+import android.database.sqlite.SQLiteException
 import net.zetetic.database.sqlcipher.SQLiteDatabase
+import org.signal.core.util.areForeignKeyConstraintsEnabled
 import org.signal.core.util.logging.Log
+import org.thoughtcrime.securesms.database.SignalDatabase
+import org.thoughtcrime.securesms.database.helpers.migration.SignalDatabaseMigration
 import org.thoughtcrime.securesms.database.helpers.migration.V149_LegacyMigrations
 import org.thoughtcrime.securesms.database.helpers.migration.V150_UrgentMslFlagMigration
 import org.thoughtcrime.securesms.database.helpers.migration.V151_MyStoryMigration
@@ -55,6 +59,56 @@ import org.thoughtcrime.securesms.database.helpers.migration.V196_BackCallLinksW
 import org.thoughtcrime.securesms.database.helpers.migration.V197_DropAvatarColorFromCallLinks
 import org.thoughtcrime.securesms.database.helpers.migration.V198_AddMacDigestColumn
 import org.thoughtcrime.securesms.database.helpers.migration.V199_AddThreadActiveColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V200_ResetPniColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V201_RecipientTableValidations
+import org.thoughtcrime.securesms.database.helpers.migration.V202_DropMessageTableThreadDateIndex
+import org.thoughtcrime.securesms.database.helpers.migration.V203_PreKeyStaleTimestamp
+import org.thoughtcrime.securesms.database.helpers.migration.V204_GroupForeignKeyMigration
+import org.thoughtcrime.securesms.database.helpers.migration.V205_DropPushTable
+import org.thoughtcrime.securesms.database.helpers.migration.V206_AddConversationCountIndex
+import org.thoughtcrime.securesms.database.helpers.migration.V207_AddChunkSizeColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V209_ClearRecipientPniFromAciColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V210_FixPniPossibleColumns
+import org.thoughtcrime.securesms.database.helpers.migration.V211_ReceiptColumnRenames
+import org.thoughtcrime.securesms.database.helpers.migration.V212_RemoveDistributionListUniqueConstraint
+import org.thoughtcrime.securesms.database.helpers.migration.V213_FixUsernameInE164Column
+import org.thoughtcrime.securesms.database.helpers.migration.V214_PhoneNumberSharingColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V215_RemoveAttachmentUniqueId
+import org.thoughtcrime.securesms.database.helpers.migration.V216_PhoneNumberDiscoverable
+import org.thoughtcrime.securesms.database.helpers.migration.V217_MessageTableExtrasColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V218_RecipientPniSignatureVerified
+import org.thoughtcrime.securesms.database.helpers.migration.V219_PniPreKeyStores
+import org.thoughtcrime.securesms.database.helpers.migration.V220_PreKeyConstraints
+import org.thoughtcrime.securesms.database.helpers.migration.V221_AddReadColumnToCallEventsTable
+import org.thoughtcrime.securesms.database.helpers.migration.V222_DataHashRefactor
+import org.thoughtcrime.securesms.database.helpers.migration.V223_AddNicknameAndNoteFieldsToRecipientTable
+import org.thoughtcrime.securesms.database.helpers.migration.V224_AddAttachmentArchiveColumns
+import org.thoughtcrime.securesms.database.helpers.migration.V225_AddLocalUserJoinedStateAndGroupCallActiveState
+import org.thoughtcrime.securesms.database.helpers.migration.V226_AddAttachmentMediaIdIndex
+import org.thoughtcrime.securesms.database.helpers.migration.V227_AddAttachmentArchiveTransferState
+import org.thoughtcrime.securesms.database.helpers.migration.V228_AddNameCollisionTables
+import org.thoughtcrime.securesms.database.helpers.migration.V229_MarkMissedCallEventsNotified
+import org.thoughtcrime.securesms.database.helpers.migration.V230_UnreadCountIndices
+import org.thoughtcrime.securesms.database.helpers.migration.V231_ArchiveThumbnailColumns
+import org.thoughtcrime.securesms.database.helpers.migration.V232_CreateInAppPaymentTable
+import org.thoughtcrime.securesms.database.helpers.migration.V233_FixInAppPaymentTableDefaultNotifiedValue
+import org.thoughtcrime.securesms.database.helpers.migration.V234_ThumbnailRestoreStateColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V235_AttachmentUuidColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V236_FixInAppSubscriberCurrencyIfAble
+import org.thoughtcrime.securesms.database.helpers.migration.V237_ResetGroupForceUpdateTimestamps
+import org.thoughtcrime.securesms.database.helpers.migration.V238_AddGroupSendEndorsementsColumns
+import org.thoughtcrime.securesms.database.helpers.migration.V239_MessageFullTextSearchEmojiSupport
+import org.thoughtcrime.securesms.database.helpers.migration.V240_MessageFullTextSearchSecureDelete
+import org.thoughtcrime.securesms.database.helpers.migration.V241_ExpireTimerVersion
+import org.thoughtcrime.securesms.database.helpers.migration.V242_MessageFullTextSearchEmojiSupportV2
+import org.thoughtcrime.securesms.database.helpers.migration.V243_MessageFullTextSearchDisableSecureDelete
+import org.thoughtcrime.securesms.database.helpers.migration.V244_AttachmentRemoteIv
+import org.thoughtcrime.securesms.database.helpers.migration.V245_DeletionTimestampOnCallLinks
+import org.thoughtcrime.securesms.database.helpers.migration.V246_DropThumbnailCdnFromAttachments
+import org.thoughtcrime.securesms.database.helpers.migration.V247_ClearUploadTimestamp
+import org.thoughtcrime.securesms.database.helpers.migration.V250_ClearUploadTimestampV2
+import org.thoughtcrime.securesms.database.helpers.migration.V251_ArchiveTransferStateIndex
+import org.thoughtcrime.securesms.database.helpers.migration.V252_AttachmentOffloadRestoredAtColumn
 
 /**
  * Contains all of the database migrations for [SignalDatabase]. Broken into a separate file for cleanliness.
@@ -63,213 +117,154 @@ object SignalDatabaseMigrations {
 
   val TAG: String = Log.tag(SignalDatabaseMigrations.javaClass)
 
-  const val DATABASE_VERSION = 199
+  private val migrations: List<Pair<Int, SignalDatabaseMigration>> = listOf(
+    149 to V149_LegacyMigrations,
+    150 to V150_UrgentMslFlagMigration,
+    151 to V151_MyStoryMigration,
+    152 to V152_StoryGroupTypesMigration,
+    153 to V153_MyStoryMigration,
+    154 to V154_PniSignaturesMigration,
+    155 to V155_SmsExporterMigration,
+    156 to V156_RecipientUnregisteredTimestampMigration,
+    157 to V157_RecipeintHiddenMigration,
+    158 to V158_GroupsLastForceUpdateTimestampMigration,
+    159 to V159_ThreadUnreadSelfMentionCount,
+    160 to V160_SmsMmsExportedIndexMigration,
+    161 to V161_StorySendMessageIdIndex,
+    162 to V162_ThreadUnreadSelfMentionCountFixup,
+    163 to V163_RemoteMegaphoneSnoozeSupportMigration,
+    164 to V164_ThreadDatabaseReadIndexMigration,
+    165 to V165_MmsMessageBoxPaymentTransactionIndexMigration,
+    166 to V166_ThreadAndMessageForeignKeys,
+    167 to V167_RecreateReactionTriggers,
+    168 to V168_SingleMessageTableMigration,
+    169 to V169_EmojiSearchIndexRank,
+    170 to V170_CallTableMigration,
+    171 to V171_ThreadForeignKeyFix,
+    172 to V172_GroupMembershipMigration,
+    173 to V173_ScheduledMessagesMigration,
+    174 to V174_ReactionForeignKeyMigration,
+    175 to V175_FixFullTextSearchLink,
+    176 to V176_AddScheduledDateToQuoteIndex,
+    177 to V177_MessageSendLogTableCleanupMigration,
+    178 to V178_ReportingTokenColumnMigration,
+    179 to V179_CleanupDanglingMessageSendLogMigration,
+    180 to V180_RecipientNicknameMigration,
+    181 to V181_ThreadTableForeignKeyCleanup,
+    182 to V182_CallTableMigration,
+    183 to V183_CallLinkTableMigration,
+    184 to V184_CallLinkReplaceIndexMigration,
+    185 to V185_MessageRecipientsAndEditMessageMigration,
+    186 to V186_ForeignKeyIndicesMigration,
+    187 to V187_MoreForeignKeyIndexesMigration,
+    188 to V188_FixMessageRecipientsAndEditMessageMigration,
+    189 to V189_CreateCallLinkTableColumnsAndRebuildFKReference,
+    190 to V190_UniqueMessageMigration,
+    191 to V191_UniqueMessageMigrationV2,
+    192 to V192_CallLinkTableNullableRootKeys,
+    193 to V193_BackCallLinksWithRecipient,
+    194 to V194_KyberPreKeyMigration,
+    195 to V195_GroupMemberForeignKeyMigration,
+    196 to V196_BackCallLinksWithRecipientV2,
+    197 to V197_DropAvatarColorFromCallLinks,
+    198 to V198_AddMacDigestColumn,
+    199 to V199_AddThreadActiveColumn,
+    200 to V200_ResetPniColumn,
+    201 to V201_RecipientTableValidations,
+    202 to V202_DropMessageTableThreadDateIndex,
+    203 to V203_PreKeyStaleTimestamp,
+    204 to V204_GroupForeignKeyMigration,
+    205 to V205_DropPushTable,
+    206 to V206_AddConversationCountIndex,
+    207 to V207_AddChunkSizeColumn,
+    // 208 was a bad migration that only manipulated data and did not change schema, replaced by 209
+    209 to V209_ClearRecipientPniFromAciColumn,
+    210 to V210_FixPniPossibleColumns,
+    211 to V211_ReceiptColumnRenames,
+    212 to V212_RemoveDistributionListUniqueConstraint,
+    213 to V213_FixUsernameInE164Column,
+    214 to V214_PhoneNumberSharingColumn,
+    215 to V215_RemoveAttachmentUniqueId,
+    216 to V216_PhoneNumberDiscoverable,
+    217 to V217_MessageTableExtrasColumn,
+    218 to V218_RecipientPniSignatureVerified,
+    219 to V219_PniPreKeyStores,
+    220 to V220_PreKeyConstraints,
+    221 to V221_AddReadColumnToCallEventsTable,
+    222 to V222_DataHashRefactor,
+    223 to V223_AddNicknameAndNoteFieldsToRecipientTable,
+    224 to V224_AddAttachmentArchiveColumns,
+    225 to V225_AddLocalUserJoinedStateAndGroupCallActiveState,
+    226 to V226_AddAttachmentMediaIdIndex,
+    227 to V227_AddAttachmentArchiveTransferState,
+    228 to V228_AddNameCollisionTables,
+    229 to V229_MarkMissedCallEventsNotified,
+    230 to V230_UnreadCountIndices,
+    231 to V231_ArchiveThumbnailColumns,
+    232 to V232_CreateInAppPaymentTable,
+    233 to V233_FixInAppPaymentTableDefaultNotifiedValue,
+    234 to V234_ThumbnailRestoreStateColumn,
+    235 to V235_AttachmentUuidColumn,
+    236 to V236_FixInAppSubscriberCurrencyIfAble,
+    237 to V237_ResetGroupForceUpdateTimestamps,
+    238 to V238_AddGroupSendEndorsementsColumns,
+    239 to V239_MessageFullTextSearchEmojiSupport,
+    240 to V240_MessageFullTextSearchSecureDelete,
+    241 to V241_ExpireTimerVersion,
+    242 to V242_MessageFullTextSearchEmojiSupportV2,
+    243 to V243_MessageFullTextSearchDisableSecureDelete,
+    244 to V244_AttachmentRemoteIv,
+    245 to V245_DeletionTimestampOnCallLinks,
+    246 to V246_DropThumbnailCdnFromAttachments,
+    247 to V247_ClearUploadTimestamp,
+    // 248 and 249 were originally in 7.18.0, but are now skipped because we needed to hotfix 7.17.6 after 7.18.0 was already released.
+    250 to V250_ClearUploadTimestampV2,
+    251 to V251_ArchiveTransferStateIndex,
+    252 to V252_AttachmentOffloadRestoredAtColumn
+  )
+
+  const val DATABASE_VERSION = 252
 
   @JvmStatic
   fun migrate(context: Application, db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-    if (oldVersion < 149) {
-      V149_LegacyMigrations.migrate(context, db, oldVersion, newVersion)
+    val initialForeignKeyState = db.areForeignKeyConstraintsEnabled()
+
+    for (migrationData in migrations) {
+      val (version, migration) = migrationData
+
+      if (oldVersion < version) {
+        Log.i(TAG, "Running migration for version $version: ${migration.javaClass.simpleName}. Foreign keys: ${migration.enableForeignKeys}")
+        val startTime = System.currentTimeMillis()
+
+        var ftsException: SQLiteException? = null
+
+        db.setForeignKeyConstraintsEnabled(migration.enableForeignKeys)
+        db.beginTransaction()
+        try {
+          migration.migrate(context, db, oldVersion, newVersion)
+          db.version = version
+          db.setTransactionSuccessful()
+        } catch (e: SQLiteException) {
+          if (e.message?.contains("invalid fts5 file format") == true || e.message?.contains("vtable constructor failed") == true) {
+            ftsException = e
+          } else {
+            throw e
+          }
+        } finally {
+          db.endTransaction()
+        }
+
+        if (ftsException != null) {
+          Log.w(TAG, "Encountered FTS format issue! Attempting to repair.", ftsException)
+          SignalDatabase.messageSearch.fullyResetTables(db)
+          throw ftsException
+        }
+
+        Log.i(TAG, "Successfully completed migration for version $version in ${System.currentTimeMillis() - startTime} ms")
+      }
     }
 
-    if (oldVersion < 150) {
-      V150_UrgentMslFlagMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 151) {
-      V151_MyStoryMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 152) {
-      V152_StoryGroupTypesMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 153) {
-      V153_MyStoryMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 154) {
-      V154_PniSignaturesMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 155) {
-      V155_SmsExporterMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 156) {
-      V156_RecipientUnregisteredTimestampMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 157) {
-      V157_RecipeintHiddenMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 158) {
-      V158_GroupsLastForceUpdateTimestampMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 159) {
-      V159_ThreadUnreadSelfMentionCount.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 160) {
-      V160_SmsMmsExportedIndexMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 161) {
-      V161_StorySendMessageIdIndex.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 162) {
-      V162_ThreadUnreadSelfMentionCountFixup.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 163) {
-      V163_RemoteMegaphoneSnoozeSupportMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 164) {
-      V164_ThreadDatabaseReadIndexMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 165) {
-      V165_MmsMessageBoxPaymentTransactionIndexMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 166) {
-      V166_ThreadAndMessageForeignKeys.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 167) {
-      V167_RecreateReactionTriggers.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 168) {
-      V168_SingleMessageTableMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 169) {
-      V169_EmojiSearchIndexRank.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 170) {
-      V170_CallTableMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 171) {
-      V171_ThreadForeignKeyFix.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 172) {
-      V172_GroupMembershipMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 173) {
-      V173_ScheduledMessagesMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 174) {
-      V174_ReactionForeignKeyMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 175) {
-      V175_FixFullTextSearchLink.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 176) {
-      V176_AddScheduledDateToQuoteIndex.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 177) {
-      V177_MessageSendLogTableCleanupMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 178) {
-      V178_ReportingTokenColumnMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 179) {
-      V179_CleanupDanglingMessageSendLogMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 180) {
-      V180_RecipientNicknameMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 181) {
-      V181_ThreadTableForeignKeyCleanup.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 182) {
-      V182_CallTableMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 183) {
-      V183_CallLinkTableMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 184) {
-      V184_CallLinkReplaceIndexMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 185) {
-      V185_MessageRecipientsAndEditMessageMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 186) {
-      V186_ForeignKeyIndicesMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 187) {
-      V187_MoreForeignKeyIndexesMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 188) {
-      V188_FixMessageRecipientsAndEditMessageMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 189) {
-      V189_CreateCallLinkTableColumnsAndRebuildFKReference.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 190) {
-      V190_UniqueMessageMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 191) {
-      V191_UniqueMessageMigrationV2.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 192) {
-      V192_CallLinkTableNullableRootKeys.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 193) {
-      V193_BackCallLinksWithRecipient.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 194) {
-      V194_KyberPreKeyMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 195) {
-      V195_GroupMemberForeignKeyMigration.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 196) {
-      V196_BackCallLinksWithRecipientV2.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 197) {
-      V197_DropAvatarColorFromCallLinks.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 198) {
-      V198_AddMacDigestColumn.migrate(context, db, oldVersion, newVersion)
-    }
-
-    if (oldVersion < 199) {
-      V199_AddThreadActiveColumn.migrate(context, db, oldVersion, newVersion)
-    }
+    db.setForeignKeyConstraintsEnabled(initialForeignKeyState)
   }
 
   @JvmStatic

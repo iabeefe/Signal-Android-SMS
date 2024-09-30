@@ -3,12 +3,9 @@ package org.thoughtcrime.securesms.mediasend;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.camera.view.video.ExperimentalVideo;
 import androidx.fragment.app.Fragment;
 
 import org.thoughtcrime.securesms.R;
@@ -25,9 +22,9 @@ public interface CameraFragment {
   float PORTRAIT_ASPECT_RATIO = 9 / 16f;
 
   @SuppressLint({ "RestrictedApi", "UnsafeOptInUsageError" })
-  static Fragment newInstance() {
+  static Fragment newInstance(boolean qrScanEnabled) {
     if (CameraXUtil.isSupported()) {
-      return CameraXFragment.newInstance();
+      return CameraXFragment.newInstance(qrScanEnabled);
     } else {
       return Camera1Fragment.newInstance();
     }
@@ -66,6 +63,7 @@ public interface CameraFragment {
     void onVideoCaptureError();
     void onGalleryClicked();
     void onCameraCountButtonClicked();
+    void onQrCodeFound(@NonNull String data);
     @NonNull Flowable<Optional<Media>> getMostRecentMediaItem();
     @NonNull MediaConstraints getMediaConstraints();
     int getMaxVideoDuration();

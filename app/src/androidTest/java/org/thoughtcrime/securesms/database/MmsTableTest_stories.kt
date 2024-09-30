@@ -13,12 +13,11 @@ import org.thoughtcrime.securesms.database.model.DistributionListId
 import org.thoughtcrime.securesms.database.model.ParentStoryId
 import org.thoughtcrime.securesms.database.model.StoryType
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.mms.IncomingMediaMessage
+import org.thoughtcrime.securesms.mms.IncomingMessage
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
-import org.whispersystems.signalservice.api.push.ACI
-import org.whispersystems.signalservice.api.push.PNI
-import org.whispersystems.signalservice.api.push.ServiceId
+import org.whispersystems.signalservice.api.push.ServiceId.ACI
+import org.whispersystems.signalservice.api.push.ServiceId.PNI
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
@@ -41,14 +40,14 @@ class MmsTableTest_stories {
 
     mms.deleteAllThreads()
 
-    SignalStore.account().setAci(localAci)
-    SignalStore.account().setPni(localPni)
+    SignalStore.account.setAci(localAci)
+    SignalStore.account.setPni(localPni)
 
     myStory = Recipient.resolved(SignalDatabase.recipients.getOrInsertFromDistributionListId(DistributionListId.MY_STORY))
-    recipients = (0 until 5).map { SignalDatabase.recipients.getOrInsertFromServiceId(ServiceId.from(UUID.randomUUID())) }
+    recipients = (0 until 5).map { SignalDatabase.recipients.getOrInsertFromServiceId(ACI.from(UUID.randomUUID())) }
     releaseChannelRecipient = Recipient.resolved(SignalDatabase.recipients.insertReleaseChannelRecipient())
 
-    SignalStore.releaseChannelValues().setReleaseChannelRecipientId(releaseChannelRecipient.id)
+    SignalStore.releaseChannel.setReleaseChannelRecipientId(releaseChannelRecipient.id)
   }
 
   @Test
@@ -74,7 +73,8 @@ class MmsTableTest_stories {
     )
 
     MmsHelper.insert(
-      IncomingMediaMessage(
+      IncomingMessage(
+        type = MessageType.NORMAL,
         from = sender,
         sentTimeMillis = 2,
         serverTimeMillis = 2,
@@ -96,7 +96,8 @@ class MmsTableTest_stories {
     // GIVEN
     val sender = recipients[0]
     val messageId = MmsHelper.insert(
-      IncomingMediaMessage(
+      IncomingMessage(
+        type = MessageType.NORMAL,
         from = sender,
         sentTimeMillis = 2,
         serverTimeMillis = 2,
@@ -123,7 +124,8 @@ class MmsTableTest_stories {
     // GIVEN
     val messageIds = recipients.take(5).map {
       MmsHelper.insert(
-        IncomingMediaMessage(
+        IncomingMessage(
+          type = MessageType.NORMAL,
           from = it,
           sentTimeMillis = 2,
           serverTimeMillis = 2,
@@ -155,7 +157,8 @@ class MmsTableTest_stories {
     val unviewedIds: List<Long> = (0 until 5).map {
       Thread.sleep(5)
       MmsHelper.insert(
-        IncomingMediaMessage(
+        IncomingMessage(
+          type = MessageType.NORMAL,
           from = recipients[it],
           sentTimeMillis = System.currentTimeMillis(),
           serverTimeMillis = 2,
@@ -169,7 +172,8 @@ class MmsTableTest_stories {
     val viewedIds: List<Long> = (0 until 5).map {
       Thread.sleep(5)
       MmsHelper.insert(
-        IncomingMediaMessage(
+        IncomingMessage(
+          type = MessageType.NORMAL,
           from = recipients[it],
           sentTimeMillis = System.currentTimeMillis(),
           serverTimeMillis = 2,
@@ -214,7 +218,8 @@ class MmsTableTest_stories {
   fun givenNoOutgoingStories_whenICheckIsOutgoingStoryAlreadyInDatabase_thenIExpectFalse() {
     // GIVEN
     MmsHelper.insert(
-      IncomingMediaMessage(
+      IncomingMessage(
+        type = MessageType.NORMAL,
         from = recipients[0],
         sentTimeMillis = 200,
         serverTimeMillis = 2,
@@ -322,7 +327,8 @@ class MmsTableTest_stories {
     )
 
     MmsHelper.insert(
-      IncomingMediaMessage(
+      IncomingMessage(
+        type = MessageType.NORMAL,
         from = myStory.id,
         sentTimeMillis = 201,
         serverTimeMillis = 201,

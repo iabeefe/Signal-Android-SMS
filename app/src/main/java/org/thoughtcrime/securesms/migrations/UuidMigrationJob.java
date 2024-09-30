@@ -8,13 +8,13 @@ import androidx.annotation.Nullable;
 
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.database.SignalDatabase;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobmanager.Job;
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.whispersystems.signalservice.api.push.ACI;
+import org.whispersystems.signalservice.api.push.ServiceId.ACI;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -71,7 +71,7 @@ public class UuidMigrationJob extends MigrationJob {
 
   private static void fetchOwnUuid(@NonNull Context context) throws IOException {
     RecipientId self      = Recipient.self().getId();
-    ACI         localUuid = ACI.parseOrNull(ApplicationDependencies.getSignalServiceAccountManager().getWhoAmI().getAci());
+    ACI         localUuid = ACI.parseOrNull(AppDependencies.getSignalServiceAccountManager().getWhoAmI().getAci());
 
     if (localUuid == null) {
       throw new IOException("Invalid UUID!");

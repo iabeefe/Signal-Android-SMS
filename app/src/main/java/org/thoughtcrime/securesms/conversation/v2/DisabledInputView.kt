@@ -17,10 +17,10 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.messagerequests.MessageRequestState
-import org.thoughtcrime.securesms.messagerequests.MessageRequestViewModel
 import org.thoughtcrime.securesms.messagerequests.MessageRequestsBottomView
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.util.SpanUtil
+import org.thoughtcrime.securesms.util.visible
 
 /**
  * A one-stop-view for all your conversation input disabled needs.
@@ -44,6 +44,8 @@ class DisabledInputView @JvmOverloads constructor(
   private var noLongerAMember: View? = null
   private var requestingGroup: View? = null
   private var announcementGroupOnly: TextView? = null
+  private var inviteToSignal: View? = null
+  private var releaseNoteChannel: View? = null
 
   private var currentView: View? = null
 
@@ -77,14 +79,14 @@ class DisabledInputView @JvmOverloads constructor(
       existingView = messageRequestView,
       create = { MessageRequestsBottomView(context) },
       bind = {
-        setMessageData(MessageRequestViewModel.MessageData(recipient, messageRequestState))
-        setWallpaperEnabled(recipient.hasWallpaper())
+        setMessageRequestData(recipient, messageRequestState)
+        setWallpaperEnabled(recipient.hasWallpaper)
 
         setAcceptOnClickListener { listener?.onAcceptMessageRequestClicked() }
-        setDeleteOnClickListener { listener?.onDeleteGroupClicked() }
+        setDeleteOnClickListener { listener?.onDeleteClicked() }
         setBlockOnClickListener { listener?.onBlockClicked() }
         setUnblockOnClickListener { listener?.onUnblockClicked() }
-        setGroupV1MigrationContinueListener { listener?.onGroupV1MigrationClicked() }
+        setReportOnClickListener { listener?.onReportSpamClicked() }
       }
     )
   }
@@ -120,6 +122,43 @@ class DisabledInputView @JvmOverloads constructor(
           R.string.ConversationActivity_admins
         ) {
           listener?.onShowAdminsBottomSheetDialog()
+        }
+      }
+    )
+  }
+
+  fun showAsInviteToSignal(context: Context, recipient: Recipient, threadContainsSms: Boolean) {
+    inviteToSignal = show(
+      existingView = inviteToSignal,
+      create = { inflater.inflate(R.layout.conversation_activity_sms_export_stub, this, false) },
+      bind = {
+        findViewById<TextView>(R.id.export_sms_message).text = if (recipient.isMmsGroup) {
+          context.getString(R.string.ConversationActivity__sms_messaging_is_no_longer_supported)
+        } else if (threadContainsSms) {
+          context.getString(R.string.ConversationActivity__sms_messaging_is_no_longer_supported_in_signal_invite_s_to_to_signal_to_keep_the_conversation_here, recipient.getDisplayName(context))
+        } else {
+          context.getString(R.string.ConversationActivity__this_person_is_no_longer_using_signal)
+        }
+
+        findViewById<MaterialButton>(R.id.export_sms_button).apply {
+          setText(R.string.ConversationActivity__invite_to_signal)
+          setOnClickListener { listener?.onInviteToSignal(recipient) }
+          visible = !recipient.isMmsGroup
+        }
+      }
+    )
+  }
+
+  fun showAsReleaseNotesChannel(recipient: Recipient) {
+    releaseNoteChannel = show(
+      existingView = releaseNoteChannel,
+      create = { inflater.inflate(R.layout.conversation_activity_unmute, this, false) },
+      bind = {
+        if (recipient.isMuted) {
+          visible = true
+          findViewById<View>(R.id.conversation_activity_unmute_button).setOnClickListener { listener?.onUnmuteReleaseNotesChannel() }
+        } else {
+          visible = false
         }
       }
     )
@@ -189,9 +228,11 @@ class DisabledInputView @JvmOverloads constructor(
     fun onCancelGroupRequestClicked()
     fun onShowAdminsBottomSheetDialog()
     fun onAcceptMessageRequestClicked()
-    fun onDeleteGroupClicked()
+    fun onDeleteClicked()
     fun onBlockClicked()
     fun onUnblockClicked()
-    fun onGroupV1MigrationClicked()
+    fun onInviteToSignal(recipient: Recipient)
+    fun onUnmuteReleaseNotesChannel()
+    fun onReportSpamClicked()
   }
 }

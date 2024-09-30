@@ -12,6 +12,7 @@ import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.load.Options
 import io.reactivex.rxjava3.core.Single
+import org.signal.core.util.Base64
 import org.signal.core.util.DimensionUnit
 import org.signal.core.util.concurrent.SimpleTask
 import org.signal.core.util.logging.Log
@@ -19,15 +20,14 @@ import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.attachments.Attachment
 import org.thoughtcrime.securesms.components.menu.ActionItem
 import org.thoughtcrime.securesms.components.menu.SignalContextMenu
-import org.thoughtcrime.securesms.database.model.MediaMmsMessageRecord
 import org.thoughtcrime.securesms.database.model.MessageRecord
+import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.database.model.databaseprotos.StoryTextPost
 import org.thoughtcrime.securesms.providers.BlobProvider
 import org.thoughtcrime.securesms.stories.StoryTextPostModel
 import org.thoughtcrime.securesms.stories.landing.StoriesLandingItem
 import org.thoughtcrime.securesms.stories.viewer.page.StoryPost
 import org.thoughtcrime.securesms.stories.viewer.page.StoryViewerPageState
-import org.thoughtcrime.securesms.util.Base64
 import org.thoughtcrime.securesms.util.BitmapUtil
 import org.thoughtcrime.securesms.util.DeleteDialog
 import org.thoughtcrime.securesms.util.MediaUtil
@@ -45,11 +45,11 @@ object StoryContextMenu {
       title = context.getString(R.string.MyStories__delete_story),
       message = context.getString(R.string.MyStories__this_story_will_be_deleted),
       forceRemoteDelete = true
-    )
+    ).map { (_, deletedThread) -> deletedThread }
   }
 
   fun save(context: Context, messageRecord: MessageRecord) {
-    val mediaMessageRecord = messageRecord as? MediaMmsMessageRecord
+    val mediaMessageRecord = messageRecord as? MmsMessageRecord
     val uri: Uri? = mediaMessageRecord?.slideDeck?.firstSlide?.uri
     val contentType: String? = mediaMessageRecord?.slideDeck?.firstSlide?.contentType
 
@@ -92,9 +92,9 @@ object StoryContextMenu {
       .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, saveAttachment)
   }
 
-  fun share(fragment: Fragment, messageRecord: MediaMmsMessageRecord) {
+  fun share(fragment: Fragment, messageRecord: MmsMessageRecord) {
     val intent = if (messageRecord.storyType.isTextStory) {
-      val textStoryBody = StoryTextPost.parseFrom(Base64.decode(messageRecord.body)).body
+      val textStoryBody = StoryTextPost.ADAPTER.decode(Base64.decode(messageRecord.body)).body
       val linkUrl = messageRecord.linkPreviews.firstOrNull()?.url ?: ""
       val shareText = "$textStoryBody $linkUrl".trim()
 
@@ -168,7 +168,7 @@ object StoryContextMenu {
       isFromSelf = selectedStory.sender.isSelf,
       isToGroup = selectedStory.group != null,
       isFromReleaseChannel = selectedStory.sender.isReleaseNotes,
-      canHide = true,
+      canHide = !selectedStory.sender.shouldHideStory,
       callbacks = object : Callbacks {
         override fun onHide() = onHide(selectedStory)
         override fun onUnhide() = throw NotImplementedError()

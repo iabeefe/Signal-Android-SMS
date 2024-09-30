@@ -2,14 +2,12 @@ package org.thoughtcrime.securesms.preferences;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.text.method.LinkMovementMethod;
-import android.util.TimeUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +32,7 @@ import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.backup.BackupDialog;
 import org.thoughtcrime.securesms.backup.BackupEvent;
 import org.thoughtcrime.securesms.database.NoExternalStorageException;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobs.LocalBackupJob;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.permissions.Permissions;
@@ -266,7 +264,7 @@ public class BackupsPreferenceFragment extends Fragment {
         .setTimeFormat(timeFormat)
         .setHour(SignalStore.settings().getBackupHour())
         .setMinute(SignalStore.settings().getBackupMinute())
-        .setTitleText("Set Backup Time")
+        .setTitleText(R.string.BackupsPreferenceFragment__set_backup_time)
         .build();
     timePickerFragment.addOnPositiveButtonClickListener(v -> {
       int hour = timePickerFragment.getHour();
@@ -313,6 +311,6 @@ public class BackupsPreferenceFragment extends Fragment {
     folder.setVisibility(View.GONE);
     verify.setVisibility(View.GONE);
     timer.setVisibility(View.GONE);
-    ApplicationDependencies.getJobManager().cancelAllInQueue(LocalBackupJob.QUEUE);
+    AppDependencies.getJobManager().cancelAllInQueue(LocalBackupJob.QUEUE);
   }
 }

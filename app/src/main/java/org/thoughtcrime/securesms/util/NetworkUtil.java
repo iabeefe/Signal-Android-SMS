@@ -33,13 +33,18 @@ public final class NetworkUtil {
     return info != null && info.isConnected() && info.isRoaming() && info.getType() == ConnectivityManager.TYPE_MOBILE;
   }
 
+  public static boolean isConnected(@NonNull Context context) {
+    final NetworkInfo info = getNetworkInfo(context);
+    return info != null && info.isConnected();
+  }
+
   public static @NonNull CallManager.DataMode getCallingDataMode(@NonNull Context context) {
     return getCallingDataMode(context, PeerConnection.AdapterType.UNKNOWN);
   }
 
   public static @NonNull CallManager.DataMode getCallingDataMode(@NonNull Context context, @NonNull PeerConnection.AdapterType networkAdapter) {
-    if (SignalStore.internalValues().callingDataMode() != CallManager.DataMode.NORMAL) {
-      return SignalStore.internalValues().callingDataMode();
+    if (SignalStore.internal().callingDataMode() != CallManager.DataMode.NORMAL) {
+      return SignalStore.internal().callingDataMode();
     }
 
     return useLowDataCalling(context, networkAdapter) ? CallManager.DataMode.LOW : CallManager.DataMode.NORMAL;

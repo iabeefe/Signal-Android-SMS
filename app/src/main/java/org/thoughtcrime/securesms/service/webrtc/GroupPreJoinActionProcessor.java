@@ -20,7 +20,7 @@ import org.thoughtcrime.securesms.service.webrtc.state.WebRtcServiceState;
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcServiceStateBuilder;
 import org.thoughtcrime.securesms.util.NetworkUtil;
 import org.whispersystems.signalservice.api.messages.calls.OfferMessage;
-import org.whispersystems.signalservice.api.push.ServiceId;
+import org.whispersystems.signalservice.api.push.ServiceId.ACI;
 
 import java.util.List;
 
@@ -47,10 +47,11 @@ public class GroupPreJoinActionProcessor extends GroupActionProcessor {
 
     byte[]      groupId = currentState.getCallInfoState().getCallRecipient().requireGroupId().getDecodedId();
     GroupCall groupCall = webRtcInteractor.getCallManager().createGroupCall(groupId,
-                                                                            SignalStore.internalValues().groupCallingServer(),
+                                                                            SignalStore.internal().groupCallingServer(),
                                                                             new byte[0],
                                                                             AUDIO_LEVELS_INTERVAL,
                                                                             RingRtcDynamicConfiguration.getAudioProcessingMethod(),
+                                                                            RingRtcDynamicConfiguration.shouldUseOboeAdm(),
                                                                             webRtcInteractor.getGroupCallObserver());
 
     try {
@@ -120,7 +121,7 @@ public class GroupPreJoinActionProcessor extends GroupActionProcessor {
     }
 
     List<Recipient> callParticipants = Stream.of(peekInfo.getJoinedMembers())
-                                             .map(uuid -> Recipient.externalPush(ServiceId.from(uuid)))
+                                             .map(uuid -> Recipient.externalPush(ACI.from(uuid)))
                                              .toList();
 
     WebRtcServiceStateBuilder.CallInfoStateBuilder builder = currentState.builder()
@@ -137,6 +138,7 @@ public class GroupPreJoinActionProcessor extends GroupActionProcessor {
                                                                      true,
                                                                      true,
                                                                      true,
+                                                                     CallParticipant.HAND_LOWERED,
                                                                      0,
                                                                      false,
                                                                      0,

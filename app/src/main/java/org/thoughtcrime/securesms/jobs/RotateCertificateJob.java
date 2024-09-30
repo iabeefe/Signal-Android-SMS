@@ -4,8 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
-import org.thoughtcrime.securesms.jobmanager.JsonJobData;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobmanager.Job;
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint;
 import org.thoughtcrime.securesms.keyvalue.CertificateType;
@@ -57,7 +56,7 @@ public final class RotateCertificateJob extends BaseJob {
     }
 
     synchronized (RotateCertificateJob.class) {
-      SignalServiceAccountManager accountManager   = ApplicationDependencies.getSignalServiceAccountManager();
+      SignalServiceAccountManager accountManager   = AppDependencies.getSignalServiceAccountManager();
       Collection<CertificateType> certificateTypes = SignalStore.phoneNumberPrivacy()
                                                                 .getAllCertificateTypes();
 
@@ -67,13 +66,13 @@ public final class RotateCertificateJob extends BaseJob {
         byte[] certificate;
 
         switch (certificateType) {
-          case UUID_AND_E164: certificate = accountManager.getSenderCertificate(); break;
-          case UUID_ONLY    : certificate = accountManager.getSenderCertificateForPhoneNumberPrivacy(); break;
-          default           : throw new AssertionError();
+          case ACI_AND_E164: certificate = accountManager.getSenderCertificate(); break;
+          case ACI_ONLY    : certificate = accountManager.getSenderCertificateForPhoneNumberPrivacy(); break;
+          default          : throw new AssertionError();
         }
 
         Log.i(TAG, String.format("Successfully got %s certificate", certificateType));
-        SignalStore.certificateValues()
+        SignalStore.certificate()
                    .setUnidentifiedAccessCertificate(certificateType, certificate);
       }
     }

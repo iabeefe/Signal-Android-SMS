@@ -7,7 +7,10 @@ package org.thoughtcrime.securesms.conversation.v2.items
 
 import android.net.Uri
 import android.view.View
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.bumptech.glide.RequestManager
+import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -45,7 +48,6 @@ class V2ConversationItemShapeTest {
 
     val expected = V2ConversationItemShape.MessageShape.SINGLE
     val actual = testSubject.setMessageShape(
-      isLtr = true,
       currentMessage = getMessageRecord(),
       isGroupThread = false,
       adapterPosition = 5
@@ -67,7 +69,6 @@ class V2ConversationItemShapeTest {
 
     val expected = V2ConversationItemShape.MessageShape.END
     val actual = testSubject.setMessageShape(
-      isLtr = true,
       currentMessage = getMessageRecord(now),
       isGroupThread = false,
       adapterPosition = 5
@@ -89,7 +90,6 @@ class V2ConversationItemShapeTest {
 
     val expected = V2ConversationItemShape.MessageShape.START
     val actual = testSubject.setMessageShape(
-      isLtr = true,
       currentMessage = getMessageRecord(prev),
       isGroupThread = false,
       adapterPosition = 5
@@ -113,7 +113,6 @@ class V2ConversationItemShapeTest {
 
     val expected = V2ConversationItemShape.MessageShape.MIDDLE
     val actual = testSubject.setMessageShape(
-      isLtr = true,
       currentMessage = getMessageRecord(now),
       isGroupThread = false,
       adapterPosition = 5
@@ -135,7 +134,6 @@ class V2ConversationItemShapeTest {
 
     val expected = V2ConversationItemShape.MessageShape.SINGLE
     val actual = testSubject.setMessageShape(
-      isLtr = true,
       currentMessage = getMessageRecord(now),
       isGroupThread = false,
       adapterPosition = 5
@@ -157,7 +155,6 @@ class V2ConversationItemShapeTest {
 
     val expected = V2ConversationItemShape.MessageShape.SINGLE
     val actual = testSubject.setMessageShape(
-      isLtr = true,
       currentMessage = getMessageRecord(prev),
       isGroupThread = false,
       adapterPosition = 5
@@ -181,7 +178,6 @@ class V2ConversationItemShapeTest {
 
     val expected = V2ConversationItemShape.MessageShape.SINGLE
     val actual = testSubject.setMessageShape(
-      isLtr = true,
       currentMessage = getMessageRecord(now),
       isGroupThread = false,
       adapterPosition = 5
@@ -208,12 +204,15 @@ class V2ConversationItemShapeTest {
 
     private val colorizer = Colorizer()
 
-    override val displayMode: ConversationItemDisplayMode = ConversationItemDisplayMode.STANDARD
-
+    override val lifecycleOwner: LifecycleOwner = mockk(relaxed = true)
+    override val displayMode: ConversationItemDisplayMode = ConversationItemDisplayMode.Standard
     override val clickListener: ConversationAdapter.ItemClickListener = FakeConversationItemClickListener
     override val selectedItems: Set<MultiselectPart> = emptySet()
     override val isMessageRequestAccepted: Boolean = true
     override val searchQuery: String? = null
+    override val requestManager: RequestManager = mockk()
+    override val isParentInScroll: Boolean = false
+    override fun getChatColorsData(): ChatColorsDrawable.ChatColorsData = ChatColorsDrawable.ChatColorsData(null, null)
 
     override fun onStartExpirationTimeout(messageRecord: MessageRecord) = Unit
 
@@ -291,6 +290,8 @@ class V2ConversationItemShapeTest {
 
     override fun onChangeNumberUpdateContact(recipient: Recipient) = Unit
 
+    override fun onChangeProfileNameUpdateContact(recipient: Recipient) = Unit
+
     override fun onCallToAction(action: String) = Unit
 
     override fun onDonateClicked() = Unit
@@ -315,7 +316,7 @@ class V2ConversationItemShapeTest {
 
     override fun goToMediaPreview(parent: ConversationItem?, sharedElement: View?, args: MediaIntentFactory.MediaPreviewArgs?) = Unit
 
-    override fun onEditedIndicatorClicked(messageRecord: MessageRecord) = Unit
+    override fun onEditedIndicatorClicked(conversationMessage: ConversationMessage) = Unit
 
     override fun onShowGroupDescriptionClicked(groupName: String, description: String, shouldLinkifyWebLinks: Boolean) = Unit
 
@@ -324,5 +325,14 @@ class V2ConversationItemShapeTest {
     override fun onItemClick(item: MultiselectPart?) = Unit
 
     override fun onItemLongClick(itemView: View?, item: MultiselectPart?) = Unit
+
+    override fun onShowSafetyTips(forGroup: Boolean) = Unit
+
+    override fun onReportSpamLearnMoreClicked() = Unit
+
+    override fun onMessageRequestAcceptOptionsClicked() = Unit
+
+    override fun onItemDoubleClick(item: MultiselectPart) = Unit
+    override fun onPaymentTombstoneClicked() = Unit
   }
 }

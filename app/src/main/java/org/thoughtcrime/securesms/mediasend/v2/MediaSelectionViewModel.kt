@@ -12,6 +12,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -24,23 +25,27 @@ import io.reactivex.rxjava3.subjects.Subject
 import org.signal.core.util.BreakIteratorCompat
 import org.signal.core.util.getParcelableArrayListCompat
 import org.signal.core.util.getParcelableCompat
+import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.components.mention.MentionAnnotation
 import org.thoughtcrime.securesms.contacts.paged.ContactSearchKey
 import org.thoughtcrime.securesms.conversation.MessageSendType
 import org.thoughtcrime.securesms.conversation.MessageStyler
 import org.thoughtcrime.securesms.mediasend.Media
 import org.thoughtcrime.securesms.mediasend.MediaSendActivityResult
-import org.thoughtcrime.securesms.mediasend.VideoEditorFragment
 import org.thoughtcrime.securesms.mediasend.v2.review.AddMessageCharacterCount
+import org.thoughtcrime.securesms.mediasend.v2.videos.VideoTrimData
 import org.thoughtcrime.securesms.mms.MediaConstraints
 import org.thoughtcrime.securesms.mms.SentMediaQuality
 import org.thoughtcrime.securesms.providers.BlobProvider
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.scribbles.ImageEditorFragment
 import org.thoughtcrime.securesms.stories.Stories
+import org.thoughtcrime.securesms.util.MediaUtil
 import org.thoughtcrime.securesms.util.Util
 import org.thoughtcrime.securesms.util.livedata.Store
 import java.util.Collections
+import kotlin.math.max
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * ViewModel which maintains the list of selected media and other shared values.
@@ -56,6 +61,8 @@ class MediaSelectionViewModel(
   private val repository: MediaSelectionRepository,
   private val identityChangesSince: Long = System.currentTimeMillis()
 ) : ViewModel() {
+
+  private val TAG = Log.tag(MediaSelectionViewModel::class.java)
 
   private val selectedMediaSubject: Subject<List<Media>> = BehaviorSubject.create()
 
@@ -75,7 +82,7 @@ class MediaSelectionViewModel(
 
   private val internalHudCommands = PublishSubject.create<HudCommand>()
 
-  val mediaErrors: PublishSubject<MediaValidator.FilterError> = PublishSubject.create()
+  val mediaErrors: BehaviorSubject<MediaValidator.FilterError> = BehaviorSubject.createDefault(MediaValidator.FilterError.None)
   val hudCommands: Observable<HudCommand> = internalHudCommands
 
   private val disposables = CompositeDisposable()
@@ -100,7 +107,7 @@ class MediaSelectionViewModel(
     store.update {
       it.copy(
         isMeteredConnection = metered,
-        isPreUploadEnabled = shouldPreUpload(metered, it.sendType.usesSmsTransport, it.recipient)
+        isPreUploadEnabled = shouldPreUpload(metered, it.recipient)
       )
     }
   }
@@ -113,22 +120,26 @@ class MediaSelectionViewModel(
       store.update(Recipient.live(recipientSearchKey.recipientId).liveData) { r, s ->
         s.copy(
           recipient = r,
-          isPreUploadEnabled = shouldPreUpload(s.isMeteredConnection, s.sendType.usesSmsTransport, r)
+          isPreUploadEnabled = shouldPreUpload(s.isMeteredConnection, r)
         )
       }
     }
 
     if (initialMedia.isNotEmpty()) {
-      addMedia(initialMedia)
+      addMedia(initialMedia.toSet())
     }
 
-    disposables += selectedMediaSubject.map { media ->
-      Stories.MediaTransform.getSendRequirements(media)
-    }.subscribeBy { requirements ->
-      store.update {
-        it.copy(storySendRequirements = requirements)
+    disposables += selectedMediaSubject
+      .flatMapSingle { media ->
+        Single.fromCallable {
+          Stories.MediaTransform.getSendRequirements(media)
+        }.subscribeOn(Schedulers.io())
       }
-    }
+      .subscribeBy { requirements ->
+        store.update {
+          it.copy(storySendRequirements = requirements)
+        }
+      }
   }
 
   override fun onCleared() {
@@ -153,7 +164,7 @@ class MediaSelectionViewModel(
   }
 
   fun addMedia(media: Media) {
-    addMedia(listOf(media))
+    addMedia(setOf(media))
   }
 
   fun isStory(): Boolean {
@@ -164,7 +175,7 @@ class MediaSelectionViewModel(
     return store.state.storySendRequirements
   }
 
-  private fun addMedia(media: List<Media>) {
+  private fun addMedia(media: Set<Media>) {
     val newSelectionList: List<Media> = linkedSetOf<Media>().apply {
       addAll(store.state.selectedMedia)
       addAll(media)
@@ -176,9 +187,21 @@ class MediaSelectionViewModel(
         .subscribe { filterResult ->
           if (filterResult.filteredMedia.isNotEmpty()) {
             store.update {
+              val maxDuration = it.calculateMaxVideoDurationUs(getMediaConstraints().getVideoMaxSize())
+              val initializedVideoEditorStates = filterResult.filteredMedia.filterNot { media -> it.editorStateMap.containsKey(media.uri) }
+                .filter { media -> MediaUtil.isNonGifVideo(media) }
+                .associate { video: Media ->
+                  val duration = video.duration.milliseconds.inWholeMicroseconds
+                  if (duration < maxDuration) {
+                    video.uri to VideoTrimData(false, duration, 0, duration)
+                  } else {
+                    video.uri to VideoTrimData(true, duration, 0, maxDuration)
+                  }
+                }
               it.copy(
                 selectedMedia = filterResult.filteredMedia,
-                focusedMedia = it.focusedMedia ?: filterResult.filteredMedia.first()
+                focusedMedia = it.focusedMedia ?: filterResult.filteredMedia.first(),
+                editorStateMap = it.editorStateMap + initializedVideoEditorStates
               )
             }
 
@@ -267,6 +290,7 @@ class MediaSelectionViewModel(
     selectedMediaSubject.onNext(newMediaList)
     repository.deleteBlobs(listOf(media))
 
+    Log.d(TAG, "User removed ${media.uri} from message.")
     cancelUpload(media)
   }
 
@@ -285,26 +309,23 @@ class MediaSelectionViewModel(
     }
   }
 
-  fun setFocusedMedia(media: Media) {
+  fun onPageChanged(media: Media) {
     store.update { it.copy(focusedMedia = media) }
   }
 
-  fun setFocusedMedia(position: Int) {
+  fun onPageChanged(position: Int) {
     store.update {
       if (position >= it.selectedMedia.size) {
         it.copy(focusedMedia = null)
       } else {
-        it.copy(focusedMedia = it.selectedMedia[position])
+        val focusedMedia: Media = it.selectedMedia[position]
+        it.copy(focusedMedia = focusedMedia)
       }
     }
   }
 
   fun getMediaConstraints(): MediaConstraints {
-    return if (store.state.sendType.usesSmsTransport) {
-      MediaConstraints.getMmsMediaConstraints(store.state.sendType.simSubscriptionId ?: -1)
-    } else {
-      MediaConstraints.getPushMediaConstraints()
-    }
+    return MediaConstraints.getPushMediaConstraints()
   }
 
   fun setSentMediaQuality(sentMediaQuality: SentMediaQuality) {
@@ -324,6 +345,43 @@ class MediaSelectionViewModel(
     store.update { it.copy(viewOnceToggleState = it.viewOnceToggleState.next()) }
   }
 
+  fun onEditVideoDuration(totalDurationUs: Long, startTimeUs: Long, endTimeUs: Long, touchEnabled: Boolean) {
+    store.update {
+      val uri = it.focusedMedia?.uri ?: return@update it
+      val data = it.getOrCreateVideoTrimData(uri)
+      val clampedStartTime = max(startTimeUs, 0)
+
+      val unedited = !data.isDurationEdited
+      val durationEdited = clampedStartTime > 0 || endTimeUs < totalDurationUs
+      val isEntireDuration = startTimeUs == 0L && endTimeUs == totalDurationUs
+      val endMoved = !isEntireDuration && data.endTimeUs != endTimeUs
+      val maxVideoDurationUs: Long = it.calculateMaxVideoDurationUs(getMediaConstraints().getVideoMaxSize())
+      val preserveStartTime = unedited || !endMoved
+      val videoTrimData = VideoTrimData(durationEdited, totalDurationUs, clampedStartTime, endTimeUs)
+      val updatedData = clampToMaxClipDuration(videoTrimData, maxVideoDurationUs, preserveStartTime)
+
+      if (updatedData != videoTrimData) {
+        Log.d(TAG, "Video attachment trim clamped from ${videoTrimData.startTimeUs}, ${videoTrimData.endTimeUs} to ${updatedData.startTimeUs}, ${updatedData.endTimeUs}")
+      }
+
+      if (unedited && durationEdited) {
+        Log.d(TAG, "Canceling attachment upload because the duration has been edited for the first time..")
+        cancelUpload(MediaBuilder.buildMedia(uri))
+      }
+
+      if (updatedData != data) {
+        Log.d(TAG, "Updating video attachment trim data for $uri")
+        it.copy(
+          isTouchEnabled = touchEnabled,
+          editorStateMap = it.editorStateMap + (uri to updatedData)
+        )
+      } else {
+        Log.d(TAG, "Preserving video attachment trim data for $uri")
+        it.copy(isTouchEnabled = touchEnabled)
+      }
+    }
+  }
+
   fun getEditorState(uri: Uri): Any? {
     return store.state.editorStateMap[uri]
   }
@@ -332,10 +390,6 @@ class MediaSelectionViewModel(
     store.update {
       it.copy(editorStateMap = it.editorStateMap + (uri to state))
     }
-  }
-
-  fun onVideoBeginEdit(uri: Uri) {
-    cancelUpload(MediaBuilder.buildMedia(uri))
   }
 
   fun send(
@@ -353,7 +407,6 @@ class MediaSelectionViewModel(
         stateMap = store.state.editorStateMap,
         quality = store.state.quality,
         message = store.state.message,
-        isSms = store.state.sendType.usesSmsTransport,
         isViewOnce = isViewOnceEnabled(),
         singleContact = destination.getRecipientSearchKey(),
         contacts = selectedContacts.ifEmpty { destination.getRecipientSearchKeyList() },
@@ -366,8 +419,7 @@ class MediaSelectionViewModel(
   }
 
   private fun isViewOnceEnabled(): Boolean {
-    return !store.state.sendType.usesSmsTransport &&
-      store.state.selectedMedia.size == 1 &&
+    return store.state.selectedMedia.size == 1 &&
       store.state.viewOnceToggleState == MediaSelectionState.ViewOnceToggleState.ONCE
   }
 
@@ -377,7 +429,7 @@ class MediaSelectionViewModel(
     }
 
     val filteredPreUploadMedia = if (destination is MediaSelectionDestination.SingleRecipient || !Stories.isFeatureEnabled()) {
-      media
+      media.filter { !MediaUtil.isDocumentType(it.contentType) }
     } else {
       media.filter { Stories.MediaTransform.canPreUploadMedia(it) }
     }
@@ -389,8 +441,8 @@ class MediaSelectionViewModel(
     repository.uploadRepository.cancelUpload(media)
   }
 
-  private fun shouldPreUpload(metered: Boolean, isSms: Boolean, recipient: Recipient?): Boolean {
-    return !metered && !isSms && !repository.isLocalSelfSend(recipient, isSms)
+  private fun shouldPreUpload(metered: Boolean, recipient: Recipient?): Boolean {
+    return !metered && !repository.isLocalSelfSend(recipient)
   }
 
   fun onSaveState(outState: Bundle) {
@@ -421,6 +473,10 @@ class MediaSelectionViewModel(
     return store.state.selectedMedia.isNotEmpty()
   }
 
+  fun clearMediaErrors() {
+    mediaErrors.onNext(MediaValidator.FilterError.None)
+  }
+
   fun onRestoreState(context: Context, savedInstanceState: Bundle) {
     val selection: List<Media> = savedInstanceState.getParcelableArrayListCompat(STATE_SELECTION, Media::class.java) ?: emptyList()
     val focused: Media? = savedInstanceState.getParcelableCompat(STATE_FOCUSED, Media::class.java)
@@ -432,10 +488,9 @@ class MediaSelectionViewModel(
     val cameraFirstCapture: Media? = savedInstanceState.getParcelableCompat(STATE_CAMERA_FIRST_CAPTURE, Media::class.java)
     val editorCount: Int = savedInstanceState.getInt(STATE_EDITOR_COUNT, 0)
     val blobUri: Uri? = savedInstanceState.getParcelableCompat(STATE_EDITORS, Uri::class.java)
-
-    val editorStates: List<Bundle> = if (editorCount > 0 && blobUri != null) {
-      val accumulator: MutableList<Bundle> = mutableListOf<Bundle>()
-      val blobProvider: BlobProvider = BlobProvider.getInstance()
+    val blobProvider: BlobProvider = BlobProvider.getInstance()
+    val editorStates: List<Bundle> = if (editorCount > 0 && blobUri != null && blobProvider.hasStream(context, blobUri)) {
+      val accumulator: MutableList<Bundle> = mutableListOf()
       val blob: ByteArray = ByteStreams.toByteArray(blobProvider.getStream(context, blobUri))
       val parcel: Parcel = Parcel.obtain()
       parcel.unmarshall(blob, 0, blob.size)
@@ -476,7 +531,7 @@ class MediaSelectionViewModel(
     val value: Any = if (getBoolean(BUNDLE_IS_IMAGE)) {
       ImageEditorFragment.Data(this)
     } else {
-      VideoEditorFragment.Data.fromBundle(this)
+      VideoTrimData.fromBundle(this)
     }
 
     return key to value
@@ -490,12 +545,14 @@ class MediaSelectionViewModel(
           putBoolean(BUNDLE_IS_IMAGE, true)
         }
       }
-      is VideoEditorFragment.Data -> {
-        value.bundle.apply {
+
+      is VideoTrimData -> {
+        value.toBundle().apply {
           putParcelable(BUNDLE_URI, key)
           putBoolean(BUNDLE_IS_IMAGE, false)
         }
       }
+
       else -> {
         throw IllegalStateException()
       }
@@ -517,6 +574,23 @@ class MediaSelectionViewModel(
     private const val STATE_CAMERA_FIRST_CAPTURE = "$STATE_PREFIX.camera_first_capture"
     private const val STATE_EDITORS = "$STATE_PREFIX.editors"
     private const val STATE_EDITOR_COUNT = "$STATE_PREFIX.editor_count"
+
+    @JvmStatic
+    fun clampToMaxClipDuration(data: VideoTrimData, maxVideoDurationUs: Long, preserveStartTime: Boolean): VideoTrimData {
+      if (!MediaConstraints.isVideoTranscodeAvailable()) {
+        return data
+      }
+
+      if ((data.endTimeUs - data.startTimeUs) <= maxVideoDurationUs) {
+        return data
+      }
+
+      return data.copy(
+        isDurationEdited = true,
+        startTimeUs = if (!preserveStartTime) data.endTimeUs - maxVideoDurationUs else data.startTimeUs,
+        endTimeUs = if (preserveStartTime) data.startTimeUs + maxVideoDurationUs else data.endTimeUs
+      )
+    }
   }
 
   class Factory(

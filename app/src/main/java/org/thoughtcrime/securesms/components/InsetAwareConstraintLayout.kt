@@ -12,6 +12,7 @@ import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
+import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.util.ServiceUtil
@@ -45,17 +46,19 @@ open class InsetAwareConstraintLayout @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
   companion object {
+    private val TAG = Log.tag(InsetAwareConstraintLayout::class.java)
     private val keyboardType = WindowInsetsCompat.Type.ime()
     private val windowTypes = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
   }
 
-  private val statusBarGuideline: Guideline? by lazy { findViewById(R.id.status_bar_guideline) }
+  protected val statusBarGuideline: Guideline? by lazy { findViewById(R.id.status_bar_guideline) }
   private val navigationBarGuideline: Guideline? by lazy { findViewById(R.id.navigation_bar_guideline) }
   private val parentStartGuideline: Guideline? by lazy { findViewById(R.id.parent_start_guideline) }
   private val parentEndGuideline: Guideline? by lazy { findViewById(R.id.parent_end_guideline) }
   private val keyboardGuideline: Guideline? by lazy { findViewById(R.id.keyboard_guideline) }
 
-  private val listeners: MutableList<KeyboardStateListener> = mutableListOf()
+  private val windowInsetsListeners: MutableSet<WindowInsetsListener> = mutableSetOf()
+  private val keyboardStateListeners: MutableSet<KeyboardStateListener> = mutableSetOf()
   private val keyboardAnimator = KeyboardInsetAnimator()
   private val displayMetrics = DisplayMetrics()
   private var overridingKeyboard: Boolean = false
@@ -80,20 +83,35 @@ open class InsetAwareConstraintLayout @JvmOverloads constructor(
   }
 
   fun addKeyboardStateListener(listener: KeyboardStateListener) {
-    listeners += listener
+    keyboardStateListeners += listener
   }
 
   fun removeKeyboardStateListener(listener: KeyboardStateListener) {
-    listeners.remove(listener)
+    keyboardStateListeners.remove(listener)
+  }
+
+  fun addWindowInsetsListener(listener: WindowInsetsListener) {
+    windowInsetsListeners += listener
+  }
+
+  fun removeWindowInsetsListener(listener: WindowInsetsListener) {
+    windowInsetsListeners.remove(listener)
   }
 
   private fun applyInsets(windowInsets: Insets, keyboardInsets: Insets) {
     val isLtr = ViewUtil.isLtr(this)
 
-    statusBarGuideline?.setGuidelineBegin(windowInsets.top)
-    navigationBarGuideline?.setGuidelineEnd(windowInsets.bottom)
-    parentStartGuideline?.setGuidelineBegin(if (isLtr) windowInsets.left else windowInsets.right)
-    parentEndGuideline?.setGuidelineEnd(if (isLtr) windowInsets.right else windowInsets.left)
+    val statusBar = windowInsets.top
+    val navigationBar = windowInsets.bottom
+    val parentStart = if (isLtr) windowInsets.left else windowInsets.right
+    val parentEnd = if (isLtr) windowInsets.right else windowInsets.left
+
+    statusBarGuideline?.setGuidelineBegin(statusBar)
+    navigationBarGuideline?.setGuidelineEnd(navigationBar)
+    parentStartGuideline?.setGuidelineBegin(parentStart)
+    parentEndGuideline?.setGuidelineEnd(parentEnd)
+
+    windowInsetsListeners.forEach { it.onApplyWindowInsets(statusBar, navigationBar, parentStart, parentEnd) }
 
     if (keyboardInsets.bottom > 0) {
       setKeyboardHeight(keyboardInsets.bottom)
@@ -111,10 +129,10 @@ open class InsetAwareConstraintLayout @JvmOverloads constructor(
     }
 
     if (previousKeyboardHeight != keyboardInsets.bottom) {
-      listeners.forEach {
-        if (previousKeyboardHeight <= 0) {
+      keyboardStateListeners.forEach {
+        if (previousKeyboardHeight <= 0 && keyboardInsets.bottom > 0) {
           it.onKeyboardShown()
-        } else {
+        } else if (previousKeyboardHeight > 0 && keyboardInsets.bottom <= 0) {
           it.onKeyboardHidden()
         }
       }
@@ -139,23 +157,25 @@ open class InsetAwareConstraintLayout @JvmOverloads constructor(
 
   private fun getKeyboardHeight(): Int {
     val height = if (isLandscape()) {
-      SignalStore.misc().keyboardLandscapeHeight
+      SignalStore.misc.keyboardLandscapeHeight
     } else {
-      SignalStore.misc().keyboardPortraitHeight
+      SignalStore.misc.keyboardPortraitHeight
     }
 
-    return if (height <= 0) {
-      resources.getDimensionPixelSize(R.dimen.default_custom_keyboard_size)
-    } else {
+    val minHeight = resources.getDimensionPixelSize(R.dimen.default_custom_keyboard_size)
+    return if (height > minHeight) {
       height
+    } else {
+      Log.w(TAG, "Saved keyboard height ($height) is too low, using default size ($minHeight)")
+      minHeight
     }
   }
 
   private fun setKeyboardHeight(height: Int) {
     if (isLandscape()) {
-      SignalStore.misc().keyboardLandscapeHeight = height
+      SignalStore.misc.keyboardLandscapeHeight = height
     } else {
-      SignalStore.misc().keyboardPortraitHeight = height
+      SignalStore.misc.keyboardPortraitHeight = height
     }
   }
 
@@ -185,6 +205,10 @@ open class InsetAwareConstraintLayout @JvmOverloads constructor(
   interface KeyboardStateListener {
     fun onKeyboardShown()
     fun onKeyboardHidden()
+  }
+
+  interface WindowInsetsListener {
+    fun onApplyWindowInsets(statusBar: Int, navigationBar: Int, parentStart: Int, parentEnd: Int)
   }
 
   /**

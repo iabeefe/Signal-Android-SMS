@@ -10,16 +10,19 @@ import android.view.animation.PathInterpolator
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.OptIn
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.ui.LegacyPlayerControlView
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.model.KeyPath
-import com.google.android.exoplayer2.ui.PlayerControlView
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.util.MediaUtil
 import org.thoughtcrime.securesms.util.visible
+import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -27,12 +30,13 @@ import kotlin.time.toDuration
  * The bottom bar for the media preview. This includes the standard seek bar as well as playback controls,
  * but adds forward and share buttons as well as a recyclerview that can be populated with a rail of thumbnails.
  */
+@OptIn(UnstableApi::class)
 class MediaPreviewPlayerControlView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0,
   playbackAttrs: AttributeSet? = null
-) : PlayerControlView(context, attrs, defStyleAttr, playbackAttrs) {
+) : LegacyPlayerControlView(context, attrs, defStyleAttr, playbackAttrs) {
 
   val recyclerView: RecyclerView = findViewById(R.id.media_preview_album_rail)
   private val durationBar: LinearLayout = findViewById(R.id.exo_duration_viewgroup)
@@ -42,11 +46,12 @@ class MediaPreviewPlayerControlView @JvmOverloads constructor(
   private val forwardButton: ImageButton = findViewById(R.id.exo_forward)
 
   enum class MediaMode {
-    IMAGE, VIDEO;
+    IMAGE,
+    VIDEO;
 
     companion object {
       @JvmStatic
-      fun fromString(contentType: String): MediaMode {
+      fun fromString(contentType: String?): MediaMode {
         if (MediaUtil.isVideo(contentType)) return VIDEO
         if (MediaUtil.isImageType(contentType)) return IMAGE
         throw IllegalArgumentException("Unknown content type: $contentType")
@@ -70,9 +75,13 @@ class MediaPreviewPlayerControlView @JvmOverloads constructor(
       setProgressUpdateListener { position, _ ->
         val finalPlayer = player ?: return@setProgressUpdateListener
         val remainingDuration = (finalPlayer.duration - position).toDuration(DurationUnit.MILLISECONDS)
-        val minutes: Long = remainingDuration.inWholeMinutes
-        val seconds: Long = remainingDuration.inWholeSeconds % 60
-        durationLabel.text = "–${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}"
+        if (remainingDuration >= Duration.ZERO) {
+          val minutes: Long = remainingDuration.inWholeMinutes
+          val seconds: Long = remainingDuration.inWholeSeconds % 60
+          durationLabel.text = "–${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}"
+        } else {
+          durationLabel.text = ""
+        }
       }
     } else {
       setProgressUpdateListener(null)

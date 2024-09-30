@@ -3,6 +3,7 @@ package org.thoughtcrime.securesms.components;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -12,6 +13,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import org.signal.core.util.DimensionUnit;
@@ -133,6 +135,7 @@ public class DeliveryStatusView extends AppCompatImageView {
     state = State.NONE;
     clearAnimation();
     setVisibility(View.GONE);
+    updateContentDescription();
   }
 
   public boolean isPending() {
@@ -144,7 +147,8 @@ public class DeliveryStatusView extends AppCompatImageView {
     setVisibility(View.VISIBLE);
     ViewUtil.setPaddingStart(this, 0);
     ViewUtil.setPaddingEnd(this, horizontalPadding);
-    setImageResource(R.drawable.ic_delivery_status_sending);
+    setImageResource(R.drawable.symbol_messagestatus_sending_24);
+    updateContentDescription();
   }
 
   public void setSent() {
@@ -153,7 +157,8 @@ public class DeliveryStatusView extends AppCompatImageView {
     ViewUtil.setPaddingStart(this, horizontalPadding);
     ViewUtil.setPaddingEnd(this, 0);
     clearAnimation();
-    setImageResource(R.drawable.ic_delivery_status_sent);
+    setImageResource(R.drawable.symbol_messagestatus_sent_24);
+    updateContentDescription();
   }
 
   public void setDelivered() {
@@ -162,7 +167,8 @@ public class DeliveryStatusView extends AppCompatImageView {
     ViewUtil.setPaddingStart(this, horizontalPadding);
     ViewUtil.setPaddingEnd(this, 0);
     clearAnimation();
-    setImageResource(R.drawable.ic_delivery_status_delivered);
+    setImageResource(R.drawable.symbol_messagestatus_delivered_24);
+    updateContentDescription();
   }
 
   public void setRead() {
@@ -171,24 +177,37 @@ public class DeliveryStatusView extends AppCompatImageView {
     ViewUtil.setPaddingStart(this, horizontalPadding);
     ViewUtil.setPaddingEnd(this, 0);
     clearAnimation();
-    setImageResource(R.drawable.ic_delivery_status_read);
+    setImageResource(R.drawable.symbol_messagestatus_read_24);
+    updateContentDescription();
   }
 
   public void setTint(int color) {
-    setColorFilter(color);
+    setColorFilter(color, PorterDuff.Mode.SRC_IN);
+  }
+
+  private void updateContentDescription() {
+    if (state.contentDescription == -1) {
+      setContentDescription(null);
+    } else {
+      setContentDescription(getContext().getString(state.contentDescription));
+    }
   }
 
   private enum State {
-    NONE(0),
-    PENDING(1),
-    SENT(2),
-    DELIVERED(3),
-    READ(4);
+    NONE(0, -1),
+    PENDING(1, R.string.message_details_recipient_header__pending_send),
+    SENT(2, R.string.message_details_header_sent),
+    DELIVERED(3, R.string.conversation_item_sent__delivered_description),
+    READ(4, R.string.conversation_item_sent__message_read);
 
     final int code;
 
-    State(int code) {
-      this.code = code;
+    @StringRes
+    final int contentDescription;
+
+    State(int code, @StringRes int contentDescription) {
+      this.code               = code;
+      this.contentDescription = contentDescription;
     }
 
     static State fromCode(int code) {

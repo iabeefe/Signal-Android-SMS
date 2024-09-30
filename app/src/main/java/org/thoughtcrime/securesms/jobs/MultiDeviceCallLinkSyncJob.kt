@@ -5,21 +5,21 @@
 
 package org.thoughtcrime.securesms.jobs
 
-import com.google.protobuf.ByteString
+import okio.ByteString.Companion.toByteString
 import org.signal.core.util.logging.Log
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.service.webrtc.links.CallLinkCredentials
 import org.whispersystems.signalservice.api.messages.multidevice.SignalServiceSyncMessage
 import org.whispersystems.signalservice.api.push.exceptions.PushNetworkException
-import org.whispersystems.signalservice.internal.push.SignalServiceProtos.SyncMessage.CallLinkUpdate
-import java.util.Optional
+import org.whispersystems.signalservice.internal.push.SyncMessage.CallLinkUpdate
 import kotlin.time.Duration.Companion.days
 
 /**
  * Sends a sync message to linked devices when a new call link is created locally.
  */
+// TODO [cody] not being created?
 class MultiDeviceCallLinkSyncJob private constructor(
   parameters: Parameters,
   private val callLinkUpdate: CallLinkUpdate
@@ -32,10 +32,10 @@ class MultiDeviceCallLinkSyncJob private constructor(
       .setLifespan(1.days.inWholeMilliseconds)
       .setMaxAttempts(Parameters.UNLIMITED)
       .build(),
-    CallLinkUpdate.newBuilder()
-      .setRootKey(ByteString.copyFrom(credentials.linkKeyBytes))
-      .setAdminPassKey(ByteString.copyFrom(credentials.adminPassBytes!!))
-      .build()
+    CallLinkUpdate(
+      rootKey = credentials.linkKeyBytes.toByteString(),
+      adminPassKey = credentials.adminPassBytes!!.toByteString()
+    )
   )
 
   companion object {
@@ -45,7 +45,7 @@ class MultiDeviceCallLinkSyncJob private constructor(
   }
 
   override fun serialize(): ByteArray {
-    return callLinkUpdate.toByteArray()
+    return callLinkUpdate.encode()
   }
 
   override fun getFactoryKey(): String = KEY
@@ -56,7 +56,7 @@ class MultiDeviceCallLinkSyncJob private constructor(
     val syncMessage = SignalServiceSyncMessage.forCallLinkUpdate(callLinkUpdate)
 
     try {
-      ApplicationDependencies.getSignalServiceMessageSender().sendSyncMessage(syncMessage, Optional.empty())
+      AppDependencies.signalServiceMessageSender.sendSyncMessage(syncMessage)
     } catch (e: Exception) {
       Log.w(TAG, "Unable to send call link update message.", e)
       throw e
@@ -72,7 +72,7 @@ class MultiDeviceCallLinkSyncJob private constructor(
 
   class Factory : Job.Factory<MultiDeviceCallLinkSyncJob> {
     override fun create(parameters: Parameters, serializedData: ByteArray?): MultiDeviceCallLinkSyncJob {
-      val data = CallLinkUpdate.parseFrom(serializedData)
+      val data = CallLinkUpdate.ADAPTER.decode(serializedData!!)
       return MultiDeviceCallLinkSyncJob(parameters, data)
     }
   }

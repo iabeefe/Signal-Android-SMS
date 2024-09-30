@@ -2,11 +2,13 @@ package org.thoughtcrime.securesms.conversation.ui.edit
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.signal.core.util.concurrent.SignalExecutors
 import org.thoughtcrime.securesms.conversation.ConversationMessage
 import org.thoughtcrime.securesms.conversation.v2.data.AttachmentHelper
 import org.thoughtcrime.securesms.database.DatabaseObserver
 import org.thoughtcrime.securesms.database.SignalDatabase
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+import org.thoughtcrime.securesms.dependencies.AppDependencies
+import org.thoughtcrime.securesms.notifications.MarkReadReceiver
 import org.thoughtcrime.securesms.recipients.Recipient
 
 object EditMessageHistoryRepository {
@@ -19,7 +21,7 @@ object EditMessageHistoryRepository {
         return@create
       }
 
-      val databaseObserver: DatabaseObserver = ApplicationDependencies.getDatabaseObserver()
+      val databaseObserver: DatabaseObserver = AppDependencies.databaseObserver
       val observer = DatabaseObserver.Observer { emitter.onNext(getEditHistorySync(messageId)) }
 
       databaseObserver.registerConversationObserver(threadId, observer)
@@ -29,8 +31,14 @@ object EditMessageHistoryRepository {
     }.subscribeOn(Schedulers.io())
   }
 
+  fun markRevisionsRead(messageId: Long) {
+    SignalExecutors.BOUNDED.execute {
+      MarkReadReceiver.process(SignalDatabase.messages.setAllEditMessageRevisionsRead(messageId))
+    }
+  }
+
   private fun getEditHistorySync(messageId: Long): List<ConversationMessage> {
-    val context = ApplicationDependencies.getApplication()
+    val context = AppDependencies.application
     val records = SignalDatabase
       .messages
       .getMessageEditHistory(messageId)

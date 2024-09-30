@@ -81,7 +81,7 @@ class StoryViewerActivity : PassphraseRequiredActivity(), VoiceNoteMediaControll
     super.onCreate(savedInstanceState, ready)
     setContentView(R.layout.fragment_container)
 
-    voiceNoteMediaController = VoiceNoteMediaController(this)
+    voiceNoteMediaController = VoiceNoteMediaController(this, false)
 
     if (savedInstanceState == null) {
       replaceStoryViewerFragment()
@@ -113,7 +113,7 @@ class StoryViewerActivity : PassphraseRequiredActivity(), VoiceNoteMediaControll
     }
   }
 
-  override fun onNewIntent(intent: Intent?) {
+  override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
     setIntent(intent)
     replaceStoryViewerFragment()

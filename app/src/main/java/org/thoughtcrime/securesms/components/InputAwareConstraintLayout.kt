@@ -25,19 +25,61 @@ class InputAwareConstraintLayout @JvmOverloads constructor(
 
   private var inputId: Int? = null
   private var input: Fragment? = null
+  private var wasKeyboardVisibleBeforeToggle: Boolean = false
+  private val listeners: MutableSet<Listener> = mutableSetOf()
 
   val isInputShowing: Boolean
     get() = input != null
 
   lateinit var fragmentManager: FragmentManager
-  var listener: Listener? = null
+
+  fun addInputListener(listener: Listener) {
+    listeners.add(listener)
+  }
+
+  fun remoteInputListener(listener: Listener) {
+    listeners.remove(listener)
+  }
 
   fun showSoftkey(editText: EditText) {
     ViewUtil.focusAndShowKeyboard(editText)
     hideInput(resetKeyboardGuideline = false)
   }
 
-  fun toggleInput(fragmentCreator: FragmentCreator, imeTarget: EditText, showSoftKeyOnHide: Boolean = false) {
+  fun hideAll(imeTarget: EditText) {
+    wasKeyboardVisibleBeforeToggle = false
+    ViewUtil.hideKeyboard(context, imeTarget)
+    hideInput(resetKeyboardGuideline = true)
+  }
+
+  fun runAfterAllHidden(imeTarget: EditText, onHidden: () -> Unit) {
+    if (isInputShowing || isKeyboardShowing) {
+      val listener = object : Listener, KeyboardStateListener {
+        override fun onInputHidden() {
+          onHidden()
+          remoteInputListener(this)
+          removeKeyboardStateListener(this)
+        }
+
+        override fun onKeyboardHidden() {
+          onHidden()
+          remoteInputListener(this)
+          removeKeyboardStateListener(this)
+        }
+
+        override fun onInputShown() = Unit
+        override fun onKeyboardShown() = Unit
+      }
+
+      addInputListener(listener)
+      addKeyboardStateListener(listener)
+      hideAll(imeTarget)
+    } else {
+      onHidden()
+    }
+  }
+
+  fun toggleInput(fragmentCreator: FragmentCreator, imeTarget: EditText, showSoftKeyOnHide: Boolean = wasKeyboardVisibleBeforeToggle) {
     if (fragmentCreator.id == inputId) {
       if (showSoftKeyOnHide) {
         showSoftkey(imeTarget)
@@ -45,6 +87,7 @@ class InputAwareConstraintLayout @JvmOverloads constructor(
         hideInput(resetKeyboardGuideline = true)
       }
     } else {
+      wasKeyboardVisibleBeforeToggle = isKeyboardShowing
       hideInput(resetKeyboardGuideline = false)
       showInput(fragmentCreator, imeTarget)
     }
@@ -52,6 +95,16 @@ class InputAwareConstraintLayout @JvmOverloads constructor(
 
   fun hideInput() {
     hideInput(resetKeyboardGuideline = true)
+    wasKeyboardVisibleBeforeToggle = false
+  }
+
+  fun hideKeyboard(imeTarget: EditText, keepHeightOverride: Boolean = false) {
+    if (isKeyboardShowing) {
+      if (keepHeightOverride) {
+        overrideKeyboardGuidelineWithPreviousHeight()
+      }
+      ViewUtil.hideKeyboard(context, imeTarget)
+    }
   }
 
   private fun showInput(fragmentCreator: FragmentCreator, imeTarget: EditText) {
@@ -67,7 +120,7 @@ class InputAwareConstraintLayout @JvmOverloads constructor(
     overrideKeyboardGuidelineWithPreviousHeight()
     ViewUtil.hideKeyboard(context, imeTarget)
 
-    listener?.onInputShown()
+    listeners.forEach { it.onInputShown() }
   }
 
   private fun hideInput(resetKeyboardGuideline: Boolean) {
@@ -89,7 +142,7 @@ class InputAwareConstraintLayout @JvmOverloads constructor(
     }
 
     if (inputHidden) {
-      listener?.onInputHidden()
+      listeners.forEach { it.onInputHidden() }
     }
   }
 

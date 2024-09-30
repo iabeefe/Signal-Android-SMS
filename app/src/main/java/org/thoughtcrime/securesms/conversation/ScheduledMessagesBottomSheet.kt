@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.signal.core.util.StreamUtil
 import org.signal.core.util.concurrent.LifecycleDisposable
@@ -29,7 +30,6 @@ import org.thoughtcrime.securesms.conversation.colors.RecyclerViewColorizer
 import org.thoughtcrime.securesms.conversation.mutiselect.MultiselectPart
 import org.thoughtcrime.securesms.conversation.mutiselect.MultiselectPart.Attachments
 import org.thoughtcrime.securesms.database.SignalDatabase
-import org.thoughtcrime.securesms.database.model.MediaMmsMessageRecord
 import org.thoughtcrime.securesms.database.model.MessageRecord
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.giph.mp4.GiphyMp4ItemDecoration
@@ -39,7 +39,6 @@ import org.thoughtcrime.securesms.giph.mp4.GiphyMp4ProjectionPlayerHolder
 import org.thoughtcrime.securesms.giph.mp4.GiphyMp4ProjectionRecycler
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.groups.GroupMigrationMembershipChange
-import org.thoughtcrime.securesms.mms.GlideApp
 import org.thoughtcrime.securesms.mms.PartAuthority
 import org.thoughtcrime.securesms.mms.TextSlide
 import org.thoughtcrime.securesms.recipients.Recipient
@@ -92,9 +91,8 @@ class ScheduledMessagesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment
 
     val colorizer = Colorizer()
 
-    messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, GlideApp.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient.hasWallpaper(), colorizer).apply {
-      setCondensedMode(ConversationItemDisplayMode.CONDENSED)
-      setScheduledMessagesMode(true)
+    messageAdapter = ConversationAdapter(requireContext(), viewLifecycleOwner, Glide.with(this), Locale.getDefault(), ConversationAdapterListener(), conversationRecipient.hasWallpaper, colorizer).apply {
+      setCondensedMode(ConversationItemDisplayMode.Condensed(scheduleMessageMode = true))
     }
 
     val list: RecyclerView = view.findViewById<RecyclerView>(R.id.scheduled_list).apply {
@@ -168,7 +166,7 @@ class ScheduledMessagesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment
   }
 
   private fun handleRescheduleMessage(messageRecord: MessageRecord) {
-    ScheduleMessageTimePickerBottomSheet.showReschedule(childFragmentManager, messageRecord.id, (messageRecord as MediaMmsMessageRecord).scheduledDate)
+    ScheduleMessageTimePickerBottomSheet.showReschedule(childFragmentManager, messageRecord.id, (messageRecord as MmsMessageRecord).scheduledDate)
   }
 
   private fun handleSendMessageNow(messageRecord: MessageRecord) {
@@ -275,7 +273,11 @@ class ScheduledMessagesBottomSheet : FixedRoundedCornerBottomSheetDialogFragment
     override fun onViewGiftBadgeClicked(messageRecord: MessageRecord) = Unit
     override fun onActivatePaymentsClicked() = Unit
     override fun onSendPaymentClicked(recipientId: RecipientId) = Unit
-    override fun onEditedIndicatorClicked(messageRecord: MessageRecord) = Unit
+    override fun onEditedIndicatorClicked(conversationMessage: ConversationMessage) = Unit
+    override fun onShowSafetyTips(forGroup: Boolean) = Unit
+    override fun onReportSpamLearnMoreClicked() = Unit
+    override fun onMessageRequestAcceptOptionsClicked() = Unit
+    override fun onItemDoubleClick(item: MultiselectPart) = Unit
   }
 
   companion object {

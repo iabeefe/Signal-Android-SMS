@@ -1,6 +1,7 @@
 package org.thoughtcrime.securesms.sharing.v2
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -12,10 +13,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutManagerCompat
+import com.google.android.material.appbar.MaterialToolbar
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import org.signal.core.util.Result
 import org.signal.core.util.concurrent.LifecycleDisposable
+import org.signal.core.util.concurrent.addTo
 import org.signal.core.util.getParcelableArrayListCompat
 import org.signal.core.util.getParcelableArrayListExtraCompat
 import org.signal.core.util.getParcelableExtraCompat
@@ -23,8 +26,10 @@ import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.MainActivity
 import org.thoughtcrime.securesms.PassphraseRequiredActivity
 import org.thoughtcrime.securesms.R
+import org.thoughtcrime.securesms.components.SignalProgressDialog
 import org.thoughtcrime.securesms.contacts.paged.ContactSearchKey
 import org.thoughtcrime.securesms.conversation.ConversationIntents
+import org.thoughtcrime.securesms.conversation.MessageSendType
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragment
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragmentArgs
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFullScreenDialogFragment
@@ -37,12 +42,25 @@ import org.thoughtcrime.securesms.sharing.MultiShareSender.MultiShareSendResultC
 import org.thoughtcrime.securesms.sharing.interstitial.ShareInterstitialActivity
 import org.thoughtcrime.securesms.util.ConversationUtil
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme
+import org.thoughtcrime.securesms.util.visible
 import java.util.Optional
+import java.util.concurrent.TimeUnit
 
 class ShareActivity : PassphraseRequiredActivity(), MultiselectForwardFragment.Callback {
 
   companion object {
     private val TAG = Log.tag(ShareActivity::class.java)
+
+    private const val EXTRA_TITLE = "ShareActivity.extra.title"
+    private const val EXTRA_NAVIGATION = "ShareActivity.extra.navigation"
+
+    fun sendSimpleText(context: Context, text: String): Intent {
+      return Intent(context, ShareActivity::class.java)
+        .setAction(Intent.ACTION_SEND)
+        .putExtra(Intent.EXTRA_TEXT, text)
+        .putExtra(EXTRA_TITLE, R.string.MediaReviewFragment__send_to)
+        .putExtra(EXTRA_NAVIGATION, true)
+    }
   }
 
   private val dynamicTheme = DynamicNoActionBarTheme()
@@ -88,6 +106,16 @@ class ShareActivity : PassphraseRequiredActivity(), MultiselectForwardFragment.C
       }
     }
 
+    val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+
+    if (intent?.getBooleanExtra(EXTRA_NAVIGATION, false) == true) {
+      toolbar.setTitle(getTitleFromExtras())
+      toolbar.setNavigationIcon(R.drawable.symbol_arrow_left_24)
+      toolbar.setNavigationOnClickListener { finish() }
+    } else {
+      toolbar.visible = false
+    }
+
     lifecycleDisposable.bindTo(this)
     lifecycleDisposable += viewModel.events.subscribe { shareEvent ->
       when (shareEvent) {
@@ -97,6 +125,22 @@ class ShareActivity : PassphraseRequiredActivity(), MultiselectForwardFragment.C
         is ShareEvent.SendWithoutInterstitial -> sendWithoutInterstitial(shareEvent)
       }
     }
+
+    var dialog: SignalProgressDialog? = null
+    viewModel
+      .state
+      .debounce(500, TimeUnit.MILLISECONDS)
+      .onErrorComplete()
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribeBy { state ->
+        if (state.loadState == ShareState.ShareDataLoadState.Init) {
+          dialog = SignalProgressDialog.show(this, indeterminate = true)
+        } else {
+          dialog?.dismiss()
+          dialog = null
+        }
+      }
+      .addTo(lifecycleDisposable)
 
     lifecycleDisposable += viewModel.state.observeOn(AndroidSchedulers.mainThread()).subscribe { shareState ->
       when (shareState.loadState) {
@@ -207,9 +251,8 @@ class ShareActivity : PassphraseRequiredActivity(), MultiselectForwardFragment.C
           R.id.fragment_container,
           MultiselectForwardFragment.create(
             MultiselectForwardFragmentArgs(
-              canSendToNonPush = resolvedShareData.isMmsOrSmsSupported,
               multiShareArgs = listOf(resolvedShareData.toMultiShareArgs()),
-              title = R.string.MultiselectForwardFragment__share_with,
+              title = getTitleFromExtras(),
               forceDisableAddMessage = true,
               forceSelectionOnly = true
             )
@@ -262,6 +305,7 @@ class ShareActivity : PassphraseRequiredActivity(), MultiselectForwardFragment.C
           false,
           Optional.empty(),
           Optional.empty(),
+          Optional.empty(),
           Optional.empty()
         )
       )
@@ -271,7 +315,7 @@ class ShareActivity : PassphraseRequiredActivity(), MultiselectForwardFragment.C
 
     val intent = share(
       this,
-      MultiShareSender.getWorstTransportOption(this, multiShareArgs.recipientSearchKeys),
+      MessageSendType.SignalMessageSendType,
       media,
       multiShareArgs.recipientSearchKeys.toList(),
       multiShareArgs.draftText,
@@ -308,6 +352,10 @@ class ShareActivity : PassphraseRequiredActivity(), MultiselectForwardFragment.C
 
     Log.w(TAG, "$logEntry action: ${intent.action}, type: ${intent.type}")
     Toast.makeText(this, R.string.ShareActivity__could_not_get_share_data_from_intent, Toast.LENGTH_LONG).show()
+  }
+
+  private fun getTitleFromExtras(): Int {
+    return intent?.getIntExtra(EXTRA_TITLE, R.string.MultiselectForwardFragment__share_with) ?: R.string.MultiselectForwardFragment__share_with
   }
 
   /**

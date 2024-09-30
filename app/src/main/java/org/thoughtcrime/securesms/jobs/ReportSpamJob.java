@@ -6,14 +6,14 @@ import androidx.annotation.Nullable;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.database.MessageTable.ReportSpamData;
 import org.thoughtcrime.securesms.database.SignalDatabase;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobmanager.JsonJobData;
 import org.thoughtcrime.securesms.jobmanager.Job;
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.thoughtcrime.securesms.util.Base64;
+import org.signal.core.util.Base64;
 import org.whispersystems.signalservice.api.SignalServiceAccountManager;
 import org.whispersystems.signalservice.api.push.ServiceId;
 import org.whispersystems.signalservice.api.push.exceptions.NonSuccessfulResponseCodeException;
@@ -72,9 +72,28 @@ public class ReportSpamJob extends BaseJob {
       return;
     }
 
-    int                         count                          = 0;
-    List<ReportSpamData>        reportSpamData                 = SignalDatabase.messages().getReportSpamMessageServerData(threadId, timestamp, MAX_MESSAGE_COUNT);
-    SignalServiceAccountManager signalServiceAccountManager    = ApplicationDependencies.getSignalServiceAccountManager();
+    Recipient threadRecipient = SignalDatabase.threads().getRecipientForThreadId(threadId);
+    if (threadRecipient == null) {
+      Log.w(TAG, "No recipient for thread");
+      return;
+    }
+
+    List<ReportSpamData> reportSpamData;
+
+    if (threadRecipient.isGroup()) {
+      Recipient inviter = SignalDatabase.groups().getGroupInviter(threadRecipient.requireGroupId());
+      if (inviter == null) {
+        Log.w(TAG, "Unable to determine inviter to report");
+        return;
+      }
+
+      reportSpamData = SignalDatabase.messages().getGroupReportSpamMessageServerData(threadId, inviter.getId(), timestamp, MAX_MESSAGE_COUNT);
+    } else {
+      reportSpamData = SignalDatabase.messages().getReportSpamMessageServerData(threadId, timestamp, MAX_MESSAGE_COUNT);
+    }
+
+    int                         count                       = 0;
+    SignalServiceAccountManager signalServiceAccountManager = AppDependencies.getSignalServiceAccountManager();
 
     for (ReportSpamData data : reportSpamData) {
       RecipientId         recipientId = data.getRecipientId();
@@ -86,9 +105,9 @@ public class ReportSpamJob extends BaseJob {
 
         byte[] reportingTokenBytes = SignalDatabase.recipients().getReportingToken(recipientId);
         if (reportingTokenBytes != null) {
-          reportingTokenEncoded = Base64.encodeBytes(reportingTokenBytes);
+          reportingTokenEncoded = Base64.encodeWithPadding(reportingTokenBytes);
         }
-        
+
         signalServiceAccountManager.reportSpam(serviceId.get(), data.getServerGuid(), reportingTokenEncoded);
         count++;
       } else {

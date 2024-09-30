@@ -4,10 +4,14 @@ import android.content.Context
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import com.annimon.stream.OptionalLong
+import kotlinx.collections.immutable.toImmutableList
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.webrtc.WebRtcControls.FoldableState
 import org.thoughtcrime.securesms.events.CallParticipant
+import org.thoughtcrime.securesms.events.CallParticipant.Companion.HAND_LOWERED
 import org.thoughtcrime.securesms.events.CallParticipant.Companion.createLocal
+import org.thoughtcrime.securesms.events.GroupCallRaiseHandEvent
+import org.thoughtcrime.securesms.events.GroupCallReactionEvent
 import org.thoughtcrime.securesms.events.WebRtcViewModel
 import org.thoughtcrime.securesms.groups.ui.GroupMemberEntry
 import org.thoughtcrime.securesms.recipients.Recipient
@@ -25,24 +29,40 @@ data class CallParticipantsState(
   val callState: WebRtcViewModel.State = WebRtcViewModel.State.CALL_DISCONNECTED,
   val groupCallState: WebRtcViewModel.GroupCallState = WebRtcViewModel.GroupCallState.IDLE,
   private val remoteParticipants: ParticipantCollection = ParticipantCollection(SMALL_GROUP_MAX),
-  val localParticipant: CallParticipant = createLocal(CameraState.UNKNOWN, BroadcastVideoSink(), false),
+  val localParticipant: CallParticipant = createLocal(CameraState.UNKNOWN, BroadcastVideoSink(), microphoneEnabled = false, handRaisedTimestamp = HAND_LOWERED),
   val focusedParticipant: CallParticipant = CallParticipant.EMPTY,
   val localRenderState: WebRtcLocalRenderState = WebRtcLocalRenderState.GONE,
+  val reactions: List<GroupCallReactionEvent> = emptyList(),
   val isInPipMode: Boolean = false,
   private val showVideoForOutgoing: Boolean = false,
   val isViewingFocusedParticipant: Boolean = false,
   val remoteDevicesCount: OptionalLong = OptionalLong.empty(),
   private val foldableState: FoldableState = FoldableState.flat(),
   val isInOutgoingRingingMode: Boolean = false,
+  val recipient: Recipient = Recipient.UNKNOWN,
   val ringGroup: Boolean = false,
   val ringerRecipient: Recipient = Recipient.UNKNOWN,
-  val groupMembers: List<GroupMemberEntry.FullMember> = emptyList()
+  val groupMembers: List<GroupMemberEntry.FullMember> = emptyList(),
+  val isCallLink: Boolean = false
 ) {
 
   val allRemoteParticipants: List<CallParticipant> = remoteParticipants.allParticipants
   val isFolded: Boolean = foldableState.isFolded
-  val isLargeVideoGroup: Boolean = allRemoteParticipants.size > SMALL_GROUP_MAX
-  val isIncomingRing: Boolean = callState == WebRtcViewModel.State.CALL_INCOMING
+  val isLargeVideoGroup: Boolean = allRemoteParticipants.size > SMALL_GROUP_MAX && !isInPipMode && !isFolded
+  val hideAvatar: Boolean = callState.isIncomingOrHandledElsewhere
+
+  val raisedHands: List<GroupCallRaiseHandEvent>
+    get() {
+      val results = allRemoteParticipants.asSequence()
+        .filter { it.isHandRaised }
+        .map { GroupCallRaiseHandEvent(it, it.handRaisedTimestamp) }
+        .sortedBy { it.timestamp }
+        .toMutableList()
+      if (localParticipant.isHandRaised) {
+        results.add(GroupCallRaiseHandEvent(localParticipant, localParticipant.handRaisedTimestamp))
+      }
+      return results.toImmutableList()
+    }
 
   val gridParticipants: List<CallParticipant>
     get() {
@@ -80,6 +100,7 @@ data class CallParticipantsState(
     return if (remoteParticipants.isEmpty) {
       describeGroupMembers(
         context = context,
+        noParticipants = if (isCallLink) R.string.WebRtcCallView__signal_call_link else null,
         oneParticipant = if (ringGroup) R.string.WebRtcCallView__signal_will_ring_s else R.string.WebRtcCallView__s_will_be_notified,
         twoParticipants = if (ringGroup) R.string.WebRtcCallView__signal_will_ring_s_and_s else R.string.WebRtcCallView__s_and_s_will_be_notified,
         multipleParticipants = if (ringGroup) R.plurals.WebRtcCallView__signal_will_ring_s_s_and_d_others else R.plurals.WebRtcCallView__s_s_and_d_others_will_be_notified,
@@ -115,6 +136,7 @@ data class CallParticipantsState(
     ) {
       return describeGroupMembers(
         context = context,
+        noParticipants = null,
         oneParticipant = R.string.WebRtcCallView__ringing_s,
         twoParticipants = R.string.WebRtcCallView__ringing_s_and_s,
         multipleParticipants = R.plurals.WebRtcCallView__ringing_s_s_and_d_others,
@@ -128,7 +150,7 @@ data class CallParticipantsState(
   fun getIncomingRingingGroupDescription(context: Context): String? {
     if (callState == WebRtcViewModel.State.CALL_INCOMING &&
       groupCallState == WebRtcViewModel.GroupCallState.RINGING &&
-      ringerRecipient.hasServiceId()
+      ringerRecipient.hasServiceId
     ) {
       val ringerName = ringerRecipient.getShortDisplayName(context)
       val membersWithoutYouOrRinger: List<GroupMemberEntry.FullMember> = groupMembers.filterNot { it.member.isSelf || ringerRecipient.requireServiceId() == it.member.serviceId.orElse(null) }
@@ -172,7 +194,7 @@ data class CallParticipantsState(
   }
 
   companion object {
-    private const val SMALL_GROUP_MAX = 6
+    const val SMALL_GROUP_MAX = 6
 
     @JvmField
     val MAX_OUTGOING_GROUP_RING_DURATION = TimeUnit.MINUTES.toMillis(1)
@@ -220,10 +242,12 @@ data class CallParticipantsState(
         focusedParticipant = getFocusedParticipant(webRtcViewModel.remoteParticipants),
         localRenderState = localRenderState,
         showVideoForOutgoing = newShowVideoForOutgoing,
+        recipient = webRtcViewModel.recipient,
         remoteDevicesCount = webRtcViewModel.remoteDevicesCount,
         ringGroup = webRtcViewModel.ringGroup,
         isInOutgoingRingingMode = isInOutgoingRingingMode,
-        ringerRecipient = webRtcViewModel.ringerRecipient
+        ringerRecipient = webRtcViewModel.ringerRecipient,
+        isCallLink = webRtcViewModel.isCallLink
       )
     }
 
@@ -265,7 +289,8 @@ data class CallParticipantsState(
       return oldState.copy(
         remoteParticipants = oldState.remoteParticipants.map { p -> p.copy(audioLevel = ephemeralState.remoteAudioLevels[p.callParticipantId]) },
         localParticipant = oldState.localParticipant.copy(audioLevel = ephemeralState.localAudioLevel),
-        focusedParticipant = oldState.focusedParticipant.copy(audioLevel = ephemeralState.remoteAudioLevels[oldState.focusedParticipant.callParticipantId])
+        focusedParticipant = oldState.focusedParticipant.copy(audioLevel = ephemeralState.remoteAudioLevels[oldState.focusedParticipant.callParticipantId]),
+        reactions = ephemeralState.getUnexpiredReactions()
       )
     }
 
@@ -283,7 +308,7 @@ data class CallParticipantsState(
       val displayLocal: Boolean = (numberOfRemoteParticipants == 0 || !isInPip) && (isNonIdleGroupCall || localParticipant.isVideoEnabled)
       var localRenderState: WebRtcLocalRenderState = WebRtcLocalRenderState.GONE
 
-      if (!isInPip && isExpanded && (localParticipant.isVideoEnabled || isNonIdleGroupCall)) {
+      if (!isInPip && isExpanded && localParticipant.isVideoEnabled) {
         return WebRtcLocalRenderState.EXPANDED
       } else if (displayLocal || showVideoForOutgoing) {
         if (callState == WebRtcViewModel.State.CALL_CONNECTED || callState == WebRtcViewModel.State.CALL_RECONNECTING) {
@@ -315,6 +340,7 @@ data class CallParticipantsState(
 
     private fun describeGroupMembers(
       context: Context,
+      @StringRes noParticipants: Int?,
       @StringRes oneParticipant: Int,
       @StringRes twoParticipants: Int,
       @PluralsRes multipleParticipants: Int,
@@ -323,7 +349,7 @@ data class CallParticipantsState(
       val eligibleMembers: List<GroupMemberEntry.FullMember> = members.filterNot { it.member.isSelf || it.member.isBlocked }
 
       return when (eligibleMembers.size) {
-        0 -> ""
+        0 -> noParticipants?.let { context.getString(noParticipants) } ?: ""
         1 -> context.getString(
           oneParticipant,
           eligibleMembers[0].member.getShortDisplayName(context)
@@ -348,6 +374,7 @@ data class CallParticipantsState(
   }
 
   enum class SelectedPage {
-    GRID, FOCUSED
+    GRID,
+    FOCUSED
   }
 }

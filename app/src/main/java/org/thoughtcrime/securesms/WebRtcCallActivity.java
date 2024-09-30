@@ -22,13 +22,16 @@ import android.annotation.SuppressLint;
 import android.app.PictureInPictureParams;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Pair;
 import android.util.Rational;
+import android.view.Surface;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -37,6 +40,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Consumer;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.window.java.layout.WindowInfoTrackerCallbackAdapter;
 import androidx.window.layout.DisplayFeature;
@@ -50,94 +57,108 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.signal.core.util.ThreadUtil;
+import org.signal.core.util.concurrent.LifecycleDisposable;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.protocol.IdentityKey;
 import org.thoughtcrime.securesms.components.TooltipPopup;
-import org.thoughtcrime.securesms.components.sensors.DeviceOrientationMonitor;
-import org.thoughtcrime.securesms.components.webrtc.CallLinkInfoSheet;
+import org.thoughtcrime.securesms.components.sensors.Orientation;
+import org.thoughtcrime.securesms.components.webrtc.CallLinkProfileKeySender;
+import org.thoughtcrime.securesms.components.webrtc.CallOverflowPopupWindow;
 import org.thoughtcrime.securesms.components.webrtc.CallParticipantsListUpdatePopupWindow;
 import org.thoughtcrime.securesms.components.webrtc.CallParticipantsState;
+import org.thoughtcrime.securesms.components.webrtc.CallReactionScrubber;
 import org.thoughtcrime.securesms.components.webrtc.CallStateUpdatePopupWindow;
 import org.thoughtcrime.securesms.components.webrtc.CallToastPopupWindow;
 import org.thoughtcrime.securesms.components.webrtc.GroupCallSafetyNumberChangeNotificationUtil;
+import org.thoughtcrime.securesms.components.webrtc.InCallStatus;
+import org.thoughtcrime.securesms.components.webrtc.PendingParticipantsBottomSheet;
+import org.thoughtcrime.securesms.components.webrtc.PendingParticipantsView;
+import org.thoughtcrime.securesms.components.webrtc.WebRtcAudioDevice;
 import org.thoughtcrime.securesms.components.webrtc.WebRtcAudioOutput;
 import org.thoughtcrime.securesms.components.webrtc.WebRtcCallView;
 import org.thoughtcrime.securesms.components.webrtc.WebRtcCallViewModel;
 import org.thoughtcrime.securesms.components.webrtc.WebRtcControls;
 import org.thoughtcrime.securesms.components.webrtc.WifiToCellularPopupWindow;
+import org.thoughtcrime.securesms.components.webrtc.controls.ControlsAndInfoController;
+import org.thoughtcrime.securesms.components.webrtc.controls.ControlsAndInfoViewModel;
 import org.thoughtcrime.securesms.components.webrtc.participantslist.CallParticipantsListDialog;
+import org.thoughtcrime.securesms.components.webrtc.requests.CallLinkIncomingRequestSheet;
+import org.thoughtcrime.securesms.components.webrtc.v2.CallControlsChange;
+import org.thoughtcrime.securesms.components.webrtc.v2.CallEvent;
+import org.thoughtcrime.securesms.components.webrtc.v2.CallIntent;
+import org.thoughtcrime.securesms.components.webrtc.v2.CallPermissionsDialogController;
 import org.thoughtcrime.securesms.conversation.ui.error.SafetyNumberChangeDialog;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.events.WebRtcViewModel;
 import org.thoughtcrime.securesms.messagerequests.CalleeMustAcceptMessageRequestActivity;
 import org.thoughtcrime.securesms.permissions.Permissions;
-import org.thoughtcrime.securesms.recipients.LiveRecipient;
+import org.thoughtcrime.securesms.reactions.any.ReactWithAnyEmojiBottomSheetDialogFragment;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.safety.SafetyNumberBottomSheet;
+import org.thoughtcrime.securesms.service.webrtc.CallLinkDisconnectReason;
 import org.thoughtcrime.securesms.service.webrtc.SignalCallManager;
 import org.thoughtcrime.securesms.sms.MessageSender;
+import org.thoughtcrime.securesms.util.BottomSheetUtil;
 import org.thoughtcrime.securesms.util.EllapsedTimeFormatter;
-import org.thoughtcrime.securesms.util.FeatureFlags;
 import org.thoughtcrime.securesms.util.FullscreenHelper;
+import org.thoughtcrime.securesms.util.RemoteConfig;
 import org.thoughtcrime.securesms.util.TextSecurePreferences;
 import org.thoughtcrime.securesms.util.ThrottledDebouncer;
 import org.thoughtcrime.securesms.util.Util;
 import org.thoughtcrime.securesms.util.VibrateUtil;
+import org.thoughtcrime.securesms.util.WindowUtil;
 import org.thoughtcrime.securesms.util.livedata.LiveDataUtil;
 import org.thoughtcrime.securesms.webrtc.CallParticipantsViewState;
 import org.thoughtcrime.securesms.webrtc.audio.SignalAudioManager;
 import org.whispersystems.signalservice.api.messages.calls.HangupMessage;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 import static org.thoughtcrime.securesms.components.sensors.Orientation.PORTRAIT_BOTTOM_EDGE;
 
-public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChangeDialog.Callback {
+public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChangeDialog.Callback, ReactWithAnyEmojiBottomSheetDialogFragment.Callback {
 
   private static final String TAG = Log.tag(WebRtcCallActivity.class);
 
   private static final int STANDARD_DELAY_FINISH = 1000;
   private static final int VIBRATE_DURATION      = 50;
 
-  /**
-   * ANSWER the call via voice-only.
-   */
-  public static final String ANSWER_ACTION       = WebRtcCallActivity.class.getCanonicalName() + ".ANSWER_ACTION";
-
-  /**
-   * ANSWER the call via video.
-   */
-  public static final String ANSWER_VIDEO_ACTION = WebRtcCallActivity.class.getCanonicalName() + ".ANSWER_VIDEO_ACTION";
-  public static final String DENY_ACTION         = WebRtcCallActivity.class.getCanonicalName() + ".DENY_ACTION";
-  public static final String END_CALL_ACTION     = WebRtcCallActivity.class.getCanonicalName() + ".END_CALL_ACTION";
-
-  public static final String EXTRA_ENABLE_VIDEO_IF_AVAILABLE = WebRtcCallActivity.class.getCanonicalName() + ".ENABLE_VIDEO_IF_AVAILABLE";
-  public static final String EXTRA_STARTED_FROM_FULLSCREEN   = WebRtcCallActivity.class.getCanonicalName() + ".STARTED_FROM_FULLSCREEN";
-
   private CallParticipantsListUpdatePopupWindow participantUpdateWindow;
   private CallStateUpdatePopupWindow            callStateUpdatePopupWindow;
+  private CallOverflowPopupWindow               callOverflowPopupWindow;
   private WifiToCellularPopupWindow             wifiToCellularPopupWindow;
-  private DeviceOrientationMonitor              deviceOrientationMonitor;
 
   private FullscreenHelper                 fullscreenHelper;
   private WebRtcCallView                   callScreen;
   private TooltipPopup                     videoTooltip;
+  private TooltipPopup                     switchCameraTooltip;
   private WebRtcCallViewModel              viewModel;
+  private ControlsAndInfoViewModel         controlsAndInfoViewModel;
   private boolean                          enableVideoIfAvailable;
   private boolean                          hasWarnedAboutBluetooth;
   private WindowLayoutInfoConsumer         windowLayoutInfoConsumer;
   private WindowInfoTrackerCallbackAdapter windowInfoTrackerCallbackAdapter;
   private ThrottledDebouncer               requestNewSizesThrottle;
   private PictureInPictureParams.Builder   pipBuilderParams;
-
-  private Disposable ephemeralStateDisposable = Disposable.empty();
+  private LifecycleDisposable              lifecycleDisposable;
+  private long                             lastCallLinkDisconnectDialogShowTime;
+  private ControlsAndInfoController        controlsAndInfo;
+  private boolean                          enterPipOnResume;
+  private long                             lastProcessedIntentTimestamp;
+  private WebRtcViewModel                  previousEvent = null;
+  private Disposable                       ephemeralStateDisposable = Disposable.empty();
+  private CallPermissionsDialogController  callPermissionsDialogController = new CallPermissionsDialogController();
 
   @Override
   protected void attachBaseContext(@NonNull Context newBase) {
@@ -145,18 +166,18 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     super.attachBaseContext(newBase);
   }
 
-  @SuppressLint("SourceLockedOrientationActivity")
+  @SuppressLint({ "MissingInflatedId" })
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    Log.i(TAG, "onCreate(" + getIntent().getBooleanExtra(EXTRA_STARTED_FROM_FULLSCREEN, false) + ")");
+    CallIntent callIntent = getCallIntent();
+    Log.i(TAG, "onCreate(" + callIntent.isStartedFromFullScreen() + ")");
+
+    lifecycleDisposable = new LifecycleDisposable();
+    lifecycleDisposable.bindTo(this);
+
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     super.onCreate(savedInstanceState);
-
-    boolean isLandscapeEnabled = getResources().getConfiguration().smallestScreenWidthDp >= 480;
-    if (!isLandscapeEnabled) {
-      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
 
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.webrtc_call_activity);
@@ -166,21 +187,33 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
 
     initializeResources();
-    initializeViewModel(isLandscapeEnabled);
+    initializeViewModel();
     initializePictureInPictureParams();
 
-    logIntent(getIntent());
+    controlsAndInfo = new ControlsAndInfoController(this, callScreen, callOverflowPopupWindow, viewModel, controlsAndInfoViewModel);
+    controlsAndInfo.addVisibilityListener(new FadeCallback());
 
-    if (ANSWER_VIDEO_ACTION.equals(getIntent().getAction())) {
+    fullscreenHelper.showAndHideWithSystemUI(getWindow(),
+                                             findViewById(R.id.call_screen_header_gradient),
+                                             findViewById(R.id.webrtc_call_view_toolbar_text),
+                                             findViewById(R.id.webrtc_call_view_toolbar_no_text));
+
+    lifecycleDisposable.add(controlsAndInfo);
+
+    logIntent(callIntent);
+
+    if (callIntent.getAction() == CallIntent.Action.ANSWER_VIDEO) {
       enableVideoIfAvailable = true;
-    } else if (ANSWER_ACTION.equals(getIntent().getAction()) || getIntent().getBooleanExtra(EXTRA_STARTED_FROM_FULLSCREEN, false)) {
+    } else if (callIntent.getAction() == CallIntent.Action.ANSWER_AUDIO || callIntent.isStartedFromFullScreen()) {
       enableVideoIfAvailable = false;
     } else {
-      enableVideoIfAvailable = getIntent().getBooleanExtra(EXTRA_ENABLE_VIDEO_IF_AVAILABLE, false);
-      getIntent().removeExtra(EXTRA_ENABLE_VIDEO_IF_AVAILABLE);
+      enableVideoIfAvailable = callIntent.shouldEnableVideoIfAvailable();
+      callIntent.setShouldEnableVideoIfAvailable(false);
     }
 
-    processIntent(getIntent());
+    processIntent(callIntent);
+
+    registerSystemPipChangeListeners();
 
     windowLayoutInfoConsumer = new WindowLayoutInfoConsumer();
 
@@ -188,16 +221,42 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     windowInfoTrackerCallbackAdapter.addWindowLayoutInfoListener(this, SignalExecutors.BOUNDED, windowLayoutInfoConsumer);
 
     requestNewSizesThrottle = new ThrottledDebouncer(TimeUnit.SECONDS.toMillis(1));
+
+    initializePendingParticipantFragmentListener();
+
+    WindowUtil.setNavigationBarColor(this, ContextCompat.getColor(this, R.color.signal_dark_colorSurface));
+
+    if (!hasCameraPermission() & !hasAudioPermission()) {
+      askCameraAudioPermissions(() -> {
+        callScreen.setMicEnabled(viewModel.getMicrophoneEnabled().getValue());
+        handleSetMuteVideo(false);
+      });
+    } else if (!hasAudioPermission()) {
+      askAudioPermissions(() -> callScreen.setMicEnabled(viewModel.getMicrophoneEnabled().getValue()));
+    }
+  }
+
+  private void registerSystemPipChangeListeners() {
+    addOnPictureInPictureModeChangedListener(pictureInPictureModeChangedInfo -> {
+      CallParticipantsListDialog.dismiss(getSupportFragmentManager());
+      CallReactionScrubber.dismissCustomEmojiBottomSheet(getSupportFragmentManager());
+    });
+  }
+
+  @Override
+  protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    controlsAndInfo.onStateRestored();
   }
 
   @Override
   protected void onStart() {
     super.onStart();
 
-    ephemeralStateDisposable = ApplicationDependencies.getSignalCallManager()
-                                                      .ephemeralStates()
-                                                      .observeOn(AndroidSchedulers.mainThread())
-                                                      .subscribe(viewModel::updateFromEphemeralState);
+    ephemeralStateDisposable = AppDependencies.getSignalCallManager()
+                                              .ephemeralStates()
+                                              .observeOn(AndroidSchedulers.mainThread())
+                                              .subscribe(viewModel::updateFromEphemeralState);
   }
 
   @Override
@@ -223,14 +282,20 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
         }
       }, TimeUnit.SECONDS.toMillis(1));
     }
+
+    if (enterPipOnResume) {
+      enterPipOnResume = false;
+      enterPipModeIfPossible();
+    }
   }
 
   @Override
   public void onNewIntent(Intent intent) {
-    Log.i(TAG, "onNewIntent(" + intent.getBooleanExtra(EXTRA_STARTED_FROM_FULLSCREEN, false) + ")");
+    CallIntent callIntent = getCallIntent();
+    Log.i(TAG, "onNewIntent(" + callIntent.isStartedFromFullScreen() + ")");
     super.onNewIntent(intent);
-    logIntent(intent);
-    processIntent(intent);
+    logIntent(callIntent);
+    processIntent(callIntent);
   }
 
   @Override
@@ -238,8 +303,8 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     Log.i(TAG, "onPause");
     super.onPause();
 
-    if (!viewModel.isCallStarting()) {
-      CallParticipantsState state = viewModel.getCallParticipantsState().getValue();
+    if (!callPermissionsDialogController.isAskingForPermission() && !viewModel.isCallStarting() && !isChangingConfigurations()) {
+      CallParticipantsState state = viewModel.getCallParticipantsStateSnapshot();
       if (state != null && state.getCallState().isPreJoinOrNetworkUnavailable()) {
         finish();
       }
@@ -258,16 +323,23 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
       requestNewSizesThrottle.clear();
     }
 
-    if (!viewModel.isCallStarting()) {
-      CallParticipantsState state = viewModel.getCallParticipantsState().getValue();
-      if (state != null && state.getCallState().isPreJoinOrNetworkUnavailable()) {
-        ApplicationDependencies.getSignalCallManager().cancelPreJoin();
+    AppDependencies.getSignalCallManager().setEnableVideo(false);
+
+    if (!viewModel.isCallStarting() && !isChangingConfigurations()) {
+      CallParticipantsState state = viewModel.getCallParticipantsStateSnapshot();
+      if (state != null) {
+        if (state.getCallState().isPreJoinOrNetworkUnavailable()) {
+          AppDependencies.getSignalCallManager().cancelPreJoin();
+        } else if (state.getCallState().getInOngoingCall() && isInPipMode()) {
+          AppDependencies.getSignalCallManager().relaunchPipOnForeground();
+        }
       }
     }
   }
 
   @Override
   protected void onDestroy() {
+    Log.d(TAG, "onDestroy");
     super.onDestroy();
     windowInfoTrackerCallbackAdapter.removeWindowLayoutInfoListener(windowLayoutInfoConsumer);
     EventBus.getDefault().unregister(this);
@@ -281,6 +353,7 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
 
   @Override
   protected void onUserLeaveHint() {
+    super.onUserLeaveHint();
     enterPipModeIfPossible();
   }
 
@@ -289,6 +362,10 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     if (!enterPipModeIfPossible()) {
       super.onBackPressed();
     }
+  }
+
+  private @NonNull CallIntent getCallIntent() {
+    return new CallIntent(getIntent());
   }
 
   private boolean enterPipModeIfPossible() {
@@ -300,8 +377,6 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
           Log.w(TAG, "Device lied to us about supporting PiP.", e);
           return false;
         }
-
-        CallParticipantsListDialog.dismiss(getSupportFragmentManager());
 
         return true;
       }
@@ -316,22 +391,71 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     return isSystemPipEnabledAndAvailable() && isInPictureInPictureMode();
   }
 
-  private void logIntent(@NonNull Intent intent) {
-    Log.d(TAG, "Intent: Action: " + intent.getAction());
-    Log.d(TAG, "Intent: EXTRA_STARTED_FROM_FULLSCREEN: " + intent.getBooleanExtra(EXTRA_STARTED_FROM_FULLSCREEN, false));
-    Log.d(TAG, "Intent: EXTRA_ENABLE_VIDEO_IF_AVAILABLE: " + intent.getBooleanExtra(EXTRA_ENABLE_VIDEO_IF_AVAILABLE, false));
+  private void logIntent(@NonNull CallIntent intent) {
+    Log.d(TAG, intent.toString());
   }
 
-  private void processIntent(@NonNull Intent intent) {
-    if (ANSWER_ACTION.equals(intent.getAction())) {
-      handleAnswerWithAudio();
-    } else if (ANSWER_VIDEO_ACTION.equals(intent.getAction())) {
-      handleAnswerWithVideo();
-    } else if (DENY_ACTION.equals(intent.getAction())) {
-      handleDenyCall();
-    } else if (END_CALL_ACTION.equals(intent.getAction())) {
-      handleEndCall();
+  private void processIntent(@NonNull CallIntent intent) {
+    switch (intent.getAction()) {
+      case ANSWER_AUDIO -> handleAnswerWithAudio();
+      case ANSWER_VIDEO -> handleAnswerWithVideo();
+      case DENY -> handleDenyCall();
+      case END_CALL -> handleEndCall();
     }
+
+    if (System.currentTimeMillis() - lastProcessedIntentTimestamp > TimeUnit.SECONDS.toMillis(1)) {
+      enterPipOnResume = intent.shouldLaunchInPip();
+    }
+
+    lastProcessedIntentTimestamp = System.currentTimeMillis();
+  }
+
+  private void initializePendingParticipantFragmentListener() {
+    if (!RemoteConfig.adHocCalling()) {
+      return;
+    }
+
+    getSupportFragmentManager().setFragmentResultListener(
+        PendingParticipantsBottomSheet.REQUEST_KEY,
+        this,
+        (requestKey, result) -> {
+          PendingParticipantsBottomSheet.Action action = PendingParticipantsBottomSheet.getAction(result);
+          List<RecipientId> recipientIds = viewModel.getPendingParticipantsSnapshot()
+                                                    .getUnresolvedPendingParticipants()
+                                                    .stream()
+                                                    .map(r -> r.getRecipient().getId())
+                                                    .collect(Collectors.toList());
+
+          switch (action) {
+            case NONE:
+              break;
+            case APPROVE_ALL:
+              new MaterialAlertDialogBuilder(this)
+                  .setTitle(getResources().getQuantityString(R.plurals.WebRtcCallActivity__approve_d_requests, recipientIds.size(), recipientIds.size()))
+                  .setMessage(getResources().getQuantityString(R.plurals.WebRtcCallActivity__d_people_will_be_added_to_the_call, recipientIds.size(), recipientIds.size()))
+                  .setNegativeButton(android.R.string.cancel, null)
+                  .setPositiveButton(R.string.WebRtcCallActivity__approve_all, (dialog, which) -> {
+                    for (RecipientId id : recipientIds) {
+                      AppDependencies.getSignalCallManager().setCallLinkJoinRequestAccepted(id);
+                    }
+                  })
+                  .show();
+              break;
+            case DENY_ALL:
+              new MaterialAlertDialogBuilder(this)
+                  .setTitle(getResources().getQuantityString(R.plurals.WebRtcCallActivity__deny_d_requests, recipientIds.size(), recipientIds.size()))
+                  .setMessage(getResources().getQuantityString(R.plurals.WebRtcCallActivity__d_people_will_be_added_to_the_call, recipientIds.size(), recipientIds.size()))
+                  .setNegativeButton(android.R.string.cancel, null)
+                  .setPositiveButton(R.string.WebRtcCallActivity__deny_all, (dialog, which) -> {
+                    for (RecipientId id : recipientIds) {
+                      AppDependencies.getSignalCallManager().setCallLinkJoinRequestRejected(id);
+                    }
+                  })
+                  .show();
+              break;
+          }
+        }
+    );
   }
 
   private void initializeScreenshotSecurity() {
@@ -349,44 +473,73 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     participantUpdateWindow    = new CallParticipantsListUpdatePopupWindow(callScreen);
     callStateUpdatePopupWindow = new CallStateUpdatePopupWindow(callScreen);
     wifiToCellularPopupWindow  = new WifiToCellularPopupWindow(callScreen);
+    callOverflowPopupWindow    = new CallOverflowPopupWindow(this, callScreen, () -> {
+      CallParticipantsState state = viewModel.getCallParticipantsStateSnapshot();
+      if (state == null) {
+        return false;
+      }
+      return state.getLocalParticipant().isHandRaised();
+    });
+
+    getLifecycle().addObserver(participantUpdateWindow);
   }
 
-  private void initializeViewModel(boolean isLandscapeEnabled) {
-    deviceOrientationMonitor = new DeviceOrientationMonitor(this);
-    getLifecycle().addObserver(deviceOrientationMonitor);
+  private @NonNull Orientation resolveOrientationFromContext() {
+    int displayOrientation = getResources().getConfiguration().orientation;
+    int displayRotation    = ContextCompat.getDisplayOrDefault(this).getRotation();
 
-    WebRtcCallViewModel.Factory factory = new WebRtcCallViewModel.Factory(deviceOrientationMonitor);
+    if (displayOrientation == Configuration.ORIENTATION_PORTRAIT) {
+      return Orientation.PORTRAIT_BOTTOM_EDGE;
+    } else if (displayRotation == Surface.ROTATION_270) {
+      return Orientation.LANDSCAPE_RIGHT_EDGE;
+    } else {
+      return Orientation.LANDSCAPE_LEFT_EDGE;
+    }
+  }
 
-    viewModel = new ViewModelProvider(this, factory).get(WebRtcCallViewModel.class);
-    viewModel.setIsLandscapeEnabled(isLandscapeEnabled);
+  private void initializeViewModel() {
+    final Orientation orientation = resolveOrientationFromContext();
+    if (orientation == PORTRAIT_BOTTOM_EDGE) {
+      WindowUtil.setNavigationBarColor(this, ContextCompat.getColor(this, R.color.signal_dark_colorSurface2));
+      WindowUtil.clearTranslucentNavigationBar(getWindow());
+    }
+
+    LiveData<Pair<Orientation, Boolean>> orientationAndLandscapeEnabled = Transformations.map(new MutableLiveData<>(orientation), o -> Pair.create(o, true));
+
+    viewModel = new ViewModelProvider(this).get(WebRtcCallViewModel.class);
+    viewModel.setIsLandscapeEnabled(true);
     viewModel.setIsInPipMode(isInPipMode());
     viewModel.getMicrophoneEnabled().observe(this, callScreen::setMicEnabled);
-    viewModel.getWebRtcControls().observe(this, callScreen::setWebRtcControls);
+    viewModel.getWebRtcControls().observe(this, controls -> {
+      callScreen.setWebRtcControls(controls);
+      controlsAndInfo.updateControls(controls);
+    });
     viewModel.getEvents().observe(this, this::handleViewModelEvent);
-    viewModel.getCallTime().observe(this, this::handleCallTime);
 
-    LiveDataUtil.combineLatest(viewModel.getCallParticipantsState(),
-                               viewModel.getOrientationAndLandscapeEnabled(),
+    lifecycleDisposable.add(viewModel.getInCallstatus().subscribe(this::handleInCallStatus));
+
+    boolean isStartedFromCallLink = getCallIntent().isStartedFromCallLink();
+    LiveDataUtil.combineLatest(LiveDataReactiveStreams.fromPublisher(viewModel.getCallParticipantsState().toFlowable(BackpressureStrategy.LATEST)),
+                               orientationAndLandscapeEnabled,
                                viewModel.getEphemeralState(),
-                               (s, o, e) -> new CallParticipantsViewState(s, e, o.first == PORTRAIT_BOTTOM_EDGE, o.second))
+                               (s, o, e) -> new CallParticipantsViewState(s, e, o.first == PORTRAIT_BOTTOM_EDGE, o.second, isStartedFromCallLink))
                 .observe(this, p -> callScreen.updateCallParticipants(p));
     viewModel.getCallParticipantListUpdate().observe(this, participantUpdateWindow::addCallParticipantListUpdate);
     viewModel.getSafetyNumberChangeEvent().observe(this, this::handleSafetyNumberChangeEvent);
     viewModel.getGroupMembersChanged().observe(this, unused -> updateGroupMembersForGroupCall());
     viewModel.getGroupMemberCount().observe(this, this::handleGroupMemberCountChange);
-    viewModel.shouldShowSpeakerHint().observe(this, this::updateSpeakerHint);
+    lifecycleDisposable.add(viewModel.shouldShowSpeakerHint().subscribe(this::updateSpeakerHint));
 
     callScreen.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-      CallParticipantsState state = viewModel.getCallParticipantsState().getValue();
+      CallParticipantsState state = viewModel.getCallParticipantsStateSnapshot();
       if (state != null) {
         if (state.needsNewRequestSizes()) {
-          requestNewSizesThrottle.publish(() -> ApplicationDependencies.getSignalCallManager().updateRenderedResolutions());
+          requestNewSizesThrottle.publish(() -> AppDependencies.getSignalCallManager().updateRenderedResolutions());
         }
       }
     });
 
-    viewModel.getOrientationAndLandscapeEnabled().observe(this, pair -> ApplicationDependencies.getSignalCallManager().orientationChanged(pair.second, pair.first.getDegrees()));
-    viewModel.getControlsRotation().observe(this, callScreen::rotateControls);
+    orientationAndLandscapeEnabled.observe(this, pair -> AppDependencies.getSignalCallManager().orientationChanged(pair.second, pair.first.getDegrees()));
 
     addOnPictureInPictureModeChangedListener(info -> {
       viewModel.setIsInPipMode(info.isInPictureInPictureMode());
@@ -397,12 +550,29 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
       }
       viewModel.setIsLandscapeEnabled(info.isInPictureInPictureMode());
     });
+
+    callScreen.setPendingParticipantsViewListener(new PendingParticipantsViewListener());
+    Disposable disposable = viewModel.getPendingParticipants()
+                                     .subscribe(callScreen::updatePendingParticipantsList);
+
+    lifecycleDisposable.add(disposable);
+
+    controlsAndInfoViewModel = new ViewModelProvider(this).get(ControlsAndInfoViewModel.class);
   }
 
   private void initializePictureInPictureParams() {
     if (isSystemPipEnabledAndAvailable()) {
+      final Orientation orientation = resolveOrientationFromContext();
+      final Rational    aspectRatio;
+
+      if (orientation == PORTRAIT_BOTTOM_EDGE) {
+        aspectRatio = new Rational(9, 16);
+      } else {
+        aspectRatio = new Rational(16, 9);
+      }
+
       pipBuilderParams = new PictureInPictureParams.Builder();
-      pipBuilderParams.setAspectRatio(new Rational(9, 16));
+      pipBuilderParams.setAspectRatio(aspectRatio);
       if (Build.VERSION.SDK_INT >= 31) {
         pipBuilderParams.setAutoEnterEnabled(true);
       }
@@ -416,18 +586,18 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     }
   }
 
-  private void handleViewModelEvent(@NonNull WebRtcCallViewModel.Event event) {
-    if (event instanceof WebRtcCallViewModel.Event.StartCall) {
-      startCall(((WebRtcCallViewModel.Event.StartCall) event).isVideoCall());
+  private void handleViewModelEvent(@NonNull CallEvent event) {
+    if (event instanceof CallEvent.StartCall) {
+      startCall(((CallEvent.StartCall) event).isVideoCall());
       return;
-    } else if (event instanceof WebRtcCallViewModel.Event.ShowGroupCallSafetyNumberChange) {
-      SafetyNumberBottomSheet.forGroupCall(((WebRtcCallViewModel.Event.ShowGroupCallSafetyNumberChange) event).getIdentityRecords())
+    } else if (event instanceof CallEvent.ShowGroupCallSafetyNumberChange) {
+      SafetyNumberBottomSheet.forGroupCall(((CallEvent.ShowGroupCallSafetyNumberChange) event).getIdentityRecords())
                              .show(getSupportFragmentManager());
       return;
-    } else if (event instanceof WebRtcCallViewModel.Event.SwitchToSpeaker) {
+    } else if (event instanceof CallEvent.SwitchToSpeaker) {
       callScreen.switchToSpeakerView();
       return;
-    } else if (event instanceof WebRtcCallViewModel.Event.ShowSwipeToSpeakerHint) {
+    } else if (event instanceof CallEvent.ShowSwipeToSpeakerHint) {
       CallToastPopupWindow.show(callScreen);
       return;
     }
@@ -436,7 +606,7 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
       return;
     }
 
-    if (event instanceof WebRtcCallViewModel.Event.ShowVideoTooltip) {
+    if (event instanceof CallEvent.ShowVideoTooltip) {
       if (videoTooltip == null) {
         videoTooltip = TooltipPopup.forTarget(callScreen.getVideoTooltipTarget())
                                    .setBackgroundTint(ContextCompat.getColor(this, R.color.core_ultramarine))
@@ -444,108 +614,125 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
                                    .setText(R.string.WebRtcCallActivity__tap_here_to_turn_on_your_video)
                                    .setOnDismissListener(() -> viewModel.onDismissedVideoTooltip())
                                    .show(TooltipPopup.POSITION_ABOVE);
-        return;
       }
-    } else if (event instanceof WebRtcCallViewModel.Event.DismissVideoTooltip) {
+    } else if (event instanceof CallEvent.DismissVideoTooltip) {
       if (videoTooltip != null) {
         videoTooltip.dismiss();
         videoTooltip = null;
       }
-    } else if (event instanceof WebRtcCallViewModel.Event.ShowWifiToCellularPopup) {
+    } else if (event instanceof CallEvent.ShowWifiToCellularPopup) {
       wifiToCellularPopupWindow.show();
+    } else if (event instanceof CallEvent.ShowSwitchCameraTooltip) {
+      if (switchCameraTooltip == null) {
+        switchCameraTooltip = TooltipPopup.forTarget(callScreen.getSwitchCameraTooltipTarget())
+                                          .setBackgroundTint(ContextCompat.getColor(this, R.color.core_ultramarine))
+                                          .setTextColor(ContextCompat.getColor(this, R.color.core_white))
+                                          .setText(R.string.WebRtcCallActivity__flip_camera_tooltip)
+                                          .setOnDismissListener(() -> viewModel.onDismissedSwitchCameraTooltip())
+                                          .show(TooltipPopup.POSITION_ABOVE);
+      }
+    } else if (event instanceof CallEvent.DismissSwitchCameraTooltip) {
+      if (switchCameraTooltip != null) {
+        switchCameraTooltip.dismiss();
+        switchCameraTooltip = null;
+      }
     } else {
       throw new IllegalArgumentException("Unknown event: " + event);
     }
   }
 
-  private void handleCallTime(long callTime) {
-    EllapsedTimeFormatter ellapsedTimeFormatter = EllapsedTimeFormatter.fromDurationMillis(callTime);
+  private void handleInCallStatus(@NonNull InCallStatus inCallStatus) {
+    if (inCallStatus instanceof InCallStatus.ElapsedTime) {
 
-    if (ellapsedTimeFormatter == null) {
-      return;
+      EllapsedTimeFormatter ellapsedTimeFormatter = EllapsedTimeFormatter.fromDurationMillis(((InCallStatus.ElapsedTime) inCallStatus).getElapsedTime());
+
+      if (ellapsedTimeFormatter == null) {
+        return;
+      }
+
+      callScreen.setStatus(getString(R.string.WebRtcCallActivity__signal_s, ellapsedTimeFormatter.toString()));
+    } else if (inCallStatus instanceof InCallStatus.PendingCallLinkUsers) {
+      int waiting = ((InCallStatus.PendingCallLinkUsers) inCallStatus).getPendingUserCount();
+
+      callScreen.setStatus(getResources().getQuantityString(
+          R.plurals.WebRtcCallActivity__d_people_waiting,
+          waiting,
+          waiting
+      ));
+    } else if (inCallStatus instanceof InCallStatus.JoinedCallLinkUsers) {
+      int joined = ((InCallStatus.JoinedCallLinkUsers) inCallStatus).getJoinedUserCount();
+
+      callScreen.setStatus(getResources().getQuantityString(
+          R.plurals.WebRtcCallActivity__d_people,
+          joined,
+          joined
+      ));
+    }else {
+      throw new AssertionError();
     }
-
-    callScreen.setStatus(getString(R.string.WebRtcCallActivity__signal_s, ellapsedTimeFormatter.toString()));
   }
 
   private void handleSetAudioHandset() {
-    ApplicationDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.EARPIECE));
+    AppDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.EARPIECE));
   }
 
   private void handleSetAudioSpeaker() {
-    ApplicationDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.SPEAKER_PHONE));
+    AppDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.SPEAKER_PHONE));
   }
 
   private void handleSetAudioBluetooth() {
-    ApplicationDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.BLUETOOTH));
+    AppDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.BLUETOOTH));
   }
 
   private void handleSetAudioWiredHeadset() {
-    ApplicationDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.WIRED_HEADSET));
+    AppDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(SignalAudioManager.AudioDevice.WIRED_HEADSET));
   }
 
   private void handleSetMuteAudio(boolean enabled) {
-    ApplicationDependencies.getSignalCallManager().setMuteAudio(enabled);
+    AppDependencies.getSignalCallManager().setMuteAudio(enabled);
   }
 
   private void handleSetMuteVideo(boolean muted) {
     Recipient recipient = viewModel.getRecipient().get();
 
     if (!recipient.equals(Recipient.UNKNOWN)) {
-      String recipientDisplayName = recipient.getDisplayName(this);
-
-      Permissions.with(this)
-                 .request(Manifest.permission.CAMERA)
-                 .ifNecessary()
-                 .withRationaleDialog(getString(R.string.WebRtcCallActivity__to_call_s_signal_needs_access_to_your_camera, recipientDisplayName), R.drawable.ic_video_solid_24_tinted)
-                 .withPermanentDenialDialog(getString(R.string.WebRtcCallActivity__to_call_s_signal_needs_access_to_your_camera, recipientDisplayName))
-                 .onAllGranted(() -> ApplicationDependencies.getSignalCallManager().setEnableVideo(!muted))
-                 .execute();
+      Runnable onGranted = () -> AppDependencies.getSignalCallManager().setEnableVideo(!muted);
+      askCameraPermissions(onGranted);
     }
   }
 
   private void handleFlipCamera() {
-    ApplicationDependencies.getSignalCallManager().flipCamera();
+    AppDependencies.getSignalCallManager().flipCamera();
   }
 
   private void handleAnswerWithAudio() {
-    Permissions.with(this)
-               .request(Manifest.permission.RECORD_AUDIO)
-               .ifNecessary()
-               .withRationaleDialog(getString(R.string.WebRtcCallActivity_to_answer_the_call_give_signal_access_to_your_microphone),
-                                    R.drawable.ic_mic_solid_24)
-               .withPermanentDenialDialog(getString(R.string.WebRtcCallActivity_signal_requires_microphone_and_camera_permissions_in_order_to_make_or_receive_calls))
-               .onAllGranted(() -> {
-                 callScreen.setStatus(getString(R.string.RedPhone_answering));
-
-                 ApplicationDependencies.getSignalCallManager().acceptCall(false);
-               })
-               .onAnyDenied(this::handleDenyCall)
-               .execute();
+    Runnable onGranted = () -> {
+      callScreen.setStatus(getString(R.string.RedPhone_answering));
+      AppDependencies.getSignalCallManager().acceptCall(false);
+    };
+    askAudioPermissions(onGranted);
   }
 
   private void handleAnswerWithVideo() {
-    Permissions.with(this)
-               .request(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA)
-               .ifNecessary()
-               .withRationaleDialog(getString(R.string.WebRtcCallActivity_to_answer_the_call_give_signal_access_to_your_microphone_and_camera), R.drawable.ic_mic_solid_24, R.drawable.ic_video_solid_24_tinted)
-               .withPermanentDenialDialog(getString(R.string.WebRtcCallActivity_signal_requires_microphone_and_camera_permissions_in_order_to_make_or_receive_calls))
-               .onAllGranted(() -> {
-                 callScreen.setStatus(getString(R.string.RedPhone_answering));
-
-                 ApplicationDependencies.getSignalCallManager().acceptCall(true);
-
-                 handleSetMuteVideo(false);
-               })
-               .onAnyDenied(this::handleDenyCall)
-               .execute();
+    Runnable onGranted = () -> {
+      callScreen.setStatus(getString(R.string.RedPhone_answering));
+      AppDependencies.getSignalCallManager().acceptCall(true);
+      handleSetMuteVideo(false);
+    };
+    if (!hasCameraPermission() &!hasAudioPermission()) {
+      askCameraAudioPermissions(onGranted);
+    } else if (!hasAudioPermission()) {
+      askAudioPermissions(onGranted);
+    } else {
+      askCameraPermissions(onGranted);
+    }
   }
 
   private void handleDenyCall() {
     Recipient recipient = viewModel.getRecipient().get();
 
     if (!recipient.equals(Recipient.UNKNOWN)) {
-      ApplicationDependencies.getSignalCallManager().denyCall();
+      AppDependencies.getSignalCallManager().denyCall();
 
       callScreen.setRecipient(recipient);
       callScreen.setStatus(getString(R.string.RedPhone_ending_call));
@@ -555,7 +742,7 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
 
   private void handleEndCall() {
     Log.i(TAG, "Hangup pressed, handling termination now...");
-    ApplicationDependencies.getSignalCallManager().localHangup();
+    AppDependencies.getSignalCallManager().localHangup();
   }
 
   private void handleOutgoingCall(@NonNull WebRtcViewModel event) {
@@ -622,7 +809,7 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     if (isFinishing()) return; // XXX Stuart added this check above, not sure why, so I'm repeating in ignorance. - moxie
     new MaterialAlertDialogBuilder(this)
         .setTitle(R.string.RedPhone_number_not_registered)
-        .setIcon(R.drawable.ic_warning)
+        .setIcon(R.drawable.symbol_error_triangle_fill_24)
         .setMessage(R.string.RedPhone_the_number_you_dialed_does_not_support_secure_voice)
         .setCancelable(true)
         .setPositiveButton(R.string.RedPhone_got_it, (d, w) -> handleTerminate(event.getRecipient(), HangupMessage.Type.NORMAL))
@@ -653,13 +840,13 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
   }
 
   private void updateGroupMembersForGroupCall() {
-    ApplicationDependencies.getSignalCallManager().requestUpdateGroupMembers();
+    AppDependencies.getSignalCallManager().requestUpdateGroupMembers();
   }
 
   public void handleGroupMemberCountChange(int count) {
-    boolean canRing = count <= FeatureFlags.maxGroupCallRingSize();
+    boolean canRing = count <= RemoteConfig.maxGroupCallRingSize();
     callScreen.enableRingGroup(canRing);
-    ApplicationDependencies.getSignalCallManager().setRingGroup(canRing);
+    AppDependencies.getSignalCallManager().setRingGroup(canRing);
   }
 
   private void updateSpeakerHint(boolean showSpeakerHint) {
@@ -672,28 +859,32 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
 
   @Override
   public void onSendAnywayAfterSafetyNumberChange(@NonNull List<RecipientId> changedRecipients) {
-    CallParticipantsState state = viewModel.getCallParticipantsState().getValue();
+    CallParticipantsState state = viewModel.getCallParticipantsStateSnapshot();
 
     if (state == null) {
       return;
     }
 
+    if (state.isCallLink()) {
+      CallLinkProfileKeySender.onSendAnyway(new HashSet<>(changedRecipients));
+    }
+
     if (state.getGroupCallState().isConnected()) {
-      ApplicationDependencies.getSignalCallManager().groupApproveSafetyChange(changedRecipients);
+      AppDependencies.getSignalCallManager().groupApproveSafetyChange(changedRecipients);
     } else {
       viewModel.startCall(state.getLocalParticipant().isVideoEnabled());
     }
   }
 
   @Override
-  public void onMessageResentAfterSafetyNumberChange() { }
+  public void onMessageResentAfterSafetyNumberChange() {}
 
   @Override
   public void onCanceled() {
-    CallParticipantsState state = viewModel.getCallParticipantsState().getValue();
+    CallParticipantsState state = viewModel.getCallParticipantsStateSnapshot();
     if (state != null && state.getGroupCallState().isNotIdle()) {
       if (state.getCallState().isPreJoinOrNetworkUnavailable()) {
-        ApplicationDependencies.getSignalCallManager().cancelPreJoin();
+        AppDependencies.getSignalCallManager().cancelPreJoin();
         finish();
       } else {
         handleEndCall();
@@ -704,8 +895,7 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
   }
 
   private boolean isSystemPipEnabledAndAvailable() {
-    return Build.VERSION.SDK_INT >= 26 &&
-           getPackageManager().hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE);
+    return Build.VERSION.SDK_INT >= 26 && getPackageManager().hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE);
   }
 
   private void delayedFinish() {
@@ -718,10 +908,12 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
   public void onEventMainThread(@NonNull WebRtcViewModel event) {
-    Log.i(TAG, "Got message from service: " + event);
+    Log.i(TAG, "Got message from service: " + event.describeDifference(previousEvent));
+    previousEvent = event;
 
     viewModel.setRecipient(event.getRecipient());
     callScreen.setRecipient(event.getRecipient());
+    controlsAndInfoViewModel.setRecipient(event.getRecipient());
 
     switch (event.getState()) {
       case CALL_PRE_JOIN:
@@ -758,6 +950,18 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
         handleUntrustedIdentity(event); break;
     }
 
+    if (event.getCallLinkDisconnectReason() != null && event.getCallLinkDisconnectReason().getPostedAt() > lastCallLinkDisconnectDialogShowTime) {
+      lastCallLinkDisconnectDialogShowTime = System.currentTimeMillis();
+
+      if (event.getCallLinkDisconnectReason() instanceof CallLinkDisconnectReason.RemovedFromCall) {
+        displayRemovedFromCallLinkDialog();
+      } else if (event.getCallLinkDisconnectReason() instanceof CallLinkDisconnectReason.DeniedRequestToJoinCall) {
+        displayDeniedRequestToJoinCallLinkDialog();
+      } else {
+        throw new AssertionError("Unexpected reason: " + event.getCallLinkDisconnectReason());
+      }
+    }
+
     boolean enableVideo = event.getLocalParticipant().getCameraState().getCameraCount() > 0 && enableVideoIfAvailable;
 
     viewModel.updateFromWebRtcViewModel(event, enableVideo);
@@ -779,27 +983,86 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     }
   }
 
+  private void displayRemovedFromCallLinkDialog() {
+    new MaterialAlertDialogBuilder(this)
+        .setTitle(R.string.WebRtcCallActivity__removed_from_call)
+        .setMessage(R.string.WebRtcCallActivity__someone_has_removed_you_from_the_call)
+        .setPositiveButton(android.R.string.ok, null)
+        .show();
+  }
+
+  private void displayDeniedRequestToJoinCallLinkDialog() {
+    new MaterialAlertDialogBuilder(this)
+        .setTitle(R.string.WebRtcCallActivity__join_request_denied)
+        .setMessage(R.string.WebRtcCallActivity__your_request_to_join_this_call_has_been_denied)
+        .setPositiveButton(android.R.string.ok, null)
+        .show();
+  }
+
   private void handleCallPreJoin(@NonNull WebRtcViewModel event) {
     if (event.getGroupState().isNotIdle()) {
-      callScreen.setStatusFromGroupCallState(event.getGroupState());
       callScreen.setRingGroup(event.shouldRingGroup());
 
       if (event.shouldRingGroup() && event.areRemoteDevicesInCall()) {
-        ApplicationDependencies.getSignalCallManager().setRingGroup(false);
+        AppDependencies.getSignalCallManager().setRingGroup(false);
       }
     }
+  }
+
+  private boolean hasCameraPermission() {
+    return Permissions.hasAll(this, Manifest.permission.CAMERA);
+  }
+
+  private boolean hasAudioPermission() {
+    return Permissions.hasAll(this, Manifest.permission.RECORD_AUDIO);
+  }
+
+  private void askCameraPermissions(@NonNull Runnable onGranted) {
+    callPermissionsDialogController.requestCameraPermission(
+        this,
+        () -> {
+          onGranted.run();
+          findViewById(R.id.missing_permissions_container).setVisibility(View.GONE);
+        }
+    );
+  }
+
+  private void askAudioPermissions(@NonNull Runnable onGranted) {
+    callPermissionsDialogController.requestAudioPermission(
+        this,
+        onGranted,
+        this::handleDenyCall
+    );
+  }
+
+  public void askCameraAudioPermissions(@NonNull Runnable onGranted) {
+    callPermissionsDialogController.requestCameraAndAudioPermission(
+        this,
+        onGranted,
+        () -> findViewById(R.id.missing_permissions_container).setVisibility(View.GONE),
+        this::handleDenyCall
+    );
   }
 
   private void startCall(boolean isVideoCall) {
     enableVideoIfAvailable = isVideoCall;
 
     if (isVideoCall) {
-      ApplicationDependencies.getSignalCallManager().startOutgoingVideoCall(viewModel.getRecipient().get());
+      AppDependencies.getSignalCallManager().startOutgoingVideoCall(viewModel.getRecipient().get());
     } else {
-      ApplicationDependencies.getSignalCallManager().startOutgoingAudioCall(viewModel.getRecipient().get());
+      AppDependencies.getSignalCallManager().startOutgoingAudioCall(viewModel.getRecipient().get());
     }
 
     MessageSender.onMessageSent();
+  }
+
+  @Override
+  public void onReactWithAnyEmojiDialogDismissed() { /* no-op */ }
+
+  @Override
+  public void onReactWithAnyEmojiSelected(@NonNull String emoji) {
+    AppDependencies.getSignalCallManager().react(emoji);
+    callOverflowPopupWindow.dismiss();
   }
 
   private final class ControlsListener implements WebRtcCallView.ControlsListener {
@@ -815,24 +1078,21 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     }
 
     @Override
-    public void onControlsFadeOut() {
-      if (videoTooltip != null) {
-        videoTooltip.dismiss();
+    public void toggleControls() {
+      WebRtcControls controlState = viewModel.getWebRtcControls().getValue();
+      if (controlState != null && !controlState.displayIncomingCallButtons() && !controlState.displayErrorControls()) {
+        controlsAndInfo.toggleControls();
       }
     }
 
     @Override
-    public void showSystemUI() {
-      fullscreenHelper.showSystemUI();
-    }
-
-    @Override
-    public void hideSystemUI() {
-      fullscreenHelper.hideSystemUI();
+    public void onAudioPermissionsRequested(Runnable onGranted) {
+      askAudioPermissions(onGranted);
     }
 
     @Override
     public void onAudioOutputChanged(@NonNull WebRtcAudioOutput audioOutput) {
+      maybeDisplaySpeakerphonePopup(audioOutput);
       switch (audioOutput) {
         case HANDSET:
           handleSetAudioHandset();
@@ -853,8 +1113,9 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
 
     @RequiresApi(31)
     @Override
-    public void onAudioOutputChanged31(@NonNull Integer audioDeviceInfo) {
-      ApplicationDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(audioDeviceInfo));
+    public void onAudioOutputChanged31(@NonNull WebRtcAudioDevice audioOutput) {
+      maybeDisplaySpeakerphonePopup(audioOutput.getWebRtcAudioOutput());
+      AppDependencies.getSignalCallManager().selectAudioDevice(new SignalAudioManager.ChosenAudioDeviceIdentifier(audioOutput.getDeviceId()));
     }
 
     @Override
@@ -864,9 +1125,12 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
 
     @Override
     public void onMicChanged(boolean isMicEnabled) {
-      callStateUpdatePopupWindow.onCallStateUpdate(isMicEnabled ? CallStateUpdatePopupWindow.CallStateUpdate.MIC_ON
-                                                                : CallStateUpdatePopupWindow.CallStateUpdate.MIC_OFF);
-      handleSetMuteAudio(!isMicEnabled);
+      Runnable onGranted = () -> {
+        callStateUpdatePopupWindow.onCallStateUpdate(isMicEnabled ? CallControlsChange.MIC_ON
+                                                                  : CallControlsChange.MIC_OFF);
+        handleSetMuteAudio(!isMicEnabled);
+      };
+      askAudioPermissions(onGranted);
     }
 
     @Override
@@ -890,6 +1154,11 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     }
 
     @Override
+    public void onOverflowClicked() {
+      controlsAndInfo.toggleOverflowPopup();
+    }
+
+    @Override
     public void onAcceptCallPressed() {
       if (viewModel.isAnswerWithVideoAvailable()) {
         handleAnswerWithVideo();
@@ -906,34 +1175,61 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
     @Override
     public void onLocalPictureInPictureClicked() {
       viewModel.onLocalPictureInPictureClicked();
+      controlsAndInfo.restartHideControlsTimer();
     }
 
     @Override
     public void onRingGroupChanged(boolean ringGroup, boolean ringingAllowed) {
       if (ringingAllowed) {
-        ApplicationDependencies.getSignalCallManager().setRingGroup(ringGroup);
-        callStateUpdatePopupWindow.onCallStateUpdate(ringGroup ? CallStateUpdatePopupWindow.CallStateUpdate.RINGING_ON
-                                                               : CallStateUpdatePopupWindow.CallStateUpdate.RINGING_OFF);
+        AppDependencies.getSignalCallManager().setRingGroup(ringGroup);
+        callStateUpdatePopupWindow.onCallStateUpdate(ringGroup ? CallControlsChange.RINGING_ON
+                                                               : CallControlsChange.RINGING_OFF);
       } else {
-        ApplicationDependencies.getSignalCallManager().setRingGroup(false);
-        callStateUpdatePopupWindow.onCallStateUpdate(CallStateUpdatePopupWindow.CallStateUpdate.RINGING_DISABLED);
+        AppDependencies.getSignalCallManager().setRingGroup(false);
+        callStateUpdatePopupWindow.onCallStateUpdate(CallControlsChange.RINGING_DISABLED);
       }
     }
 
     @Override
     public void onCallInfoClicked() {
-      LiveRecipient liveRecipient = viewModel.getRecipient();
-
-      if (liveRecipient.get().isCallLink()) {
-        CallLinkInfoSheet.show(getSupportFragmentManager(), liveRecipient.get().requireCallLinkRoomId());
-      } else {
-        CallParticipantsListDialog.show(getSupportFragmentManager());
-      }
+      controlsAndInfo.showCallInfo();
     }
 
     @Override
     public void onNavigateUpClicked() {
       onBackPressed();
+    }
+  }
+
+  private void maybeDisplaySpeakerphonePopup(WebRtcAudioOutput nextOutput) {
+    final WebRtcAudioOutput currentOutput = viewModel.getCurrentAudioOutput();
+    if (currentOutput == WebRtcAudioOutput.SPEAKER && nextOutput != WebRtcAudioOutput.SPEAKER) {
+      callStateUpdatePopupWindow.onCallStateUpdate(CallControlsChange.SPEAKER_OFF);
+    } else if (currentOutput != WebRtcAudioOutput.SPEAKER && nextOutput == WebRtcAudioOutput.SPEAKER) {
+      callStateUpdatePopupWindow.onCallStateUpdate(CallControlsChange.SPEAKER_ON);
+    }
+  }
+
+  private class PendingParticipantsViewListener implements PendingParticipantsView.Listener {
+
+    @Override
+    public void onAllowPendingRecipient(@NonNull Recipient pendingRecipient) {
+      AppDependencies.getSignalCallManager().setCallLinkJoinRequestAccepted(pendingRecipient.getId());
+    }
+
+    @Override
+    public void onRejectPendingRecipient(@NonNull Recipient pendingRecipient) {
+      AppDependencies.getSignalCallManager().setCallLinkJoinRequestRejected(pendingRecipient.getId());
+    }
+
+    @Override
+    public void onLaunchPendingRequestsSheet() {
+      new PendingParticipantsBottomSheet().show(getSupportFragmentManager(), BottomSheetUtil.STANDARD_BOTTOM_SHEET_FRAGMENT_TAG);
+    }
+
+    @Override
+    public void onLaunchRecipientSheet(@NonNull Recipient pendingRecipient) {
+      CallLinkIncomingRequestSheet.show(getSupportFragmentManager(), pendingRecipient.getId());
     }
   }
 
@@ -944,8 +1240,6 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
       Log.d(TAG, "On WindowLayoutInfo accepted: " + windowLayoutInfo.toString());
 
       Optional<DisplayFeature> feature = windowLayoutInfo.getDisplayFeatures().stream().filter(f -> f instanceof FoldingFeature).findFirst();
-      viewModel.setIsLandscapeEnabled(feature.isPresent());
-      setRequestedOrientation(feature.isPresent() ? ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
       if (feature.isPresent()) {
         FoldingFeature foldingFeature = (FoldingFeature) feature.get();
         Rect           bounds         = foldingFeature.getBounds();
@@ -955,6 +1249,25 @@ public class WebRtcCallActivity extends BaseActivity implements SafetyNumberChan
         } else {
           Log.d(TAG, "OnWindowLayoutInfo accepted: ensure call view is in flat display mode");
           viewModel.setFoldableState(WebRtcControls.FoldableState.flat());
+        }
+      }
+    }
+  }
+
+  private class FadeCallback implements ControlsAndInfoController.BottomSheetVisibilityListener {
+
+    @Override
+    public void onShown() {
+      fullscreenHelper.showSystemUI();
+    }
+
+    @Override
+    public void onHidden() {
+      WebRtcControls controlState = viewModel.getWebRtcControls().getValue();
+      if (controlState == null || !controlState.displayErrorControls()) {
+        fullscreenHelper.hideSystemUI();
+        if (videoTooltip != null) {
+          videoTooltip.dismiss();
         }
       }
     }

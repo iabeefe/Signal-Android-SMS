@@ -1,5 +1,7 @@
 package org.thoughtcrime.securesms.util;
 
+import android.os.SystemClock;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -152,8 +154,13 @@ public final class SignalLocalMetrics {
       split(messageId, SPLIT_JOB_ENQUEUE);
     }
 
-    public static void onDeliveryStarted(long messageId) {
+    public static void onDeliveryStarted(long messageId, long sentTimestamp) {
       split(messageId, SPLIT_JOB_PRE_NETWORK);
+
+      String splitId = ID_MAP.get(messageId);
+      if (splitId != null) {
+        LocalMetrics.getInstance().setLabel(splitId, String.valueOf(sentTimestamp));
+      }
     }
 
     public static void onMessageEncrypted(long messageId) {
@@ -203,9 +210,58 @@ public final class SignalLocalMetrics {
     }
   }
 
+  public static final class MessageLatency {
+    public static final String NAME_HIGH = "message-latency-high-priority";
+    public static final String NAME_LOW = "message-latency-low-priority";
+
+    private static final String SPLIT_LATENCY = "latency";
+
+    public static void onMessageReceived(long serverReceiveTimestamp, long serverDeliverTimestamp, boolean highPriority) {
+      String name    = highPriority ? NAME_HIGH : NAME_LOW;
+      long   latency = serverDeliverTimestamp - serverReceiveTimestamp;
+
+      if (latency > SystemClock.elapsedRealtime()) {
+        // Ignore messages with latency that would be before device boot time
+        return;
+      }
+
+      String id = name + System.currentTimeMillis();
+      LocalMetrics.getInstance().start(id, name);
+      LocalMetrics.getInstance().splitWithDuration(id, SPLIT_LATENCY, latency);
+      LocalMetrics.getInstance().end(id);
+    }
+  }
+
+  public static final class FcmServiceStartFailure {
+    public static final String NAME = "fcm-service-start-failure";
+
+    private static final String SPLIT_EVENT = "event";
+
+    public static void onFcmFailedToStart() {
+      String id = NAME + System.currentTimeMillis();
+      LocalMetrics.getInstance().start(id, NAME);
+      LocalMetrics.getInstance().splitWithDuration(id, SPLIT_EVENT, 1);
+      LocalMetrics.getInstance().end(id);
+    }
+
+  }
+
+  public static final class FcmServiceStartSuccess {
+    public static final String NAME = "fcm-service-start-success";
+
+    private static final String SPLIT_EVENT = "event";
+
+    public static void onFcmStarted() {
+      String id = NAME + System.currentTimeMillis();
+      LocalMetrics.getInstance().start(id, NAME);
+      LocalMetrics.getInstance().splitWithDuration(id, SPLIT_EVENT, 1);
+      LocalMetrics.getInstance().end(id);
+    }
+
+  }
   public static final class PushWebsocketFetch {
-    private static final String SUCCESS_EVENT = "push-websocket-fetch";
-    private static final String TIMEOUT_EVENT = "timed-out-fetch";
+    public static final String SUCCESS_EVENT = "push-websocket-fetch";
+    public static final String TIMEOUT_EVENT = "timed-out-fetch";
 
     private static final String SPLIT_BATCH_PROCESSED = "batches-processed";
     private static final String SPLIT_PROCESS_TIME    = "fetch-time";
@@ -284,6 +340,13 @@ public final class SignalLocalMetrics {
 
     public static void onJobStarted(long messageId) {
       split(messageId, SPLIT_JOB_ENQUEUE);
+    }
+
+    public static void setSentTimestamp(long messageId, long sentTimestamp) {
+      String splitId = ID_MAP.get(messageId);
+      if (splitId != null) {
+        LocalMetrics.getInstance().setLabel(splitId, String.valueOf(sentTimestamp));
+      }
     }
 
     public static void onSenderKeyStarted(long messageId) {

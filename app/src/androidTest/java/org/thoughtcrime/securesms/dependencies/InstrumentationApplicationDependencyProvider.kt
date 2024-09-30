@@ -1,6 +1,7 @@
 package org.thoughtcrime.securesms.dependencies
 
 import android.app.Application
+import io.mockk.spyk
 import okhttp3.ConnectionSpec
 import okhttp3.Response
 import okhttp3.WebSocket
@@ -13,9 +14,9 @@ import okio.ByteString
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import org.signal.core.util.Base64
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.BuildConfig
-import org.thoughtcrime.securesms.KbsEnclave
 import org.thoughtcrime.securesms.push.SignalServiceNetworkAccess
 import org.thoughtcrime.securesms.push.SignalServiceTrustStore
 import org.thoughtcrime.securesms.recipients.LiveRecipientCache
@@ -23,33 +24,31 @@ import org.thoughtcrime.securesms.testing.Get
 import org.thoughtcrime.securesms.testing.Verb
 import org.thoughtcrime.securesms.testing.runSync
 import org.thoughtcrime.securesms.testing.success
-import org.thoughtcrime.securesms.util.Base64
-import org.whispersystems.signalservice.api.KeyBackupService
-import org.whispersystems.signalservice.api.SignalServiceAccountManager
+import org.whispersystems.signalservice.api.SignalServiceDataStore
+import org.whispersystems.signalservice.api.SignalServiceMessageSender
+import org.whispersystems.signalservice.api.SignalWebSocket
 import org.whispersystems.signalservice.api.push.TrustStore
 import org.whispersystems.signalservice.internal.configuration.SignalCdnUrl
 import org.whispersystems.signalservice.internal.configuration.SignalCdsiUrl
-import org.whispersystems.signalservice.internal.configuration.SignalKeyBackupServiceUrl
 import org.whispersystems.signalservice.internal.configuration.SignalServiceConfiguration
 import org.whispersystems.signalservice.internal.configuration.SignalServiceUrl
 import org.whispersystems.signalservice.internal.configuration.SignalStorageUrl
 import org.whispersystems.signalservice.internal.configuration.SignalSvr2Url
-import java.security.KeyStore
+import org.whispersystems.signalservice.internal.push.PushServiceSocket
 import java.util.Optional
 
 /**
  * Dependency provider used for instrumentation tests (aka androidTests).
  *
- * Handles setting up a mock web server for API calls, and provides mockable versions of [SignalServiceNetworkAccess] and
- * [KeyBackupService].
+ * Handles setting up a mock web server for API calls, and provides mockable versions of [SignalServiceNetworkAccess].
  */
-class InstrumentationApplicationDependencyProvider(application: Application, default: ApplicationDependencyProvider) : ApplicationDependencies.Provider by default {
+class InstrumentationApplicationDependencyProvider(val application: Application, private val default: ApplicationDependencyProvider) : AppDependencies.Provider by default {
 
   private val serviceTrustStore: TrustStore
   private val uncensoredConfiguration: SignalServiceConfiguration
   private val serviceNetworkAccessMock: SignalServiceNetworkAccess
-  private val keyBackupService: KeyBackupService
   private val recipientCache: LiveRecipientCache
+  private var signalServiceMessageSender: SignalServiceMessageSender? = null
 
   init {
     runSync {
@@ -60,18 +59,21 @@ class InstrumentationApplicationDependencyProvider(application: Application, def
         Get("/v1/websocket/?login=") {
           MockResponse().success().withWebSocketUpgrade(mockIdentifiedWebSocket)
         },
-        Get("/v1/websocket", { !it.path.contains("login") }) {
+        Get("/v1/websocket", {
+          val path = it.path
+          return@Get path == null || !path.contains("login")
+        }) {
           MockResponse().success().withWebSocketUpgrade(object : WebSocketListener() {})
         }
       )
     }
 
-    webServer.setDispatcher(object : Dispatcher() {
+    webServer.dispatcher = object : Dispatcher() {
       override fun dispatch(request: RecordedRequest): MockResponse {
         val handler = handlers.firstOrNull { it.requestPredicate(request) }
         return handler?.responseFactory?.invoke(request) ?: MockResponse().setResponseCode(500)
       }
-    })
+    }
 
     serviceTrustStore = SignalServiceTrustStore(application)
     uncensoredConfiguration = SignalServiceConfiguration(
@@ -80,7 +82,6 @@ class InstrumentationApplicationDependencyProvider(application: Application, def
         0 to arrayOf(SignalCdnUrl(baseUrl, "localhost", serviceTrustStore, ConnectionSpec.CLEARTEXT)),
         2 to arrayOf(SignalCdnUrl(baseUrl, "localhost", serviceTrustStore, ConnectionSpec.CLEARTEXT))
       ),
-      signalKeyBackupServiceUrls = arrayOf(SignalKeyBackupServiceUrl(baseUrl, "localhost", serviceTrustStore, ConnectionSpec.CLEARTEXT)),
       signalStorageUrls = arrayOf(SignalStorageUrl(baseUrl, "localhost", serviceTrustStore, ConnectionSpec.CLEARTEXT)),
       signalCdsiUrls = arrayOf(SignalCdsiUrl(baseUrl, "localhost", serviceTrustStore, ConnectionSpec.CLEARTEXT)),
       signalSvr2Urls = arrayOf(SignalSvr2Url(baseUrl, serviceTrustStore, "localhost", ConnectionSpec.CLEARTEXT)),
@@ -88,7 +89,8 @@ class InstrumentationApplicationDependencyProvider(application: Application, def
       dns = Optional.of(SignalServiceNetworkAccess.DNS),
       signalProxy = Optional.empty(),
       zkGroupServerPublicParams = Base64.decode(BuildConfig.ZKGROUP_SERVER_PUBLIC_PARAMS),
-      genericServerPublicParams = Base64.decode(BuildConfig.GENERIC_SERVER_PUBLIC_PARAMS)
+      genericServerPublicParams = Base64.decode(BuildConfig.GENERIC_SERVER_PUBLIC_PARAMS),
+      backupServerPublicParams = Base64.decode(BuildConfig.BACKUP_SERVER_PUBLIC_PARAMS)
     )
 
     serviceNetworkAccessMock = mock {
@@ -97,8 +99,6 @@ class InstrumentationApplicationDependencyProvider(application: Application, def
       on { uncensoredConfiguration } doReturn uncensoredConfiguration
     }
 
-    keyBackupService = mock()
-
     recipientCache = LiveRecipientCache(application) { r -> r.run() }
   }
 
@@ -106,12 +106,19 @@ class InstrumentationApplicationDependencyProvider(application: Application, def
     return serviceNetworkAccessMock
   }
 
-  override fun provideKeyBackupService(signalServiceAccountManager: SignalServiceAccountManager, keyStore: KeyStore, enclave: KbsEnclave): KeyBackupService {
-    return keyBackupService
-  }
-
   override fun provideRecipientCache(): LiveRecipientCache {
     return recipientCache
+  }
+
+  override fun provideSignalServiceMessageSender(
+    signalWebSocket: SignalWebSocket,
+    protocolStore: SignalServiceDataStore,
+    pushServiceSocket: PushServiceSocket
+  ): SignalServiceMessageSender {
+    if (signalServiceMessageSender == null) {
+      signalServiceMessageSender = spyk(objToCopy = default.provideSignalServiceMessageSender(signalWebSocket, protocolStore, pushServiceSocket))
+    }
+    return signalServiceMessageSender!!
   }
 
   class MockWebSocket : WebSocketListener() {

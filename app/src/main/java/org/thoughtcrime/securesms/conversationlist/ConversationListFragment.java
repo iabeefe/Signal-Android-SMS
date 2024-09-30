@@ -46,7 +46,6 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
@@ -56,6 +55,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.widget.TooltipCompat;
+import androidx.compose.ui.platform.ComposeView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
@@ -68,6 +68,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.SimpleColorFilter;
 import com.annimon.stream.Stream;
+import com.bumptech.glide.Glide;
 import com.google.android.material.animation.ArgbEvaluatorCompat;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -90,9 +91,22 @@ import org.thoughtcrime.securesms.MainNavigator;
 import org.thoughtcrime.securesms.MuteDialog;
 import org.thoughtcrime.securesms.NewConversationActivity;
 import org.thoughtcrime.securesms.R;
+import org.thoughtcrime.securesms.backup.v2.ui.BackupAlertDelegate;
 import org.thoughtcrime.securesms.badges.models.Badge;
-import org.thoughtcrime.securesms.badges.self.expired.CantProcessSubscriptionPaymentBottomSheetDialogFragment;
-import org.thoughtcrime.securesms.badges.self.expired.ExpiredBadgeBottomSheetDialogFragment;
+import org.thoughtcrime.securesms.badges.self.expired.ExpiredOneTimeBadgeBottomSheetDialogFragment;
+import org.thoughtcrime.securesms.badges.self.expired.MonthlyDonationCanceledBottomSheetDialogFragment;
+import org.thoughtcrime.securesms.banner.Banner;
+import org.thoughtcrime.securesms.banner.BannerManager;
+import org.thoughtcrime.securesms.banner.banners.CdsPermanentErrorBanner;
+import org.thoughtcrime.securesms.banner.banners.CdsTemporaryErrorBanner;
+import org.thoughtcrime.securesms.banner.banners.DeprecatedBuildBanner;
+import org.thoughtcrime.securesms.banner.banners.DozeBanner;
+import org.thoughtcrime.securesms.banner.banners.MediaRestoreProgressBanner;
+import org.thoughtcrime.securesms.banner.banners.OutdatedBuildBanner;
+import org.thoughtcrime.securesms.banner.banners.ServiceOutageBanner;
+import org.thoughtcrime.securesms.banner.banners.UnauthorizedBanner;
+import org.thoughtcrime.securesms.banner.banners.UsernameOutOfSyncBanner;
+import org.thoughtcrime.securesms.components.DeleteSyncEducationDialog;
 import org.thoughtcrime.securesms.components.Material3SearchToolbar;
 import org.thoughtcrime.securesms.components.RatingManager;
 import org.thoughtcrime.securesms.components.SignalProgressDialog;
@@ -100,18 +114,9 @@ import org.thoughtcrime.securesms.components.menu.ActionItem;
 import org.thoughtcrime.securesms.components.menu.SignalBottomActionBar;
 import org.thoughtcrime.securesms.components.menu.SignalContextMenu;
 import org.thoughtcrime.securesms.components.registration.PulsingFloatingActionButton;
-import org.thoughtcrime.securesms.components.reminder.CdsPermanentErrorReminder;
-import org.thoughtcrime.securesms.components.reminder.CdsTemporaryErrorReminder;
-import org.thoughtcrime.securesms.components.reminder.DozeReminder;
-import org.thoughtcrime.securesms.components.reminder.ExpiredBuildReminder;
-import org.thoughtcrime.securesms.components.reminder.OutdatedBuildReminder;
-import org.thoughtcrime.securesms.components.reminder.PushRegistrationReminder;
-import org.thoughtcrime.securesms.components.reminder.Reminder;
-import org.thoughtcrime.securesms.components.reminder.ReminderView;
-import org.thoughtcrime.securesms.components.reminder.ServiceOutageReminder;
-import org.thoughtcrime.securesms.components.reminder.UnauthorizedReminder;
-import org.thoughtcrime.securesms.components.reminder.UsernameOutOfSyncReminder;
+import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity;
 import org.thoughtcrime.securesms.components.settings.app.notifications.manual.NotificationProfileSelectionFragment;
+import org.thoughtcrime.securesms.components.settings.app.subscription.completed.InAppPaymentsBottomSheetDelegate;
 import org.thoughtcrime.securesms.components.settings.app.subscription.errors.UnexpectedSubscriptionCancellation;
 import org.thoughtcrime.securesms.components.spoiler.SpoilerAnnotation;
 import org.thoughtcrime.securesms.components.voice.VoiceNoteMediaControllerOwner;
@@ -122,9 +127,6 @@ import org.thoughtcrime.securesms.contacts.paged.ContactSearchData;
 import org.thoughtcrime.securesms.contacts.paged.ContactSearchKey;
 import org.thoughtcrime.securesms.contacts.paged.ContactSearchMediator;
 import org.thoughtcrime.securesms.contacts.paged.ContactSearchState;
-import org.thoughtcrime.securesms.contacts.sync.CdsPermanentErrorBottomSheet;
-import org.thoughtcrime.securesms.contacts.sync.CdsTemporaryErrorBottomSheet;
-import org.thoughtcrime.securesms.conversation.ConversationFragment;
 import org.thoughtcrime.securesms.conversationlist.chatfilter.ConversationFilterRequest;
 import org.thoughtcrime.securesms.conversationlist.chatfilter.ConversationFilterSource;
 import org.thoughtcrime.securesms.conversationlist.chatfilter.ConversationListFilterPullView;
@@ -135,31 +137,32 @@ import org.thoughtcrime.securesms.database.MessageTable.MarkedMessageInfo;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.ThreadTable;
 import org.thoughtcrime.securesms.database.model.ThreadRecord;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
-import org.thoughtcrime.securesms.events.ReminderUpdateEvent;
-import org.thoughtcrime.securesms.exporter.flow.SmsExportDialogs;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.groups.SelectionLimits;
-import org.thoughtcrime.securesms.insights.InsightsLauncher;
-import org.thoughtcrime.securesms.jobs.ServiceOutageDetectionJob;
+import org.thoughtcrime.securesms.jobs.RefreshOwnProfileJob;
+import org.thoughtcrime.securesms.keyvalue.AccountValues;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.lock.v2.CreateSvrPinActivity;
 import org.thoughtcrime.securesms.main.Material3OnScrollHelperBinder;
 import org.thoughtcrime.securesms.main.SearchBinder;
+import org.thoughtcrime.securesms.mediasend.camerax.CameraXUtil;
 import org.thoughtcrime.securesms.mediasend.v2.MediaSelectionActivity;
 import org.thoughtcrime.securesms.megaphone.Megaphone;
 import org.thoughtcrime.securesms.megaphone.MegaphoneActionController;
 import org.thoughtcrime.securesms.megaphone.MegaphoneViewBuilder;
 import org.thoughtcrime.securesms.megaphone.Megaphones;
+<<<<<<< HEAD
 //import org.thoughtcrime.securesms.megaphone.SmsExportMegaphoneActivity;
 import org.thoughtcrime.securesms.mms.GlideApp;
+=======
+>>>>>>> upstream/main
 import org.thoughtcrime.securesms.notifications.MarkReadReceiver;
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfile;
 import org.thoughtcrime.securesms.permissions.Permissions;
-import org.thoughtcrime.securesms.profiles.manage.ManageProfileActivity;
+import org.thoughtcrime.securesms.profiles.manage.UsernameEditFragment;
 import org.thoughtcrime.securesms.ratelimit.RecaptchaProofBottomSheetFragment;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.thoughtcrime.securesms.registration.RegistrationNavigationActivity;
 import org.thoughtcrime.securesms.search.MessageResult;
 import org.thoughtcrime.securesms.service.KeyCachingService;
 import org.thoughtcrime.securesms.sms.MessageSender;
@@ -168,17 +171,13 @@ import org.thoughtcrime.securesms.stories.tabs.ConversationListTab;
 import org.thoughtcrime.securesms.stories.tabs.ConversationListTabsViewModel;
 import org.thoughtcrime.securesms.util.AppForegroundObserver;
 import org.thoughtcrime.securesms.util.AppStartup;
-import org.thoughtcrime.securesms.util.BottomSheetUtil;
 import org.thoughtcrime.securesms.util.CachedInflater;
 import org.thoughtcrime.securesms.util.ConversationUtil;
-import org.thoughtcrime.securesms.util.FeatureFlags;
-import org.thoughtcrime.securesms.util.PlayStoreUtil;
 import org.thoughtcrime.securesms.util.ServiceUtil;
 import org.thoughtcrime.securesms.util.SignalLocalMetrics;
 import org.thoughtcrime.securesms.util.SignalProxyUtil;
 import org.thoughtcrime.securesms.util.SnapToTopDataObserver;
 import org.thoughtcrime.securesms.util.TextSecurePreferences;
-import org.thoughtcrime.securesms.util.Util;
 import org.thoughtcrime.securesms.util.ViewUtil;
 import org.thoughtcrime.securesms.util.WindowUtil;
 import org.thoughtcrime.securesms.util.adapter.mapping.PagingMappingAdapter;
@@ -196,19 +195,18 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import kotlin.Unit;
 
-import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 
 public class ConversationListFragment extends MainFragment implements ActionMode.Callback,
                                                                       ConversationListAdapter.OnConversationClickListener,
-                                                                      MegaphoneActionController, ClearFilterViewHolder.OnClearFilterClickListener
+                                                                      MegaphoneActionController,
+                                                                      ClearFilterViewHolder.OnClearFilterClickListener
 {
   public static final short MESSAGE_REQUESTS_REQUEST_CODE_CREATE_NAME = 32562;
   public static final short SMS_ROLE_REQUEST_CODE                     = 32563;
@@ -225,7 +223,7 @@ public class ConversationListFragment extends MainFragment implements ActionMode
   private ActionMode                             actionMode;
   private View                                   coordinator;
   private RecyclerView                           list;
-  private Stub<ReminderView>                     reminderView;
+  private Stub<ComposeView>                      bannerView;
   private PulsingFloatingActionButton            fab;
   private PulsingFloatingActionButton            cameraFab;
   private ConversationListFilterPullView         pullView;
@@ -250,6 +248,8 @@ public class ConversationListFragment extends MainFragment implements ActionMode
   private   Stopwatch                             startupStopwatch;
   private   ConversationListTabsViewModel         conversationListTabsViewModel;
   private   ContactSearchMediator                 contactSearchMediator;
+
+  private BannerManager bannerManager;
 
   public static ConversationListFragment newInstance() {
     return new ConversationListFragment();
@@ -280,13 +280,16 @@ public class ConversationListFragment extends MainFragment implements ActionMode
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    getViewLifecycleOwner().getLifecycle().addObserver(new InAppPaymentsBottomSheetDelegate(getParentFragmentManager(), getViewLifecycleOwner()));
+    BackupAlertDelegate.delegate(getParentFragmentManager(), getViewLifecycleOwner().getLifecycle());
+
     lifecycleDisposable = new LifecycleDisposable();
     lifecycleDisposable.bindTo(getViewLifecycleOwner());
 
     coordinator             = view.findViewById(R.id.coordinator);
     list                    = view.findViewById(R.id.list);
     bottomActionBar         = view.findViewById(R.id.conversation_list_bottom_action_bar);
-    reminderView            = new Stub<>(view.findViewById(R.id.reminder));
+    bannerView              = new Stub<>(view.findViewById(R.id.banner_compose_view));
     megaphoneContainer      = new Stub<>(view.findViewById(R.id.megaphone_container));
     voiceNotePlayerViewStub = new Stub<>(view.findViewById(R.id.voice_note_player));
     fab                     = view.findViewById(R.id.fab);
@@ -302,7 +305,6 @@ public class ConversationListFragment extends MainFragment implements ActionMode
                                                       SelectionLimits.NO_LIMITS,
                                                       new ContactSearchAdapter.DisplayOptions(
                                                           false,
-                                                          ContactSearchAdapter.DisplaySmsTag.DEFAULT,
                                                           ContactSearchAdapter.DisplaySecondaryInformation.NEVER,
                                                           false,
                                                           false
@@ -328,7 +330,7 @@ public class ConversationListFragment extends MainFragment implements ActionMode
                                                             storyContextMenuCallbacks,
                                                             callButtonClickCallbacks,
                                                             getViewLifecycleOwner(),
-                                                            GlideApp.with(this)
+                                                            Glide.with(this)
                                                         );
                                                       },
                                                       new ConversationListSearchAdapter.ChatFilterRepository()
@@ -397,20 +399,26 @@ public class ConversationListFragment extends MainFragment implements ActionMode
 
     fab.setOnClickListener(v -> startActivity(new Intent(getActivity(), NewConversationActivity.class)));
     cameraFab.setOnClickListener(v -> {
-      Permissions.with(this)
-                 .request(Manifest.permission.CAMERA)
-                 .ifNecessary()
-                 .withRationaleDialog(getString(R.string.ConversationActivity_to_capture_photos_and_video_allow_signal_access_to_the_camera), R.drawable.symbol_camera_24)
-                 .withPermanentDenialDialog(getString(R.string.ConversationActivity_signal_needs_the_camera_permission_to_take_photos_or_video))
-                 .onAllGranted(() -> startActivity(MediaSelectionActivity.camera(requireContext())))
-                 .onAnyDenied(() -> Toast.makeText(requireContext(), R.string.ConversationActivity_signal_needs_camera_permissions_to_take_photos_or_video, Toast.LENGTH_LONG).show())
-                 .execute();
+      if (CameraXUtil.isSupported()) {
+        startActivity(MediaSelectionActivity.camera(requireContext()));
+      } else {
+        Permissions.with(this)
+                   .request(Manifest.permission.CAMERA)
+                   .ifNecessary()
+                   .withRationaleDialog(getString(R.string.CameraXFragment_allow_access_camera), getString(R.string.CameraXFragment_to_capture_photos_and_video_allow_camera), R.drawable.symbol_camera_24)
+                   .withPermanentDenialDialog(getString(R.string.CameraXFragment_signal_needs_camera_access_capture_photos), null, R.string.CameraXFragment_allow_access_camera, R.string.CameraXFragment_to_capture_photos_videos, getParentFragmentManager())
+                   .onAllGranted(() -> startActivity(MediaSelectionActivity.camera(requireContext())))
+                   .onAnyDenied(() -> Toast.makeText(requireContext(), R.string.CameraXFragment_signal_needs_camera_access_capture_photos, Toast.LENGTH_LONG).show())
+                   .execute();
+      }
     });
 
     initializeViewModel();
     initializeListAdapters();
     initializeTypingObserver();
     initializeVoiceNotePlayer();
+    initializeBanners();
+    maybeScheduleRefreshProfileJob();
 
     RatingManager.showRatingDialogIfNecessary(requireContext());
 
@@ -449,7 +457,6 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     coordinator             = null;
     list                    = null;
     bottomActionBar         = null;
-    reminderView            = null;
     megaphoneContainer      = null;
     voiceNotePlayerViewStub = null;
     fab                     = null;
@@ -469,21 +476,16 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     super.onResume();
 
     initializeSearchListener();
-    updateReminders();
     EventBus.getDefault().register(this);
     itemAnimator.disable();
     SpoilerAnnotation.resetRevealedSpoilers();
-
-    if (Util.isDefaultSmsProvider(requireContext())) {
-      InsightsLauncher.showInsightsModal(requireContext(), requireFragmentManager());
-    }
 
     if ((!requireCallback().getSearchToolbar().resolved() || !(requireCallback().getSearchToolbar().get().getVisibility() == View.VISIBLE)) && list.getAdapter() != defaultAdapter) {
       setAdapter(defaultAdapter);
     }
 
-    if (activeAdapter != null) {
-      activeAdapter.notifyItemRangeChanged(0, activeAdapter.getItemCount());
+    if (activeAdapter instanceof TimestampPayloadSupport) {
+      ((TimestampPayloadSupport) activeAdapter).notifyTimestampPayloadUpdate();
     }
 
     SignalProxyUtil.startListeningToWebsocket();
@@ -493,49 +495,50 @@ public class ConversationListFragment extends MainFragment implements ActionMode
       RecaptchaProofBottomSheetFragment.show(getChildFragmentManager());
     }
 
-    Badge                              expiredBadge                       = SignalStore.donationsValues().getExpiredBadge();
-    String                             subscriptionCancellationReason     = SignalStore.donationsValues().getUnexpectedSubscriptionCancelationReason();
+    Badge                              expiredBadge                       = SignalStore.inAppPayments().getExpiredBadge();
+    String                             subscriptionCancellationReason     = SignalStore.inAppPayments().getUnexpectedSubscriptionCancelationReason();
     UnexpectedSubscriptionCancellation unexpectedSubscriptionCancellation = UnexpectedSubscriptionCancellation.fromStatus(subscriptionCancellationReason);
-    boolean                            isDisplayingSubscriptionFailure    = false;
-    long                               subscriptionFailureTimestamp       = SignalStore.donationsValues().getUnexpectedSubscriptionCancelationTimestamp();
-    long                               subscriptionFailureWatermark       = SignalStore.donationsValues().getUnexpectedSubscriptionCancelationWatermark();
+    long                               subscriptionFailureTimestamp       = SignalStore.inAppPayments().getUnexpectedSubscriptionCancelationTimestamp();
+    long                               subscriptionFailureWatermark       = SignalStore.inAppPayments().getUnexpectedSubscriptionCancelationWatermark();
     boolean                            isWatermarkPriorToTimestamp        = subscriptionFailureWatermark < subscriptionFailureTimestamp;
 
     if (unexpectedSubscriptionCancellation != null &&
-        !SignalStore.donationsValues().isUserManuallyCancelled() &&
-        SignalStore.donationsValues().showCantProcessDialog() &&
+        !SignalStore.inAppPayments().isDonationSubscriptionManuallyCancelled() &&
+        SignalStore.inAppPayments().showCantProcessDialog() &&
         isWatermarkPriorToTimestamp)
     {
       Log.w(TAG, "Displaying bottom sheet for unexpected cancellation: " + unexpectedSubscriptionCancellation, true);
-      new CantProcessSubscriptionPaymentBottomSheetDialogFragment().show(getChildFragmentManager(), BottomSheetUtil.STANDARD_BOTTOM_SHEET_FRAGMENT_TAG);
-      SignalStore.donationsValues().setUnexpectedSubscriptionCancelationWatermark(subscriptionFailureTimestamp);
-      isDisplayingSubscriptionFailure = true;
-    } else if (unexpectedSubscriptionCancellation != null && SignalStore.donationsValues().isUserManuallyCancelled()) {
+      MonthlyDonationCanceledBottomSheetDialogFragment.show(getChildFragmentManager());
+      SignalStore.inAppPayments().setUnexpectedSubscriptionCancelationWatermark(subscriptionFailureTimestamp);
+    } else if (unexpectedSubscriptionCancellation != null && SignalStore.inAppPayments().isDonationSubscriptionManuallyCancelled()) {
       Log.w(TAG, "Unexpected cancellation detected but not displaying dialog because user manually cancelled their subscription: " + unexpectedSubscriptionCancellation, true);
-      SignalStore.donationsValues().setUnexpectedSubscriptionCancelationWatermark(subscriptionFailureTimestamp);
-    } else if (unexpectedSubscriptionCancellation != null && !SignalStore.donationsValues().showCantProcessDialog()) {
+      SignalStore.inAppPayments().setUnexpectedSubscriptionCancelationWatermark(subscriptionFailureTimestamp);
+    } else if (unexpectedSubscriptionCancellation != null && !SignalStore.inAppPayments().showCantProcessDialog()) {
       Log.w(TAG, "Unexpected cancellation detected but not displaying dialog because user has silenced it.", true);
-      SignalStore.donationsValues().setUnexpectedSubscriptionCancelationWatermark(subscriptionFailureTimestamp);
+      SignalStore.inAppPayments().setUnexpectedSubscriptionCancelationWatermark(subscriptionFailureTimestamp);
     }
 
-    if (expiredBadge != null && !isDisplayingSubscriptionFailure) {
-      SignalStore.donationsValues().setExpiredBadge(null);
+    if (expiredBadge != null && expiredBadge.isBoost()) {
+      SignalStore.inAppPayments().setExpiredBadge(null);
 
-      if (expiredBadge.isBoost() || !SignalStore.donationsValues().isUserManuallyCancelled()) {
-        Log.w(TAG, "Displaying bottom sheet for an expired badge", true);
-        ExpiredBadgeBottomSheetDialogFragment.show(
-            expiredBadge,
-            unexpectedSubscriptionCancellation,
-            SignalStore.donationsValues().getUnexpectedSubscriptionCancelationChargeFailure(),
-            getParentFragmentManager());
-      }
+      Log.w(TAG, "Displaying bottom sheet for an expired badge", true);
+      ExpiredOneTimeBadgeBottomSheetDialogFragment.show(
+          expiredBadge,
+          unexpectedSubscriptionCancellation,
+          SignalStore.inAppPayments().getUnexpectedSubscriptionCancelationChargeFailure(),
+          getParentFragmentManager()
+      );
+    }
+
+    if (this.bannerManager != null) {
+      this.bannerManager.updateContent(bannerView.get());
     }
   }
 
   @Override
   public void onStart() {
     super.onStart();
-    ApplicationDependencies.getAppForegroundObserver().addListener(appForegroundObserver);
+    AppForegroundObserver.addListener(appForegroundObserver);
     itemAnimator.disable();
   }
 
@@ -552,7 +555,7 @@ public class ConversationListFragment extends MainFragment implements ActionMode
   @Override
   public void onStop() {
     super.onStop();
-    ApplicationDependencies.getAppForegroundObserver().removeListener(appForegroundObserver);
+    AppForegroundObserver.removeListener(appForegroundObserver);
   }
 
   @Override
@@ -563,8 +566,7 @@ public class ConversationListFragment extends MainFragment implements ActionMode
 
   @Override
   public void onPrepareOptionsMenu(Menu menu) {
-    menu.findItem(R.id.menu_insights).setVisible(Util.isDefaultSmsProvider(requireContext()));
-    menu.findItem(R.id.menu_clear_passphrase).setVisible(!TextSecurePreferences.isPasswordDisabled(requireContext()));
+    menu.findItem(R.id.menu_clear_passphrase).setVisible(!SignalStore.settings().getPassphraseDisabled());
 
     ConversationFilterRequest request             = viewModel.getConversationFilterRequest();
     boolean                   isChatFilterEnabled = request != null && request.getFilter() == ConversationFilter.UNREAD;
@@ -593,9 +595,6 @@ public class ConversationListFragment extends MainFragment implements ActionMode
       return true;
     } else if (itemId == R.id.menu_invite) {
       handleInvite();
-      return true;
-    } else if (itemId == R.id.menu_insights) {
-      handleInsights();
       return true;
     } else if (itemId == R.id.menu_notification_profile) {
       handleNotificationProfile();
@@ -706,6 +705,7 @@ public class ConversationListFragment extends MainFragment implements ActionMode
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+<<<<<<< HEAD
     /*
     if (requestCode == SmsExportMegaphoneActivity.REQUEST_CODE) {
       ApplicationDependencies.getMegaphoneRepository().markSeen(Megaphones.Event.SMS_EXPORT);
@@ -716,9 +716,16 @@ public class ConversationListFragment extends MainFragment implements ActionMode
       }
     }
 */
+=======
+>>>>>>> upstream/main
     if (resultCode == RESULT_OK && requestCode == CreateSvrPinActivity.REQUEST_NEW_PIN) {
       Snackbar.make(fab, R.string.ConfirmKbsPinFragment__pin_created, Snackbar.LENGTH_LONG).show();
       viewModel.onMegaphoneCompleted(Megaphones.Event.PINS_FOR_ALL);
+    }
+
+    if (resultCode == RESULT_OK && requestCode == UsernameEditFragment.REQUEST_CODE) {
+      String snackbarString = getString(R.string.ConversationListFragment_username_recovered_toast, SignalStore.account().getUsername());
+      Snackbar.make(fab, snackbarString, Snackbar.LENGTH_LONG).show();
     }
   }
 
@@ -798,25 +805,6 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     dialogFragment.show(getChildFragmentManager(), "megaphone_dialog");
   }
 
-  private void initializeReminderView() {
-    reminderView.get().setOnDismissListener(this::updateReminders);
-    reminderView.get().setOnActionClickListener(this::onReminderAction);
-  }
-
-  private void onReminderAction(@IdRes int reminderActionId) {
-    if (reminderActionId == R.id.reminder_action_update_now) {
-      PlayStoreUtil.openPlayStoreOrOurApkDownloadPage(requireContext());
-    } else if (reminderActionId == R.id.reminder_action_cds_temporary_error_learn_more) {
-      CdsTemporaryErrorBottomSheet.show(getChildFragmentManager());
-    } else if (reminderActionId == R.id.reminder_action_cds_permanent_error_learn_more) {
-      CdsPermanentErrorBottomSheet.show(getChildFragmentManager());
-    } else if (reminderActionId == R.id.reminder_action_fix_username) {
-      startActivity(ManageProfileActivity.getIntentForUsernameEdit(requireContext()));
-    } else if (reminderActionId == R.id.reminder_action_re_register) {
-      startActivity(RegistrationNavigationActivity.newIntentForReRegistration(requireContext()));
-    }
-  }
-
   private void hideKeyboard() {
     InputMethodManager imm = ServiceUtil.getInputMethodManager(requireContext());
     imm.hideSoftInputFromWindow(requireView().getWindowToken(), 0);
@@ -888,6 +876,37 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     });
   }
 
+  private void initializeBanners() {
+    List<Banner<?>> bannerRepositories = List.of(
+        new DeprecatedBuildBanner(),
+        new UnauthorizedBanner(requireContext()),
+        new ServiceOutageBanner(requireContext()),
+        new OutdatedBuildBanner(),
+        new DozeBanner(requireContext()),
+        new CdsTemporaryErrorBanner(getChildFragmentManager()),
+        new CdsPermanentErrorBanner(getChildFragmentManager()),
+        new UsernameOutOfSyncBanner((usernameSyncState) -> {
+          if (usernameSyncState == AccountValues.UsernameSyncState.USERNAME_AND_LINK_CORRUPTED) {
+            startActivityForResult(AppSettingsActivity.usernameRecovery(requireContext()), UsernameEditFragment.REQUEST_CODE);
+          } else {
+            startActivity(AppSettingsActivity.usernameLinkSettings(requireContext()));
+          }
+          return Unit.INSTANCE;
+        }),
+        new MediaRestoreProgressBanner()
+    );
+
+    this.bannerManager = new BannerManager(bannerRepositories);
+    this.bannerManager.updateContent(bannerView.get());
+  }
+
+  private void maybeScheduleRefreshProfileJob() {
+    switch (SignalStore.account().getUsernameSyncState()) {
+      case USERNAME_AND_LINK_CORRUPTED, LINK_CORRUPTED -> AppDependencies.getJobManager().add(new RefreshOwnProfileJob());
+      case IN_SYNC -> {}
+    }
+  }
+
   private @NonNull VoiceNotePlayerView requireVoiceNotePlayerView() {
     if (voiceNotePlayerView == null) {
       voiceNotePlayerView = voiceNotePlayerViewStub.get().findViewById(R.id.voice_note_player_view);
@@ -899,7 +918,7 @@ public class ConversationListFragment extends MainFragment implements ActionMode
 
 
   private void initializeListAdapters() {
-    defaultAdapter          = new ConversationListAdapter(getViewLifecycleOwner(), GlideApp.with(this), this, this);
+    defaultAdapter          = new ConversationListAdapter(getViewLifecycleOwner(), Glide.with(this), this, this);
 
     setAdapter(defaultAdapter);
 
@@ -947,7 +966,7 @@ public class ConversationListFragment extends MainFragment implements ActionMode
   }
 
   private void initializeTypingObserver() {
-    ApplicationDependencies.getTypingStatusRepository().getTypingThreads().observe(getViewLifecycleOwner(), threadIds -> {
+    AppDependencies.getTypingStatusRepository().getTypingThreads().observe(getViewLifecycleOwner(), threadIds -> {
       if (threadIds == null) {
         threadIds = Collections.emptySet();
       }
@@ -997,8 +1016,17 @@ public class ConversationListFragment extends MainFragment implements ActionMode
       requireCallback().getSearchToolbar().get();
     }
 
-    if (getContext() != null) {
-      ConversationFragment.prepare(getContext());
+    Context context = getContext();
+    if (context != null) {
+      FrameLayout parent = new FrameLayout(context);
+      parent.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+
+      CachedInflater.from(context).cacheUntilLimit(R.layout.v2_conversation_item_text_only_incoming, parent, 25);
+      CachedInflater.from(context).cacheUntilLimit(R.layout.v2_conversation_item_text_only_outgoing, parent, 25);
+      CachedInflater.from(context).cacheUntilLimit(R.layout.conversation_item_received_multimedia, parent, 10);
+      CachedInflater.from(context).cacheUntilLimit(R.layout.conversation_item_sent_multimedia, parent, 10);
+      CachedInflater.from(context).cacheUntilLimit(R.layout.conversation_item_update, parent, 5);
+      CachedInflater.from(context).cacheUntilLimit(R.layout.cursor_adapter_header_footer_view, parent, 2);
     }
   }
 
@@ -1049,44 +1077,6 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     viewModel.onMegaphoneVisible(megaphone);
   }
 
-  private void updateReminders() {
-    Context context = requireContext();
-
-    SimpleTask.run(getViewLifecycleOwner().getLifecycle(), () -> {
-      if (ExpiredBuildReminder.isEligible()) {
-        return Optional.of(new ExpiredBuildReminder(context));
-      } else if (UnauthorizedReminder.isEligible(context)) {
-        return Optional.of(new UnauthorizedReminder(context));
-      } else if (ServiceOutageReminder.isEligible(context)) {
-        ApplicationDependencies.getJobManager().add(new ServiceOutageDetectionJob());
-        return Optional.of(new ServiceOutageReminder());
-      } else if (OutdatedBuildReminder.isEligible()) {
-        return Optional.of(new OutdatedBuildReminder(context));
-      } else if (PushRegistrationReminder.isEligible()) {
-        return Optional.of((new PushRegistrationReminder(context)));
-      } else if (DozeReminder.isEligible(context)) {
-        return Optional.of(new DozeReminder(context));
-      } else if (CdsTemporaryErrorReminder.isEligible()) {
-        return Optional.of(new CdsTemporaryErrorReminder());
-      } else if (CdsPermanentErrorReminder.isEligible()) {
-        return Optional.of(new CdsPermanentErrorReminder());
-      } else if (UsernameOutOfSyncReminder.isEligible()) {
-        return Optional.of(new UsernameOutOfSyncReminder());
-      } else {
-        return Optional.<Reminder>empty();
-      }
-    }, reminder -> {
-      if (reminder.isPresent() && getActivity() != null && !isRemoving()) {
-        if (!reminderView.resolved()) {
-          initializeReminderView();
-        }
-        reminderView.get().showReminder(reminder.get());
-      } else if (reminderView.resolved() && !reminder.isPresent()) {
-        reminderView.get().hide();
-      }
-    });
-  }
-
   private void handleCreateGroup() {
     getNavigator().goToGroupCreation();
   }
@@ -1107,8 +1097,8 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     SignalExecutors.BOUNDED.execute(() -> {
       List<MarkedMessageInfo> messageIds = SignalDatabase.threads().setAllThreadsRead();
 
-      ApplicationDependencies.getMessageNotifier().updateNotification(context);
-      MarkReadReceiver.process(context, messageIds);
+      AppDependencies.getMessageNotifier().updateNotification(context);
+      MarkReadReceiver.process(messageIds);
     });
   }
 
@@ -1122,10 +1112,10 @@ public class ConversationListFragment extends MainFragment implements ActionMode
       List<MarkedMessageInfo> messageIds = SignalDatabase.threads().setRead(ids, false);
       stopwatch.split("db");
 
-      ApplicationDependencies.getMessageNotifier().updateNotification(context);
+      AppDependencies.getMessageNotifier().updateNotification(context);
       stopwatch.split("notification");
 
-      MarkReadReceiver.process(context, messageIds);
+      MarkReadReceiver.process(messageIds);
       stopwatch.split("process");
 
       return null;
@@ -1150,10 +1140,6 @@ public class ConversationListFragment extends MainFragment implements ActionMode
 
   private void handleInvite() {
     getNavigator().goToInvite();
-  }
-
-  private void handleInsights() {
-    getNavigator().goToInsights();
   }
 
   private void handleNotificationProfile() {
@@ -1200,14 +1186,30 @@ public class ConversationListFragment extends MainFragment implements ActionMode
 
   @SuppressLint("StaticFieldLeak")
   private void handleDelete(@NonNull Collection<Long> ids) {
+    if (DeleteSyncEducationDialog.shouldShow()) {
+      lifecycleDisposable.add(
+          DeleteSyncEducationDialog.show(getChildFragmentManager())
+                                   .subscribe(() -> handleDelete(ids))
+      );
+
+      return;
+    }
+
     int                        conversationsCount = ids.size();
     MaterialAlertDialogBuilder alert              = new MaterialAlertDialogBuilder(requireActivity());
     Context                    context            = requireContext();
 
     alert.setTitle(context.getResources().getQuantityString(R.plurals.ConversationListFragment_delete_selected_conversations,
                                                             conversationsCount, conversationsCount));
-    alert.setMessage(context.getResources().getQuantityString(R.plurals.ConversationListFragment_this_will_permanently_delete_all_n_selected_conversations,
-                                                              conversationsCount, conversationsCount));
+
+    if (TextSecurePreferences.isMultiDevice(context) && Recipient.self().getDeleteSyncCapability().isSupported()) {
+      alert.setMessage(context.getResources().getQuantityString(R.plurals.ConversationListFragment_this_will_permanently_delete_all_n_selected_conversations_linked_device,
+                                                                conversationsCount, conversationsCount));
+    } else {
+      alert.setMessage(context.getResources().getQuantityString(R.plurals.ConversationListFragment_this_will_permanently_delete_all_n_selected_conversations,
+                                                                conversationsCount, conversationsCount));
+    }
+
     alert.setCancelable(true);
 
     alert.setPositiveButton(R.string.delete, (dialog, which) -> {
@@ -1221,15 +1223,15 @@ public class ConversationListFragment extends MainFragment implements ActionMode
           protected void onPreExecute() {
             dialog = SignalProgressDialog.show(requireActivity(),
                                                context.getString(R.string.ConversationListFragment_deleting),
-                                               context.getString(R.string.ConversationListFragment_deleting_selected_conversations),
+                                               context.getResources().getQuantityString(R.plurals.ConversationListFragment_deleting_selected_conversations, conversationsCount),
                                                true,
                                                false);
           }
 
           @Override
           protected Void doInBackground(Void... params) {
-            SignalDatabase.threads().deleteConversations(selectedConversations);
-            ApplicationDependencies.getMessageNotifier().updateNotification(requireActivity());
+            SignalDatabase.threads().deleteConversations(selectedConversations, true);
+            AppDependencies.getMessageNotifier().updateNotification(requireActivity());
             return null;
           }
 
@@ -1395,7 +1397,7 @@ public class ConversationListFragment extends MainFragment implements ActionMode
   protected void onPostSubmitList(int conversationCount) {
     if (conversationCount >= 6 && (SignalStore.onboarding().shouldShowInviteFriends() || SignalStore.onboarding().shouldShowNewGroup())) {
       SignalStore.onboarding().clearAll();
-      ApplicationDependencies.getMegaphoneRepository().markFinished(Megaphones.Event.ONBOARDING);
+      AppDependencies.getMegaphoneRepository().markFinished(Megaphones.Event.ONBOARDING);
     }
   }
 
@@ -1458,9 +1460,9 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     }));
 
     if (conversation.getThreadRecord().isArchived()) {
-      items.add(new ActionItem(R.drawable.symbol_archive_android_up_24, getResources().getString(R.string.ConversationListFragment_unarchive), () -> handleArchive(id, false)));
+      items.add(new ActionItem(R.drawable.symbol_archive_up_24, getResources().getString(R.string.ConversationListFragment_unarchive), () -> handleArchive(id, false)));
     } else {
-      items.add(new ActionItem(R.drawable.symbol_archive_android_24, getResources().getString(R.string.ConversationListFragment_archive), () -> handleArchive(id, false)));
+      items.add(new ActionItem(R.drawable.symbol_archive_24, getResources().getString(R.string.ConversationListFragment_archive), () -> handleArchive(id, false)));
     }
 
     items.add(new ActionItem(R.drawable.symbol_trash_24, getResources().getString(R.string.ConversationListFragment_delete), () -> handleDelete(id)));
@@ -1519,11 +1521,6 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     endActionModeIfActive();
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  public void onEvent(ReminderUpdateEvent event) {
-    updateReminders();
-  }
-
   @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
   public void onEvent(MessageSender.MessageSentEvent event) {
     EventBus.getDefault().removeStickyEvent(event);
@@ -1561,9 +1558,9 @@ public class ConversationListFragment extends MainFragment implements ActionMode
     }
 
     if (isArchived()) {
-      items.add(new ActionItem(R.drawable.symbol_archive_android_up_24, getResources().getString(R.string.ConversationListFragment_unarchive), () -> handleArchive(selectionIds, true)));
+      items.add(new ActionItem(R.drawable.symbol_archive_up_24, getResources().getString(R.string.ConversationListFragment_unarchive), () -> handleArchive(selectionIds, true)));
     } else {
-      items.add(new ActionItem(R.drawable.symbol_archive_android_24, getResources().getString(R.string.ConversationListFragment_archive), () -> handleArchive(selectionIds, true)));
+      items.add(new ActionItem(R.drawable.symbol_archive_24, getResources().getString(R.string.ConversationListFragment_archive), () -> handleArchive(selectionIds, true)));
     }
 
     items.add(new ActionItem(R.drawable.symbol_trash_24, getResources().getString(R.string.ConversationListFragment_delete), () -> handleDelete(selectionIds)));
@@ -1592,7 +1589,7 @@ public class ConversationListFragment extends MainFragment implements ActionMode
   }
 
   protected @DrawableRes int getArchiveIconRes() {
-    return R.drawable.symbol_archive_android_24;
+    return R.drawable.symbol_archive_24;
   }
 
   @WorkerThread
@@ -1631,8 +1628,8 @@ public class ConversationListFragment extends MainFragment implements ActionMode
 
         if (unreadCount > 0) {
           List<MarkedMessageInfo> messageIds = threadTable.setRead(threadId, false);
-          ApplicationDependencies.getMessageNotifier().updateNotification(context);
-          MarkReadReceiver.process(context, messageIds);
+          AppDependencies.getMessageNotifier().updateNotification(context);
+          MarkReadReceiver.process(messageIds);
         }
 
         ConversationUtil.refreshRecipientShortcuts();
@@ -1647,7 +1644,7 @@ public class ConversationListFragment extends MainFragment implements ActionMode
 
         if (unreadCount > 0) {
           threadTable.incrementUnread(threadId, unreadCount, unreadSelfMentionsCount);
-          ApplicationDependencies.getMessageNotifier().updateNotification(context);
+          AppDependencies.getMessageNotifier().updateNotification(context);
         }
 
         ConversationUtil.refreshRecipientShortcuts();

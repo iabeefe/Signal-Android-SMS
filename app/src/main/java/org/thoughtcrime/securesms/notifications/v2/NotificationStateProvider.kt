@@ -7,11 +7,10 @@ import org.thoughtcrime.securesms.database.MessageTable
 import org.thoughtcrime.securesms.database.NoSuchMessageException
 import org.thoughtcrime.securesms.database.RecipientTable
 import org.thoughtcrime.securesms.database.SignalDatabase
-import org.thoughtcrime.securesms.database.model.MediaMmsMessageRecord
 import org.thoughtcrime.securesms.database.model.MessageId
 import org.thoughtcrime.securesms.database.model.MessageRecord
+import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.database.model.ReactionRecord
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfile
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.util.isStoryReaction
@@ -52,10 +51,10 @@ object NotificationStateProvider {
               SignalDatabase.messages.hasGroupReplyOrReactionInStory(it)
             }
 
-            if (record is MediaMmsMessageRecord) {
+            if (record is MmsMessageRecord) {
               val attachments = SignalDatabase.attachments.getAttachmentsForMessage(record.id)
               if (attachments.isNotEmpty()) {
-                record = record.withAttachments(ApplicationDependencies.getApplication(), attachments)
+                record = record.withAttachments(attachments)
               }
             }
 
@@ -139,6 +138,7 @@ object NotificationStateProvider {
   ) {
     private val isGroupStoryReply: Boolean = thread.groupStoryId != null
     private val isUnreadIncoming: Boolean = isUnreadMessage && !messageRecord.isOutgoing && !isGroupStoryReply
+    private val isIncomingMissedCall: Boolean = !messageRecord.isOutgoing && (messageRecord.isMissedAudioCall || messageRecord.isMissedVideoCall)
 
     private val isNotifiableGroupStoryMessage: Boolean =
       isUnreadMessage &&
@@ -147,7 +147,7 @@ object NotificationStateProvider {
         (isParentStorySentBySelf || messageRecord.hasSelfMention() || (hasSelfRepliedToStory && !messageRecord.isStoryReaction()))
 
     fun includeMessage(notificationProfile: NotificationProfile?): MessageInclusion {
-      return if (isUnreadIncoming || stickyThread || isNotifiableGroupStoryMessage) {
+      return if (isUnreadIncoming || stickyThread || isNotifiableGroupStoryMessage || isIncomingMissedCall) {
         if (threadRecipient.isMuted && (threadRecipient.isDoNotNotifyMentions || !messageRecord.hasSelfMention())) {
           MessageInclusion.MUTE_FILTERED
         } else if (notificationProfile != null && !notificationProfile.isRecipientAllowed(threadRecipient.id) && !(notificationProfile.allowAllMentions && messageRecord.hasSelfMention())) {

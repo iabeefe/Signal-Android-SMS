@@ -1,5 +1,6 @@
 package org.thoughtcrime.securesms.components.emoji;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -18,6 +19,8 @@ import android.text.method.TransformationMethod;
 import android.text.style.CharacterStyle;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 
 import androidx.annotation.ColorInt;
@@ -25,10 +28,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.core.view.ViewKt;
 import androidx.core.widget.TextViewCompat;
 
-import org.signal.core.util.StringUtil;
+import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.emoji.parsing.EmojiParser;
 import org.thoughtcrime.securesms.components.mention.MentionAnnotation;
@@ -53,7 +57,6 @@ public class EmojiTextView extends AppCompatTextView {
   private static final char  ELLIPSIS        = '…';
   private static final float JUMBOMOJI_SCALE = 0.8f;
 
-  private boolean                forceCustom;
   private CharSequence           previousText;
   private BufferType             previousBufferType;
   private TransformationMethod   previousTransformationMethod;
@@ -70,6 +73,7 @@ public class EmojiTextView extends AppCompatTextView {
   private boolean                isJumbomoji;
   private boolean                forceJumboEmoji;
   private boolean                renderSpoilers;
+  private boolean                shrinkWrap;
 
   private MentionRendererDelegate mentionRendererDelegate;
   private SpoilerRendererDelegate spoilerRendererDelegate;
@@ -88,11 +92,11 @@ public class EmojiTextView extends AppCompatTextView {
     TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.EmojiTextView, 0, 0);
     scaleEmojis     = a.getBoolean(R.styleable.EmojiTextView_scaleEmojis, false);
     maxLength       = a.getInteger(R.styleable.EmojiTextView_emoji_maxLength, -1);
-    forceCustom     = a.getBoolean(R.styleable.EmojiTextView_emoji_forceCustom, false);
     renderMentions  = a.getBoolean(R.styleable.EmojiTextView_emoji_renderMentions, true);
     measureLastLine = a.getBoolean(R.styleable.EmojiTextView_measureLastLine, false);
     forceJumboEmoji = a.getBoolean(R.styleable.EmojiTextView_emoji_forceJumbo, false);
     renderSpoilers  = a.getBoolean(R.styleable.EmojiTextView_emoji_renderSpoilers, false);
+    shrinkWrap      = a.getBoolean(R.styleable.EmojiTextView_emoji_shrinkWrap, false);
     a.recycle();
 
     a                = context.obtainStyledAttributes(attrs, new int[] { android.R.attr.textSize });
@@ -221,6 +225,25 @@ public class EmojiTextView extends AppCompatTextView {
     widthMeasureSpec = applyWidthMeasureRoundingFix(widthMeasureSpec);
 
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+    int mode = MeasureSpec.getMode(widthMeasureSpec);
+    if (shrinkWrap && getLayout() != null && mode == MeasureSpec.AT_MOST) {
+      Layout layout = getLayout();
+
+      float maxLineWidth = 0f;
+      for (int i = 0; i < layout.getLineCount(); i++) {
+        if (layout.getLineWidth(i) > maxLineWidth) {
+          maxLineWidth = layout.getLineWidth(i);
+        }
+      }
+
+      int desiredWidth = (int) maxLineWidth + getPaddingLeft() + getPaddingRight();
+      if (getMeasuredWidth() > desiredWidth) {
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(desiredWidth, mode);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+      }
+    }
+
     CharSequence text = getText();
     if (getLayout() == null || !measureLastLine || text == null || text.length() == 0) {
       lastLineWidth = -1;
@@ -308,11 +331,10 @@ public class EmojiTextView extends AppCompatTextView {
     setText(previousText, BufferType.SPANNABLE);
   }
 
-  public void setForceCustomEmoji(boolean forceCustom) {
-    if (this.forceCustom != forceCustom) {
-      this.forceCustom = forceCustom;
-      setText(previousText, BufferType.SPANNABLE);
-    }
+  @SuppressLint("ClickableViewAccessibility")
+  public void bindGestureListener() {
+    GestureDetectorCompat gestureDetectorCompat = new GestureDetectorCompat(getContext(), new OnGestureListener());
+    setOnTouchListener((v, event) -> gestureDetectorCompat.onTouchEvent(event));
   }
 
   private void ellipsizeAnyTextForMaxLength() {
@@ -352,10 +374,10 @@ public class EmojiTextView extends AppCompatTextView {
           return;
         }
 
-        int          overflowEnd = getLayout().getLineEnd(maxLines - 1);
-        CharSequence overflow    = getText().subSequence(overflowStart, overflowEnd);
+        int          overflowEnd = getLayout().getLineEnd(maxLines);
+        CharSequence overflow    = new SpannableString(getText().subSequence(overflowStart, overflowEnd).toString());
         float        adjust      = overflowText != null ? getPaint().measureText(overflowText, 0, overflowText.length()) : 0f;
-        CharSequence ellipsized  = StringUtil.trim(TextUtils.ellipsize(overflow, getPaint(), getWidth() - adjust, TextUtils.TruncateAt.END));
+        CharSequence ellipsized  = TextUtils.ellipsize(overflow, getPaint(), getWidth() - adjust, TextUtils.TruncateAt.END);
 
         SpannableStringBuilder newContent = new SpannableStringBuilder();
         newContent.append(getText().subSequence(0, overflowStart).toString())
@@ -421,7 +443,7 @@ public class EmojiTextView extends AppCompatTextView {
   }
 
   private boolean useSystemEmoji() {
-    return isInEditMode() || (!forceCustom && SignalStore.settings().isPreferSystemEmoji());
+    return isInEditMode() || SignalStore.settings().isPreferSystemEmoji();
   }
 
   @Override
@@ -463,6 +485,34 @@ public class EmojiTextView extends AppCompatTextView {
   public void setMentionBackgroundTint(@ColorInt int mentionBackgroundTint) {
     if (renderMentions) {
       mentionRendererDelegate.setTint(mentionBackgroundTint);
+    }
+  }
+
+  /**
+   * Due to some peculiarities in how TextView deals with touch events, it's really easy to accidentally trigger
+   * a click (say, when you try to scroll but you're at the bottom of a view.) Because of this, we handle these
+   * events manually.
+   */
+  private class OnGestureListener extends GestureDetector.SimpleOnGestureListener {
+    @Override
+    public boolean onDown(@NonNull MotionEvent e) {
+      return true;
+    }
+
+    @Override
+    public boolean onScroll(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
+      if (!canScrollVertically((int) distanceY)) {
+        return true;
+      }
+
+      int maxScrollDistance = computeVerticalScrollRange() - computeHorizontalScrollExtent();
+      scrollTo(0, Util.clamp(getScrollY() + (int) distanceY, 0, maxScrollDistance));
+      return true;
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(@NonNull MotionEvent e) {
+      return performClick();
     }
   }
 }

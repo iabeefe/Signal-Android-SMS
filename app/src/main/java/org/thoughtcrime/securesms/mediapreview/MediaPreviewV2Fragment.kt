@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.bumptech.glide.Glide
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -39,24 +40,27 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import org.signal.core.util.concurrent.LifecycleDisposable
 import org.signal.core.util.concurrent.SignalExecutors
+import org.signal.core.util.concurrent.addTo
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.LoggingFragment
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment
+import org.thoughtcrime.securesms.components.DeleteSyncEducationDialog
 import org.thoughtcrime.securesms.components.ViewBinderDelegate
 import org.thoughtcrime.securesms.components.mention.MentionAnnotation
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragment
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragmentArgs
+import org.thoughtcrime.securesms.database.DatabaseObserver
 import org.thoughtcrime.securesms.database.MediaTable
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.databinding.FragmentMediaPreviewV2Binding
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.mediapreview.caption.ExpandingCaptionView
 import org.thoughtcrime.securesms.mediapreview.mediarail.CenterDecoration
 import org.thoughtcrime.securesms.mediapreview.mediarail.MediaRailAdapter
 import org.thoughtcrime.securesms.mediapreview.mediarail.MediaRailAdapter.ImageLoadingListener
 import org.thoughtcrime.securesms.mediasend.Media
 import org.thoughtcrime.securesms.mediasend.v2.MediaSelectionActivity
-import org.thoughtcrime.securesms.mms.GlideApp
 import org.thoughtcrime.securesms.mms.PartAuthority
 import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.recipients.Recipient
@@ -89,6 +93,7 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
   private lateinit var fullscreenHelper: FullscreenHelper
 
   private var individualItemWidth: Int = 0
+  private var dbChangeObserver: DatabaseObserver.Observer? = null
 
   override fun onAttach(context: Context) {
     super.onAttach(context)
@@ -114,7 +119,19 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
     lifecycleDisposable +=
       viewModel
         .state
-        .distinctUntilChanged()
+        .distinctUntilChanged { t1, t2 ->
+          // this is all fields except for [isInSharedAnimation], which is explicitly excluded.
+          (
+            t1.mediaRecords == t2.mediaRecords &&
+              t1.loadState == t2.loadState &&
+              t1.position == t2.position &&
+              t1.showThread == t2.showThread &&
+              t1.allMediaInAlbumRail == t2.allMediaInAlbumRail &&
+              t1.leftIsRecent == t2.leftIsRecent &&
+              t1.albums == t2.albums &&
+              t1.messageBodies == t2.messageBodies
+            )
+        }
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
           bindCurrentState(it)
@@ -131,7 +148,12 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
     }
     viewModel.initialize(args.showThread, args.allMediaInRail, args.leftIsRecent)
     val sorting = MediaTable.Sorting.deserialize(args.sorting.ordinal)
-    viewModel.fetchAttachments(requireContext(), PartAuthority.requireAttachmentId(args.initialMediaUri), args.threadId, sorting)
+    val startingAttachmentId = PartAuthority.requireAttachmentId(args.initialMediaUri)
+    val threadId = args.threadId
+    viewModel.fetchAttachments(requireContext(), startingAttachmentId, threadId, sorting)
+    val dbObserver = DatabaseObserver.Observer { viewModel.refetchAttachments(requireContext(), startingAttachmentId, threadId, sorting) }
+    AppDependencies.databaseObserver.registerAttachmentUpdatedObserver(dbObserver)
+    this.dbChangeObserver = dbObserver
   }
 
   @SuppressLint("RestrictedApi")
@@ -167,7 +189,7 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
       layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
       addItemDecoration(CenterDecoration(0))
       albumRailAdapter = MediaRailAdapter(
-        GlideApp.with(this@MediaPreviewV2Fragment),
+        Glide.with(this@MediaPreviewV2Fragment),
         { media -> jumpViewPagerToMedia(media) },
         object : ImageLoadingListener() {
           override fun onAllRequestsFinished() {
@@ -188,7 +210,7 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
   }
 
   private fun bindCurrentState(currentState: MediaPreviewV2State) {
-    if (currentState.position == -1 && currentState.mediaRecords.isEmpty()) {
+    if (currentState.position < 0 && currentState.mediaRecords.isEmpty()) {
       onMediaNotAvailable()
       return
     }
@@ -203,7 +225,7 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
     val currentPosition = currentState.position
 
     val backingItems = currentState.mediaRecords.mapNotNull { it.attachment }
-    if (backingItems.isEmpty()) {
+    if (backingItems.isEmpty() || currentPosition < 0) {
       onMediaNotAvailable()
       return
     }
@@ -220,12 +242,12 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
    * {@link OnPageChangeCallback}.
    */
   private fun bindMediaReadyState(currentState: MediaPreviewV2State) {
-    if (currentState.mediaRecords.isEmpty()) {
+    val currentPosition: Int = currentState.position
+    if (currentState.mediaRecords.isEmpty() || currentPosition < 0) {
       onMediaNotAvailable()
       return
     }
 
-    val currentPosition: Int = currentState.position
     val currentItem: MediaTable.MediaRecord = currentState.mediaRecords[currentPosition]
     val currentItemTag: String? = pagerAdapter.getFragmentTag(currentPosition)
 
@@ -311,7 +333,7 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
   }
 
   private fun bindMediaPreviewPlaybackControls(currentItem: MediaTable.MediaRecord, currentFragment: MediaPreviewFragment?) {
-    val mediaType: MediaPreviewPlayerControlView.MediaMode = if (currentItem.attachment?.isVideoGif == true) {
+    val mediaType: MediaPreviewPlayerControlView.MediaMode = if (currentItem.attachment?.videoGif == true) {
       MediaPreviewPlayerControlView.MediaMode.IMAGE
     } else {
       MediaPreviewPlayerControlView.MediaMode.fromString(currentItem.contentType)
@@ -485,6 +507,15 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
     }
   }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    val observer = dbChangeObserver
+    if (observer != null) {
+      AppDependencies.databaseObserver.unregisterObserver(observer)
+      dbChangeObserver = null
+    }
+  }
+
   override fun unableToPlayMedia() {
     Toast.makeText(requireContext(), R.string.MediaPreviewActivity_unable_to_play_media, Toast.LENGTH_LONG).show()
     requireActivity().finish()
@@ -495,10 +526,10 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
     val uri = attachment?.uri
     if (attachment != null && uri != null) {
       MultiselectForwardFragmentArgs.create(
-        requireContext(),
-        mediaItem.threadId,
-        uri,
-        attachment.contentType
+        context = requireContext(),
+        threadId = mediaItem.threadId,
+        mediaUri = uri,
+        contentType = attachment.contentType
       ) { args: MultiselectForwardFragmentArgs ->
         MultiselectForwardFragment.showBottomSheet(childFragmentManager, args)
       }
@@ -556,8 +587,17 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
   private fun deleteMedia(mediaItem: MediaTable.MediaRecord) {
     val attachment: DatabaseAttachment = mediaItem.attachment ?: return
 
+    if (DeleteSyncEducationDialog.shouldShow()) {
+      DeleteSyncEducationDialog
+        .show(childFragmentManager)
+        .subscribe { deleteMedia(mediaItem) }
+        .addTo(lifecycleDisposable)
+
+      return
+    }
+
     MaterialAlertDialogBuilder(requireContext()).apply {
-      setIcon(R.drawable.ic_warning)
+      setIcon(R.drawable.symbol_error_triangle_fill_24)
       setTitle(R.string.MediaPreviewActivity_media_delete_confirmation_title)
       setMessage(R.string.MediaPreviewActivity_media_delete_confirmation_message)
       setCancelable(true)
@@ -596,7 +636,7 @@ class MediaPreviewV2Fragment : LoggingFragment(R.layout.fragment_media_preview_v
     }.show()
   }
 
-  fun canRemotelyDelete(attachment: DatabaseAttachment): Boolean {
+  private fun canRemotelyDelete(attachment: DatabaseAttachment): Boolean {
     val mmsId = attachment.mmsId
     val attachmentCount = SignalDatabase.attachments.getAttachmentsForMessage(mmsId).size
     return attachmentCount <= 1 && MessageConstraintsUtil.isValidRemoteDeleteSend(listOf(SignalDatabase.messages.getMessageRecord(mmsId)), System.currentTimeMillis())

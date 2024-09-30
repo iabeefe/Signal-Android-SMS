@@ -2,7 +2,6 @@ package org.thoughtcrime.securesms.wallpaper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,6 +11,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
@@ -21,19 +21,13 @@ import com.bumptech.glide.request.target.Target;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.database.model.databaseprotos.Wallpaper;
 import org.thoughtcrime.securesms.mms.DecryptableStreamUriLoader;
-import org.thoughtcrime.securesms.mms.GlideApp;
-import org.thoughtcrime.securesms.util.ByteUnit;
-import org.thoughtcrime.securesms.util.LRUCache;
 
-import java.util.HashMap;
 import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-final class UriChatWallpaper implements ChatWallpaper, Parcelable {
+public final class UriChatWallpaper implements ChatWallpaper, Parcelable {
 
   private static final LruCache<Uri, Bitmap> CACHE = new LruCache<Uri, Bitmap>((int) Runtime.getRuntime().maxMemory() / 8) {
     @Override
@@ -70,7 +64,7 @@ final class UriChatWallpaper implements ChatWallpaper, Parcelable {
       imageView.setImageBitmap(cached);
     } else {
       Log.d(TAG, "Not in cache or recycled. Fetching using Glide.");
-      GlideApp.with(imageView.getContext().getApplicationContext())
+      Glide.with(imageView.getContext().getApplicationContext())
               .asBitmap()
               .load(new DecryptableStreamUriLoader.DecryptableUri(uri))
               .skipMemoryCache(true)
@@ -84,13 +78,12 @@ final class UriChatWallpaper implements ChatWallpaper, Parcelable {
 
                 @Override
                 public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                  Log.i(TAG, "Loaded wallpaper " + uri);
-                  imageView.setImageBitmap(resource);
+                  Log.i(TAG, "Loaded wallpaper " + uri + " on " + Thread.currentThread().getName());
                   CACHE.put(uri, resource);
                   return false;
                 }
               })
-              .submit();
+              .into(imageView);
     }
   }
 
@@ -104,7 +97,7 @@ final class UriChatWallpaper implements ChatWallpaper, Parcelable {
 
     long startTime = System.currentTimeMillis();
     try {
-      Bitmap bitmap = GlideApp.with(context.getApplicationContext())
+      Bitmap bitmap = Glide.with(context.getApplicationContext())
                               .asBitmap()
                               .load(new DecryptableStreamUriLoader.DecryptableUri(uri))
                               .skipMemoryCache(true)
@@ -125,12 +118,16 @@ final class UriChatWallpaper implements ChatWallpaper, Parcelable {
     return false;
   }
 
+  public @NonNull Uri getUri() {
+    return uri;
+  }
+
   @Override
   public @NonNull Wallpaper serialize() {
-    return Wallpaper.newBuilder()
-                    .setFile(Wallpaper.File.newBuilder().setUri(uri.toString()))
-                    .setDimLevelInDarkTheme(dimLevelInDarkTheme)
-                    .build();
+    return new Wallpaper.Builder()
+                        .file_(new Wallpaper.File.Builder().uri(uri.toString()).build())
+                        .dimLevelInDarkTheme(dimLevelInDarkTheme)
+                        .build();
   }
 
   @Override

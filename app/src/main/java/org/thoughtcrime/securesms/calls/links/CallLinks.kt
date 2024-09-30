@@ -12,7 +12,7 @@ import org.signal.ringrtc.CallLinkRootKey
 import org.thoughtcrime.securesms.database.CallLinkTable
 import org.thoughtcrime.securesms.database.DatabaseObserver
 import org.thoughtcrime.securesms.database.SignalDatabase
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.service.webrtc.links.CallLinkRoomId
 import java.net.URLDecoder
 
@@ -22,7 +22,7 @@ import java.net.URLDecoder
 object CallLinks {
   private const val ROOT_KEY = "key"
   private const val HTTPS_LINK_PREFIX = "https://signal.link/call/#key="
-  private const val SNGL_LINK_PREFIX = "sgnl://signal.link/#key="
+  private const val SNGL_LINK_PREFIX = "sgnl://signal.link/call/#key="
 
   private val TAG = Log.tag(CallLinks::class.java)
 
@@ -42,9 +42,9 @@ object CallLinks {
         refresh()
       }
 
-      ApplicationDependencies.getDatabaseObserver().registerCallLinkObserver(roomId, observer)
+      AppDependencies.databaseObserver.registerCallLinkObserver(roomId, observer)
       emitter.setCancellable {
-        ApplicationDependencies.getDatabaseObserver().unregisterObserver(observer)
+        AppDependencies.databaseObserver.unregisterObserver(observer)
       }
 
       refresh()
@@ -54,7 +54,6 @@ object CallLinks {
   @JvmStatic
   fun isCallLink(url: String): Boolean {
     if (!url.startsWith(HTTPS_LINK_PREFIX) && !url.startsWith(SNGL_LINK_PREFIX)) {
-      Log.w(TAG, "Invalid url prefix.")
       return false
     }
 

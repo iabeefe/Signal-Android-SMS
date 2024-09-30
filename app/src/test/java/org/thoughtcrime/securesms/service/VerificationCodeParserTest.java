@@ -1,3 +1,8 @@
+/*
+ * Copyright 2024 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 package org.thoughtcrime.securesms.service;
 
 import org.junit.Before;
@@ -14,6 +19,9 @@ import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.when;
 
+/**
+ * Tests {@link VerificationCodeParser}
+ */
 public class VerificationCodeParserTest extends BaseUnitTest {
 
   public static Collection<String[]> challenges() {
@@ -80,7 +88,10 @@ public class VerificationCodeParserTest extends BaseUnitTest {
         {"<#>Jou Signal verifikasiekode is: 054247\nabAbCDEFO1g", "054247"},
 
         {"【SIGNAL】 Your code is: 423-431", "423431"},
-        {"<#>【SIGNAL】<#> Your code: 298-763\nabAbCDEFO1g", "298763"}
+        {"<#>【SIGNAL】<#> Your code: 298-763\nabAbCDEFO1g", "298763"},
+
+        { "SIGNAL: Your code is: 123456\nDo not share this code\n\nabAbCDEFO1g", "123456" },
+        { "SIGNAL: Your code is: 123456\nDo not share this code. Signal will never ask for it.\n\ndoDiFGKPO1r", "123456" }
     });
   }
 

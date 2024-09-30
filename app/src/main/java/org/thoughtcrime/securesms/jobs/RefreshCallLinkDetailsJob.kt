@@ -7,13 +7,13 @@ package org.thoughtcrime.securesms.jobs
 
 import org.signal.core.util.concurrent.safeBlockingGet
 import org.thoughtcrime.securesms.database.SignalDatabase
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.service.webrtc.links.CallLinkCredentials
 import org.thoughtcrime.securesms.service.webrtc.links.ReadCallLinkResult
 import org.thoughtcrime.securesms.service.webrtc.links.SignalCallLinkManager
-import org.whispersystems.signalservice.internal.push.SignalServiceProtos.SyncMessage.CallLinkUpdate
+import org.whispersystems.signalservice.internal.push.SyncMessage.CallLinkUpdate
 import java.util.concurrent.TimeUnit
 
 /**
@@ -38,16 +38,16 @@ class RefreshCallLinkDetailsJob private constructor(
     const val KEY = "RefreshCallLinkDetailsJob"
   }
 
-  override fun serialize(): ByteArray = callLinkUpdate.toByteArray()
+  override fun serialize(): ByteArray = callLinkUpdate.encode()
 
   override fun getFactoryKey(): String = KEY
 
   override fun onFailure() = Unit
 
   override fun onRun() {
-    val manager: SignalCallLinkManager = ApplicationDependencies.getSignalCallManager().callLinkManager
+    val manager: SignalCallLinkManager = AppDependencies.signalCallManager.callLinkManager
     val credentials = CallLinkCredentials(
-      linkKeyBytes = callLinkUpdate.rootKey.toByteArray(),
+      linkKeyBytes = callLinkUpdate.rootKey!!.toByteArray(),
       adminPassBytes = callLinkUpdate.adminPassKey?.toByteArray()
     )
 
@@ -63,7 +63,7 @@ class RefreshCallLinkDetailsJob private constructor(
 
   class Factory : Job.Factory<RefreshCallLinkDetailsJob> {
     override fun create(parameters: Parameters, serializedData: ByteArray?): RefreshCallLinkDetailsJob {
-      val callLinkUpdate = CallLinkUpdate.parseFrom(serializedData)
+      val callLinkUpdate = CallLinkUpdate.ADAPTER.decode(serializedData!!)
       return RefreshCallLinkDetailsJob(parameters, callLinkUpdate)
     }
   }

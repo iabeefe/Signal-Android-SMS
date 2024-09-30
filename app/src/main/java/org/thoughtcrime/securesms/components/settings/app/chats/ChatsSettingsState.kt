@@ -1,13 +1,12 @@
 package org.thoughtcrime.securesms.components.settings.app.chats
 
-import org.thoughtcrime.securesms.components.settings.app.chats.sms.SmsExportState
-
 data class ChatsSettingsState(
   val generateLinkPreviews: Boolean,
   val useAddressBook: Boolean,
   val keepMutedChatsArchived: Boolean,
   val useSystemEmoji: Boolean,
   val enterKeySends: Boolean,
+<<<<<<< HEAD
   val chatBackupsEnabled: Boolean,
   val useAsDefaultSmsApp: Boolean,
   val smsExportState: SmsExportState = SmsExportState.FETCHING
@@ -22,4 +21,8 @@ data class ChatsSettingsState(
   val deleteMediaOnly: Boolean,
   val googleMapType: String,
   val whoCanAddYouToGroups: String
+=======
+  val localBackupsEnabled: Boolean,
+  val canAccessRemoteBackupsSettings: Boolean
+>>>>>>> upstream/main
 )

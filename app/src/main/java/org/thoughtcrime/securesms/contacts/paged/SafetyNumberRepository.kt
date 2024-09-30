@@ -7,7 +7,7 @@ import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.concurrent.safeBlockingGet
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.crypto.storage.SignalIdentityKeyStore
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.util.IdentityUtil
@@ -20,8 +20,8 @@ import java.util.concurrent.TimeUnit
  * Generic repository for interacting with safety numbers and fetch new ones.
  */
 class SafetyNumberRepository(
-  private val profileService: ProfileService = ApplicationDependencies.getProfileService(),
-  private val aciIdentityStore: SignalIdentityKeyStore = ApplicationDependencies.getProtocolStore().aci().identities()
+  private val profileService: ProfileService = AppDependencies.profileService,
+  private val aciIdentityStore: SignalIdentityKeyStore = AppDependencies.protocolStore.aci().identities()
 ) {
 
   private val recentlyFetched: MutableMap<RecipientId, Long> = HashMap()
@@ -45,17 +45,17 @@ class SafetyNumberRepository(
     stopwatch.split("recipient-ids")
 
     val recentIds = recentlyFetched.filter { (_, timestamp) -> (now - timestamp) < RECENT_TIME_WINDOW }.keys
-    val recipients = Recipient.resolvedList(recipientIds - recentIds).filter { it.hasServiceId() }
+    val recipients = Recipient.resolvedList(recipientIds - recentIds).filter { it.hasServiceId }
     stopwatch.split("recipient-resolve")
 
     if (recipients.isNotEmpty()) {
       Log.i(TAG, "Checking on ${recipients.size} identities...")
-      val requests: List<Single<List<IdentityCheckResponse.AciIdentityPair>>> = recipients.chunked(batchSize) { it.createBatchRequestSingle() }
+      val requests: List<Single<List<IdentityCheckResponse.ServiceIdentityPair>>> = recipients.chunked(batchSize) { it.createBatchRequestSingle() }
       stopwatch.split("requests")
 
-      val aciKeyPairs: List<IdentityCheckResponse.AciIdentityPair> = Single.zip(requests) { responses ->
+      val aciKeyPairs: List<IdentityCheckResponse.ServiceIdentityPair> = Single.zip(requests) { responses ->
         responses
-          .map { it as List<IdentityCheckResponse.AciIdentityPair> }
+          .map { it as List<IdentityCheckResponse.ServiceIdentityPair> }
           .flatten()
       }.safeBlockingGet()
 
@@ -65,8 +65,8 @@ class SafetyNumberRepository(
         Log.d(TAG, "No identity key mismatches")
       } else {
         aciKeyPairs
-          .filter { it.aci != null && it.identityKey != null }
-          .forEach { IdentityUtil.saveIdentity(it.aci.toString(), it.identityKey) }
+          .filter { it.serviceId != null && it.identityKey != null }
+          .forEach { IdentityUtil.saveIdentity(it.serviceId.toString(), it.identityKey) }
       }
       recentlyFetched += recipients.associate { it.id to now }
       stopwatch.split("saving-identities")
@@ -95,7 +95,7 @@ class SafetyNumberRepository(
       .apply { remove(Recipient.self().id) }
   }
 
-  private fun List<Recipient>.createBatchRequestSingle(): Single<List<IdentityCheckResponse.AciIdentityPair>> {
+  private fun List<Recipient>.createBatchRequestSingle(): Single<List<IdentityCheckResponse.ServiceIdentityPair>> {
     return profileService
       .performIdentityCheck(
         mapNotNull { r ->
@@ -107,7 +107,7 @@ class SafetyNumberRepository(
           }
         }.associate { it }
       )
-      .map { ServiceResponseProcessor.DefaultProcessor(it).resultOrThrow.aciKeyPairs ?: emptyList() }
+      .map { ServiceResponseProcessor.DefaultProcessor(it).resultOrThrow.serviceIdKeyPairs ?: emptyList() }
       .onErrorReturn { t ->
         Log.w(TAG, "Unable to fetch identities", t)
         emptyList()

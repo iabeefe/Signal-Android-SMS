@@ -23,7 +23,7 @@ import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.backup.proto.SharedPreference;
 import org.thoughtcrime.securesms.crypto.ProfileKeyUtil;
 import org.thoughtcrime.securesms.database.SignalDatabase;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobmanager.impl.SqlCipherMigrationConstraintObserver;
 import org.thoughtcrime.securesms.keyvalue.SettingsValues;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
@@ -32,7 +32,7 @@ import org.thoughtcrime.securesms.notifications.NotificationChannels;
 import org.thoughtcrime.securesms.notifications.NotificationIds;
 import org.thoughtcrime.securesms.preferences.widgets.NotificationPrivacyPreference;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.registration.RegistrationNavigationActivity;
+import org.thoughtcrime.securesms.registration.ui.RegistrationActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,8 +83,6 @@ public class TextSecurePreferences {
   private static final String PROMPTED_OPTIMIZE_DOZE_PREF      = "pref_prompted_optimize_doze";
   private static final String DIRECTORY_FRESH_TIME_PREF        = "pref_directory_refresh_time";
   private static final String UPDATE_APK_REFRESH_TIME_PREF     = "pref_update_apk_refresh_time";
-  private static final String UPDATE_APK_DOWNLOAD_ID           = "pref_update_apk_download_id";
-  private static final String UPDATE_APK_DIGEST                = "pref_update_apk_digest";
   private static final String SIGNED_PREKEY_ROTATION_TIME_PREF = "pref_signed_pre_key_rotation_time";
 
   private static final String IN_THREAD_NOTIFICATION_PREF      = "pref_key_inthread_notifications";
@@ -112,7 +110,7 @@ public class TextSecurePreferences {
   public  static final String ALWAYS_RELAY_CALLS_PREF          = "pref_turn_only";
   public  static final String READ_RECEIPTS_PREF               = "pref_read_receipts";
   public  static final String INCOGNITO_KEYBORAD_PREF          = "pref_incognito_keyboard";
-  private static final String UNAUTHORIZED_RECEIVED            = "pref_unauthorized_received";
+  public  static final String UNAUTHORIZED_RECEIVED            = "pref_unauthorized_received";
   private static final String SUCCESSFUL_DIRECTORY_PREF        = "pref_successful_directory";
 
   private static final String DATABASE_ENCRYPTED_SECRET     = "pref_database_encrypted_secret";
@@ -148,7 +146,7 @@ public class TextSecurePreferences {
 
   public  static final String SIGNAL_PIN_CHANGE = "pref_kbs_change";
 
-  private static final String SERVICE_OUTAGE         = "pref_service_outage";
+  public  static final String SERVICE_OUTAGE         = "pref_service_outage";
   private static final String LAST_OUTAGE_CHECK_TIME = "pref_last_outage_check_time";
 
   private static final String LAST_FULL_CONTACT_SYNC_TIME = "pref_last_full_contact_sync_time";
@@ -327,6 +325,14 @@ public class TextSecurePreferences {
     if (NotificationChannels.supported()) {
       NotificationChannels.getInstance().updateMessageVibrate(SignalStore.settings().isMessageVibrateEnabled());
     }
+  }
+
+  public static void registerListener(@NonNull Context context, SharedPreferences.OnSharedPreferenceChangeListener listener) {
+    getSharedPreferences(context).registerOnSharedPreferenceChangeListener(listener);
+  }
+
+  public static void unregisterListener(@NonNull Context context, SharedPreferences.OnSharedPreferenceChangeListener listener) {
+    getSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(listener);
   }
 
   public static boolean isScreenLockEnabled(@NonNull Context context) {
@@ -656,22 +662,6 @@ public class TextSecurePreferences {
 
   public static void setUpdateApkRefreshTime(Context context, long value) {
     setLongPreference(context, UPDATE_APK_REFRESH_TIME_PREF, value);
-  }
-
-  public static void setUpdateApkDownloadId(Context context, long value) {
-    setLongPreference(context, UPDATE_APK_DOWNLOAD_ID, value);
-  }
-
-  public static long getUpdateApkDownloadId(Context context) {
-    return getLongPreference(context, UPDATE_APK_DOWNLOAD_ID, -1);
-  }
-
-  public static void setUpdateApkDigest(Context context, String value) {
-    setStringPreference(context, UPDATE_APK_DIGEST, value);
-  }
-
-  public static String getUpdateApkDigest(Context context) {
-    return getStringPreference(context, UPDATE_APK_DIGEST, null);
   }
 
   public static boolean isEnterImeKeyEnabled(Context context) {
@@ -1183,7 +1173,7 @@ public class TextSecurePreferences {
     Recipient  self          = Recipient.self();
     SignalDatabase.recipients().setProfileKey(self.getId(), newProfileKey);
 
-    ApplicationDependencies.getGroupsV2Authorization().clear();
+    AppDependencies.getGroupsV2Authorization().clear();
   }
 
   private static SharedPreferences getSharedPreferences(Context context) {
@@ -1196,7 +1186,7 @@ public class TextSecurePreferences {
   private static void notifyUnregisteredReceived(Context context) {
     PendingIntent reRegistrationIntent = PendingIntent.getActivity(context,
                                                                    0,
-                                                                   RegistrationNavigationActivity.newIntentForReRegistration(context),
+                                                                   RegistrationActivity.newIntentForReRegistration(context),
                                                                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntentFlags.immutable());
     final NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NotificationChannels.getInstance().FAILURES)
         .setSmallIcon(R.drawable.ic_signal_logo_large)

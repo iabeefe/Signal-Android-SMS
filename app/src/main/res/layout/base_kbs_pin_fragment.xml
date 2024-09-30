@@ -49,7 +49,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edit_kbs_textinputlayout"
-            style="@style/Widget.Signal.TextInputLayout.Registration"
+            style="@style/Widget.Signal.TextInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -73,16 +73,6 @@
                 android:inputType="numberPassword"
                 tools:text="1234567890" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/edit_kbs_pin_lottie_end"
-            android:layout_width="57dp"
-            android:layout_height="57dp"
-            android:layout_gravity="center_horizontal"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_kbs_pin_description" />
 
         <TextView
             android:id="@+id/edit_kbs_pin_input_label"

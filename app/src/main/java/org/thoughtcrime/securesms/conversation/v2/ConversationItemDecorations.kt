@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.conversation.v2.data.ConversationMessageElement
-import org.thoughtcrime.securesms.database.model.MediaMmsMessageRecord
+import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.util.DateUtils
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModel
 import org.thoughtcrime.securesms.util.drawAsTopItemDecoration
@@ -55,7 +55,14 @@ class ConversationItemDecorations(hasWallpaper: Boolean = false, private val sch
     }
 
   override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-    val position = parent.getChildAdapterPosition(view)
+    val viewHolder = parent.getChildViewHolder(view)
+
+    if (viewHolder is ConversationTypingIndicatorAdapter.ViewHolder) {
+      outRect.set(0, 0, 0, 0)
+      return
+    }
+
+    val position = viewHolder.bindingAdapterPosition
 
     val unreadHeight = if (isFirstUnread(position)) {
       getUnreadViewHolder(parent).height
@@ -76,9 +83,15 @@ class ConversationItemDecorations(hasWallpaper: Boolean = false, private val sch
     val count = parent.childCount
     for (layoutPosition in 0 until count) {
       val child = parent.getChildAt(count - 1 - layoutPosition)
-      val position = parent.getChildAdapterPosition(child)
+      val viewHolder = parent.getChildViewHolder(child)
 
-      val unreadOffset = if (isFirstUnread(position)) {
+      if (viewHolder is ConversationTypingIndicatorAdapter.ViewHolder) {
+        continue
+      }
+
+      val bindingAdapterPosition = viewHolder.bindingAdapterPosition
+
+      val unreadOffset = if (isFirstUnread(bindingAdapterPosition)) {
         val unread = getUnreadViewHolder(parent)
         unread.itemView.drawAsTopItemDecoration(c, parent, child)
         unread.height
@@ -86,8 +99,8 @@ class ConversationItemDecorations(hasWallpaper: Boolean = false, private val sch
         0
       }
 
-      if (hasHeader(position)) {
-        val headerView = getHeader(parent, currentItems[position] as ConversationMessageElement).itemView
+      if (hasHeader(bindingAdapterPosition)) {
+        val headerView = getHeader(parent, currentItems[bindingAdapterPosition] as ConversationMessageElement).itemView
         headerView.drawAsTopItemDecoration(c, parent, child, unreadOffset)
       }
     }
@@ -109,10 +122,11 @@ class ConversationItemDecorations(hasWallpaper: Boolean = false, private val sch
    * which causes the unread divider to be removed.
    */
   private fun updateUnreadState(items: List<ConversationElement?>) {
-    val state = unreadState
+    val state: UnreadState = unreadState
 
     if (state is UnreadState.InitialUnreadState) {
-      val timestamp = (items[state.unreadCount - 1] as? ConversationMessageElement)?.timestamp()
+      val firstUnread: ConversationMessageElement? = findFirstUnreadStartingAt(items, (state.unreadCount - 1).coerceIn(items.indices))
+      val timestamp = firstUnread?.timestamp()
       if (timestamp != null) {
         unreadState = UnreadState.CompleteUnreadState(unreadCount = state.unreadCount, firstUnreadTimestamp = timestamp)
       }
@@ -135,18 +149,29 @@ class ConversationItemDecorations(hasWallpaper: Boolean = false, private val sch
     }
   }
 
-  private fun isFirstUnread(position: Int): Boolean {
+  private fun findFirstUnreadStartingAt(items: List<ConversationElement?>, startingIndex: Int): ConversationMessageElement? {
+    val endingIndex = (startingIndex + 20).coerceAtMost(items.lastIndex)
+    for (index in startingIndex..endingIndex) {
+      val item = items[index] as? ConversationMessageElement
+      if ((item?.conversationMessage?.messageRecord as? MmsMessageRecord)?.isRead == false) {
+        return item
+      }
+    }
+    return items[startingIndex] as? ConversationMessageElement
+  }
+
+  private fun isFirstUnread(bindingAdapterPosition: Int): Boolean {
     val state = unreadState
 
     return state is UnreadState.CompleteUnreadState &&
       state.firstUnreadTimestamp != null &&
-      position in currentItems.indices &&
-      (currentItems[position] as? ConversationMessageElement)?.timestamp() == state.firstUnreadTimestamp
+      bindingAdapterPosition in currentItems.indices &&
+      (currentItems[bindingAdapterPosition] as? ConversationMessageElement)?.timestamp() == state.firstUnreadTimestamp
   }
 
-  private fun hasHeader(position: Int): Boolean {
-    val model = if (position in currentItems.indices) {
-      currentItems[position]
+  private fun hasHeader(bindingAdapterPosition: Int): Boolean {
+    val model = if (bindingAdapterPosition in currentItems.indices) {
+      currentItems[bindingAdapterPosition]
     } else {
       null
     }
@@ -155,7 +180,7 @@ class ConversationItemDecorations(hasWallpaper: Boolean = false, private val sch
       return false
     }
 
-    val previousPosition = position + 1
+    val previousPosition = bindingAdapterPosition + 1
     val previousDay: Long
     if (previousPosition in currentItems.indices) {
       val previousModel = currentItems[previousPosition]
@@ -196,7 +221,7 @@ class ConversationItemDecorations(hasWallpaper: Boolean = false, private val sch
 
   private fun ConversationMessageElement.timestamp(): Long {
     return if (scheduleMessageMode) {
-      (conversationMessage.messageRecord as MediaMmsMessageRecord).scheduledDate
+      (conversationMessage.messageRecord as MmsMessageRecord).scheduledDate
     } else {
       conversationMessage.conversationTimestamp
     }

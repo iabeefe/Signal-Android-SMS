@@ -257,6 +257,7 @@ final class GroupMemberListAdapter extends RecyclerView.Adapter<GroupMemberListA
       if (this.badge != null) {
         this.badge.setBadgeFromRecipient(recipient);
         this.badge.setClickable(false);
+        this.badge.setVisibility(this.badge.isShowingBadge() ? View.VISIBLE : View.GONE);
       }
 
       if (this.about != null) {
@@ -398,7 +399,7 @@ final class GroupMemberListAdapter extends RecyclerView.Adapter<GroupMemberListA
 
       GroupMemberEntry.PendingMember pendingMember = (GroupMemberEntry.PendingMember) memberEntry;
 
-      bindImageAndText(pendingMember.getInvitee(), pendingMember.getInvitee().getDisplayNameOrUsername(context), pendingMember.getInvitee().getCombinedAboutAndEmoji());
+      bindImageAndText(pendingMember.getInvitee(), pendingMember.getInvitee().getDisplayName(context), pendingMember.getInvitee().getCombinedAboutAndEmoji());
       bindRecipientClick(pendingMember.getInvitee());
 
       if (pendingMember.isCancellable() && adminActionsListener != null) {
@@ -437,7 +438,7 @@ final class GroupMemberListAdapter extends RecyclerView.Adapter<GroupMemberListA
                                                                        pendingMembers.getInviteCount(),
                                                                        displayName, pendingMembers.getInviteCount());
 
-      bindImageAndText(inviter, displayText, inviter.getAbout());
+      bindImageAndText(inviter, displayText, inviter.getFilteredAbout());
 
       if (pendingMembers.isCancellable() && adminActionsListener != null) {
         popupMenu.setMenu(R.menu.others_invite_pending_menu,

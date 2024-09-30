@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import androidx.core.content.contentValuesOf
+import org.signal.core.util.Base64
 import org.signal.core.util.CursorUtil
 import org.signal.core.util.SqlUtil
 import org.signal.core.util.delete
@@ -14,6 +15,7 @@ import org.signal.core.util.requireNonNullString
 import org.signal.core.util.requireObject
 import org.signal.core.util.requireString
 import org.signal.core.util.select
+import org.signal.core.util.update
 import org.signal.core.util.withinTransaction
 import org.thoughtcrime.securesms.database.model.DistributionListId
 import org.thoughtcrime.securesms.database.model.DistributionListPrivacyData
@@ -23,7 +25,6 @@ import org.thoughtcrime.securesms.database.model.StoryType
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.storage.StorageRecordUpdate
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
-import org.thoughtcrime.securesms.util.Base64
 import org.whispersystems.signalservice.api.push.DistributionId
 import org.whispersystems.signalservice.api.storage.SignalStoryDistributionListRecord
 import org.whispersystems.signalservice.api.util.UuidUtil
@@ -53,9 +54,9 @@ class DistributionListTables constructor(context: Context?, databaseHelper: Sign
         RecipientTable.TABLE_NAME,
         null,
         contentValuesOf(
-          RecipientTable.GROUP_TYPE to RecipientTable.GroupType.DISTRIBUTION_LIST.id,
+          RecipientTable.TYPE to RecipientTable.RecipientType.DISTRIBUTION_LIST.id,
           RecipientTable.DISTRIBUTION_LIST_ID to DistributionListId.MY_STORY_ID,
-          RecipientTable.STORAGE_SERVICE_ID to Base64.encodeBytes(StorageSyncHelper.generateKey()),
+          RecipientTable.STORAGE_SERVICE_ID to Base64.encodeWithPadding(StorageSyncHelper.generateKey()),
           RecipientTable.PROFILE_SHARING to 1
         )
       )
@@ -88,9 +89,9 @@ class DistributionListTables constructor(context: Context?, databaseHelper: Sign
     val CREATE_TABLE = """
       CREATE TABLE $TABLE_NAME (
         $ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        $NAME TEXT UNIQUE NOT NULL,
+        $NAME TEXT NOT NULL,
         $DISTRIBUTION_ID TEXT UNIQUE NOT NULL,
-        $RECIPIENT_ID INTEGER UNIQUE REFERENCES ${RecipientTable.TABLE_NAME} (${RecipientTable.ID}),
+        $RECIPIENT_ID INTEGER UNIQUE REFERENCES ${RecipientTable.TABLE_NAME} (${RecipientTable.ID}) ON DELETE CASCADE,
         $ALLOWS_REPLIES INTEGER DEFAULT 1,
         $DELETION_TIMESTAMP INTEGER DEFAULT 0,
         $IS_UNKNOWN INTEGER DEFAULT 0,
@@ -106,7 +107,7 @@ class DistributionListTables constructor(context: Context?, databaseHelper: Sign
     val LIST_UI_PROJECTION = arrayOf(ID, NAME, RECIPIENT_ID, ALLOWS_REPLIES, IS_UNKNOWN, PRIVACY_MODE, SEARCH_NAME)
   }
 
-  private object MembershipTable {
+  object MembershipTable {
     const val TABLE_NAME = "distribution_list_member"
 
     const val ID = "_id"
@@ -118,7 +119,7 @@ class DistributionListTables constructor(context: Context?, databaseHelper: Sign
       CREATE TABLE $TABLE_NAME (
         $ID INTEGER PRIMARY KEY AUTOINCREMENT,
         $LIST_ID INTEGER NOT NULL REFERENCES ${ListTable.TABLE_NAME} (${ListTable.ID}) ON DELETE CASCADE,
-        $RECIPIENT_ID INTEGER NOT NULL REFERENCES ${RecipientTable.TABLE_NAME} (${RecipientTable.ID}),
+        $RECIPIENT_ID INTEGER NOT NULL REFERENCES ${RecipientTable.TABLE_NAME} (${RecipientTable.ID}) ON DELETE CASCADE,
         $PRIVACY_MODE INTEGER DEFAULT 0
       )
     """
@@ -415,6 +416,7 @@ class DistributionListTables constructor(context: Context?, databaseHelper: Sign
           .getSignalContacts(false)!!
           .readToList { it.requireObject(RecipientTable.ID, RecipientId.SERIALIZER) }
       }
+      DistributionListPrivacyMode.ONLY_WITH -> rawMembers
       DistributionListPrivacyMode.ALL_EXCEPT -> {
         SignalDatabase.recipients
           .getSignalContacts(false)!!
@@ -423,7 +425,6 @@ class DistributionListTables constructor(context: Context?, databaseHelper: Sign
             mapper = { it.requireObject(RecipientTable.ID, RecipientId.SERIALIZER) }
           )
       }
-      DistributionListPrivacyMode.ONLY_WITH -> rawMembers
     }
   }
 
@@ -476,7 +477,7 @@ class DistributionListTables constructor(context: Context?, databaseHelper: Sign
     }
   }
 
-  private fun getPrivacyMode(listId: DistributionListId): DistributionListPrivacyMode {
+  fun getPrivacyMode(listId: DistributionListId): DistributionListPrivacyMode {
     return readableDatabase
       .select(ListTable.PRIVACY_MODE)
       .from(ListTable.TABLE_NAME)
@@ -489,6 +490,10 @@ class DistributionListTables constructor(context: Context?, databaseHelper: Sign
           DistributionListPrivacyMode.ONLY_WITH
         }
       }
+  }
+
+  fun removeMemberFromAllLists(member: RecipientId) {
+    writableDatabase.delete(MembershipTable.TABLE_NAME, "${MembershipTable.RECIPIENT_ID} = ?", SqlUtil.buildArgs(member))
   }
 
   fun removeMemberFromList(listId: DistributionListId, privacyMode: DistributionListPrivacyMode, member: RecipientId) {
@@ -520,10 +525,11 @@ class DistributionListTables constructor(context: Context?, databaseHelper: Sign
   }
 
   override fun remapRecipient(oldId: RecipientId, newId: RecipientId) {
-    val values = ContentValues().apply {
-      put(MembershipTable.RECIPIENT_ID, newId.serialize())
-    }
-    writableDatabase.update(MembershipTable.TABLE_NAME, values, "${MembershipTable.RECIPIENT_ID} = ?", SqlUtil.buildArgs(oldId))
+    writableDatabase
+      .update(MembershipTable.TABLE_NAME)
+      .values(MembershipTable.RECIPIENT_ID to newId.serialize())
+      .where("${MembershipTable.RECIPIENT_ID} = ?", oldId)
+      .run(SQLiteDatabase.CONFLICT_REPLACE)
   }
 
   fun deleteList(distributionListId: DistributionListId, deletionTimestamp: Long = System.currentTimeMillis()) {

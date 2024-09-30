@@ -1,24 +1,31 @@
 package org.thoughtcrime.securesms.components.settings.app.chats
 
+<<<<<<< HEAD
 import android.app.Activity
 import android.content.Intent
 import android.os.Build // JW: added
+=======
+>>>>>>> upstream/main
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.backup.BackupDialog // JW: added
 import org.thoughtcrime.securesms.components.settings.DSLConfiguration
 import org.thoughtcrime.securesms.components.settings.DSLSettingsFragment
 import org.thoughtcrime.securesms.components.settings.DSLSettingsText
-import org.thoughtcrime.securesms.components.settings.app.chats.sms.SmsExportState
+import org.thoughtcrime.securesms.components.settings.app.subscription.MessageBackupsCheckoutLauncher.createBackupsCheckoutLauncher
 import org.thoughtcrime.securesms.components.settings.configure
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.service.LocalBackupListener // JW: added
 import org.thoughtcrime.securesms.util.TextSecurePreferences // JW: added
 import org.thoughtcrime.securesms.exporter.flow.SmsExportActivity
 import org.thoughtcrime.securesms.exporter.flow.SmsExportDialogs
 import org.thoughtcrime.securesms.keyvalue.SignalStore // JW: added
+=======
+import org.thoughtcrime.securesms.util.RemoteConfig
+>>>>>>> upstream/main
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
 import org.thoughtcrime.securesms.util.UriUtils // JW: added
@@ -26,12 +33,16 @@ import org.thoughtcrime.securesms.util.UriUtils // JW: added
 class ChatsSettingsFragment : DSLSettingsFragment(R.string.preferences_chats__chats) {
 
   private lateinit var viewModel: ChatsSettingsViewModel
+<<<<<<< HEAD
   private lateinit var smsExportLauncher: ActivityResultLauncher<Intent>
   private val mapLabels by lazy { resources.getStringArray(R.array.pref_map_type_entries) } // JW: added
   private val mapValues by lazy { resources.getStringArray(R.array.pref_map_type_values) }  // JW: added
   private val groupAddLabels by lazy { resources.getStringArray(R.array.pref_group_add_entries) } // JW: added
   private val groupAddValues by lazy { resources.getStringArray(R.array.pref_group_add_values) }  // JW: added
   val CHOOSE_BACKUPS_LOCATION_REQUEST_CODE = 1201 // JW: added
+=======
+  private lateinit var checkoutLauncher: ActivityResultLauncher<Unit>
+>>>>>>> upstream/main
 
   override fun onResume() {
     super.onResume()
@@ -40,10 +51,8 @@ class ChatsSettingsFragment : DSLSettingsFragment(R.string.preferences_chats__ch
 
   @Suppress("ReplaceGetOrSet")
   override fun bindAdapter(adapter: MappingAdapter) {
-    smsExportLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-      if (it.resultCode == Activity.RESULT_OK) {
-        SmsExportDialogs.showSmsRemovalDialog(requireContext(), requireView())
-      }
+    checkoutLauncher = createBackupsCheckoutLauncher {
+      findNavController().safeNavigate(ChatsSettingsFragmentDirections.actionChatsSettingsFragmentToRemoteBackupsSettingsFragment().setBackupLaterSelected(it))
     }
 
     viewModel = ViewModelProvider(this).get(ChatsSettingsViewModel::class.java)
@@ -74,55 +83,6 @@ class ChatsSettingsFragment : DSLSettingsFragment(R.string.preferences_chats__ch
 
   private fun getConfiguration(state: ChatsSettingsState): DSLConfiguration {
     return configure {
-      if (!state.useAsDefaultSmsApp) {
-        when (state.smsExportState) {
-          SmsExportState.FETCHING -> Unit
-          SmsExportState.HAS_UNEXPORTED_MESSAGES -> {
-            clickPref(
-              title = DSLSettingsText.from(R.string.SmsSettingsFragment__export_sms_messages),
-              summary = DSLSettingsText.from(R.string.SmsSettingsFragment__you_can_export_your_sms_messages_to_your_phones_sms_database),
-              onClick = {
-                smsExportLauncher.launch(SmsExportActivity.createIntent(requireContext()))
-              }
-            )
-
-            dividerPref()
-          }
-          SmsExportState.ALL_MESSAGES_EXPORTED -> {
-            clickPref(
-              title = DSLSettingsText.from(R.string.SmsSettingsFragment__remove_sms_messages),
-              summary = DSLSettingsText.from(R.string.SmsSettingsFragment__remove_sms_messages_from_signal_to_clear_up_storage_space),
-              onClick = {
-                SmsExportDialogs.showSmsRemovalDialog(requireContext(), requireView())
-              }
-            )
-
-            clickPref(
-              title = DSLSettingsText.from(R.string.SmsSettingsFragment__export_sms_messages_again),
-              summary = DSLSettingsText.from(R.string.SmsSettingsFragment__exporting_again_can_result_in_duplicate_messages),
-              onClick = {
-                SmsExportDialogs.showSmsReExportDialog(requireContext()) {
-                  smsExportLauncher.launch(SmsExportActivity.createIntent(requireContext(), isReExport = true))
-                }
-              }
-            )
-
-            dividerPref()
-          }
-          SmsExportState.NO_SMS_MESSAGES_IN_DATABASE -> Unit
-          SmsExportState.NOT_AVAILABLE -> Unit
-        }
-      } else {
-        clickPref(
-          title = DSLSettingsText.from(R.string.preferences__sms_mms),
-          onClick = {
-            Navigation.findNavController(requireView()).safeNavigate(R.id.action_chatsSettingsFragment_to_smsSettingsFragment)
-          }
-        )
-
-        dividerPref()
-      }
-
       switchPref(
         title = DSLSettingsText.from(R.string.preferences__generate_link_previews),
         summary = DSLSettingsText.from(R.string.preferences__retrieve_link_previews_from_websites_for_messages),
@@ -163,7 +123,7 @@ class ChatsSettingsFragment : DSLSettingsFragment(R.string.preferences_chats__ch
       )
 
       switchPref(
-        title = DSLSettingsText.from(R.string.ChatsSettingsFragment__enter_key_sends),
+        title = DSLSettingsText.from(R.string.ChatsSettingsFragment__send_with_enter),
         isChecked = state.enterKeySends,
         onClick = {
           viewModel.setEnterKeySends(!state.enterKeySends)
@@ -174,9 +134,23 @@ class ChatsSettingsFragment : DSLSettingsFragment(R.string.preferences_chats__ch
 
       sectionHeaderPref(R.string.preferences_chats__backups)
 
+      if (RemoteConfig.messageBackups || state.canAccessRemoteBackupsSettings) {
+        clickPref(
+          title = DSLSettingsText.from(R.string.RemoteBackupsSettingsFragment__signal_backups),
+          summary = DSLSettingsText.from(if (state.canAccessRemoteBackupsSettings) R.string.arrays__enabled else R.string.arrays__disabled),
+          onClick = {
+            if (state.canAccessRemoteBackupsSettings) {
+              Navigation.findNavController(requireView()).safeNavigate(R.id.action_chatsSettingsFragment_to_remoteBackupsSettingsFragment)
+            } else {
+              checkoutLauncher.launch(Unit)
+            }
+          }
+        )
+      }
+
       clickPref(
         title = DSLSettingsText.from(R.string.preferences_chats__chat_backups),
-        summary = DSLSettingsText.from(if (state.chatBackupsEnabled) R.string.arrays__enabled else R.string.arrays__disabled),
+        summary = DSLSettingsText.from(if (state.localBackupsEnabled) R.string.arrays__enabled else R.string.arrays__disabled),
         onClick = {
           Navigation.findNavController(requireView()).safeNavigate(R.id.action_chatsSettingsFragment_to_backupsPreferenceFragment)
         }

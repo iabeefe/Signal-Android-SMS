@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import androidx.core.content.contentValuesOf
 import org.signal.core.util.delete
+import org.signal.core.util.deleteAll
 import org.signal.core.util.logging.Log
 import org.signal.core.util.readToSet
 import org.signal.core.util.requireInt
@@ -115,13 +116,21 @@ class SenderKeySharedTable internal constructor(context: Context?, databaseHelpe
    */
   fun deleteAllFor(recipientId: RecipientId) {
     val recipient = Recipient.resolved(recipientId)
-    if (recipient.hasServiceId()) {
-      writableDatabase
-        .delete(TABLE_NAME)
-        .where("$ADDRESS = ?", recipient.requireServiceId().toString())
-        .run()
+    if (recipient.hasServiceId) {
+      if (recipient.hasAci) {
+        writableDatabase
+          .delete(TABLE_NAME)
+          .where("$ADDRESS = ?", recipient.requireAci().toString())
+          .run()
+      }
+      if (recipient.hasPni) {
+        writableDatabase
+          .delete(TABLE_NAME)
+          .where("$ADDRESS = ?", recipient.requirePni().toString())
+          .run()
+      }
     } else {
-      Log.w(TAG, "Recipient doesn't have a UUID! $recipientId")
+      Log.w(TAG, "Recipient doesn't have a ServiceId! $recipientId")
     }
   }
 
@@ -129,9 +138,7 @@ class SenderKeySharedTable internal constructor(context: Context?, databaseHelpe
    * Clears all database content.
    */
   fun deleteAll() {
-    writableDatabase
-      .delete(TABLE_NAME)
-      .run()
+    writableDatabase.deleteAll(TABLE_NAME)
   }
 
   /**

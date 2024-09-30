@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
@@ -409,9 +408,12 @@ public class SaveAttachmentTask extends ProgressDialogAsyncTask<SaveAttachmentTa
     public String contentType;
     public long   date;
 
-    public Attachment(@NonNull Uri uri, @NonNull String contentType,
-                      long date, @Nullable String fileName)
-    {
+    public Attachment(
+        @NonNull Uri uri,
+        @Nullable String contentType,
+        long date,
+        @Nullable String fileName
+    ) {
       if (uri == null || contentType == null || date < 0) {
         throw new AssertionError("uri, content type, and date must all be specified");
       }
@@ -439,7 +441,7 @@ public class SaveAttachmentTask extends ProgressDialogAsyncTask<SaveAttachmentTa
   public static void showWarningDialog(Context context, OnClickListener onAcceptListener, int count) {
     AlertDialog.Builder builder = new MaterialAlertDialogBuilder(context);
     builder.setTitle(R.string.ConversationFragment_save_to_sd_card);
-    builder.setIcon(R.drawable.ic_warning);
+    builder.setIcon(R.drawable.symbol_error_triangle_fill_24);
     builder.setCancelable(true);
     builder.setMessage(context.getResources().getQuantityString(R.plurals.ConversationFragment_saving_n_media_to_storage_warning,
                                                                 count, count));

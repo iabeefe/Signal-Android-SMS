@@ -69,7 +69,11 @@ public abstract class AudioManagerCompat {
 
   public boolean isBluetoothConnected() {
     if (Build.VERSION.SDK_INT >= 31) {
-      final SignalAudioManager.AudioDevice audioDevice = AudioDeviceMapping.fromPlatformType(audioManager.getCommunicationDevice().getType());
+      final AudioDeviceInfo communicationDevice = audioManager.getCommunicationDevice();
+      if (communicationDevice == null) {
+        return false;
+      }
+      final SignalAudioManager.AudioDevice audioDevice = AudioDeviceMapping.fromPlatformType(communicationDevice.getType());
       return SignalAudioManager.AudioDevice.BLUETOOTH == audioDevice;
     } else {
       return isBluetoothScoOn();
@@ -187,6 +191,10 @@ public abstract class AudioManagerCompat {
     return (float) (1 - (Math.log(maxVolume + 1 - volume) / Math.log(maxVolume + 1)));
   }
 
+  public float getVoiceCallVolume() {
+    return audioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
+  }
+
   abstract public SoundPool createSoundPool();
 
   abstract public boolean requestCallAudioFocus();
@@ -239,13 +247,17 @@ public abstract class AudioManagerCompat {
         Log.w(TAG, "Trying again to request audio focus");
       }
 
-      int result = audioManager.requestAudioFocus(audioFocusRequest);
+      try {
+        int result = audioManager.requestAudioFocus(audioFocusRequest);
 
-      if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-        Log.w(TAG, "Audio focus not granted. Result code: " + result);
+        if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+          Log.w(TAG, "Audio focus not granted. Result code: " + result);
+          return false;
+        }
+      } catch (SecurityException ex) {
+        Log.w(TAG, "Encountered security exception when requesting audio focus.");
         return false;
       }
-
       return true;
     }
 

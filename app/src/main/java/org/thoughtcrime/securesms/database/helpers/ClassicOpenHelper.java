@@ -20,6 +20,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import com.google.i18n.phonenumbers.ShortNumberInfo;
 
+import org.signal.core.util.Hex;
 import org.signal.core.util.StreamUtil;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.protocol.IdentityKey;
@@ -31,22 +32,20 @@ import org.thoughtcrime.securesms.crypto.MasterSecret;
 import org.thoughtcrime.securesms.crypto.MasterSecretUtil;
 import org.thoughtcrime.securesms.database.AttachmentTable;
 import org.thoughtcrime.securesms.database.DraftTable;
-import org.thoughtcrime.securesms.database.GroupTable;
 import org.thoughtcrime.securesms.database.GroupReceiptTable;
+import org.thoughtcrime.securesms.database.GroupTable;
 import org.thoughtcrime.securesms.database.IdentityTable;
-import org.thoughtcrime.securesms.database.MessageTypes;
 import org.thoughtcrime.securesms.database.MessageTable;
-import org.thoughtcrime.securesms.database.PushTable;
+import org.thoughtcrime.securesms.database.MessageTypes;
 import org.thoughtcrime.securesms.database.RecipientTable;
 import org.thoughtcrime.securesms.database.ThreadTable;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.groups.GroupId;
 import org.thoughtcrime.securesms.migrations.LegacyMigrationJob;
 import org.thoughtcrime.securesms.permissions.Permissions;
 import org.thoughtcrime.securesms.phonenumbers.NumberUtil;
-import org.thoughtcrime.securesms.util.Base64;
+import org.signal.core.util.Base64;
 import org.thoughtcrime.securesms.util.DelimiterUtil;
-import org.signal.core.util.Hex;
 import org.thoughtcrime.securesms.util.JsonUtils;
 import org.thoughtcrime.securesms.util.MediaUtil;
 import org.thoughtcrime.securesms.util.TextSecurePreferences;
@@ -133,7 +132,6 @@ public class ClassicOpenHelper extends SQLiteOpenHelper {
     db.execSQL(ThreadTable.CREATE_TABLE);
     db.execSQL(IdentityTable.CREATE_TABLE);
     db.execSQL(DraftTable.CREATE_TABLE);
-    db.execSQL(PushTable.CREATE_TABLE);
     db.execSQL(GroupTable.CREATE_TABLE);
     db.execSQL(RecipientTable.CREATE_TABLE);
     db.execSQL(GroupReceiptTable.CREATE_TABLE);
@@ -381,8 +379,8 @@ public class ClassicOpenHelper extends SQLiteOpenHelper {
 
               if (identityKey != null) {
                 MasterCipher masterCipher = new MasterCipher(masterSecret);
-                String identityKeyString  = Base64.encodeBytes(identityKey.serialize());
-                String macString          = Base64.encodeBytes(masterCipher.getMacFor(recipientId +
+                String identityKeyString  = Base64.encodeWithPadding(identityKey.serialize());
+                String macString          = Base64.encodeWithPadding(masterCipher.getMacFor(recipientId +
                                                                                           identityKeyString));
 
                 db.execSQL("REPLACE INTO identities (recipient, key, mac) VALUES (?, ?, ?)",
@@ -433,7 +431,7 @@ public class ClassicOpenHelper extends SQLiteOpenHelper {
     db.endTransaction();
 
 //    DecryptingQueue.schedulePendingDecrypts(context, masterSecret);
-    ApplicationDependencies.getMessageNotifier().updateNotification(context);
+    AppDependencies.getMessageNotifier().updateNotification(context);
   }
 
   @Override

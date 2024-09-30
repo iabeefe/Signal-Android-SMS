@@ -25,39 +25,40 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.ExoPlayer;
-import com.google.android.exoplayer2.MediaItem;
-import com.google.android.exoplayer2.PlaybackException;
-import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.Tracks;
-import com.google.android.exoplayer2.source.ClippingMediaSource;
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
-import com.google.android.exoplayer2.ui.PlayerControlView;
-import com.google.android.exoplayer2.ui.StyledPlayerView;
+import androidx.annotation.OptIn;
+import androidx.media3.common.C;
+import androidx.media3.common.MediaItem;
+import androidx.media3.common.PlaybackException;
+import androidx.media3.common.Player;
+import androidx.media3.common.Tracks;
+import androidx.media3.common.util.UnstableApi;
+import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.exoplayer.source.ClippingMediaSource;
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory;
+import androidx.media3.exoplayer.source.MediaSource;
+import androidx.media3.ui.AspectRatioFrameLayout;
+import androidx.media3.ui.LegacyPlayerControlView;
+import androidx.media3.ui.PlayerView;
 
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.R;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.mediapreview.MediaPreviewPlayerControlView;
 import org.thoughtcrime.securesms.mms.VideoSlide;
 
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
+@OptIn(markerClass = UnstableApi.class)
 public class VideoPlayer extends FrameLayout {
 
   @SuppressWarnings("unused")
   private static final String TAG = Log.tag(VideoPlayer.class);
 
-  private final StyledPlayerView          exoView;
+  private final PlayerView                exoView;
   private final DefaultMediaSourceFactory mediaSourceFactory;
 
   private ExoPlayer                           exoPlayer;
-  private PlayerControlView                   exoControls;
+  private LegacyPlayerControlView             exoControls;
   private Window                              window;
   private PlayerStateCallback                 playerStateCallback;
   private PlayerPositionDiscontinuityCallback playerPositionDiscontinuityCallback;
@@ -130,8 +131,8 @@ public class VideoPlayer extends FrameLayout {
     };
   }
 
-  private PlayerControlView createPlayerControls(Context context) {
-    final PlayerControlView playerControlView = new PlayerControlView(context);
+  private LegacyPlayerControlView createPlayerControls(Context context) {
+    final LegacyPlayerControlView playerControlView = new LegacyPlayerControlView(context);
     playerControlView.setShowTimeoutMs(-1);
     playerControlView.setShowNextButton(false);
     playerControlView.setShowPreviousButton(false);
@@ -146,7 +147,7 @@ public class VideoPlayer extends FrameLayout {
 
   public void setVideoSource(@NonNull VideoSlide videoSource, boolean autoplay, String poolTag, long clipStartMs, long clipEndMs) {
     if (exoPlayer == null) {
-      exoPlayer = ApplicationDependencies.getExoPlayerPool().require(poolTag);
+      exoPlayer = AppDependencies.getExoPlayerPool().require(poolTag);
       exoPlayer.addListener(exoPlayerListener);
       exoPlayer.addListener(playerListener);
       exoView.setPlayer(exoPlayer);
@@ -231,7 +232,7 @@ public class VideoPlayer extends FrameLayout {
     super.setOnClickListener(l);
   }
 
-  public @Nullable PlayerControlView getControlView() {
+  public @Nullable LegacyPlayerControlView getControlView() {
     return this.exoControls;
   }
 
@@ -260,7 +261,7 @@ public class VideoPlayer extends FrameLayout {
       exoPlayer.removeListener(playerListener);
       exoPlayer.removeListener(exoPlayerListener);
 
-      ApplicationDependencies.getExoPlayerPool().pool(exoPlayer);
+      AppDependencies.getExoPlayerPool().pool(exoPlayer);
       this.exoPlayer = null;
     }
   }
@@ -285,11 +286,17 @@ public class VideoPlayer extends FrameLayout {
     return 0L;
   }
 
-  public long getPlaybackPositionUs() {
+  /**
+   * After calling {@link #setPlaybackPosition}, the underlying {@link Player} resets the current position to 0.
+   * We manually store the offset of where we clipped to, and add that here.
+   *
+   * @return the current playback position, rounded to the nearest millisecond
+   */
+  public long getTruePlaybackPosition() {
     if (this.exoPlayer != null) {
-      return TimeUnit.MILLISECONDS.toMicros(this.exoPlayer.getCurrentPosition()) + clippedStartUs;
+      return this.exoPlayer.getCurrentPosition() + Math.round(clippedStartUs / 1000.0);
     }
-    return 0L;
+    return -1L;
   }
 
   public void setPlaybackPosition(long positionMs) {

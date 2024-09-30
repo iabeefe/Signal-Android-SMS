@@ -46,7 +46,7 @@ private const val BIG_PICTURE_DIMEN = 500
  */
 sealed class NotificationBuilder(protected val context: Context) {
 
-  private val privacy: NotificationPrivacyPreference = SignalStore.settings().messageNotificationsPrivacy
+  private val privacy: NotificationPrivacyPreference = SignalStore.settings.messageNotificationsPrivacy
   private val isNotLocked: Boolean = !KeyCachingService.isLocked(context)
 
   abstract fun setSmallIcon(@DrawableRes drawable: Int)
@@ -123,7 +123,7 @@ sealed class NotificationBuilder(protected val context: Context) {
         }
       }
 
-      addActions(ReplyMethod.forRecipient(context, conversation.recipient), conversation)
+      addActions(ReplyMethod.forRecipient(conversation.recipient), conversation)
     }
   }
 
@@ -160,10 +160,10 @@ sealed class NotificationBuilder(protected val context: Context) {
   }
 
   fun setLights() {
-    val ledColor: String = SignalStore.settings().messageLedColor
+    val ledColor: String = SignalStore.settings.messageLedColor
 
     if (ledColor != "none") {
-      var blinkPattern = SignalStore.settings().messageLedBlinkPattern
+      var blinkPattern = SignalStore.settings.messageLedBlinkPattern
       if (blinkPattern == "custom") {
         blinkPattern = TextSecurePreferences.getNotificationLedPatternCustom(context)
       }
@@ -194,7 +194,7 @@ sealed class NotificationBuilder(protected val context: Context) {
       val markAsRead: PendingIntent? = conversation.getMarkAsReadIntent(context)
       if (markAsRead != null) {
         val markAsReadAction: NotificationCompat.Action =
-          NotificationCompat.Action.Builder(R.drawable.check, context.getString(R.string.MessageNotifier_mark_read), markAsRead)
+          NotificationCompat.Action.Builder(R.drawable.symbol_check_24, context.getString(R.string.MessageNotifier_mark_read), markAsRead)
             .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_MARK_AS_READ)
             .setShowsUserInterface(false)
             .build()
@@ -239,7 +239,7 @@ sealed class NotificationBuilder(protected val context: Context) {
       val markAsRead: PendingIntent? = state.getMarkAsReadIntent(context)
 
       if (markAsRead != null) {
-        val markAllAsReadAction = NotificationCompat.Action(R.drawable.check, context.getString(R.string.MessageNotifier_mark_all_as_read), markAsRead)
+        val markAllAsReadAction = NotificationCompat.Action(R.drawable.symbol_check_24, context.getString(R.string.MessageNotifier_mark_all_as_read), markAsRead)
         builder.addAction(markAllAsReadAction)
         builder.extend(NotificationCompat.WearableExtender().addAction(markAllAsReadAction))
       }
@@ -248,7 +248,7 @@ sealed class NotificationBuilder(protected val context: Context) {
     override fun addTurnOffJoinedNotificationsAction(pendingIntent: PendingIntent?) {
       if (pendingIntent != null) {
         val turnOffTheseNotifications = NotificationCompat.Action(
-          R.drawable.check,
+          R.drawable.symbol_check_24,
           context.getString(R.string.MessageNotifier_turn_off_these_notifications),
           pendingIntent
         )
@@ -274,7 +274,7 @@ sealed class NotificationBuilder(protected val context: Context) {
       val self: PersonCompat = PersonCompat.Builder()
         .setBot(false)
         .setName(if (includeShortcut) Recipient.self().getDisplayName(context) else context.getString(R.string.SingleRecipientNotificationBuilder_you))
-        .setIcon(if (includeShortcut) Recipient.self().getContactDrawable(context).toLargeBitmap(context).toIconCompat() else null)
+        .setIcon(AvatarUtil.getIconCompat(context, Recipient.self()))
         .setKey(ConversationUtil.getShortcutId(Recipient.self().id))
         .build()
 
@@ -289,8 +289,8 @@ sealed class NotificationBuilder(protected val context: Context) {
           val personBuilder: PersonCompat.Builder = PersonCompat.Builder()
             .setBot(false)
             .setName(notificationItem.getPersonName(context))
-            .setUri(notificationItem.getPersonUri())
-            .setIcon(notificationItem.getPersonIcon(context).toIconCompat())
+            .setUri(notificationItem.getPersonUri(context))
+            .setIcon(notificationItem.getPersonIcon(context))
 
           if (includeShortcut) {
             personBuilder.setKey(ConversationUtil.getShortcutId(notificationItem.authorRecipient))
@@ -333,8 +333,8 @@ sealed class NotificationBuilder(protected val context: Context) {
       val ringtone: Uri? = recipient?.messageRingtone
       val vibrate = recipient?.messageVibrate
 
-      val defaultRingtone: Uri = SignalStore.settings().messageNotificationSound
-      val defaultVibrate: Boolean = SignalStore.settings().isMessageVibrateEnabled
+      val defaultRingtone: Uri = SignalStore.settings.messageNotificationSound
+      val defaultVibrate: Boolean = SignalStore.settings.isMessageVibrateEnabled
 
       if (ringtone == null && !TextUtils.isEmpty(defaultRingtone.toString())) {
         builder.setSound(defaultRingtone)
@@ -360,7 +360,7 @@ sealed class NotificationBuilder(protected val context: Context) {
       )
 
       if (intent != null) {
-        val bubbleMetadata = NotificationCompat.BubbleMetadata.Builder(intent, AvatarUtil.getIconCompatForShortcut(context, conversation.recipient))
+        val bubbleMetadata = NotificationCompat.BubbleMetadata.Builder(intent, AvatarUtil.getIconCompat(context, conversation.recipient))
           .setAutoExpandBubble(bubbleState === BubbleUtil.BubbleState.SHOWN)
           .setDesiredHeight(600)
           .setSuppressNotification(bubbleState === BubbleUtil.BubbleState.SHOWN)
@@ -469,7 +469,12 @@ sealed class NotificationBuilder(protected val context: Context) {
     }
 
     override fun addPersonActual(recipient: Recipient) {
-      builder.addPerson(recipient.contactUri.toString())
+      builder.addPerson(
+        ConversationUtil.buildPerson(
+          context,
+          recipient
+        )
+      )
     }
 
     override fun setWhen(timestamp: Long) {
@@ -504,6 +509,5 @@ private fun ReplyMethod.toLongDescription(): Int {
   return when (this) {
     ReplyMethod.GroupMessage -> R.string.MessageNotifier_reply
     ReplyMethod.SecureMessage -> R.string.MessageNotifier_signal_message
-    ReplyMethod.UnsecuredSmsMessage -> R.string.MessageNotifier_unsecured_sms
   }
 }

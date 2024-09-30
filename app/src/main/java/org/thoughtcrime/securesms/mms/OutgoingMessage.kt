@@ -9,8 +9,9 @@ import org.thoughtcrime.securesms.database.model.Mention
 import org.thoughtcrime.securesms.database.model.ParentStoryId
 import org.thoughtcrime.securesms.database.model.StoryType
 import org.thoughtcrime.securesms.database.model.databaseprotos.BodyRangeList
-import org.thoughtcrime.securesms.database.model.databaseprotos.DecryptedGroupV2Context
+import org.thoughtcrime.securesms.database.model.databaseprotos.GV2UpdateDescription
 import org.thoughtcrime.securesms.database.model.databaseprotos.GiftBadge
+import org.thoughtcrime.securesms.database.model.databaseprotos.MessageExtras
 import org.thoughtcrime.securesms.linkpreview.LinkPreview
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.sms.GroupV2UpdateMessageUtil
@@ -23,8 +24,8 @@ data class OutgoingMessage(
   val sentTimeMillis: Long,
   val body: String = "",
   val distributionType: Int = ThreadTable.DistributionTypes.DEFAULT,
-  val subscriptionId: Int = -1,
   val expiresIn: Long = 0L,
+  val expireTimerVersion: Int = threadRecipient.expireTimerVersion,
   val isViewOnce: Boolean = false,
   val outgoingQuote: QuoteModel? = null,
   val storyType: StoryType = StoryType.NONE,
@@ -51,7 +52,10 @@ data class OutgoingMessage(
   val isIdentityVerified: Boolean = false,
   val isIdentityDefault: Boolean = false,
   val scheduledDate: Long = -1,
-  val messageToEdit: Long = 0
+  val messageToEdit: Long = 0,
+  val isReportSpam: Boolean = false,
+  val isMessageRequestAccept: Boolean = false,
+  val messageExtras: MessageExtras? = null
 ) {
 
   val isV2Group: Boolean = messageGroupContext != null && GroupV2UpdateMessageUtil.isGroupV2(messageGroupContext)
@@ -66,8 +70,8 @@ data class OutgoingMessage(
     body: String? = "",
     attachments: List<Attachment> = emptyList(),
     timestamp: Long,
-    subscriptionId: Int = -1,
     expiresIn: Long = 0L,
+    expireTimerVersion: Int = 1,
     viewOnce: Boolean = false,
     distributionType: Int = ThreadTable.DistributionTypes.DEFAULT,
     storyType: StoryType = StoryType.NONE,
@@ -89,8 +93,8 @@ data class OutgoingMessage(
     body = body ?: "",
     attachments = attachments,
     sentTimeMillis = timestamp,
-    subscriptionId = subscriptionId,
     expiresIn = expiresIn,
+    expireTimerVersion = expireTimerVersion,
     isViewOnce = viewOnce,
     distributionType = distributionType,
     storyType = storyType,
@@ -117,8 +121,8 @@ data class OutgoingMessage(
     slideDeck: SlideDeck,
     body: String? = "",
     timestamp: Long,
-    subscriptionId: Int = -1,
     expiresIn: Long = 0L,
+    expiresTimerVersion: Int = 1,
     viewOnce: Boolean = false,
     storyType: StoryType = StoryType.NONE,
     linkPreviews: List<LinkPreview> = emptyList(),
@@ -131,8 +135,8 @@ data class OutgoingMessage(
     body = buildMessage(slideDeck, body ?: ""),
     attachments = slideDeck.asAttachments(),
     sentTimeMillis = timestamp,
-    subscriptionId = subscriptionId,
     expiresIn = expiresIn,
+    expireTimerVersion = expiresTimerVersion,
     isViewOnce = viewOnce,
     storyType = storyType,
     linkPreviews = linkPreviews,
@@ -142,8 +146,10 @@ data class OutgoingMessage(
     sharedContacts = contacts
   )
 
-  fun withExpiry(expiresIn: Long): OutgoingMessage {
-    return copy(expiresIn = expiresIn)
+  val subscriptionId = -1
+
+  fun withExpiry(expiresIn: Long, expireTimerVersion: Int): OutgoingMessage {
+    return copy(expiresIn = expiresIn, expireTimerVersion = expireTimerVersion)
   }
 
   fun stripAttachments(): OutgoingMessage {
@@ -172,12 +178,11 @@ data class OutgoingMessage(
      * A literal, insecure SMS message.
      */
     @JvmStatic
-    fun sms(threadRecipient: Recipient, body: String, subscriptionId: Int): OutgoingMessage {
+    fun sms(threadRecipient: Recipient, body: String): OutgoingMessage {
       return OutgoingMessage(
         threadRecipient = threadRecipient,
         sentTimeMillis = System.currentTimeMillis(),
         body = body,
-        subscriptionId = subscriptionId,
         isSecure = false
       )
     }
@@ -230,17 +235,18 @@ data class OutgoingMessage(
      * Helper for creating a group update message when a state change occurs and needs to be sent to others.
      */
     @JvmStatic
-    fun groupUpdateMessage(threadRecipient: Recipient, group: DecryptedGroupV2Context, sentTimeMillis: Long): OutgoingMessage {
-      val groupContext = MessageGroupContext(group)
+    fun groupUpdateMessage(threadRecipient: Recipient, update: GV2UpdateDescription, sentTimeMillis: Long): OutgoingMessage {
+      val messageExtras = MessageExtras(gv2UpdateDescription = update)
+      val groupContext = MessageGroupContext(update.gv2ChangeDescription!!)
 
       return OutgoingMessage(
         threadRecipient = threadRecipient,
-        body = groupContext.encodedGroupContext,
         sentTimeMillis = sentTimeMillis,
         messageGroupContext = groupContext,
         isGroup = true,
         isGroupUpdate = true,
-        isSecure = true
+        isSecure = true,
+        messageExtras = messageExtras
       )
     }
 
@@ -262,7 +268,6 @@ data class OutgoingMessage(
     ): OutgoingMessage {
       return OutgoingMessage(
         threadRecipient = threadRecipient,
-        body = groupContext.encodedGroupContext,
         isGroup = true,
         isGroupUpdate = true,
         messageGroupContext = groupContext,
@@ -351,12 +356,13 @@ data class OutgoingMessage(
      * Helper for creating expiration update messages.
      */
     @JvmStatic
-    fun expirationUpdateMessage(threadRecipient: Recipient, sentTimeMillis: Long, expiresIn: Long): OutgoingMessage {
+    fun expirationUpdateMessage(threadRecipient: Recipient, sentTimeMillis: Long, expiresIn: Long, expireTimerVersion: Int): OutgoingMessage {
       return OutgoingMessage(
         threadRecipient = threadRecipient,
         sentTimeMillis = sentTimeMillis,
         expiresIn = expiresIn,
         isExpirationUpdate = true,
+        expireTimerVersion = expireTimerVersion,
         isUrgent = false,
         isSecure = true
       )
@@ -400,6 +406,30 @@ data class OutgoingMessage(
         threadRecipient = threadRecipient,
         sentTimeMillis = sentTimeMillis,
         isEndSession = true,
+        isUrgent = false,
+        isSecure = true
+      )
+    }
+
+    @JvmStatic
+    fun reportSpamMessage(threadRecipient: Recipient, sentTimeMillis: Long, expiresIn: Long): OutgoingMessage {
+      return OutgoingMessage(
+        threadRecipient = threadRecipient,
+        sentTimeMillis = sentTimeMillis,
+        expiresIn = expiresIn,
+        isReportSpam = true,
+        isUrgent = false,
+        isSecure = true
+      )
+    }
+
+    @JvmStatic
+    fun messageRequestAcceptMessage(threadRecipient: Recipient, sentTimeMillis: Long, expiresIn: Long): OutgoingMessage {
+      return OutgoingMessage(
+        threadRecipient = threadRecipient,
+        sentTimeMillis = sentTimeMillis,
+        expiresIn = expiresIn,
+        isMessageRequestAccept = true,
         isUrgent = false,
         isSecure = true
       )

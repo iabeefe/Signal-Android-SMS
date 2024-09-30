@@ -7,12 +7,15 @@ import android.view.Window
 import androidx.activity.viewModels
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
+import org.signal.core.util.logging.Log
+import org.signal.core.util.logging.Log.tag
 import org.thoughtcrime.securesms.PassphraseRequiredActivity
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.components.settings.app.subscription.DonationPaymentComponent
+import org.thoughtcrime.securesms.components.settings.app.subscription.InAppPaymentComponent
 import org.thoughtcrime.securesms.components.settings.app.subscription.StripeRepository
 import org.thoughtcrime.securesms.components.voice.VoiceNoteMediaController
 import org.thoughtcrime.securesms.components.voice.VoiceNoteMediaControllerOwner
+import org.thoughtcrime.securesms.conversation.ConversationIntents
 import org.thoughtcrime.securesms.util.Debouncer
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme
 import java.util.concurrent.TimeUnit
@@ -20,9 +23,11 @@ import java.util.concurrent.TimeUnit
 /**
  * Wrapper activity for ConversationFragment.
  */
-class ConversationActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner, DonationPaymentComponent {
+open class ConversationActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner, InAppPaymentComponent {
 
   companion object {
+    private val TAG = tag(ConversationActivity::class.java)
+
     private const val STATE_WATERMARK = "share_data_watermark"
   }
 
@@ -32,7 +37,7 @@ class ConversationActivity : PassphraseRequiredActivity(), VoiceNoteMediaControl
   override val voiceNoteMediaController = VoiceNoteMediaController(this, true)
 
   override val stripeRepository: StripeRepository by lazy { StripeRepository(this) }
-  override val googlePayResultPublisher: Subject<DonationPaymentComponent.GooglePayResult> = PublishSubject.create()
+  override val googlePayResultPublisher: Subject<InAppPaymentComponent.GooglePayResult> = PublishSubject.create()
 
   private val motionEventRelay: MotionEventRelay by viewModels()
   private val shareDataTimestampViewModel: ShareDataTimestampViewModel by viewModels()
@@ -69,26 +74,40 @@ class ConversationActivity : PassphraseRequiredActivity(), VoiceNoteMediaControl
     outState.putLong(STATE_WATERMARK, shareDataTimestampViewModel.timestamp)
   }
 
+  override fun onStop() {
+    super.onStop()
+    if (isChangingConfigurations) {
+      Log.i(TAG, "Conversation recreating due to configuration change")
+    }
+  }
+
   override fun onDestroy() {
     super.onDestroy()
     transitionDebouncer.clear()
   }
 
-  override fun onNewIntent(intent: Intent?) {
+  override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
-    setIntent(intent)
-    replaceFragment()
+
+    // Note: We utilize this instead of 'replaceFragment' because there seems to be a bug
+    // in constraint-layout which mixes up insets when replacing the fragment via onNewIntent.
+    finish()
+    startActivity(intent)
   }
 
   @Suppress("DEPRECATION")
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    googlePayResultPublisher.onNext(DonationPaymentComponent.GooglePayResult(requestCode, resultCode, data))
+    googlePayResultPublisher.onNext(InAppPaymentComponent.GooglePayResult(requestCode, resultCode, data))
   }
 
   private fun replaceFragment() {
     val fragment = ConversationFragment().apply {
-      arguments = intent.extras
+      arguments = if (ConversationIntents.isBubbleIntentUri(intent.data)) {
+        ConversationIntents.createParentFragmentArguments(intent)
+      } else {
+        intent.extras
+      }
     }
 
     supportFragmentManager

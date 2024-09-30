@@ -1,9 +1,10 @@
 package org.thoughtcrime.securesms.components.voice
 
 import android.content.Context
-import com.google.android.exoplayer2.audio.AudioCapabilities
-import com.google.android.exoplayer2.audio.AudioSink
-import com.google.android.exoplayer2.audio.DefaultAudioSink
+import androidx.annotation.OptIn
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.audio.AudioSink
+import androidx.media3.exoplayer.audio.DefaultAudioSink
 import org.signal.core.util.logging.Log
 import java.nio.ByteBuffer
 
@@ -12,16 +13,14 @@ import java.nio.ByteBuffer
  * It does eventually recover, but it needs to be given ample opportunity to.
  * This class wraps the final DefaultAudioSink to provide exactly that functionality.
  */
+@OptIn(UnstableApi::class)
 class RetryableInitAudioSink(
   context: Context,
   enableFloatOutput: Boolean,
   enableAudioTrackPlaybackParams: Boolean,
-  enableOffload: Boolean,
-  val delegate: AudioSink = DefaultAudioSink.Builder()
-    .setAudioCapabilities(AudioCapabilities.getCapabilities(context))
+  val delegate: AudioSink = DefaultAudioSink.Builder(context)
     .setEnableFloatOutput(enableFloatOutput)
     .setEnableAudioTrackPlaybackParams(enableAudioTrackPlaybackParams)
-    .setOffloadMode(if (enableOffload) DefaultAudioSink.OFFLOAD_MODE_ENABLED_GAPLESS_REQUIRED else DefaultAudioSink.OFFLOAD_MODE_DISABLED)
     .build()
 ) : AudioSink by delegate {
 

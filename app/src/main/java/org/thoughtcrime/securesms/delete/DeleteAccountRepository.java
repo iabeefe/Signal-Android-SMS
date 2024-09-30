@@ -8,19 +8,17 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
+import org.thoughtcrime.securesms.components.settings.app.subscription.InAppPaymentsRepository;
 import org.thoughtcrime.securesms.database.GroupTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.model.GroupRecord;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.database.model.InAppPaymentSubscriberRecord;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.groups.GroupManager;
-import org.thoughtcrime.securesms.keyvalue.SignalStore;
-import org.thoughtcrime.securesms.pin.KbsEnclaves;
-import org.thoughtcrime.securesms.subscription.Subscriber;
 import org.thoughtcrime.securesms.util.ServiceUtil;
 import org.whispersystems.signalservice.api.util.PhoneNumberFormatter;
 import org.whispersystems.signalservice.internal.EmptyResponse;
 import org.whispersystems.signalservice.internal.ServiceResponse;
-import org.whispersystems.signalservice.internal.contacts.crypto.UnauthenticatedResponseException;
 
 import java.io.IOException;
 import java.text.Collator;
@@ -47,13 +45,13 @@ class DeleteAccountRepository {
 
   void deleteAccount(@NonNull Consumer<DeleteAccountEvent> onDeleteAccountEvent) {
     SignalExecutors.BOUNDED.execute(() -> {
-      if (SignalStore.donationsValues().getSubscriber() != null) {
+      if (InAppPaymentsRepository.getSubscriber(InAppPaymentSubscriberRecord.Type.DONATION) != null) {
         Log.i(TAG, "deleteAccount: attempting to cancel subscription");
         onDeleteAccountEvent.accept(DeleteAccountEvent.CancelingSubscription.INSTANCE);
 
-        Subscriber                     subscriber                 = SignalStore.donationsValues().requireSubscriber();
-        ServiceResponse<EmptyResponse> cancelSubscriptionResponse = ApplicationDependencies.getDonationsService()
-                                                                                           .cancelSubscription(subscriber.getSubscriberId());
+        InAppPaymentSubscriberRecord subscriber = InAppPaymentsRepository.requireSubscriber(InAppPaymentSubscriberRecord.Type.DONATION);
+        ServiceResponse<EmptyResponse> cancelSubscriptionResponse = AppDependencies.getDonationsService()
+                                                                                   .cancelSubscription(subscriber.getSubscriberId());
 
         if (cancelSubscriptionResponse.getExecutionError().isPresent()) {
           Log.w(TAG, "deleteAccount: failed attempt to cancel subscription");
@@ -86,7 +84,7 @@ class DeleteAccountRepository {
         while (groupRecord != null) {
           if (groupRecord.getId().isPush() && groupRecord.isActive()) {
             if (!groupRecord.isV1Group()) {
-              GroupManager.leaveGroup(ApplicationDependencies.getApplication(), groupRecord.getId().requirePush(), true);
+              GroupManager.leaveGroup(AppDependencies.getApplication(), groupRecord.getId().requirePush(), true);
             }
             onDeleteAccountEvent.accept(new DeleteAccountEvent.LeaveGroupsProgress(groups.getCount(), ++groupsLeft));
           }
@@ -102,21 +100,10 @@ class DeleteAccountRepository {
       }
 
       Log.i(TAG, "deleteAccount: successfully left all groups.");
-      Log.i(TAG, "deleteAccount: attempting to remove pin...");
-
-      try {
-        ApplicationDependencies.getKeyBackupService(KbsEnclaves.current()).newPinChangeSession().removePin();
-      } catch (UnauthenticatedResponseException | IOException e) {
-        Log.w(TAG, "deleteAccount: failed to remove PIN", e);
-        onDeleteAccountEvent.accept(DeleteAccountEvent.PinDeletionFailed.INSTANCE);
-        return;
-      }
-
-      Log.i(TAG, "deleteAccount: successfully removed pin.");
       Log.i(TAG, "deleteAccount: attempting to delete account from server...");
 
       try {
-        ApplicationDependencies.getSignalServiceAccountManager().deleteAccount();
+        AppDependencies.getSignalServiceAccountManager().deleteAccount();
       } catch (IOException e) {
         Log.w(TAG, "deleteAccount: failed to delete account from signal service", e);
         onDeleteAccountEvent.accept(DeleteAccountEvent.ServerDeletionFailed.INSTANCE);
@@ -126,7 +113,7 @@ class DeleteAccountRepository {
       Log.i(TAG, "deleteAccount: successfully removed account from server");
       Log.i(TAG, "deleteAccount: attempting to delete user data and close process...");
 
-      if (!ServiceUtil.getActivityManager(ApplicationDependencies.getApplication()).clearApplicationUserData()) {
+      if (!ServiceUtil.getActivityManager(AppDependencies.getApplication()).clearApplicationUserData()) {
         Log.w(TAG, "deleteAccount: failed to delete user data");
         onDeleteAccountEvent.accept(DeleteAccountEvent.LocalDataDeletionFailed.INSTANCE);
       }

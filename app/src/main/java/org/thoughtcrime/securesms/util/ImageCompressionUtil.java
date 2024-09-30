@@ -8,14 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
+import org.signal.core.util.ByteSize;
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.mms.GlideApp;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -72,16 +73,16 @@ public final class ImageCompressionUtil {
    */
   @WorkerThread
   public static @NonNull Result compress(@NonNull Context context,
-                                          @NonNull String mimeType,
-                                          @NonNull Object glideModel,
-                                          int maxDimension,
-                                          @IntRange(from = 0, to = 100) int quality)
+                                         @Nullable String contentType,
+                                         @NonNull Object glideModel,
+                                         int maxDimension,
+                                         @IntRange(from = 0, to = 100) int quality)
       throws BitmapDecodingException
   {
     Bitmap scaledBitmap;
 
     try {
-      scaledBitmap = GlideApp.with(context.getApplicationContext())
+      scaledBitmap = Glide.with(context.getApplicationContext())
                              .asBitmap()
                              .addListener(bitmapRequestListener)
                              .load(glideModel)
@@ -91,8 +92,26 @@ public final class ImageCompressionUtil {
                              .submit(maxDimension, maxDimension)
                              .get();
     } catch (ExecutionException | InterruptedException e) {
+      Log.w(TAG, "Verbose logging to try to give all possible debug information for Glide issues. Exceptions below may be duplicated.", e);
       if (e.getCause() instanceof GlideException) {
-        ((GlideException) e.getCause()).logRootCauses(TAG);
+        List<Throwable> rootCauses = ((GlideException) e.getCause()).getRootCauses();
+        if (!rootCauses.isEmpty()) {
+          for (int i = 0, size = rootCauses.size(); i < size; i++) {
+            Log.w(TAG, "Root cause (" + (i + 1) + " of " + size + ")", rootCauses.get(i));
+          }
+        } else {
+          Log.w(TAG, "Encountered GlideException with no root cause.", e.getCause());
+        }
+        List<Throwable> causes = ((GlideException) e.getCause()).getCauses();
+        if (!causes.isEmpty()) {
+          for (int i = 0, size = causes.size(); i < size; i++) {
+            Log.w(TAG, "Caused by (" + (i + 1) + " of " + size + ")", causes.get(i));
+          }
+        } else {
+          Log.w(TAG, "Encountered GlideException with no child cause.", e.getCause());
+        }
+      } else {
+        Log.w(TAG, "Encountered non-GlideException.", e);
       }
       throw new BitmapDecodingException(e);
     }
@@ -102,15 +121,16 @@ public final class ImageCompressionUtil {
     }
 
     ByteArrayOutputStream output = new ByteArrayOutputStream();
-    Bitmap.CompressFormat format = mimeTypeToCompressFormat(mimeType);
+    Bitmap.CompressFormat format = mimeTypeToCompressFormat(contentType);
     scaledBitmap.compress(format, quality, output);
 
     byte[] data = output.toByteArray();
 
+    Log.d(TAG, "[Input] mimeType: " + contentType + " [Output] format: " + format + ", maxDimension: " + maxDimension + ", quality: " + quality + ", size(KiB): " + new ByteSize(data.length).getInWholeKibiBytes());
     return new Result(data, compressFormatToMimeType(format), scaledBitmap.getWidth(), scaledBitmap.getHeight());
   }
 
-  private static @NonNull Bitmap.CompressFormat mimeTypeToCompressFormat(@NonNull String mimeType) {
+  private static @NonNull Bitmap.CompressFormat mimeTypeToCompressFormat(@Nullable String mimeType) {
     if (MediaUtil.isJpegType(mimeType) ||
         MediaUtil.isHeicType(mimeType) ||
         MediaUtil.isHeifType(mimeType) ||

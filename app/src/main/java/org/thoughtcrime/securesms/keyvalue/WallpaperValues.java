@@ -1,12 +1,9 @@
 package org.thoughtcrime.securesms.keyvalue;
 
-import android.content.Context;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.google.protobuf.InvalidProtocolBufferException;
 
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.database.model.databaseprotos.Wallpaper;
@@ -14,6 +11,7 @@ import org.thoughtcrime.securesms.wallpaper.ChatWallpaper;
 import org.thoughtcrime.securesms.wallpaper.ChatWallpaperFactory;
 import org.thoughtcrime.securesms.wallpaper.WallpaperStorage;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,27 +34,27 @@ public final class WallpaperValues extends SignalStoreValues {
     return Collections.emptyList();
   }
 
-  public void setWallpaper(@NonNull Context context, @Nullable ChatWallpaper wallpaper) {
-    Wallpaper currentWallpaper = getCurrentWallpaper();
+  public void setWallpaper(@Nullable ChatWallpaper wallpaper) {
+    Wallpaper currentWallpaper = getCurrentRawWallpaper();
     Uri       currentUri       = null;
 
-    if (currentWallpaper != null && currentWallpaper.hasFile()) {
-      currentUri = Uri.parse(currentWallpaper.getFile().getUri());
+    if (currentWallpaper != null && currentWallpaper.file_ != null) {
+      currentUri = Uri.parse(currentWallpaper.file_.uri);
     }
 
     if (wallpaper != null) {
-      putBlob(KEY_WALLPAPER, wallpaper.serialize().toByteArray());
+      putBlob(KEY_WALLPAPER, wallpaper.serialize().encode());
     } else {
       getStore().beginWrite().remove(KEY_WALLPAPER).apply();
     }
 
     if (currentUri != null) {
-      WallpaperStorage.onWallpaperDeselected(context, currentUri);
+      WallpaperStorage.onWallpaperDeselected(currentUri);
     }
   }
 
   public @Nullable ChatWallpaper getWallpaper() {
-    Wallpaper currentWallpaper = getCurrentWallpaper();
+    Wallpaper currentWallpaper = getCurrentRawWallpaper();
 
     if (currentWallpaper != null) {
       return ChatWallpaperFactory.create(currentWallpaper);
@@ -70,14 +68,14 @@ public final class WallpaperValues extends SignalStoreValues {
   }
 
   public void setDimInDarkTheme(boolean enabled) {
-    Wallpaper currentWallpaper = getCurrentWallpaper();
+    Wallpaper currentWallpaper = getCurrentRawWallpaper();
 
     if (currentWallpaper != null) {
       putBlob(KEY_WALLPAPER,
-              currentWallpaper.toBuilder()
-                              .setDimLevelInDarkTheme(enabled ? 0.2f : 0)
+              currentWallpaper.newBuilder()
+                              .dimLevelInDarkTheme(enabled ? 0.2f : 0)
                               .build()
-                              .toByteArray());
+                              .encode());
     } else {
       throw new IllegalStateException("No wallpaper currently set!");
     }
@@ -89,27 +87,38 @@ public final class WallpaperValues extends SignalStoreValues {
    * wallpaper is both set *and* it's an image.
    */
   public @Nullable Uri getWallpaperUri() {
-    Wallpaper currentWallpaper = getCurrentWallpaper();
+    Wallpaper currentWallpaper = getCurrentRawWallpaper();
 
-    if (currentWallpaper != null && currentWallpaper.hasFile()) {
-      return Uri.parse(currentWallpaper.getFile().getUri());
+    if (currentWallpaper != null && currentWallpaper.file_ != null) {
+      return Uri.parse(currentWallpaper.file_.uri);
     } else {
       return null;
     }
   }
 
-  private @Nullable Wallpaper getCurrentWallpaper() {
+  /**
+   * Allows for retrieval of the raw, serialized wallpaper proto. Clients should prefer {@link #getWallpaper()} instead.
+   */
+  public @Nullable Wallpaper getCurrentRawWallpaper() {
     byte[] serialized = getBlob(KEY_WALLPAPER, null);
 
     if (serialized != null) {
       try {
-        return Wallpaper.parseFrom(serialized);
-      } catch (InvalidProtocolBufferException e) {
+        return Wallpaper.ADAPTER.decode(serialized);
+      } catch (IOException e) {
         Log.w(TAG, "Invalid proto stored for wallpaper!");
         return null;
       }
     } else {
       return null;
     }
+  }
+
+  /**
+   * For a migration, we need to update the current wallpaper _without_ triggering the onDeselectedEvents and such.
+   * For normal usage, use {@link #setWallpaper(ChatWallpaper)}
+   */
+  public void setRawWallpaperForMigration(@NonNull Wallpaper wallpaper) {
+    putBlob(KEY_WALLPAPER, wallpaper.encode());
   }
 }

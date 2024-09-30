@@ -21,6 +21,7 @@ import org.whispersystems.signalservice.api.push.DistributionId;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -101,6 +102,16 @@ public class SignalServiceAccountDataStoreImpl implements SignalServiceAccountDa
   }
 
   @Override
+  public void markAllOneTimeEcPreKeysStaleIfNecessary(long staleTime) {
+    preKeyStore.markAllOneTimeEcPreKeysStaleIfNecessary(staleTime);
+  }
+
+  @Override
+  public void deleteAllStaleOneTimeEcPreKeys(long threshold, int minCount) {
+    preKeyStore.deleteAllStaleOneTimeEcPreKeys(threshold, minCount);
+  }
+
+  @Override
   public SessionRecord loadSession(SignalProtocolAddress axolotlAddress) {
     return sessionStore.loadSession(axolotlAddress);
   }
@@ -116,7 +127,7 @@ public class SignalServiceAccountDataStoreImpl implements SignalServiceAccountDa
   }
 
   @Override
-  public Set<SignalProtocolAddress> getAllAddressesWithActiveSessions(List<String> addressNames) {
+  public Map<SignalProtocolAddress, SessionRecord> getAllAddressesWithActiveSessions(List<String> addressNames) {
     return sessionStore.getAllAddressesWithActiveSessions(addressNames);
   }
 
@@ -193,7 +204,7 @@ public class SignalServiceAccountDataStoreImpl implements SignalServiceAccountDa
 
   @Override
   public void storeLastResortKyberPreKey(int kyberPreKeyId, @NonNull KyberPreKeyRecord kyberPreKeyRecord) {
-    kyberPreKeyStore.storeKyberPreKey(kyberPreKeyId, kyberPreKeyRecord);
+    kyberPreKeyStore.storeLastResortKyberPreKey(kyberPreKeyId, kyberPreKeyRecord);
   }
 
   @Override
@@ -209,6 +220,16 @@ public class SignalServiceAccountDataStoreImpl implements SignalServiceAccountDa
   @Override
   public void removeKyberPreKey(int kyberPreKeyId) {
     kyberPreKeyStore.removeKyberPreKey(kyberPreKeyId);
+  }
+
+  @Override
+  public void markAllOneTimeKyberPreKeysStaleIfNecessary(long staleTime) {
+    kyberPreKeyStore.markAllOneTimeKyberPreKeysStaleIfNecessary(staleTime);
+  }
+
+  @Override
+  public void deleteAllStaleOneTimeKyberPreKeys(long threshold, int minCount) {
+    kyberPreKeyStore.deleteAllStaleOneTimeKyberPreKeys(threshold, minCount);
   }
 
   @Override
@@ -251,5 +272,4 @@ public class SignalServiceAccountDataStoreImpl implements SignalServiceAccountDa
   public @NonNull SignalSenderKeyStore senderKeys() {
     return senderKeyStore;
   }
-
 }

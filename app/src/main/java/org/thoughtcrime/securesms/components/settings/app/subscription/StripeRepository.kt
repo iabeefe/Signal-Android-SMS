@@ -5,22 +5,24 @@ import android.content.Intent
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.logging.Log
 import org.signal.core.util.money.FiatMoney
 import org.signal.donations.GooglePayApi
+import org.signal.donations.InAppPaymentType
 import org.signal.donations.PaymentSourceType
 import org.signal.donations.StripeApi
 import org.signal.donations.StripeIntentAccessor
 import org.signal.donations.json.StripeIntentStatus
+import org.thoughtcrime.securesms.components.settings.app.subscription.InAppPaymentsRepository.requireSubscriberType
+import org.thoughtcrime.securesms.components.settings.app.subscription.InAppPaymentsRepository.toPaymentMethodType
 import org.thoughtcrime.securesms.components.settings.app.subscription.errors.DonationError
+import org.thoughtcrime.securesms.components.settings.app.subscription.errors.DonationError.OneTimeDonationError
 import org.thoughtcrime.securesms.components.settings.app.subscription.errors.DonationErrorSource
 import org.thoughtcrime.securesms.database.SignalDatabase
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
-import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.database.model.InAppPaymentSubscriberRecord
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
-import org.thoughtcrime.securesms.storage.StorageSyncHelper
 import org.thoughtcrime.securesms.util.Environment
 import org.whispersystems.signalservice.api.subscriptions.StripeClientSecret
 import org.whispersystems.signalservice.internal.EmptyResponse
@@ -43,24 +45,15 @@ import org.whispersystems.signalservice.internal.ServiceResponse
  * 1. Create a PaymentMethod vai the Stripe API, utilizing the token from Google Pay
  * 1. Confirm the PaymentIntent via the Stripe API
  */
-class StripeRepository(activity: Activity) : StripeApi.PaymentIntentFetcher, StripeApi.SetupIntentHelper {
+class StripeRepository(
+  activity: Activity
+) : StripeApi.PaymentIntentFetcher, StripeApi.SetupIntentHelper {
 
   private val googlePayApi = GooglePayApi(activity, StripeApi.Gateway(Environment.Donations.STRIPE_CONFIGURATION), Environment.Donations.GOOGLE_PAY_CONFIGURATION)
-  private val stripeApi = StripeApi(Environment.Donations.STRIPE_CONFIGURATION, this, this, ApplicationDependencies.getOkHttpClient())
+  private val stripeApi = StripeApi(Environment.Donations.STRIPE_CONFIGURATION, this, this, AppDependencies.okHttpClient)
 
   fun isGooglePayAvailable(): Completable {
     return googlePayApi.queryIsReadyToPay()
-  }
-
-  fun scheduleSyncForAccountRecordChange() {
-    SignalExecutors.BOUNDED.execute {
-      scheduleSyncForAccountRecordChangeSync()
-    }
-  }
-
-  private fun scheduleSyncForAccountRecordChangeSync() {
-    SignalDatabase.recipients.markNeedsSync(Recipient.self().id)
-    StorageSyncHelper.scheduleSyncForDataChange()
   }
 
   fun requestTokenFromGooglePay(price: FiatMoney, label: String, requestCode: Int) {
@@ -89,29 +82,35 @@ class StripeRepository(activity: Activity) : StripeApi.PaymentIntentFetcher, Str
     badgeLevel: Long,
     paymentSourceType: PaymentSourceType
   ): Single<StripeIntentAccessor> {
+    check(paymentSourceType is PaymentSourceType.Stripe)
+
     Log.d(TAG, "Creating payment intent for $price...", true)
 
-    return stripeApi.createPaymentIntent(price, badgeLevel)
+    return stripeApi.createPaymentIntent(price, badgeLevel, paymentSourceType)
       .onErrorResumeNext {
-        OneTimeDonationRepository.handleCreatePaymentIntentError(it, badgeRecipient, paymentSourceType)
+        OneTimeInAppPaymentRepository.handleCreatePaymentIntentError(it, badgeRecipient, paymentSourceType)
       }
       .flatMap { result ->
         val recipient = Recipient.resolved(badgeRecipient)
-        val errorSource = if (recipient.isSelf) DonationErrorSource.BOOST else DonationErrorSource.GIFT
+        val errorSource = if (recipient.isSelf) DonationErrorSource.ONE_TIME else DonationErrorSource.GIFT
 
         Log.d(TAG, "Created payment intent for $price.", true)
         when (result) {
-          is StripeApi.CreatePaymentIntentResult.AmountIsTooSmall -> Single.error(DonationError.oneTimeDonationAmountTooSmall(errorSource))
-          is StripeApi.CreatePaymentIntentResult.AmountIsTooLarge -> Single.error(DonationError.oneTimeDonationAmountTooLarge(errorSource))
-          is StripeApi.CreatePaymentIntentResult.CurrencyIsNotSupported -> Single.error(DonationError.invalidCurrencyForOneTimeDonation(errorSource))
+          is StripeApi.CreatePaymentIntentResult.AmountIsTooSmall -> Single.error(OneTimeDonationError.AmountTooSmallError(errorSource))
+          is StripeApi.CreatePaymentIntentResult.AmountIsTooLarge -> Single.error(OneTimeDonationError.AmountTooLargeError(errorSource))
+          is StripeApi.CreatePaymentIntentResult.CurrencyIsNotSupported -> Single.error(OneTimeDonationError.InvalidCurrencyError(errorSource))
           is StripeApi.CreatePaymentIntentResult.Success -> Single.just(result.paymentIntent)
         }
       }.subscribeOn(Schedulers.io())
   }
 
-  fun createAndConfirmSetupIntent(paymentSource: StripeApi.PaymentSource): Single<StripeApi.Secure3DSAction> {
+  fun createAndConfirmSetupIntent(
+    inAppPaymentType: InAppPaymentType,
+    paymentSource: StripeApi.PaymentSource,
+    paymentSourceType: PaymentSourceType.Stripe
+  ): Single<StripeApi.Secure3DSAction> {
     Log.d(TAG, "Continuing subscription setup...", true)
-    return stripeApi.createSetupIntent()
+    return stripeApi.createSetupIntent(inAppPaymentType, paymentSourceType)
       .flatMap { result ->
         Log.d(TAG, "Retrieved SetupIntent, confirming...", true)
         stripeApi.confirmSetupIntent(paymentSource, result.setupIntent)
@@ -124,7 +123,7 @@ class StripeRepository(activity: Activity) : StripeApi.PaymentIntentFetcher, Str
     badgeRecipient: RecipientId
   ): Single<StripeApi.Secure3DSAction> {
     val isBoost = badgeRecipient == Recipient.self().id
-    val donationErrorSource: DonationErrorSource = if (isBoost) DonationErrorSource.BOOST else DonationErrorSource.GIFT
+    val donationErrorSource: DonationErrorSource = if (isBoost) DonationErrorSource.ONE_TIME else DonationErrorSource.GIFT
 
     Log.d(TAG, "Confirming payment intent...", true)
     return stripeApi.confirmPaymentIntent(paymentSource, paymentIntent)
@@ -133,13 +132,13 @@ class StripeRepository(activity: Activity) : StripeApi.PaymentIntentFetcher, Str
       }
   }
 
-  override fun fetchPaymentIntent(price: FiatMoney, level: Long): Single<StripeIntentAccessor> {
+  override fun fetchPaymentIntent(price: FiatMoney, level: Long, sourceType: PaymentSourceType.Stripe): Single<StripeIntentAccessor> {
     Log.d(TAG, "Fetching payment intent from Signal service for $price... (Locale.US minimum precision: ${price.minimumUnitPrecisionString})")
     return Single
       .fromCallable {
-        ApplicationDependencies
-          .getDonationsService()
-          .createDonationIntentWithAmount(price.minimumUnitPrecisionString, price.currency.currencyCode, level)
+        AppDependencies
+          .donationsService
+          .createDonationIntentWithAmount(price.minimumUnitPrecisionString, price.currency.currencyCode, level, sourceType.paymentMethod)
       }
       .flatMap(ServiceResponse<StripeClientSecret>::flattenResult)
       .map {
@@ -153,17 +152,32 @@ class StripeRepository(activity: Activity) : StripeApi.PaymentIntentFetcher, Str
       }
   }
 
-  override fun fetchSetupIntent(): Single<StripeIntentAccessor> {
-    Log.d(TAG, "Fetching setup intent from Signal service...")
-    return Single.fromCallable { SignalStore.donationsValues().requireSubscriber() }
+  /**
+   * Creates the PaymentMethod via the Signal Service. Note that if the operation fails with a 409,
+   * it means that the PaymentMethod is already tied to a PayPal account. We can retry in this
+   * situation by simply deleting the old subscriber id on the service and replacing it.
+   */
+  private fun createPaymentMethod(subscriberType: InAppPaymentSubscriberRecord.Type, paymentSourceType: PaymentSourceType.Stripe, retryOn409: Boolean = true): Single<StripeClientSecret> {
+    return Single.fromCallable { InAppPaymentsRepository.requireSubscriber(subscriberType) }
       .flatMap {
         Single.fromCallable {
-          ApplicationDependencies
-            .getDonationsService()
-            .createStripeSubscriptionPaymentMethod(it.subscriberId)
+          AppDependencies
+            .donationsService
+            .createStripeSubscriptionPaymentMethod(it.subscriberId, paymentSourceType.paymentMethod)
         }
       }
-      .flatMap(ServiceResponse<StripeClientSecret>::flattenResult)
+      .flatMap { serviceResponse ->
+        if (retryOn409 && serviceResponse.status == 409) {
+          RecurringInAppPaymentRepository.rotateSubscriberId(subscriberType).andThen(createPaymentMethod(subscriberType, paymentSourceType, retryOn409 = false))
+        } else {
+          serviceResponse.flattenResult()
+        }
+      }
+  }
+
+  override fun fetchSetupIntent(inAppPaymentType: InAppPaymentType, sourceType: PaymentSourceType.Stripe): Single<StripeIntentAccessor> {
+    Log.d(TAG, "Fetching setup intent from Signal service...")
+    return createPaymentMethod(inAppPaymentType.requireSubscriberType(), sourceType)
       .map {
         StripeIntentAccessor(
           objectType = StripeIntentAccessor.ObjectType.SETUP_INTENT,
@@ -181,18 +195,22 @@ class StripeRepository(activity: Activity) : StripeApi.PaymentIntentFetcher, Str
    *       that we are successful and proceed as normal. If the payment didn't actually succeed, then we
    *       expect an error later in the chain to inform us of this.
    */
-  fun getStatusAndPaymentMethodId(stripeIntentAccessor: StripeIntentAccessor): Single<StatusAndPaymentMethodId> {
+  fun getStatusAndPaymentMethodId(
+    stripeIntentAccessor: StripeIntentAccessor,
+    paymentMethodId: String?
+  ): Single<StatusAndPaymentMethodId> {
     return Single.fromCallable {
       when (stripeIntentAccessor.objectType) {
-        StripeIntentAccessor.ObjectType.NONE -> StatusAndPaymentMethodId(StripeIntentStatus.SUCCEEDED, null)
+        StripeIntentAccessor.ObjectType.NONE -> StatusAndPaymentMethodId(stripeIntentAccessor.intentId, StripeIntentStatus.SUCCEEDED, paymentMethodId)
         StripeIntentAccessor.ObjectType.PAYMENT_INTENT -> stripeApi.getPaymentIntent(stripeIntentAccessor).let {
           if (it.status == null) {
             Log.d(TAG, "Returned payment intent had a null status.", true)
           }
-          StatusAndPaymentMethodId(it.status ?: StripeIntentStatus.SUCCEEDED, it.paymentMethod)
+          StatusAndPaymentMethodId(stripeIntentAccessor.intentId, it.status ?: StripeIntentStatus.SUCCEEDED, it.paymentMethod)
         }
+
         StripeIntentAccessor.ObjectType.SETUP_INTENT -> stripeApi.getSetupIntent(stripeIntentAccessor).let {
-          StatusAndPaymentMethodId(it.status, it.paymentMethod)
+          StatusAndPaymentMethodId(stripeIntentAccessor.intentId, it.status, it.paymentMethod)
         }
       }
     }
@@ -200,22 +218,30 @@ class StripeRepository(activity: Activity) : StripeApi.PaymentIntentFetcher, Str
 
   fun setDefaultPaymentMethod(
     paymentMethodId: String,
+    setupIntentId: String,
+    subscriberType: InAppPaymentSubscriberRecord.Type,
     paymentSourceType: PaymentSourceType
   ): Completable {
     return Single.fromCallable {
       Log.d(TAG, "Getting the subscriber...")
-      SignalStore.donationsValues().requireSubscriber()
-    }.flatMap {
+      InAppPaymentsRepository.requireSubscriber(subscriberType)
+    }.flatMapCompletable { subscriberRecord ->
       Log.d(TAG, "Setting default payment method via Signal service...")
       Single.fromCallable {
-        ApplicationDependencies
-          .getDonationsService()
-          .setDefaultStripePaymentMethod(it.subscriberId, paymentMethodId)
+        if (paymentSourceType == PaymentSourceType.Stripe.IDEAL) {
+          AppDependencies
+            .donationsService
+            .setDefaultIdealPaymentMethod(subscriberRecord.subscriberId, setupIntentId)
+        } else {
+          AppDependencies
+            .donationsService
+            .setDefaultStripePaymentMethod(subscriberRecord.subscriberId, paymentMethodId)
+        }
+      }.flatMap(ServiceResponse<EmptyResponse>::flattenResult).ignoreElement().doOnComplete {
+        Log.d(TAG, "Set default payment method via Signal service!")
+        Log.d(TAG, "Storing the subscription payment source type locally.")
+        SignalDatabase.inAppPaymentSubscribers.setPaymentMethod(subscriberRecord.subscriberId, paymentSourceType.toPaymentMethodType())
       }
-    }.flatMap(ServiceResponse<EmptyResponse>::flattenResult).ignoreElement().doOnComplete {
-      Log.d(TAG, "Set default payment method via Signal service!")
-      Log.d(TAG, "Storing the subscription payment source type locally.")
-      SignalStore.donationsValues().setSubscriptionPaymentSourceType(paymentSourceType)
     }
   }
 
@@ -229,7 +255,18 @@ class StripeRepository(activity: Activity) : StripeApi.PaymentIntentFetcher, Str
     }
   }
 
+  fun createSEPADebitPaymentSource(sepaDebitData: StripeApi.SEPADebitData): Single<StripeApi.PaymentSource> {
+    Log.d(TAG, "Creating SEPA Debit payment source via Stripe api...")
+    return stripeApi.createPaymentSourceFromSEPADebitData(sepaDebitData)
+  }
+
+  fun createIdealPaymentSource(idealData: StripeApi.IDEALData): Single<StripeApi.PaymentSource> {
+    Log.d(TAG, "Creating iDEAL payment source via Stripe api...")
+    return stripeApi.createPaymentSourceFromIDEALData(idealData)
+  }
+
   data class StatusAndPaymentMethodId(
+    val intentId: String,
     val status: StripeIntentStatus,
     val paymentMethod: String?
   )

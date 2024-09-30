@@ -10,6 +10,7 @@ import androidx.core.view.doOnNextLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -18,6 +19,7 @@ import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.FixedRoundedCornerBottomSheetDialogFragment
 import org.thoughtcrime.securesms.components.ViewBinderDelegate
 import org.thoughtcrime.securesms.conversation.ConversationAdapter
+import org.thoughtcrime.securesms.conversation.ConversationAdapterBridge
 import org.thoughtcrime.securesms.conversation.ConversationBottomSheetCallback
 import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode
 import org.thoughtcrime.securesms.conversation.ConversationMessage
@@ -35,7 +37,6 @@ import org.thoughtcrime.securesms.giph.mp4.GiphyMp4ProjectionPlayerHolder
 import org.thoughtcrime.securesms.giph.mp4.GiphyMp4ProjectionRecycler
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.groups.GroupMigrationMembershipChange
-import org.thoughtcrime.securesms.mms.GlideApp
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.util.BottomSheetUtil
@@ -55,6 +56,12 @@ class EditMessageHistoryDialog : FixedRoundedCornerBottomSheetDialogFragment() {
   private val viewModel: EditMessageHistoryViewModel by viewModels(factoryProducer = ViewModelFactory.factoryProducer { EditMessageHistoryViewModel(originalMessageId, conversationRecipient) })
 
   private val disposables: LifecycleDisposable = LifecycleDisposable()
+
+  override fun onResume() {
+    super.onResume()
+
+    viewModel.markRevisionsRead()
+  }
 
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
     val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
@@ -78,13 +85,13 @@ class EditMessageHistoryDialog : FixedRoundedCornerBottomSheetDialogFragment() {
     val messageAdapter = ConversationAdapter(
       requireContext(),
       viewLifecycleOwner,
-      GlideApp.with(this),
+      Glide.with(this),
       Locale.getDefault(),
       ConversationAdapterListener(),
-      conversationRecipient.hasWallpaper(),
+      conversationRecipient.hasWallpaper,
       colorizer
     ).apply {
-      setCondensedMode(ConversationItemDisplayMode.EDIT_HISTORY)
+      setCondensedMode(ConversationItemDisplayMode.EditHistory)
     }
 
     binding.editHistoryList.apply {
@@ -113,7 +120,7 @@ class EditMessageHistoryDialog : FixedRoundedCornerBottomSheetDialogFragment() {
 
     disposables += viewModel.getNameColorsMap().subscribe { map ->
       colorizer.onNameColorsChanged(map)
-      messageAdapter.notifyItemRangeChanged(0, messageAdapter.itemCount, ConversationAdapter.PAYLOAD_NAME_COLORS)
+      messageAdapter.notifyItemRangeChanged(0, messageAdapter.itemCount, ConversationAdapterBridge.PAYLOAD_NAME_COLORS)
     }
 
     initializeGiphyMp4()
@@ -157,7 +164,11 @@ class EditMessageHistoryDialog : FixedRoundedCornerBottomSheetDialogFragment() {
     override fun onViewGiftBadgeClicked(messageRecord: MessageRecord) = Unit
     override fun onActivatePaymentsClicked() = Unit
     override fun onSendPaymentClicked(recipientId: RecipientId) = Unit
-    override fun onEditedIndicatorClicked(messageRecord: MessageRecord) = Unit
+    override fun onEditedIndicatorClicked(conversationMessage: ConversationMessage) = Unit
+    override fun onShowSafetyTips(forGroup: Boolean) = Unit
+    override fun onReportSpamLearnMoreClicked() = Unit
+    override fun onMessageRequestAcceptOptionsClicked() = Unit
+    override fun onItemDoubleClick(item: MultiselectPart) = Unit
   }
 
   companion object {

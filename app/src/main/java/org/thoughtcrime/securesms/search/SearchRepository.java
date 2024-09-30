@@ -2,7 +2,6 @@ package org.thoughtcrime.securesms.search;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.MergeCursor;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -12,11 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
-import com.annimon.stream.Stream;
-
 import org.signal.core.util.CursorUtil;
 import org.signal.core.util.StringUtil;
-import org.signal.core.util.concurrent.LatestPrioritizedSerialExecutor;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.contacts.ContactRepository;
@@ -36,14 +32,14 @@ import org.thoughtcrime.securesms.database.model.Mention;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.database.model.ThreadRecord;
 import org.thoughtcrime.securesms.database.model.databaseprotos.BodyRangeList;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.thoughtcrime.securesms.util.FtsUtil;
 import org.thoughtcrime.securesms.util.Util;
 import org.thoughtcrime.securesms.util.concurrent.SerialExecutor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -54,7 +50,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executor;
-import java.util.function.Consumer;
 
 import static org.thoughtcrime.securesms.database.SearchTable.SNIPPET_WRAP;
 
@@ -74,11 +69,10 @@ public class SearchRepository {
   private final MentionTable      mentionTable;
   private final MessageTable      messageTable;
 
-  private final LatestPrioritizedSerialExecutor searchExecutor;
-  private final Executor                        serialExecutor;
+  private final Executor serialExecutor;
 
   public SearchRepository(@NonNull String noteToSelfTitle) {
-    this.context           = ApplicationDependencies.getApplication().getApplicationContext();
+    this.context           = AppDependencies.getApplication().getApplicationContext();
     this.noteToSelfTitle   = noteToSelfTitle;
     this.searchDatabase    = SignalDatabase.messageSearch();
     this.threadTable       = SignalDatabase.threads();
@@ -86,7 +80,6 @@ public class SearchRepository {
     this.mentionTable      = SignalDatabase.mentions();
     this.messageTable      = SignalDatabase.messages();
     this.contactRepository = new ContactRepository(context, noteToSelfTitle);
-    this.searchExecutor    = new LatestPrioritizedSerialExecutor(SignalExecutors.BOUNDED);
     this.serialExecutor    = new SerialExecutor(SignalExecutors.BOUNDED);
   }
 
@@ -100,24 +93,12 @@ public class SearchRepository {
     return new ThreadSearchResult(result, query);
   }
 
-  public void queryContacts(@NonNull String query, @NonNull Consumer<ContactSearchResult> callback) {
-    searchExecutor.execute(1, () -> {
-      long            start  = System.currentTimeMillis();
-      List<Recipient> result = queryContacts(query);
-
-      Log.d(TAG, "[contacts] Search took " + (System.currentTimeMillis() - start) + " ms");
-
-      callback.accept(new ContactSearchResult(result, query));
-    });
-  }
-
   @WorkerThread
   public @NonNull MessageSearchResult queryMessagesSync(@NonNull String query) {
-    long   start      = System.currentTimeMillis();
-    String cleanQuery = FtsUtil.sanitize(query);
+    long start = System.currentTimeMillis();
 
-    List<MessageResult> messages        = queryMessages(cleanQuery);
-    List<MessageResult> mentionMessages = queryMentions(sanitizeQueryAsTokens(query));
+    List<MessageResult> messages        = queryMessages(query);
+    List<MessageResult> mentionMessages = queryMentions(convertMentionsQueryToTokens(query));
     List<MessageResult> combined        = mergeMessagesAndMentions(messages, mentionMessages);
 
     Log.d(TAG, "[messages] Search took " + (System.currentTimeMillis() - start) + " ms");
@@ -133,34 +114,13 @@ public class SearchRepository {
 
     serialExecutor.execute(() -> {
       long                startTime       = System.currentTimeMillis();
-      List<MessageResult> messages        = queryMessages(FtsUtil.sanitize(query), threadId);
-      List<MessageResult> mentionMessages = queryMentions(sanitizeQueryAsTokens(query), threadId);
+      List<MessageResult> messages        = queryMessages(query, threadId);
+      List<MessageResult> mentionMessages = queryMentions(convertMentionsQueryToTokens(query), threadId);
 
       Log.d(TAG, "[ConversationQuery] " + (System.currentTimeMillis() - startTime) + " ms");
 
       callback.onResult(mergeMessagesAndMentions(messages, mentionMessages));
     });
-  }
-
-  private List<Recipient> queryContacts(String query) {
-    if (Util.isEmpty(query)) {
-      return Collections.emptyList();
-    }
-
-    Cursor contacts = null;
-
-    try {
-      Cursor textSecureContacts = contactRepository.querySignalContacts(query);
-      Cursor systemContacts     = contactRepository.queryNonSignalContacts(query);
-
-      contacts = new MergeCursor(new Cursor[] { textSecureContacts, systemContacts });
-
-      return readToList(contacts, new RecipientModelBuilder(), 250);
-    } finally {
-      if (contacts != null) {
-        contacts.close();
-      }
-    }
   }
 
   private @NonNull List<ThreadRecord> queryConversations(@NonNull String query, boolean unreadOnly) {
@@ -318,13 +278,16 @@ public class SearchRepository {
     int startIndex = TextUtils.indexOf(body, cleanSnippet);
 
     if (startIndex != -1) {
-      BodyRangeList.Builder builder = BodyRangeList.newBuilder();
-      for (BodyRangeList.BodyRange range : bodyRanges.getRangesList()) {
-        int adjustedStart = range.getStart() - startIndex + startOffset;
-        if (adjustedStart >= 0 && adjustedStart + range.getLength() <= bodySnippet.length()) {
-          builder.addRanges(range.toBuilder().setStart(adjustedStart).build());
+      List<BodyRangeList.BodyRange> newRanges = new ArrayList<>(bodyRanges.ranges.size());
+      for (BodyRangeList.BodyRange range : bodyRanges.ranges) {
+        int adjustedStart = range.start - startIndex + startOffset;
+        if (adjustedStart >= 0 && adjustedStart + range.length <= bodySnippet.length()) {
+          newRanges.add(range.newBuilder().start(adjustedStart).build());
         }
       }
+
+      BodyRangeList.Builder builder = new BodyRangeList.Builder();
+      builder.ranges(newRanges);
 
       MessageStyler.style(id, builder.build(), bodySnippet);
     }
@@ -367,7 +330,7 @@ public class SearchRepository {
           CharSequence updatedBody    = MentionUtil.updateBodyAndMentionsWithDisplayNames(context, body, mentions).getBody();
           CharSequence updatedSnippet = makeSnippet(cleanQueries, Objects.requireNonNull(updatedBody));
 
-          results.add(new MessageResult(record.getToRecipient(), record.getFromRecipient(), updatedBody, updatedSnippet, record.getThreadId(), record.getId(), record.getDateReceived(), true));
+          results.add(new MessageResult(record.getFromRecipient(), record.getToRecipient(), updatedBody, updatedSnippet, record.getThreadId(), record.getId(), record.getDateReceived(), true));
         }
       }
     }
@@ -375,10 +338,10 @@ public class SearchRepository {
     return results;
   }
 
-  private @NonNull List<MessageResult> queryMentions(@NonNull List<String> cleanQueries, long threadId) {
+  private @NonNull List<MessageResult> queryMentions(@NonNull List<String> queries, long threadId) {
     Set<RecipientId> recipientIds = new HashSet<>();
-    for (String cleanQuery : cleanQueries) {
-      for (Recipient recipient : recipientTable.queryRecipientsForMentions(cleanQuery)) {
+    for (String query : queries) {
+      for (Recipient recipient : recipientTable.queryRecipientsForMentions(query)) {
         recipientIds.add(recipient.getId());
       }
     }
@@ -442,13 +405,13 @@ public class SearchRepository {
     return list;
   }
 
-  private @NonNull List<String> sanitizeQueryAsTokens(@NonNull String query) {
+  private @NonNull List<String> convertMentionsQueryToTokens(@NonNull String query) {
     String[] parts = query.split("\\s+");
     if (parts.length > 3) {
       return Collections.emptyList();
+    } else {
+      return Arrays.asList(parts);
     }
-
-    return Stream.of(parts).map(FtsUtil::sanitize).toList();
   }
 
   private static @NonNull List<MessageResult> mergeMessagesAndMentions(@NonNull List<MessageResult> messages, @NonNull List<MessageResult> mentionMessages) {
@@ -510,6 +473,14 @@ public class SearchRepository {
       long        threadId                = CursorUtil.requireLong(cursor, MessageTable.THREAD_ID);
       int         messageId               = CursorUtil.requireInt(cursor, SearchTable.MESSAGE_ID);
       boolean     isMms                   = CursorUtil.requireInt(cursor, SearchTable.IS_MMS) == 1;
+
+      if (body == null) {
+        body = "";
+      }
+
+      if (bodySnippet == null) {
+        bodySnippet = "";
+      }
 
       return new MessageResult(conversationRecipient, messageRecipient, body, bodySnippet, threadId, messageId, receivedMs, isMms);
     }

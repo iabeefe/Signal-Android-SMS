@@ -6,20 +6,25 @@ import androidx.annotation.Nullable;
 import com.annimon.stream.Stream;
 
 import org.signal.libsignal.zkgroup.groups.GroupMasterKey;
+import org.thoughtcrime.securesms.components.settings.app.usernamelinks.UsernameQrCodeColorScheme;
+import org.thoughtcrime.securesms.database.CallLinkTable;
 import org.thoughtcrime.securesms.database.GroupTable;
 import org.thoughtcrime.securesms.database.IdentityTable;
 import org.thoughtcrime.securesms.database.RecipientTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.model.DistributionListId;
 import org.thoughtcrime.securesms.database.model.DistributionListRecord;
+import org.thoughtcrime.securesms.database.model.InAppPaymentSubscriberRecord;
 import org.thoughtcrime.securesms.database.model.RecipientRecord;
+import org.thoughtcrime.securesms.database.model.databaseprotos.InAppPaymentData;
 import org.thoughtcrime.securesms.groups.GroupId;
 import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.subscription.Subscriber;
-import org.whispersystems.signalservice.api.push.ServiceId;
+import org.thoughtcrime.securesms.service.webrtc.links.CallLinkRoomId;
 import org.whispersystems.signalservice.api.push.SignalServiceAddress;
 import org.whispersystems.signalservice.api.storage.SignalAccountRecord;
+import org.whispersystems.signalservice.api.storage.SignalCallLinkRecord;
 import org.whispersystems.signalservice.api.storage.SignalContactRecord;
 import org.whispersystems.signalservice.api.storage.SignalGroupV1Record;
 import org.whispersystems.signalservice.api.storage.SignalGroupV2Record;
@@ -31,7 +36,9 @@ import org.whispersystems.signalservice.internal.storage.protos.AccountRecord;
 import org.whispersystems.signalservice.internal.storage.protos.ContactRecord.IdentityState;
 import org.whispersystems.signalservice.internal.storage.protos.GroupV2Record;
 
+import java.util.Currency;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class StorageSyncModels {
@@ -55,60 +62,87 @@ public final class StorageSyncModels {
   }
 
   public static @NonNull SignalStorageRecord localToRemoteRecord(@NonNull RecipientRecord settings, @NonNull byte[] rawStorageId) {
-    switch (settings.getGroupType()) {
-      case NONE:              return SignalStorageRecord.forContact(localToRemoteContact(settings, rawStorageId));
-      case SIGNAL_V1:         return SignalStorageRecord.forGroupV1(localToRemoteGroupV1(settings, rawStorageId));
-      case SIGNAL_V2:         return SignalStorageRecord.forGroupV2(localToRemoteGroupV2(settings, rawStorageId, settings.getSyncExtras().getGroupMasterKey()));
+    switch (settings.getRecipientType()) {
+      case INDIVIDUAL:        return SignalStorageRecord.forContact(localToRemoteContact(settings, rawStorageId));
+      case GV1:               return SignalStorageRecord.forGroupV1(localToRemoteGroupV1(settings, rawStorageId));
+      case GV2:               return SignalStorageRecord.forGroupV2(localToRemoteGroupV2(settings, rawStorageId, settings.getSyncExtras().getGroupMasterKey()));
       case DISTRIBUTION_LIST: return SignalStorageRecord.forStoryDistributionList(localToRemoteStoryDistributionList(settings, rawStorageId));
+      case CALL_LINK:         return SignalStorageRecord.forCallLink(localToRemoteCallLink(settings, rawStorageId));
       default:                throw new AssertionError("Unsupported type!");
     }
   }
 
   public static AccountRecord.PhoneNumberSharingMode localToRemotePhoneNumberSharingMode(PhoneNumberPrivacyValues.PhoneNumberSharingMode phoneNumberPhoneNumberSharingMode) {
     switch (phoneNumberPhoneNumberSharingMode) {
-      case EVERYONE: return AccountRecord.PhoneNumberSharingMode.EVERYBODY;
-      case CONTACTS: return AccountRecord.PhoneNumberSharingMode.CONTACTS_ONLY;
-      case NOBODY  : return AccountRecord.PhoneNumberSharingMode.NOBODY;
-      default      : throw new AssertionError();
+      case DEFAULT  : return AccountRecord.PhoneNumberSharingMode.NOBODY;
+      case EVERYBODY: return AccountRecord.PhoneNumberSharingMode.EVERYBODY;
+      case NOBODY   : return AccountRecord.PhoneNumberSharingMode.NOBODY;
+      default       : throw new AssertionError();
     }
   }
 
   public static PhoneNumberPrivacyValues.PhoneNumberSharingMode remoteToLocalPhoneNumberSharingMode(AccountRecord.PhoneNumberSharingMode phoneNumberPhoneNumberSharingMode) {
     switch (phoneNumberPhoneNumberSharingMode) {
-      case EVERYBODY    : return PhoneNumberPrivacyValues.PhoneNumberSharingMode.EVERYONE;
-      case CONTACTS_ONLY: return PhoneNumberPrivacyValues.PhoneNumberSharingMode.CONTACTS;
+      case EVERYBODY    : return PhoneNumberPrivacyValues.PhoneNumberSharingMode.EVERYBODY;
       case NOBODY       : return PhoneNumberPrivacyValues.PhoneNumberSharingMode.NOBODY;
-      default           : return PhoneNumberPrivacyValues.PhoneNumberSharingMode.CONTACTS;
+      default           : return PhoneNumberPrivacyValues.PhoneNumberSharingMode.DEFAULT;
     }
   }
 
   public static List<SignalAccountRecord.PinnedConversation> localToRemotePinnedConversations(@NonNull List<RecipientRecord> settings) {
     return Stream.of(settings)
-                 .filter(s -> s.getGroupType() == RecipientTable.GroupType.SIGNAL_V1 ||
-                              s.getGroupType() == RecipientTable.GroupType.SIGNAL_V2 ||
+                 .filter(s -> s.getRecipientType() == RecipientTable.RecipientType.GV1 ||
+                              s.getRecipientType() == RecipientTable.RecipientType.GV2 ||
                               s.getRegistered() == RecipientTable.RegisteredState.REGISTERED)
                  .map(StorageSyncModels::localToRemotePinnedConversation)
                  .toList();
   }
 
   private static @NonNull SignalAccountRecord.PinnedConversation localToRemotePinnedConversation(@NonNull RecipientRecord settings) {
-    switch (settings.getGroupType()) {
-      case NONE     : return SignalAccountRecord.PinnedConversation.forContact(new SignalServiceAddress(settings.getServiceId(), settings.getE164()));
-      case SIGNAL_V1: return SignalAccountRecord.PinnedConversation.forGroupV1(settings.getGroupId().requireV1().getDecodedId());
-      case SIGNAL_V2: return SignalAccountRecord.PinnedConversation.forGroupV2(settings.getSyncExtras().getGroupMasterKey().serialize());
+    switch (settings.getRecipientType()) {
+      case INDIVIDUAL: return SignalAccountRecord.PinnedConversation.forContact(new SignalServiceAddress(settings.getServiceId(), settings.getE164()));
+      case GV1: return SignalAccountRecord.PinnedConversation.forGroupV1(settings.getGroupId().requireV1().getDecodedId());
+      case GV2: return SignalAccountRecord.PinnedConversation.forGroupV2(settings.getSyncExtras().getGroupMasterKey().serialize());
       default       : throw new AssertionError("Unexpected group type!");
     }
   }
 
+  public static @NonNull AccountRecord.UsernameLink.Color localToRemoteUsernameColor(UsernameQrCodeColorScheme local) {
+    switch (local) {
+      case Blue:   return AccountRecord.UsernameLink.Color.BLUE;
+      case White:  return AccountRecord.UsernameLink.Color.WHITE;
+      case Grey:   return AccountRecord.UsernameLink.Color.GREY;
+      case Tan:    return AccountRecord.UsernameLink.Color.OLIVE;
+      case Green:  return AccountRecord.UsernameLink.Color.GREEN;
+      case Orange: return AccountRecord.UsernameLink.Color.ORANGE;
+      case Pink:   return AccountRecord.UsernameLink.Color.PINK;
+      case Purple: return AccountRecord.UsernameLink.Color.PURPLE;
+      default:     return AccountRecord.UsernameLink.Color.BLUE;
+    }
+  }
+
+  public static @NonNull UsernameQrCodeColorScheme remoteToLocalUsernameColor(AccountRecord.UsernameLink.Color remote) {
+    switch (remote) {
+      case BLUE:   return UsernameQrCodeColorScheme.Blue;
+      case WHITE:  return UsernameQrCodeColorScheme.White;
+      case GREY:   return UsernameQrCodeColorScheme.Grey;
+      case OLIVE:  return UsernameQrCodeColorScheme.Tan;
+      case GREEN:  return UsernameQrCodeColorScheme.Green;
+      case ORANGE: return UsernameQrCodeColorScheme.Orange;
+      case PINK:   return UsernameQrCodeColorScheme.Pink;
+      case PURPLE: return UsernameQrCodeColorScheme.Purple;
+      default:     return UsernameQrCodeColorScheme.Blue;
+    }
+  }
+
   private static @NonNull SignalContactRecord localToRemoteContact(@NonNull RecipientRecord recipient, byte[] rawStorageId) {
-    if (recipient.getServiceId() == null && recipient.getE164() == null) {
+    if (recipient.getAci() == null && recipient.getPni() == null && recipient.getE164() == null) {
       throw new AssertionError("Must have either a UUID or a phone number!");
     }
 
-    ServiceId serviceId = recipient.getServiceId() != null ? recipient.getServiceId() : ServiceId.UNKNOWN;
     boolean   hideStory = recipient.getExtras() != null && recipient.getExtras().hideStory();
 
-    return new SignalContactRecord.Builder(rawStorageId, serviceId, recipient.getSyncExtras().getStorageProto())
+    return new SignalContactRecord.Builder(rawStorageId, recipient.getAci(), recipient.getSyncExtras().getStorageProto())
                                   .setE164(recipient.getE164())
                                   .setPni(recipient.getPni())
                                   .setProfileKey(recipient.getProfileKey())
@@ -126,8 +160,12 @@ public final class StorageSyncModels {
                                   .setMuteUntil(recipient.getMuteUntil())
                                   .setHideStory(hideStory)
                                   .setUnregisteredTimestamp(recipient.getSyncExtras().getUnregisteredTimestamp())
-                                  .setHidden(recipient.isHidden())
+                                  .setHidden(recipient.getHiddenState() != Recipient.HiddenState.NOT_HIDDEN)
                                   .setUsername(recipient.getUsername())
+                                  .setPniSignatureVerified(recipient.getSyncExtras().getPniSignatureVerified())
+                                  .setNicknameGivenName(recipient.getNickname().getGivenName())
+                                  .setNicknameFamilyName(recipient.getNickname().getFamilyName())
+                                  .setNote(recipient.getNote())
                                   .build();
   }
 
@@ -193,6 +231,32 @@ public final class StorageSyncModels {
                                   .build();
   }
 
+  private static @NonNull SignalCallLinkRecord localToRemoteCallLink(@NonNull RecipientRecord recipient, @NonNull byte[] rawStorageId) {
+    CallLinkRoomId callLinkRoomId = recipient.getCallLinkRoomId();
+
+    if (callLinkRoomId == null) {
+      throw new AssertionError("Must have a callLinkRoomId!");
+    }
+
+    CallLinkTable.CallLink callLink = SignalDatabase.callLinks().getCallLinkByRoomId(callLinkRoomId);
+    if (callLink == null) {
+      throw new AssertionError("Must have a call link record!");
+    }
+
+    if (callLink.getCredentials() == null) {
+      throw new AssertionError("Must have call link credentials!");
+    }
+
+    long   deletedTimestamp = Math.max(0, SignalDatabase.callLinks().getDeletedTimestampByRoomId(callLinkRoomId));
+    byte[] adminPassword    = deletedTimestamp > 0 ? new byte[]{} : Objects.requireNonNull(callLink.getCredentials().getAdminPassBytes(), "Non-deleted call link requires admin pass!");
+
+    return new SignalCallLinkRecord.Builder(rawStorageId, null)
+                                   .setRootKey(callLink.getCredentials().getLinkKeyBytes())
+                                   .setAdminPassKey(adminPassword)
+                                   .setDeletedTimestamp(deletedTimestamp)
+                                   .build();
+  }
+
   private static @NonNull SignalStoryDistributionListRecord localToRemoteStoryDistributionList(@NonNull RecipientRecord recipient, @NonNull byte[] rawStorageId) {
     DistributionListId distributionListId = recipient.getDistributionListId();
 
@@ -218,7 +282,7 @@ public final class StorageSyncModels {
                                                 .setRecipients(record.getMembersToSync()
                                                                      .stream()
                                                                      .map(Recipient::resolved)
-                                                                     .filter(Recipient::hasServiceId)
+                                                                     .filter(Recipient::getHasServiceId)
                                                                      .map(Recipient::requireServiceId)
                                                                      .map(SignalServiceAddress::new)
                                                                      .collect(Collectors.toList()))
@@ -243,17 +307,39 @@ public final class StorageSyncModels {
     }
   }
 
-  public static @NonNull SignalAccountRecord.Subscriber localToRemoteSubscriber(@Nullable Subscriber subscriber) {
+  /**
+   * TODO - need to store the subscriber type
+   */
+  public static @NonNull SignalAccountRecord.Subscriber localToRemoteSubscriber(@Nullable InAppPaymentSubscriberRecord subscriber) {
     if (subscriber == null) {
       return new SignalAccountRecord.Subscriber(null, null);
     } else {
-      return new SignalAccountRecord.Subscriber(subscriber.getCurrencyCode(), subscriber.getSubscriberId().getBytes());
+      return new SignalAccountRecord.Subscriber(subscriber.getCurrency().getCurrencyCode(), subscriber.getSubscriberId().getBytes());
     }
   }
 
-  public static @Nullable Subscriber remoteToLocalSubscriber(@NonNull SignalAccountRecord.Subscriber subscriber) {
+  public static @Nullable InAppPaymentSubscriberRecord remoteToLocalSubscriber(
+      @NonNull SignalAccountRecord.Subscriber subscriber,
+      @NonNull InAppPaymentSubscriberRecord.Type type
+  ) {
     if (subscriber.getId().isPresent()) {
-      return new Subscriber(SubscriberId.fromBytes(subscriber.getId().get()), subscriber.getCurrencyCode().get());
+      SubscriberId                       subscriberId          = SubscriberId.fromBytes(subscriber.getId().get());
+      InAppPaymentSubscriberRecord       localSubscriberRecord = SignalDatabase.inAppPaymentSubscribers().getBySubscriberId(subscriberId);
+      boolean                            requiresCancel        = localSubscriberRecord != null && localSubscriberRecord.getRequiresCancel();
+      InAppPaymentData.PaymentMethodType paymentMethodType     = localSubscriberRecord != null ? localSubscriberRecord.getPaymentMethodType() : InAppPaymentData.PaymentMethodType.UNKNOWN;
+
+      Currency currency;
+      if (subscriber.getCurrencyCode().isEmpty()) {
+        return null;
+      } else {
+        try {
+          currency = Currency.getInstance(subscriber.getCurrencyCode().get());
+        } catch (IllegalArgumentException e) {
+          return null;
+        }
+      }
+
+      return new InAppPaymentSubscriberRecord(subscriberId, currency, type, requiresCancel, paymentMethodType);
     } else {
       return null;
     }

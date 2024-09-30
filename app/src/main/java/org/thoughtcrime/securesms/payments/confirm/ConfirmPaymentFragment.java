@@ -1,7 +1,6 @@
 package org.thoughtcrime.securesms.payments.confirm;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -218,7 +217,7 @@ public class ConfirmPaymentFragment extends BottomSheetDialogFragment {
 
 
   private boolean isPaymentLockEnabled(Context context) {
-    return SignalStore.paymentsValues().isPaymentLockEnabled() && ServiceUtil.getKeyguardManager(context).isKeyguardSecure();
+    return SignalStore.payments().isPaymentLockEnabled() && ServiceUtil.getKeyguardManager(context).isKeyguardSecure();
   }
 
   private class Callbacks implements ConfirmPaymentAdapter.Callbacks {

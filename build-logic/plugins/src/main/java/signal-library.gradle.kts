@@ -8,16 +8,16 @@ import org.gradle.kotlin.dsl.extra
 val libs = the<LibrariesForLibs>()
 val testLibs = the<LibrariesForTestLibs>()
 
-val signalBuildToolsVersion: String by extra
-val signalCompileSdkVersion: String by extra
-val signalTargetSdkVersion: Int by extra
-val signalMinSdkVersion: Int by extra
-val signalJavaVersion: JavaVersion by extra
+val signalBuildToolsVersion: String by rootProject.extra
+val signalCompileSdkVersion: String by rootProject.extra
+val signalTargetSdkVersion: Int by rootProject.extra
+val signalMinSdkVersion: Int by rootProject.extra
+val signalJavaVersion: JavaVersion by rootProject.extra
+val signalKotlinJvmTarget: String by rootProject.extra
 
 plugins {
   id("com.android.library")
   id("kotlin-android")
-  id("android-constants")
   id("ktlint")
 }
 
@@ -28,7 +28,6 @@ android {
   defaultConfig {
     minSdk = signalMinSdkVersion
     targetSdk = signalTargetSdkVersion
-    multiDexEnabled = true
   }
 
   compileOptions {
@@ -38,7 +37,7 @@ android {
   }
 
   kotlinOptions {
-    jvmTarget = "11"
+    jvmTarget = signalKotlinJvmTarget
   }
 
   lint {
@@ -58,7 +57,6 @@ dependencies {
   implementation(libs.rxjava3.rxandroid)
   implementation(libs.rxjava3.rxjava)
   implementation(libs.rxjava3.rxkotlin)
-  implementation(libs.androidx.multidex)
   implementation(libs.kotlin.stdlib.jdk8)
 
   ktlintRuleset(libs.ktlint.twitter.compose)

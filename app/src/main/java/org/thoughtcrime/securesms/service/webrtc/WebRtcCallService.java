@@ -1,6 +1,7 @@
 package org.thoughtcrime.securesms.service.webrtc;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,12 +19,15 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.signal.core.util.PendingIntentFlags;
 import org.signal.core.util.ThreadUtil;
+import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobs.ForegroundServiceUtil;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
+import org.thoughtcrime.securesms.util.RemoteConfig;
 import org.thoughtcrime.securesms.util.TelephonyUtil;
 import org.thoughtcrime.securesms.webrtc.CallNotificationBuilder;
 import org.thoughtcrime.securesms.webrtc.UncaughtExceptionHandlerManager;
@@ -33,7 +37,13 @@ import org.thoughtcrime.securesms.webrtc.locks.LockManager;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * Provide a foreground service for {@link SignalCallManager} to leverage to run in the background when necessary. Also
@@ -62,6 +72,7 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
   private static final long FOREGROUND_SERVICE_TIMEOUT        = TimeUnit.SECONDS.toMillis(10);
 
   private final WebSocketKeepAliveTask webSocketKeepAliveTask = new WebSocketKeepAliveTask();
+  private final Executor               singleThreadExecutor   = SignalExecutors.newCachedSingleThreadExecutor("signal-webrtc-in-call", ThreadUtil.PRIORITY_IMPORTANT_BACKGROUND_THREAD);
 
   private SignalCallManager callManager;
 
@@ -72,9 +83,21 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
   private SignalAudioManager              signalAudioManager;
   private int                             lastNotificationId;
   private Notification                    lastNotification;
-  private boolean                         stopping = false;
+  private long                            lastNotificationRequestTime;
+  private Disposable                      lastNotificationDisposable = Disposable.disposed();
+  private boolean                         stopping                   = false;
 
-  public static void update(@NonNull Context context, int type, @NonNull RecipientId recipientId, boolean isVideoCall) {
+  private static boolean useActiveCallManager() {
+    return Build.VERSION.SDK_INT >= 34 || RemoteConfig.useActiveCallManager();
+  }
+
+  public synchronized static void update(@NonNull Context context, int type, @NonNull RecipientId recipientId, boolean isVideoCall) {
+    if (useActiveCallManager()) {
+      ActiveCallManager.update(context, type, recipientId, isVideoCall);
+
+      return;
+    }
+
     Intent intent = new Intent(context, WebRtcCallService.class);
     intent.setAction(ACTION_UPDATE)
           .putExtra(EXTRA_UPDATE_TYPE, type)
@@ -85,36 +108,69 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
   }
 
   public static void denyCall(@NonNull Context context) {
-    ForegroundServiceUtil.tryToStartWhenCapable(context, denyCallIntent(context), FOREGROUND_SERVICE_TIMEOUT);
+    if (useActiveCallManager()) {
+      ActiveCallManager.denyCall();
+      return;
+    }
+
+    ForegroundServiceUtil.tryToStartWhenCapable(context, new Intent(context, WebRtcCallService.class).setAction(ACTION_DENY_CALL), FOREGROUND_SERVICE_TIMEOUT);
   }
 
   public static void hangup(@NonNull Context context) {
-    ForegroundServiceUtil.tryToStartWhenCapable(context, hangupIntent(context), FOREGROUND_SERVICE_TIMEOUT);
+    if (useActiveCallManager()) {
+      ActiveCallManager.hangup();
+      return;
+    }
+
+    ForegroundServiceUtil.tryToStartWhenCapable(context, new Intent(context, WebRtcCallService.class).setAction(ACTION_LOCAL_HANGUP), FOREGROUND_SERVICE_TIMEOUT);
   }
 
-  public static void stop(@NonNull Context context) {
+  public synchronized static void stop(@NonNull Context context) {
+    if (useActiveCallManager()) {
+      ActiveCallManager.stop();
+      return;
+    }
+
     Intent intent = new Intent(context, WebRtcCallService.class);
     intent.setAction(ACTION_STOP);
 
     ForegroundServiceUtil.tryToStartWhenCapable(context, intent, FOREGROUND_SERVICE_TIMEOUT);
   }
 
-  public static @NonNull Intent denyCallIntent(@NonNull Context context) {
-    return new Intent(context, WebRtcCallService.class).setAction(ACTION_DENY_CALL);
+  public synchronized static @NonNull PendingIntent denyCallIntent(@NonNull Context context) {
+    if (useActiveCallManager()) {
+      return ActiveCallManager.denyCallIntent(context);
+    }
+
+    return getServicePendingIntent(context, new Intent(context, WebRtcCallService.class).setAction(ACTION_DENY_CALL));
   }
 
-  public static @NonNull Intent hangupIntent(@NonNull Context context) {
-    return new Intent(context, WebRtcCallService.class).setAction(ACTION_LOCAL_HANGUP);
+  public synchronized static @NonNull PendingIntent hangupIntent(@NonNull Context context) {
+    if (useActiveCallManager()) {
+      return ActiveCallManager.hangupIntent(context);
+    }
+
+    return getServicePendingIntent(context, new Intent(context, WebRtcCallService.class).setAction(ACTION_LOCAL_HANGUP));
   }
 
-  public static void sendAudioManagerCommand(@NonNull Context context, @NonNull AudioManagerCommand command) {
+  public synchronized static void sendAudioManagerCommand(@NonNull Context context, @NonNull AudioManagerCommand command) {
+    if (useActiveCallManager()) {
+      ActiveCallManager.sendAudioManagerCommand(context, command);
+      return;
+    }
+
     Intent intent = new Intent(context, WebRtcCallService.class);
     intent.setAction(ACTION_SEND_AUDIO_COMMAND)
           .putExtra(EXTRA_AUDIO_COMMAND, command);
     ForegroundServiceUtil.tryToStartWhenCapable(context, intent, FOREGROUND_SERVICE_TIMEOUT);
   }
 
-  public static void changePowerButtonReceiver(@NonNull Context context, boolean register) {
+  public synchronized static void changePowerButtonReceiver(@NonNull Context context, boolean register) {
+    if (useActiveCallManager()) {
+      ActiveCallManager.changePowerButtonReceiver(context, register);
+      return;
+    }
+
     Intent intent = new Intent(context, WebRtcCallService.class);
     intent.setAction(ACTION_CHANGE_POWER_BUTTON)
           .putExtra(EXTRA_ENABLED, register);
@@ -126,7 +182,7 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
   public void onCreate() {
     Log.v(TAG, "onCreate");
     super.onCreate();
-    this.callManager                   = ApplicationDependencies.getSignalCallManager();
+    this.callManager                   = AppDependencies.getSignalCallManager();
     this.hangUpRtcOnDeviceCallAnswered = new HangUpRtcOnPstnCallAnsweredListener();
     this.lastNotificationId            = INVALID_NOTIFICATION_ID;
 
@@ -168,7 +224,7 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
     if (intent == null || intent.getAction() == null) {
-      setCallNotification();
+      Log.w(TAG, "Service running with null intent/action likely from system restart, stopping");
       stop();
       return START_NOT_STICKY;
     }
@@ -200,7 +256,7 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
         }
         return START_STICKY;
       case ACTION_STOP:
-        setCallNotification();
+        setCallNotification(true);
         stop();
         return START_NOT_STICKY;
       case ACTION_DENY_CALL:
@@ -217,20 +273,44 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
   }
 
   private void setCallNotification() {
-    if (lastNotificationId != INVALID_NOTIFICATION_ID) {
+    setCallNotification(false);
+  }
+
+  private void setCallNotification(boolean stopping) {
+    if (!stopping && lastNotificationId != INVALID_NOTIFICATION_ID) {
       startForegroundCompat(lastNotificationId, lastNotification);
     } else {
-      Log.w(TAG, "Service running without having called start first, show temp notification and terminate service.");
-      startForegroundCompat(CallNotificationBuilder.getStartingStoppingNotificationId(), CallNotificationBuilder.getStoppingNotification(this));
-      stop();
+      if (!stopping) {
+        Log.i(TAG, "Service was started without calling UPDATE first, using temporary notification.");
+      }
+      startForegroundCompat(CallNotificationBuilder.getStartingStoppingNotificationId(), stopping ? CallNotificationBuilder.getStoppingNotification(this)
+                                                                                                  : CallNotificationBuilder.getStartingNotification(this));
     }
   }
 
   public void setCallInProgressNotification(int type, @NonNull RecipientId id, boolean isVideoCall) {
+    lastNotificationDisposable.dispose();
+
+    boolean requiresAsyncNotificationLoad = Build.VERSION.SDK_INT <= 29;
+
     lastNotificationId = CallNotificationBuilder.getNotificationId(type);
-    lastNotification   = CallNotificationBuilder.getCallInProgressNotification(this, type, Recipient.resolved(id), isVideoCall);
+    lastNotification   = CallNotificationBuilder.getCallInProgressNotification(this, type, Recipient.resolved(id), isVideoCall, requiresAsyncNotificationLoad);
 
     startForegroundCompat(lastNotificationId, lastNotification);
+
+    if (requiresAsyncNotificationLoad) {
+      final long requestTime = System.currentTimeMillis();
+      lastNotificationRequestTime = requestTime;
+      lastNotificationDisposable  = Single
+          .fromCallable(() -> CallNotificationBuilder.getCallInProgressNotification(this, type, Recipient.resolved(id), isVideoCall, false))
+          .subscribeOn(Schedulers.from(singleThreadExecutor))
+          .observeOn(AndroidSchedulers.mainThread())
+          .filter(unused -> requestTime == lastNotificationRequestTime && !stopping)
+          .subscribe(notification -> {
+            lastNotification = notification;
+            startForegroundCompat(lastNotificationId, lastNotification);
+          });
+    }
   }
 
   private synchronized void startForegroundCompat(int notificationId, Notification notification) {
@@ -239,7 +319,7 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
     }
 
     if (Build.VERSION.SDK_INT >= 30) {
-      startForeground(notificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA | ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE);
+      startForeground(notificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
     } else {
       startForeground(notificationId, notification);
     }
@@ -303,6 +383,11 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
     callManager.onBluetoothPermissionDenied();
   }
 
+  public static PendingIntent getServicePendingIntent(@NonNull Context context, @NonNull Intent intent) {
+    return Build.VERSION.SDK_INT >= 26 ? PendingIntent.getForegroundService(context, 0, intent, PendingIntentFlags.mutable())
+                                       : PendingIntent.getService(context, 0, intent, PendingIntentFlags.mutable());
+  }
+
   @SuppressWarnings("deprecation")
   private class HangUpRtcOnPstnCallAnsweredListener extends PhoneStateListener {
     @Override
@@ -337,14 +422,14 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
     public void stop() {
       keepRunning = false;
       ThreadUtil.cancelRunnableOnMain(webSocketKeepAliveTask);
-      ApplicationDependencies.getIncomingMessageObserver().removeKeepAliveToken(WEBSOCKET_KEEP_ALIVE_TOKEN);
+      AppDependencies.getIncomingMessageObserver().removeKeepAliveToken(WEBSOCKET_KEEP_ALIVE_TOKEN);
     }
 
     @MainThread
     @Override
     public void run() {
       if (keepRunning) {
-        ApplicationDependencies.getIncomingMessageObserver().registerKeepAliveToken(WEBSOCKET_KEEP_ALIVE_TOKEN);
+        AppDependencies.getIncomingMessageObserver().registerKeepAliveToken(WEBSOCKET_KEEP_ALIVE_TOKEN);
         ThreadUtil.runOnMainDelayed(this, REQUEST_WEBSOCKET_STAY_OPEN_DELAY);
       }
     }
@@ -356,8 +441,8 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
       ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
       NetworkInfo         activeNetworkInfo   = connectivityManager.getActiveNetworkInfo();
 
-      ApplicationDependencies.getSignalCallManager().networkChange(activeNetworkInfo != null && activeNetworkInfo.isConnected());
-      ApplicationDependencies.getSignalCallManager().dataModeUpdate();
+      AppDependencies.getSignalCallManager().networkChange(activeNetworkInfo != null && activeNetworkInfo.isConnected());
+      AppDependencies.getSignalCallManager().dataModeUpdate();
     }
   }
 
@@ -365,7 +450,7 @@ public final class WebRtcCallService extends Service implements SignalAudioManag
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
       if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
-        ApplicationDependencies.getSignalCallManager().screenOff();
+        AppDependencies.getSignalCallManager().screenOff();
       }
     }
   }

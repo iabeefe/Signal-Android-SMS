@@ -15,10 +15,9 @@ import org.thoughtcrime.securesms.notifications.profiles.NotificationProfiles;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.ringrtc.RemotePeer;
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcServiceState;
-import org.thoughtcrime.securesms.util.FeatureFlags;
+import org.thoughtcrime.securesms.util.RemoteConfig;
 import org.whispersystems.signalservice.api.messages.calls.OfferMessage;
-
-import java.util.UUID;
+import org.whispersystems.signalservice.api.push.ServiceId.ACI;
 
 /**
  * Action handler for when the system is at rest. Mainly responsible
@@ -97,14 +96,14 @@ public class IdleActionProcessor extends WebRtcActionProcessor {
                                                                   @NonNull RemotePeer remotePeerGroup,
                                                                   @NonNull GroupId.V2 groupId,
                                                                   long ringId,
-                                                                  @NonNull UUID sender,
+                                                                  @NonNull ACI sender,
                                                                   @NonNull CallManager.RingUpdate ringUpdate)
   {
     Log.i(TAG, "handleGroupCallRingUpdate(): recipient: " + remotePeerGroup.getId() + " ring: " + ringId + " update: " + ringUpdate);
 
     int groupSize = remotePeerGroup.getRecipient().getParticipantIds().size();
-    if (groupSize > FeatureFlags.maxGroupCallRingSize()) {
-      Log.w(TAG, "Received ring request for large group, dropping. size: " + groupSize + " max: " + FeatureFlags.maxGroupCallRingSize());
+    if (groupSize > RemoteConfig.maxGroupCallRingSize()) {
+      Log.w(TAG, "Received ring request for large group, dropping. size: " + groupSize + " max: " + RemoteConfig.maxGroupCallRingSize());
       return currentState;
     }
 
@@ -125,7 +124,7 @@ public class IdleActionProcessor extends WebRtcActionProcessor {
     if (activeProfile != null && !(activeProfile.isRecipientAllowed(remotePeerGroup.getId()) || activeProfile.getAllowAllCalls())) {
       try {
         Log.i(TAG, "Incoming ring request for profile restricted recipient");
-        SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(ringId, remotePeerGroup.getId(), sender, System.currentTimeMillis(), CallManager.RingUpdate.EXPIRED_REQUEST);
+        SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(ringId, remotePeerGroup.getId(), sender, System.currentTimeMillis(), CallManager.RingUpdate.EXPIRED_REQUEST, true);
         webRtcInteractor.getCallManager().cancelGroupRing(groupId.getDecodedId(), ringId, CallManager.RingCancelReason.DeclinedByUser);
       } catch (CallException e) {
         Log.w(TAG, "Error while trying to cancel ring: " + ringId, e);
@@ -154,11 +153,11 @@ public class IdleActionProcessor extends WebRtcActionProcessor {
 
     if (peekInfo.getDeviceCount() == 0) {
       Log.i(TAG, "No one in the group call, mark as expired and do not ring");
-      SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(info.getRingId(), info.getRecipientId(), info.getRingerUuid(), System.currentTimeMillis(), CallManager.RingUpdate.EXPIRED_REQUEST);
+      SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(info.getRingId(), info.getRecipientId(), info.getRingerAci(), System.currentTimeMillis(), CallManager.RingUpdate.EXPIRED_REQUEST);
       return currentState;
-    } else if (peekInfo.getJoinedMembers().contains(Recipient.self().requireServiceId().uuid())) {
+    } else if (peekInfo.getJoinedMembers().contains(Recipient.self().requireServiceId().getRawUuid())) {
       Log.i(TAG, "We are already in the call, mark accepted on another device and do not ring");
-      SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(info.getRingId(), info.getRecipientId(), info.getRingerUuid(), System.currentTimeMillis(), CallManager.RingUpdate.ACCEPTED_ON_ANOTHER_DEVICE);
+      SignalDatabase.calls().insertOrUpdateGroupCallFromRingState(info.getRingId(), info.getRecipientId(), info.getRingerAci(), System.currentTimeMillis(), CallManager.RingUpdate.ACCEPTED_ON_ANOTHER_DEVICE);
       return currentState;
     }
 
@@ -166,6 +165,6 @@ public class IdleActionProcessor extends WebRtcActionProcessor {
                                .actionProcessor(new IncomingGroupCallActionProcessor(webRtcInteractor))
                                .build();
 
-    return currentState.getActionProcessor().handleGroupCallRingUpdate(currentState, new RemotePeer(info.getRecipientId()), info.getGroupId(), info.getRingId(), info.getRingerUuid(), info.getRingUpdate());
+    return currentState.getActionProcessor().handleGroupCallRingUpdate(currentState, new RemotePeer(info.getRecipientId()), info.getGroupId(), info.getRingId(), info.getRingerAci(), info.getRingUpdate());
   }
 }

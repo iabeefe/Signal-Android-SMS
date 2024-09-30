@@ -17,9 +17,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.Interpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,14 +27,21 @@ import androidx.annotation.DimenRes;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.signal.core.util.ThreadUtil;
+import org.signal.core.util.concurrent.ListenableFuture;
+import org.signal.core.util.concurrent.SettableFuture;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.animation.AnimationCompleteListener;
@@ -49,9 +56,9 @@ import org.thoughtcrime.securesms.conversation.ConversationStickerSuggestionAdap
 import org.thoughtcrime.securesms.conversation.MessageStyler;
 import org.thoughtcrime.securesms.conversation.VoiceNoteDraftView;
 import org.thoughtcrime.securesms.database.DraftTable;
-import org.thoughtcrime.securesms.database.model.MediaMmsMessageRecord;
 import org.thoughtcrime.securesms.database.model.MessageId;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
+import org.thoughtcrime.securesms.database.model.MmsMessageRecord;
 import org.thoughtcrime.securesms.database.model.Quote;
 import org.thoughtcrime.securesms.database.model.StickerRecord;
 import org.thoughtcrime.securesms.keyboard.KeyboardPage;
@@ -59,8 +66,6 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.linkpreview.LinkPreview;
 import org.thoughtcrime.securesms.linkpreview.LinkPreviewRepository;
 import org.thoughtcrime.securesms.mms.DecryptableStreamUriLoader;
-import org.thoughtcrime.securesms.mms.GlideApp;
-import org.thoughtcrime.securesms.mms.GlideRequests;
 import org.thoughtcrime.securesms.mms.QuoteModel;
 import org.thoughtcrime.securesms.mms.Slide;
 import org.thoughtcrime.securesms.mms.SlideDeck;
@@ -69,8 +74,6 @@ import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.util.MessageRecordUtil;
 import org.thoughtcrime.securesms.util.ViewUtil;
 import org.thoughtcrime.securesms.util.concurrent.AssertedSuccessListener;
-import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
-import org.thoughtcrime.securesms.util.concurrent.SettableFuture;
 
 import java.util.Arrays;
 import java.util.List;
@@ -78,7 +81,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-public class InputPanel extends LinearLayout
+public class InputPanel extends ConstraintLayout
     implements AudioRecordingHandler,
                KeyboardAwareLinearLayout.OnKeyboardShownListener,
                EmojiEventListener,
@@ -101,15 +104,17 @@ public class InputPanel extends LinearLayout
   private SendButton      sendButton;
   private View            recordingContainer;
   private View            recordLockCancel;
-  private ViewGroup       composeContainer;
+  private View            composeContainer;
   private View            editMessageCancel;
   private ImageView       editMessageThumbnail;
-  private View            editMessageHeader;
+  private View            editMessageTitle;
+  private FrameLayout     composeTextContainer;
 
   private MicrophoneRecorderView microphoneRecorderView;
   private SlideToCancel          slideToCancel;
   private RecordTime             recordTime;
   private ValueAnimator          quoteAnimator;
+  private ValueAnimator          editMessageAnimator;
   private VoiceNoteDraftView     voiceNoteDraftView;
 
   private @Nullable Listener listener;
@@ -140,7 +145,7 @@ public class InputPanel extends LinearLayout
   public void onFinishInflate() {
     super.onFinishInflate();
 
-    View quoteDismiss = findViewById(R.id.quote_dismiss);
+    View quoteDismiss = findViewById(R.id.quote_dismiss_stub);
 
     this.composeContainer       = findViewById(R.id.compose_bubble);
     this.stickerSuggestion      = findViewById(R.id.input_panel_sticker_suggestion);
@@ -148,6 +153,7 @@ public class InputPanel extends LinearLayout
     this.linkPreview            = findViewById(R.id.link_preview);
     this.mediaKeyboard          = findViewById(R.id.emoji_toggle);
     this.composeText            = findViewById(R.id.embedded_text_editor);
+    this.composeTextContainer   = findViewById(R.id.embedded_text_editor_container);
     this.quickCameraToggle      = findViewById(R.id.quick_camera_toggle);
     this.quickAudioToggle       = findViewById(R.id.quick_audio_toggle);
     this.buttonToggle           = findViewById(R.id.button_toggle);
@@ -163,18 +169,13 @@ public class InputPanel extends LinearLayout
                                                  TimeUnit.HOURS.toSeconds(1),
                                                  () -> microphoneRecorderView.cancelAction(false));
     this.editMessageCancel      = findViewById(R.id.input_panel_exit_edit_mode);
-    this.editMessageHeader      = findViewById(R.id.edit_message_compose_header);
+    this.editMessageTitle       = findViewById(R.id.edit_message_title);
     this.editMessageThumbnail   = findViewById(R.id.edit_message_thumbnail);
 
     this.recordLockCancel.setOnClickListener(v -> microphoneRecorderView.cancelAction(true));
 
-    if (SignalStore.settings().isPreferSystemEmoji()) {
-      mediaKeyboard.setVisibility(View.GONE);
-      emojiVisible = false;
-    } else {
-      mediaKeyboard.setVisibility(View.VISIBLE);
-      emojiVisible = true;
-    }
+    mediaKeyboard.setVisibility(View.VISIBLE);
+    emojiVisible = true;
 
     quoteDismiss.setOnClickListener(v -> clearQuote());
 
@@ -184,7 +185,7 @@ public class InputPanel extends LinearLayout
       }
     });
 
-    stickerSuggestionAdapter = new ConversationStickerSuggestionAdapter(GlideApp.with(this), this);
+    stickerSuggestionAdapter = new ConversationStickerSuggestionAdapter(Glide.with(this), this);
 
     stickerSuggestion.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     stickerSuggestion.setAdapter(stickerSuggestionAdapter);
@@ -212,14 +213,14 @@ public class InputPanel extends LinearLayout
     composeText.setMediaListener(listener);
   }
 
-  public void setQuote(@NonNull GlideRequests glideRequests,
+  public void setQuote(@NonNull RequestManager requestManager,
                        long id,
                        @NonNull Recipient author,
                        @Nullable CharSequence body,
                        @NonNull SlideDeck attachments,
                        @NonNull QuoteModel.Type quoteType)
   {
-    this.quoteView.setQuote(glideRequests, id, author, body, false, attachments, null, quoteType);
+    this.quoteView.setQuote(requestManager, id, author, body, false, attachments, null, quoteType);
 
     int originalHeight = this.quoteView.getVisibility() == VISIBLE ? this.quoteView.getMeasuredHeight()
                                                                    : 0;
@@ -325,10 +326,10 @@ public class InputPanel extends LinearLayout
     this.linkPreview.setNoPreview(customError);
   }
 
-  public void setLinkPreview(@NonNull GlideRequests glideRequests, @NonNull Optional<LinkPreview> preview) {
+  public void setLinkPreview(@NonNull RequestManager requestManager, @NonNull Optional<LinkPreview> preview) {
     if (preview.isPresent()) {
       this.linkPreview.setVisibility(View.VISIBLE);
-      this.linkPreview.setLinkPreview(glideRequests, preview.get(), true);
+      this.linkPreview.setLinkPreview(requestManager, preview.get(), true);
     } else {
       this.linkPreview.setVisibility(View.GONE);
     }
@@ -404,33 +405,77 @@ public class InputPanel extends LinearLayout
     quoteView.setWallpaperEnabled(enabled);
   }
 
-  public void enterEditMessageMode(@NonNull GlideRequests glideRequests, @NonNull ConversationMessage conversationMessageToEdit, boolean fromDraft) {
-    SpannableString textToEdit = conversationMessageToEdit.getDisplayBody(getContext());
+  public void enterEditModeIfPossible(@NonNull RequestManager requestManager, @NonNull ConversationMessage conversationMessageToEdit, boolean fromDraft, boolean clearQuote) {
+    String currentText = composeText.getText() == null ? "" : composeText.getText().toString();
+    if ((messageToEdit == null && currentText.isEmpty()) || (messageToEdit != null && currentText.equals(messageToEdit.getBody()))) {
+      enterEditMessageMode(requestManager, conversationMessageToEdit, fromDraft, clearQuote);
+    } else {
+      AlertDialog.Builder builder = new MaterialAlertDialogBuilder(getContext());
+      builder.setTitle(R.string.InputPanel__discard_draft);
+      builder.setMessage(R.string.InputPanel__this_action_cant_be_undone);
+      builder.setPositiveButton(R.string.InputPanel__discard, (dialog, which) -> enterEditMessageMode(requestManager, conversationMessageToEdit, fromDraft, clearQuote));
+      builder.setNegativeButton(android.R.string.cancel, null);
+      builder.show();
+    }
+}
+
+  public void enterEditMessageMode(@NonNull RequestManager requestManager, @NonNull ConversationMessage conversationMessageToEdit, boolean fromDraft, boolean clearQuote) {
+    boolean fromEditMessageMode = inEditMessageMode();
+    int originalHeight          = composeTextContainer.getMeasuredHeight();
+    SpannableString textToEdit  = conversationMessageToEdit.getDisplayBody(getContext());
+
     if (!fromDraft) {
       MessageStyler.convertSpoilersToComposeMode(textToEdit);
       composeText.setText(textToEdit);
       composeText.setSelection(textToEdit.length());
     }
+
     Quote quote = MessageRecordUtil.getQuote(conversationMessageToEdit.getMessageRecord());
-    if (quote == null) {
+    if (quote == null || clearQuote) {
       clearQuote();
     } else {
-      setQuote(glideRequests, quote.getId(), Recipient.resolved(quote.getAuthor()), quote.getDisplayText(), quote.getAttachment(), quote.getQuoteType());
+      setQuote(requestManager, quote.getId(), Recipient.resolved(quote.getAuthor()), quote.getDisplayText(), quote.getAttachment(), quote.getQuoteType());
     }
+
     this.messageToEdit = conversationMessageToEdit.getMessageRecord();
-    updateEditModeThumbnail(glideRequests);
+
     updateEditModeUi();
+    updateEditModeThumbnail(requestManager);
+
+    int maxWidth = composeContainer.getWidth() - mediaKeyboard.getWidth();
+    if (!fromEditMessageMode) {
+      maxWidth -= editMessageCancel.getWidth();
+      if (editMessageCancel.getLayoutParams() instanceof MarginLayoutParams) {
+        MarginLayoutParams layoutParams = (MarginLayoutParams) editMessageCancel.getLayoutParams();
+        maxWidth -= layoutParams.leftMargin;
+      }
+    }
+    composeTextContainer.measure(MeasureSpec.makeMeasureSpec(maxWidth, MeasureSpec.AT_MOST), MeasureSpec.UNSPECIFIED);
+    int finalHeight = composeTextContainer.getMeasuredHeight();
+
+    if (editMessageAnimator != null) {
+      editMessageAnimator.cancel();
+    }
+    editMessageAnimator = createHeightAnimator(composeTextContainer, originalHeight, finalHeight, new AnimationCompleteListener() {
+      @Override
+      public void onAnimationEnd(Animator animation) {
+        ViewGroup.LayoutParams params = composeTextContainer.getLayoutParams();
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        composeTextContainer.setLayoutParams(params);
+      }
+    });
+    editMessageAnimator.start();
   }
 
-  private void updateEditModeThumbnail(@NonNull GlideRequests glideRequests) {
-    if (messageToEdit instanceof MediaMmsMessageRecord) {
-      MediaMmsMessageRecord mediaEditMessage = (MediaMmsMessageRecord) messageToEdit;
-      SlideDeck             slideDeck        = mediaEditMessage.getSlideDeck();
-      Slide                 imageVideoSlide  = slideDeck.getSlides().stream().filter(s -> s.hasImage() || s.hasVideo() || s.hasSticker()).findFirst().orElse(null);
+  private void updateEditModeThumbnail(@NonNull RequestManager requestManager) {
+    if (messageToEdit instanceof MmsMessageRecord) {
+      MmsMessageRecord mediaEditMessage = (MmsMessageRecord) messageToEdit;
+      SlideDeck        slideDeck        = mediaEditMessage.getSlideDeck();
+      Slide            imageVideoSlide  = slideDeck.getSlides().stream().filter(s -> s.hasImage() || s.hasVideo() || s.hasSticker()).findFirst().orElse(null);
 
       if (imageVideoSlide != null && imageVideoSlide.getUri() != null) {
         editMessageThumbnail.setVisibility(VISIBLE);
-        glideRequests.load(new DecryptableStreamUriLoader.DecryptableUri(imageVideoSlide.getUri()))
+        requestManager.load(new DecryptableStreamUriLoader.DecryptableUri(imageVideoSlide.getUri()))
                      .centerCrop()
                      .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                      .into(editMessageThumbnail);
@@ -443,24 +488,43 @@ public class InputPanel extends LinearLayout
   }
 
   public void exitEditMessageMode() {
+    int originalHeight = composeTextContainer.getMeasuredHeight();
     if (messageToEdit != null) {
       composeText.setText("");
       messageToEdit = null;
       quoteView.setMessageType(QuoteView.MessageType.PREVIEW);
+      clearQuote();
     }
     updateEditModeUi();
+
+    composeTextContainer.measure(0, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+
+    if (editMessageAnimator != null) {
+     editMessageAnimator.cancel();
+    }
+    editMessageAnimator = createHeightAnimator(composeTextContainer, originalHeight, composeTextContainer.getMeasuredHeight(), new AnimationCompleteListener() {
+      @Override
+      public void onAnimationEnd(Animator animation) {
+        ViewGroup.LayoutParams params = composeTextContainer.getLayoutParams();
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        composeTextContainer.setLayoutParams(params);
+      }
+    });
+    editMessageAnimator.start();
   }
 
   private void updateEditModeUi() {
     if (inEditMessageMode()) {
       ViewUtil.focusAndShowKeyboard(composeText);
-      editMessageHeader.setVisibility(View.VISIBLE);
+      editMessageTitle.setVisibility(View.VISIBLE);
+      editMessageThumbnail.setVisibility(View.VISIBLE);
       editMessageCancel.setVisibility(View.VISIBLE);
       if (listener != null) {
         listener.onEnterEditMode();
       }
     } else {
-      editMessageHeader.setVisibility(View.GONE);
+      editMessageTitle.setVisibility(View.GONE);
+      editMessageThumbnail.setVisibility(View.GONE);
       editMessageCancel.setVisibility(View.GONE);
       if (listener != null) {
         listener.onExitEditMode();

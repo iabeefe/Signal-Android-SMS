@@ -5,11 +5,11 @@ import androidx.annotation.Nullable;
 
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.database.SignalDatabase;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobmanager.Job;
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
-import org.whispersystems.signalservice.api.push.PNI;
+import org.whispersystems.signalservice.api.push.ServiceId.PNI;
 
 import java.io.IOException;
 
@@ -47,7 +47,7 @@ public class PniMigrationJob extends MigrationJob {
       return;
     }
 
-    PNI pni = PNI.parseOrNull(ApplicationDependencies.getSignalServiceAccountManager().getWhoAmI().getPni());
+    PNI pni = PNI.parseOrNull(AppDependencies.getSignalServiceAccountManager().getWhoAmI().getPni());
 
     if (pni == null) {
       throw new IOException("Invalid PNI!");

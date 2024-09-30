@@ -17,11 +17,16 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.signal.core.util.concurrent.ListenableFuture;
+import org.signal.core.util.concurrent.SettableFuture;
 import org.thoughtcrime.securesms.R;
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies; // JW: added
 import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
 import org.thoughtcrime.securesms.util.concurrent.SettableFuture;
+=======
+>>>>>>> upstream/main
 
 import java.util.concurrent.ExecutionException;
 

@@ -7,7 +7,7 @@ import org.thoughtcrime.securesms.database.model.DistributionListId
 import org.thoughtcrime.securesms.database.model.DistributionListRecord
 import org.thoughtcrime.securesms.database.model.StoryType
 import org.thoughtcrime.securesms.recipients.RecipientId
-import org.whispersystems.signalservice.api.push.ACI
+import org.whispersystems.signalservice.api.push.ServiceId.ACI
 import java.util.UUID
 
 class DistributionListTablesTest {
@@ -23,15 +23,6 @@ class DistributionListTablesTest {
   fun createList_whenNoConflict_insertSuccessfully() {
     val id: DistributionListId? = distributionDatabase.createList("test", recipientList(1, 2, 3))
     Assert.assertNotNull(id)
-  }
-
-  @Test
-  fun createList_whenNameConflict_failToInsert() {
-    val id: DistributionListId? = distributionDatabase.createList("test", recipientList(1, 2, 3))
-    Assert.assertNotNull(id)
-
-    val id2: DistributionListId? = distributionDatabase.createList("test", recipientList(1, 2, 3))
-    Assert.assertNull(id2)
   }
 
   @Test

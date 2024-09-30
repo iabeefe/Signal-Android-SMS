@@ -2,6 +2,7 @@ package org.signal.core.util
 
 import android.database.Cursor
 import androidx.core.database.getLongOrNull
+import androidx.core.database.getStringOrNull
 import java.util.Optional
 
 fun Cursor.requireString(column: String): String? {
@@ -78,16 +79,20 @@ fun <T> Cursor.requireObject(column: String, serializer: IntSerializer<T>): T {
 
 @JvmOverloads
 fun Cursor.readToSingleLong(defaultValue: Long = 0): Long {
+  return readToSingleLongOrNull() ?: defaultValue
+}
+
+fun Cursor.readToSingleLongOrNull(): Long? {
   return use {
     if (it.moveToFirst()) {
-      it.getLong(0)
+      it.getLongOrNull(0)
     } else {
-      defaultValue
+      null
     }
   }
 }
 
-fun <T> Cursor.readToSingleObject(serializer: Serializer<T, Cursor>): T? {
+fun <T> Cursor.readToSingleObject(serializer: BaseSerializer<T, Cursor, *>): T? {
   return use {
     if (it.moveToFirst()) {
       serializer.deserialize(it)
@@ -147,6 +152,23 @@ inline fun <K, V> Cursor.readToMap(predicate: (Pair<K, V>) -> Boolean = { true }
   return readToList(predicate, mapper).associate { it }
 }
 
+/**
+ * Groups the cursor by the given key, and returns a map of keys to lists of values.
+ */
+inline fun <K, V> Cursor.groupBy(mapper: (Cursor) -> Pair<K, V>): Map<K, List<V>> {
+  val map: MutableMap<K, MutableList<V>> = mutableMapOf()
+
+  use {
+    while (moveToNext()) {
+      val pair = mapper(this)
+      val list = map.getOrPut(pair.first) { mutableListOf() }
+      list += pair.second
+    }
+  }
+
+  return map
+}
+
 inline fun <T> Cursor.readToSet(predicate: (T) -> Boolean = { true }, mapper: (Cursor) -> T): Set<T> {
   val set = mutableSetOf<T>()
   use {
@@ -180,4 +202,57 @@ inline fun Cursor.forEach(operation: (Cursor) -> Unit) {
   }
 }
 
+inline fun Cursor.forEachIndexed(operation: (Int, Cursor) -> Unit) {
+  use {
+    var i = 0
+    while (moveToNext()) {
+      operation(i++, this)
+    }
+  }
+}
+
+fun Cursor.iterable(): Iterable<Cursor> {
+  return CursorIterable(this)
+}
+
 fun Boolean.toInt(): Int = if (this) 1 else 0
+
+/**
+ * Renders the entire cursor row as a string.
+ * Not necessarily used in the app, but very useful to have available when debugging.
+ */
+fun Cursor.rowToString(): String {
+  val builder = StringBuilder()
+  for (i in 0 until this.columnCount) {
+    builder
+      .append(this.getColumnName(i))
+      .append("=")
+      .append(this.getStringOrNull(i))
+
+    if (i < this.columnCount - 1) {
+      builder.append(", ")
+    }
+  }
+
+  return builder.toString()
+}
+
+private class CursorIterable(private val cursor: Cursor) : Iterable<Cursor> {
+  override fun iterator(): Iterator<Cursor> {
+    return CursorIterator(cursor)
+  }
+}
+
+private class CursorIterator(private val cursor: Cursor) : Iterator<Cursor> {
+  override fun hasNext(): Boolean {
+    return !cursor.isClosed && cursor.count > 0 && !cursor.isLast && !cursor.isAfterLast
+  }
+
+  override fun next(): Cursor {
+    return if (cursor.moveToNext()) {
+      cursor
+    } else {
+      throw NoSuchElementException()
+    }
+  }
+}

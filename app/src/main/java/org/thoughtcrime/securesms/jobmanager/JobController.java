@@ -15,6 +15,7 @@ import org.thoughtcrime.securesms.jobmanager.persistence.DependencySpec;
 import org.thoughtcrime.securesms.jobmanager.persistence.FullSpec;
 import org.thoughtcrime.securesms.jobmanager.persistence.JobSpec;
 import org.thoughtcrime.securesms.jobmanager.persistence.JobStorage;
+import org.thoughtcrime.securesms.jobs.MinimalJobSpec;
 import org.thoughtcrime.securesms.util.Debouncer;
 
 import java.util.ArrayList;
@@ -74,6 +75,15 @@ class JobController {
 
   synchronized void wakeUp() {
     notifyAll();
+  }
+
+  @WorkerThread
+  void submitNewJobChains(@NonNull List<List<List<Job>>> chains) {
+    synchronized (this) {
+      for (List<List<Job>> chain : chains) {
+        submitNewJobChain(chain);
+      }
+    }
   }
 
   @WorkerThread
@@ -154,7 +164,7 @@ class JobController {
   }
 
   @WorkerThread
-  void submitJobs(@NonNull List<Job> jobs) {
+  <T extends Job> void submitJobs(@NonNull List<T> jobs) {
     List<Job> canRun = new ArrayList<>(jobs.size());
 
     synchronized (this) {
@@ -222,26 +232,13 @@ class JobController {
 
   @WorkerThread
   synchronized void update(@NonNull JobUpdater updater) {
-    List<JobSpec> allJobs     = jobStorage.getAllJobSpecs();
-    List<JobSpec> updatedJobs = new LinkedList<>();
-
-    for (JobSpec job : allJobs) {
-      JobSpec updated = updater.update(job);
-      if (updated != job) {
-        updatedJobs.add(updated);
-      }
-    }
-
-    jobStorage.updateJobs(updatedJobs);
-
+    jobStorage.transformJobs(updater::update);
     notifyAll();
   }
 
   @WorkerThread
   synchronized List<JobSpec> findJobs(@NonNull Predicate<JobSpec> predicate) {
-    return Stream.of(jobStorage.getAllJobSpecs())
-                 .filter(predicate::test)
-                 .toList();
+    return jobStorage.getAllMatchingFilter(predicate);
   }
 
   @WorkerThread
@@ -250,11 +247,10 @@ class JobController {
       throw new IllegalArgumentException("Invalid backoff interval! " + backoffInterval);
     }
 
-    int    nextRunAttempt     = job.getRunAttempt() + 1;
-    long   nextRunAttemptTime = System.currentTimeMillis() + backoffInterval;
-    byte[] serializedData     = job.serialize();
+    int    nextRunAttempt = job.getRunAttempt() + 1;
+    byte[] serializedData = job.serialize();
 
-    jobStorage.updateJobAfterRetry(job.getId(), false, nextRunAttempt, nextRunAttemptTime, serializedData);
+    jobStorage.updateJobAfterRetry(job.getId(), System.currentTimeMillis(), nextRunAttempt, backoffInterval, serializedData);
     jobTracker.onStateChange(job, JobTracker.JobState.PENDING);
 
     List<Constraint> constraints = Stream.of(jobStorage.getConstraintSpecs(job.getId()))
@@ -263,10 +259,8 @@ class JobController {
                                          .toList();
 
 
-    long delay = Math.max(0, nextRunAttemptTime - System.currentTimeMillis());
-
-    Log.i(TAG, JobLogger.format(job, "Scheduling a retry in " + delay + " ms."));
-    scheduler.schedule(delay, constraints);
+    Log.i(TAG, JobLogger.format(job, "Scheduling a retry in " + backoffInterval + " ms."));
+    scheduler.schedule(backoffInterval, constraints);
 
     notifyAll();
   }
@@ -326,7 +320,7 @@ class JobController {
    * When the job returned from this method has been run, you must call {@link #onJobFinished(Job)}.
    */
   @WorkerThread
-  synchronized @NonNull Job pullNextEligibleJobForExecution(@NonNull JobPredicate predicate) {
+  synchronized @NonNull Job pullNextEligibleJobForExecution(@NonNull Predicate<MinimalJobSpec> predicate) {
     try {
       Job job;
 
@@ -338,7 +332,7 @@ class JobController {
         wait();
       }
 
-      jobStorage.updateJobRunningState(job.getId(), true);
+      jobStorage.markJobAsRunning(job.getId(), System.currentTimeMillis());
       runningJobs.put(job.getId(), job);
       jobTracker.onStateChange(job, JobTracker.JobState.RUNNING);
 
@@ -354,9 +348,9 @@ class JobController {
    */
   @WorkerThread
   synchronized @NonNull String getDebugInfo() {
-    List<JobSpec>        jobs         = jobStorage.getAllJobSpecs();
-    List<ConstraintSpec> constraints  = jobStorage.getAllConstraintSpecs();
-    List<DependencySpec> dependencies = jobStorage.getAllDependencySpecs();
+    List<JobSpec>        jobs         = jobStorage.debugGetJobSpecs(1000);
+    List<ConstraintSpec> constraints  = jobStorage.debugGetConstraintSpecs(1000);
+    List<DependencySpec> dependencies = jobStorage.debugGetAllDependencySpecs();
 
     StringBuilder info = new StringBuilder();
 
@@ -445,14 +439,16 @@ class JobController {
                                   job.getFactoryKey(),
                                   job.getParameters().getQueue(),
                                   System.currentTimeMillis(),
-                                  job.getNextRunAttemptTime(),
+                                  job.getLastRunAttemptTime(),
+                                  job.getNextBackoffInterval(),
                                   job.getRunAttempt(),
                                   job.getParameters().getMaxAttempts(),
                                   job.getParameters().getLifespan(),
                                   job.serialize(),
                                   null,
                                   false,
-                                  job.getParameters().isMemoryOnly());
+                                  job.getParameters().isMemoryOnly(),
+                                  job.getParameters().getPriority());
 
     List<ConstraintSpec> constraintSpecs = Stream.of(job.getParameters().getConstraintKeys())
                                                  .map(key -> new ConstraintSpec(jobSpec.getId(), key, jobSpec.isMemoryOnly()))
@@ -484,24 +480,27 @@ class JobController {
   }
 
   @WorkerThread
-  private @Nullable Job getNextEligibleJobForExecution(@NonNull JobPredicate predicate) {
-    List<JobSpec> jobSpecs = Stream.of(jobStorage.getPendingJobsWithNoDependenciesInCreatedOrder(System.currentTimeMillis()))
-                                   .filter(predicate::shouldRun)
-                                   .toList();
+  private @Nullable Job getNextEligibleJobForExecution(@NonNull Predicate<MinimalJobSpec> predicate) {
+    JobSpec jobSpec = jobStorage.getNextEligibleJob(System.currentTimeMillis(), minimalJobSpec -> {
+      if (!predicate.test(minimalJobSpec)) {
+        return false;
+      }
 
-    for (JobSpec jobSpec : jobSpecs) {
-      List<ConstraintSpec> constraintSpecs = jobStorage.getConstraintSpecs(jobSpec.getId());
+      List<ConstraintSpec> constraintSpecs = jobStorage.getConstraintSpecs(minimalJobSpec.getId());
       List<Constraint>     constraints     = Stream.of(constraintSpecs)
                                                    .map(ConstraintSpec::getFactoryKey)
                                                    .map(constraintInstantiator::instantiate)
                                                    .toList();
 
-      if (Stream.of(constraints).allMatch(Constraint::isMet)) {
-        return createJob(jobSpec, constraintSpecs);
-      }
+      return Stream.of(constraints).allMatch(Constraint::isMet);
+    });
+
+    if (jobSpec == null) {
+      return null;
     }
 
-    return null;
+    List<ConstraintSpec> constraintSpecs = jobStorage.getConstraintSpecs(jobSpec.getId());
+    return createJob(jobSpec, constraintSpecs);
   }
 
   private @NonNull Job createJob(@NonNull JobSpec jobSpec, @NonNull List<ConstraintSpec> constraintSpecs) {
@@ -511,7 +510,8 @@ class JobController {
       Job job = jobInstantiator.instantiate(jobSpec.getFactoryKey(), parameters, jobSpec.getSerializedData());
 
       job.setRunAttempt(jobSpec.getRunAttempt());
-      job.setNextRunAttemptTime(jobSpec.getNextRunAttemptTime());
+      job.setLastRunAttemptTime(jobSpec.getLastRunAttemptTime());
+      job.setNextBackoffInterval(jobSpec.getNextBackoffInterval());
       job.setContext(application);
 
       return job;
@@ -547,14 +547,16 @@ class JobController {
                        jobSpec.getFactoryKey(),
                        jobSpec.getQueueKey(),
                        jobSpec.getCreateTime(),
-                       jobSpec.getNextRunAttemptTime(),
+                       jobSpec.getLastRunAttemptTime(),
+                       jobSpec.getNextBackoffInterval(),
                        jobSpec.getRunAttempt(),
                        jobSpec.getMaxAttempts(),
                        jobSpec.getLifespan(),
                        jobSpec.getSerializedData(),
                        inputData,
                        jobSpec.isRunning(),
-                       jobSpec.isMemoryOnly());
+                       jobSpec.isMemoryOnly(),
+                       jobSpec.getPriority());
   }
 
   interface Callback {

@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import androidx.annotation.VisibleForTesting
+import org.signal.core.util.Base64
 import org.signal.core.util.logging.Log
 import org.signal.libsignal.protocol.IdentityKey
 import org.signal.libsignal.protocol.IdentityKeyPair
@@ -15,20 +15,22 @@ import org.thoughtcrime.securesms.crypto.MasterCipher
 import org.thoughtcrime.securesms.crypto.ProfileKeyUtil
 import org.thoughtcrime.securesms.crypto.storage.PreKeyMetadataStore
 import org.thoughtcrime.securesms.database.SignalDatabase
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobs.PreKeysSyncJob
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.service.KeyCachingService
-import org.thoughtcrime.securesms.util.Base64
 import org.thoughtcrime.securesms.util.TextSecurePreferences
 import org.thoughtcrime.securesms.util.Util
-import org.whispersystems.signalservice.api.push.ACI
-import org.whispersystems.signalservice.api.push.PNI
+import org.whispersystems.signalservice.api.push.ServiceId.ACI
+import org.whispersystems.signalservice.api.push.ServiceId.PNI
 import org.whispersystems.signalservice.api.push.ServiceIds
 import org.whispersystems.signalservice.api.push.SignalServiceAddress
+import org.whispersystems.signalservice.api.push.UsernameLinkComponents
+import org.whispersystems.signalservice.api.util.UuidUtil
+import org.whispersystems.signalservice.api.util.toByteArray
 import java.security.SecureRandom
 
-internal class AccountValues internal constructor(store: KeyValueStore) : SignalStoreValues(store) {
+class AccountValues internal constructor(store: KeyValueStore, context: Context) : SignalStoreValues(store) {
 
   companion object {
     private val TAG = Log.tag(AccountValues::class.java)
@@ -64,26 +66,31 @@ internal class AccountValues internal constructor(store: KeyValueStore) : Signal
     private const val KEY_PNI_LAST_RESORT_KYBER_PREKEY_ID = "account.pni_last_resort_kyber_prekey_id"
     private const val KEY_PNI_LAST_RESORT_KYBER_PREKEY_ROTATION_TIME = "account.pni_last_resort_kyber_prekey_rotation_time"
 
-    @VisibleForTesting
-    const val KEY_E164 = "account.e164"
+    private const val KEY_USERNAME = "account.username"
+    private const val KEY_USERNAME_LINK_ENTROPY = "account.username_link_entropy"
+    private const val KEY_USERNAME_LINK_SERVER_ID = "account.username_link_server_id"
+    private const val KEY_USERNAME_SYNC_STATE = "phoneNumberPrivacy.usernameSyncState"
+    private const val KEY_USERNAME_SYNC_ERROR_COUNT = "phoneNumberPrivacy.usernameErrorCount"
 
-    @VisibleForTesting
-    const val KEY_ACI = "account.aci"
-
-    @VisibleForTesting
-    const val KEY_PNI = "account.pni"
-
-    @VisibleForTesting
-    const val KEY_IS_REGISTERED = "account.is_registered"
+    private const val KEY_E164 = "account.e164"
+    private const val KEY_ACI = "account.aci"
+    private const val KEY_PNI = "account.pni"
+    private const val KEY_IS_REGISTERED = "account.is_registered"
   }
 
   init {
     if (!store.containsKey(KEY_ACI)) {
-      migrateFromSharedPrefsV1(ApplicationDependencies.getApplication())
+      migrateFromSharedPrefsV1(context)
     }
 
     if (!store.containsKey(KEY_ACI_IDENTITY_PUBLIC_KEY)) {
-      migrateFromSharedPrefsV2(ApplicationDependencies.getApplication())
+      migrateFromSharedPrefsV2(context)
+    }
+
+    store.getString(KEY_PNI, null)?.let { pni ->
+      if (!pni.startsWith("PNI:")) {
+        store.beginWrite().putString(KEY_PNI, "PNI:$pni").commit()
+      }
     }
   }
 
@@ -94,7 +101,10 @@ internal class AccountValues internal constructor(store: KeyValueStore) : Signal
       KEY_ACI_IDENTITY_PUBLIC_KEY,
       KEY_ACI_IDENTITY_PRIVATE_KEY,
       KEY_PNI_IDENTITY_PUBLIC_KEY,
-      KEY_PNI_IDENTITY_PRIVATE_KEY
+      KEY_PNI_IDENTITY_PRIVATE_KEY,
+      KEY_USERNAME,
+      KEY_USERNAME_LINK_ENTROPY,
+      KEY_USERNAME_LINK_SERVER_ID
     )
   }
 
@@ -183,7 +193,7 @@ internal class AccountValues internal constructor(store: KeyValueStore) : Signal
   fun generateAciIdentityKeyIfNecessary() {
     synchronized(this) {
       if (store.containsKey(KEY_ACI_IDENTITY_PUBLIC_KEY)) {
-        Log.w(TAG, "Tried to generate an ANI identity, but one was already set!", Throwable())
+        Log.w(TAG, "Tried to generate an ACI identity, but one was already set!", Throwable())
         return
       }
 
@@ -242,6 +252,30 @@ internal class AccountValues internal constructor(store: KeyValueStore) : Signal
         .beginWrite()
         .putBlob(KEY_PNI_IDENTITY_PUBLIC_KEY, key.publicKey.serialize())
         .putBlob(KEY_PNI_IDENTITY_PRIVATE_KEY, key.privateKey.serialize())
+        .commit()
+    }
+  }
+
+  fun restorePniIdentityKeyFromBackup(publicKey: ByteArray, privateKey: ByteArray) {
+    synchronized(this) {
+      Log.i(TAG, "Setting a new PNI identity key pair.")
+
+      store
+        .beginWrite()
+        .putBlob(KEY_PNI_IDENTITY_PUBLIC_KEY, publicKey)
+        .putBlob(KEY_PNI_IDENTITY_PRIVATE_KEY, privateKey)
+        .commit()
+    }
+  }
+
+  fun restoreAciIdentityKeyFromBackup(publicKey: ByteArray, privateKey: ByteArray) {
+    synchronized(this) {
+      Log.i(TAG, "Setting a new ACI identity key pair.")
+
+      store
+        .beginWrite()
+        .putBlob(KEY_ACI_IDENTITY_PUBLIC_KEY, publicKey)
+        .putBlob(KEY_ACI_IDENTITY_PRIVATE_KEY, privateKey)
         .commit()
     }
   }
@@ -319,7 +353,7 @@ internal class AccountValues internal constructor(store: KeyValueStore) : Signal
 
     putBoolean(KEY_IS_REGISTERED, registered)
 
-    ApplicationDependencies.getIncomingMessageObserver().notifyRegistrationChanged()
+    AppDependencies.incomingMessageObserver.notifyRegistrationChanged()
 
     if (previous != registered) {
       Recipient.self().live().refresh()
@@ -328,6 +362,18 @@ internal class AccountValues internal constructor(store: KeyValueStore) : Signal
     if (previous && !registered) {
       clearLocalCredentials()
     }
+  }
+
+  /**
+   * Function for testing backup/restore
+   */
+  @Deprecated("debug only")
+  fun clearRegistrationButKeepCredentials() {
+    putBoolean(KEY_IS_REGISTERED, false)
+
+    AppDependencies.incomingMessageObserver.notifyRegistrationChanged()
+
+    Recipient.self().live().refresh()
   }
 
   val deviceName: String?
@@ -345,6 +391,50 @@ internal class AccountValues internal constructor(store: KeyValueStore) : Signal
   val isLinkedDevice: Boolean
     get() = !isPrimaryDevice
 
+  /** The local user's full username (nickname.discriminator), if set. */
+  var username: String?
+    get() {
+      val value = getString(KEY_USERNAME, null)
+      return if (value.isNullOrBlank()) null else value
+    }
+    set(value) {
+      putString(KEY_USERNAME, value)
+    }
+
+  /** The local user's username link components, if set. */
+  var usernameLink: UsernameLinkComponents?
+    get() {
+      val entropy: ByteArray? = getBlob(KEY_USERNAME_LINK_ENTROPY, null)
+      val serverId: ByteArray? = getBlob(KEY_USERNAME_LINK_SERVER_ID, null)
+
+      return if (entropy != null && serverId != null) {
+        val serverIdUuid = UuidUtil.parseOrThrow(serverId)
+        UsernameLinkComponents(entropy, serverIdUuid)
+      } else {
+        null
+      }
+    }
+    set(value) {
+      store
+        .beginWrite()
+        .putBlob(KEY_USERNAME_LINK_ENTROPY, value?.entropy)
+        .putBlob(KEY_USERNAME_LINK_SERVER_ID, value?.serverId?.toByteArray())
+        .apply()
+    }
+
+  /**
+   * There are some cases where our username may fall out of sync with the service. In particular, we may get a new value for our username from
+   * storage service but then find that it doesn't match what's on the service.
+   */
+  var usernameSyncState: UsernameSyncState
+    get() = UsernameSyncState.deserialize(getLong(KEY_USERNAME_SYNC_STATE, UsernameSyncState.IN_SYNC.serialize()))
+    set(value) {
+      Log.i(TAG, "Marking username sync state as: $value")
+      putLong(KEY_USERNAME_SYNC_STATE, value.serialize())
+    }
+
+  var usernameSyncErrorCount: Int by integerValue(KEY_USERNAME_SYNC_ERROR_COUNT, 0)
+
   private fun clearLocalCredentials() {
     putString(KEY_SERVICE_PASSWORD, Util.getSecret(18))
 
@@ -352,7 +442,7 @@ internal class AccountValues internal constructor(store: KeyValueStore) : Signal
     val self = Recipient.self()
 
     SignalDatabase.recipients.setProfileKey(self.id, newProfileKey)
-    ApplicationDependencies.getGroupsV2Authorization().clear()
+    AppDependencies.groupsV2Authorization.clear()
   }
 
   /** Do not alter. If you need to migrate more stuff, create a new method. */
@@ -440,5 +530,24 @@ internal class AccountValues internal constructor(store: KeyValueStore) : Signal
 
   private fun SharedPreferences.hasStringData(key: String): Boolean {
     return this.getString(key, null) != null
+  }
+
+  enum class UsernameSyncState(private val value: Long) {
+    /** Our username data is in sync with the service */
+    IN_SYNC(1),
+
+    /** Both our username and username link are out-of-sync with the service */
+    USERNAME_AND_LINK_CORRUPTED(2),
+
+    /** Our username link is out-of-sync with the service */
+    LINK_CORRUPTED(3);
+
+    fun serialize(): Long = value
+
+    companion object {
+      fun deserialize(value: Long): UsernameSyncState {
+        return values().firstOrNull { it.value == value } ?: throw IllegalArgumentException("Invalid value: $value")
+      }
+    }
   }
 }

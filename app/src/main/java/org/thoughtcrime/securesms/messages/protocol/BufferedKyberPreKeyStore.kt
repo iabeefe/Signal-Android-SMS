@@ -25,7 +25,7 @@ class BufferedKyberPreKeyStore(private val selfServiceId: ServiceId) : SignalSer
   private var hasLoadedAll: Boolean = false
 
   /** The kyber prekeys that have been marked as removed (if they're not last resort). */
-  private val removedIfNotLastResort: MutableList<Int> = mutableListOf()
+  private val removedIfNotLastResort: MutableSet<Int> = mutableSetOf()
 
   @kotlin.jvm.Throws(InvalidKeyIdException::class)
   override fun loadKyberPreKey(kyberPreKeyId: Int): KyberPreKeyRecord {
@@ -76,6 +76,14 @@ class BufferedKyberPreKeyStore(private val selfServiceId: ServiceId) : SignalSer
   }
 
   override fun removeKyberPreKey(kyberPreKeyId: Int) {
+    error("Not expected in this flow")
+  }
+
+  override fun markAllOneTimeKyberPreKeysStaleIfNecessary(staleTime: Long) {
+    error("Not expected in this flow")
+  }
+
+  override fun deleteAllStaleOneTimeKyberPreKeys(threshold: Long, minCount: Int) {
     error("Not expected in this flow")
   }
 

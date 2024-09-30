@@ -19,8 +19,13 @@ import com.annimon.stream.Stream; // JW: added
 import org.thoughtcrime.securesms.BuildConfig;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.database.NoExternalStorageException;
+<<<<<<< HEAD
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
 import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
+=======
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
+import org.thoughtcrime.securesms.permissions.PermissionCompat;
+>>>>>>> upstream/main
 import org.thoughtcrime.securesms.permissions.Permissions;
 import org.thoughtcrime.securesms.util.UriUtils; // JW: added
 
@@ -148,6 +153,52 @@ public class StorageUtil {
     return backups;
   }
 
+<<<<<<< HEAD
+=======
+  public static File getOrCreateBackupV2Directory() throws NoExternalStorageException {
+    File storage = Environment.getExternalStorageDirectory();
+
+    if (!storage.canWrite()) {
+      throw new NoExternalStorageException();
+    }
+
+    File backups = getBackupV2Directory();
+
+    if (!backups.exists()) {
+      if (!backups.mkdirs()) {
+        throw new NoExternalStorageException("Unable to create backup directory...");
+      }
+    }
+
+    return backups;
+  }
+
+  public static File getBackupDirectory() throws NoExternalStorageException {
+    File storage = Environment.getExternalStorageDirectory();
+    File signal  = new File(storage, "Signal");
+    File backups = new File(signal, "Backups");
+
+    //noinspection ConstantConditions
+    if (BuildConfig.APPLICATION_ID.startsWith(PRODUCTION_PACKAGE_ID + ".")) {
+      backups = new File(backups, BuildConfig.APPLICATION_ID.substring(PRODUCTION_PACKAGE_ID.length() + 1));
+    }
+
+    return backups;
+  }
+
+  public static File getBackupV2Directory() throws NoExternalStorageException {
+    File storage = Environment.getExternalStorageDirectory();
+    File backups  = new File(storage, "Signal");
+
+    //noinspection ConstantConditions
+    if (BuildConfig.APPLICATION_ID.startsWith(PRODUCTION_PACKAGE_ID + ".")) {
+      backups = new File(storage, BuildConfig.APPLICATION_ID.substring(PRODUCTION_PACKAGE_ID.length() + 1));
+    }
+
+    return backups;
+  }
+
+>>>>>>> upstream/main
   @RequiresApi(24)
   public static @NonNull String getDisplayPath(@NonNull Context context, @NonNull Uri uri) {
     String lastPathSegment = Objects.requireNonNull(uri.getLastPathSegment());
@@ -172,6 +223,7 @@ public class StorageUtil {
     }
   }
 
+<<<<<<< HEAD
   public static File getBackupCacheDirectory(Context context) {
     // JW: changed.
     if (TextSecurePreferences.isBackupLocationRemovable(context)) {
@@ -197,6 +249,8 @@ public class StorageUtil {
             .orElse(null);
   }
 
+=======
+>>>>>>> upstream/main
   private static File getSignalStorageDir() throws NoExternalStorageException {
     final File storage = Environment.getExternalStorageDirectory();
 
@@ -219,17 +273,23 @@ public class StorageUtil {
     return storage.canWrite();
   }
 
-  public static File getLegacyBackupDirectory() throws NoExternalStorageException {
-    return getSignalStorageDir();
-  }
-
   public static boolean canWriteToMediaStore() {
     return Build.VERSION.SDK_INT > 28 ||
-           Permissions.hasAll(ApplicationDependencies.getApplication(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+           Permissions.hasAll(AppDependencies.getApplication(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
   }
 
-  public static boolean canReadFromMediaStore() {
-    return Permissions.hasAll(ApplicationDependencies.getApplication(), Manifest.permission.READ_EXTERNAL_STORAGE);
+  public static boolean canReadAnyFromMediaStore() {
+    return Permissions.hasAny(AppDependencies.getApplication(), PermissionCompat.forImagesAndVideos());
+  }
+
+  public static boolean canOnlyReadSelectedMediaStore() {
+    return Build.VERSION.SDK_INT >= 34 &&
+           Permissions.hasAll(AppDependencies.getApplication(), Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) &&
+           !Permissions.hasAny(AppDependencies.getApplication(), Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO);
+  }
+
+  public static boolean canReadAllFromMediaStore() {
+    return Permissions.hasAll(AppDependencies.getApplication(), PermissionCompat.forImagesAndVideos());
   }
 
   public static @NonNull Uri getVideoUri() {

@@ -1,8 +1,9 @@
 package org.thoughtcrime.securesms
 
+import org.signal.core.util.Base64
 import org.signal.spinner.Plugin
 import org.signal.spinner.PluginResult
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 
 class StorageServicePlugin : Plugin {
@@ -10,11 +11,11 @@ class StorageServicePlugin : Plugin {
   override val path: String = PATH
 
   override fun get(): PluginResult {
-    val columns = listOf("Type", "Data")
+    val columns = listOf("Type", "Id", "Data")
     val rows = mutableListOf<List<String>>()
 
-    val manager = ApplicationDependencies.getSignalServiceAccountManager()
-    val storageServiceKey = SignalStore.storageService().orCreateStorageKey
+    val manager = AppDependencies.signalServiceAccountManager
+    val storageServiceKey = SignalStore.storageService.orCreateStorageKey
     val storageManifestVersion = manager.storageManifestVersion
     val manifest = manager.getStorageManifestIfDifferentVersion(storageServiceKey, storageManifestVersion - 1).get()
     val signalStorageRecords = manager.readStorageRecords(storageServiceKey, manifest.storageIds)
@@ -37,10 +38,16 @@ class StorageServicePlugin : Plugin {
       } else if (record.storyDistributionList.isPresent) {
         row += "Distribution List"
         row += record.storyDistributionList.get().toProto().toString()
+      } else if (record.callLink.isPresent) {
+        row += "Call Link"
+        row += record.callLink.get().toProto().toString()
       } else {
         row += "Unknown"
         row += ""
       }
+
+      row.add(1, Base64.encodeWithPadding(record.id.raw))
+
       rows += row
     }
 

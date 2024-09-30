@@ -1,28 +1,19 @@
 package org.thoughtcrime.securesms.sharing.v2
 
-import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.annotation.NonNull
 import androidx.annotation.WorkerThread
-import androidx.core.content.ContextCompat
 import androidx.core.util.toKotlinPair
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.signal.core.util.logging.Log
-import org.thoughtcrime.securesms.attachments.Attachment
-import org.thoughtcrime.securesms.attachments.UriAttachment
-import org.thoughtcrime.securesms.conversation.MessageSendType
-import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.mediasend.Media
-import org.thoughtcrime.securesms.mms.MediaConstraints
 import org.thoughtcrime.securesms.providers.BlobProvider
-import org.thoughtcrime.securesms.util.FeatureFlags
 import org.thoughtcrime.securesms.util.MediaUtil
+import org.thoughtcrime.securesms.util.RemoteConfig
 import org.thoughtcrime.securesms.util.UriUtil
-import org.thoughtcrime.securesms.util.Util
 import java.io.IOException
 import java.io.InputStream
 import java.util.Optional
@@ -73,8 +64,7 @@ class ShareRepository(context: Context) {
     return ResolvedShareData.ExternalUri(
       uri = blobUri,
       mimeType = mimeType,
-      text = multiShareExternal.text,
-      isMmsOrSmsSupported = isMmsSupported(appContext, asUriAttachment(blobUri, mimeType, size))
+      text = multiShareExternal.text
     )
   }
 
@@ -92,7 +82,7 @@ class ShareRepository(context: Context) {
     }
 
     val media: List<Media> = mimeTypes.toList()
-      .take(FeatureFlags.maxAttachmentCount())
+      .take(RemoteConfig.maxAttachmentCount)
       .map { (uri, mimeType) ->
         val stream: InputStream = try {
           appContext.contentResolver.openInputStream(uri)
@@ -126,14 +116,13 @@ class ShareRepository(context: Context) {
           false,
           Optional.of(Media.ALL_MEDIA_BUCKET_ID),
           Optional.empty(),
+          Optional.empty(),
           Optional.empty()
         )
       }.filterNotNull()
 
     return if (media.isNotEmpty()) {
-      val isMmsSupported = media.all { isMmsSupported(appContext, asUriAttachment(it.uri, it.mimeType, it.size)) }
-
-      ResolvedShareData.Media(media, isMmsSupported)
+      ResolvedShareData.Media(media)
     } else {
       ResolvedShareData.Failure
     }
@@ -179,6 +168,7 @@ class ShareRepository(context: Context) {
       }
       return null
     }
+<<<<<<< HEAD
 
     private fun asUriAttachment(uri: Uri, mimeType: String, size: Long): UriAttachment {
       return UriAttachment(uri, mimeType, -1, size, null, false, false, false, false, null, null, null, null, null)
@@ -196,5 +186,7 @@ class ShareRepository(context: Context) {
       val mmsConstraints = MediaConstraints.getMmsMediaConstraints(sendType.simSubscriptionId ?: -1)
       return mmsConstraints.isSatisfied(context, attachment) || mmsConstraints.canResize(attachment)
     }
+=======
+>>>>>>> upstream/main
   }
 }

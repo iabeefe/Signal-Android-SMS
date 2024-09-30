@@ -4,18 +4,20 @@ import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.drawable.Drawable
+import android.graphics.Rect
 import android.media.AudioManager
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.method.ScrollingMovementMethod
+import android.text.style.ClickableSpan
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Interpolator
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -28,6 +30,7 @@ import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
@@ -46,22 +49,18 @@ import org.thoughtcrime.securesms.components.AvatarImageView
 import org.thoughtcrime.securesms.components.emoji.EmojiTextView
 import org.thoughtcrime.securesms.components.segmentedprogressbar.SegmentedProgressBar
 import org.thoughtcrime.securesms.components.segmentedprogressbar.SegmentedProgressBarListener
-import org.thoughtcrime.securesms.contacts.avatars.FallbackContactPhoto
-import org.thoughtcrime.securesms.contacts.avatars.FallbackPhoto20dp
-import org.thoughtcrime.securesms.contacts.avatars.GeneratedContactPhoto
+import org.thoughtcrime.securesms.components.spoiler.SpoilerAnnotation
 import org.thoughtcrime.securesms.contacts.paged.ContactSearchKey
 import org.thoughtcrime.securesms.conversation.ConversationIntents
 import org.thoughtcrime.securesms.conversation.MessageStyler
-import org.thoughtcrime.securesms.conversation.colors.AvatarColor
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardBottomSheet
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragment
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragmentArgs
 import org.thoughtcrime.securesms.database.AttachmentTable
-import org.thoughtcrime.securesms.database.model.MediaMmsMessageRecord
+import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.database.model.databaseprotos.BodyRangeList
 import org.thoughtcrime.securesms.mediapreview.MediaPreviewFragment
 import org.thoughtcrime.securesms.mediapreview.VideoControlsDelegate
-import org.thoughtcrime.securesms.mms.GlideApp
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.recipients.ui.bottomsheet.RecipientBottomSheetDialogFragment
@@ -84,6 +83,7 @@ import org.thoughtcrime.securesms.util.AvatarUtil
 import org.thoughtcrime.securesms.util.BottomSheetUtil
 import org.thoughtcrime.securesms.util.DateUtils
 import org.thoughtcrime.securesms.util.Debouncer
+import org.thoughtcrime.securesms.util.Projection
 import org.thoughtcrime.securesms.util.ServiceUtil
 import org.thoughtcrime.securesms.util.ViewUtil
 import org.thoughtcrime.securesms.util.fragments.requireListener
@@ -129,6 +129,9 @@ class StoryViewerPageFragment :
 
   private val storyViewStateViewModel: StoryViewStateViewModel by viewModels()
 
+  private var textStoryIntersectProcessingEvents: Boolean = false
+  private val textStoryIntersectHitRect: Rect = Rect()
+
   private val viewModel: StoryViewerPageViewModel by viewModels(
     factoryProducer = {
       StoryViewerPageViewModel.Factory(
@@ -138,7 +141,7 @@ class StoryViewerPageFragment :
           storyViewStateViewModel.storyViewStateCache
         ),
         StoryCache(
-          GlideApp.with(requireActivity()),
+          Glide.with(requireActivity()),
           StoryDisplay.getStorySize(resources)
         )
       )
@@ -180,13 +183,15 @@ class StoryViewerPageFragment :
     val cardWrapper: TouchInterceptingFrameLayout = view.findViewById(R.id.story_content_card_touch_interceptor)
     val card: MaterialCardView = view.findViewById(R.id.story_content_card)
     val caption: EmojiTextView = view.findViewById(R.id.story_caption)
-    val largeCaption: TextView = view.findViewById(R.id.story_large_caption)
+    val largeCaption: EmojiTextView = view.findViewById(R.id.story_large_caption)
     val largeCaptionOverlay: View = view.findViewById(R.id.story_large_caption_overlay)
     val reactionAnimationView: OnReactionSentView = view.findViewById(R.id.on_reaction_sent_view)
     val storyGradientTop: View = view.findViewById(R.id.story_gradient_top)
     val storyGradientBottom: View = view.findViewById(R.id.story_bottom_gradient_container)
     val storyVolumeOverlayView: StoryVolumeOverlayView = view.findViewById(R.id.story_volume_overlay)
     val addToGroupStoryButtonWrapper: View = view.findViewById(R.id.add_wrapper)
+
+    largeCaption.bindGestureListener()
 
     storyNormalBottomGradient = view.findViewById(R.id.story_gradient_bottom)
     storyCaptionBottomGradient = view.findViewById(R.id.story_caption_gradient)
@@ -217,9 +222,6 @@ class StoryViewerPageFragment :
       storyCaptionContainer,
       addToGroupStoryButtonWrapper
     )
-
-    senderAvatar.setFallbackPhotoProvider(FallbackPhotoProvider())
-    groupAvatar.setFallbackPhotoProvider(FallbackPhotoProvider())
 
     closeView.setOnClickListener {
       requireActivity().onBackPressed()
@@ -260,7 +262,10 @@ class StoryViewerPageFragment :
       scaleListener
     )
 
-    cardWrapper.setOnInterceptTouchEventListener { !storySlate.state.hasClickableContent && viewModel.getPost()?.content?.isText() != true }
+    cardWrapper.setOnInterceptTouchEventListener {
+      !storySlate.state.hasClickableContent && !checkEventIntersectsClickableSpan(cardWrapper, it)
+    }
+
     cardWrapper.setOnTouchListener { _, event ->
       scaleDetector.onTouchEvent(event)
       val result = if (scaleDetector.isInProgress || scaleListener.isPerformingEndAnimation) {
@@ -449,7 +454,10 @@ class StoryViewerPageFragment :
         if (storyViewerPageArgs.source == StoryViewerPageArgs.Source.NOTIFICATION) {
           startReply(isFromNotification = true, groupReplyStartPosition = storyViewerPageArgs.groupReplyStartPosition)
         } else if (storyViewerPageArgs.source == StoryViewerPageArgs.Source.INFO_CONTEXT && state.selectedPostIndex in state.posts.indices) {
-          showInfo(state.posts[state.selectedPostIndex])
+          viewModel.setIsDisplayingInfoDialog(true)
+          lifecycleDisposable += sharedViewModel.postAfterLoadStateReady {
+            showInfo(state.posts[state.selectedPostIndex])
+          }
         }
       }
     }
@@ -493,7 +501,7 @@ class StoryViewerPageFragment :
     childFragmentManager.setFragmentResultListener(StoryDirectReplyDialogFragment.REQUEST_EMOJI, viewLifecycleOwner) { _, bundle ->
       val emoji = bundle.getString(StoryDirectReplyDialogFragment.REQUEST_EMOJI)
       if (emoji != null) {
-        reactionAnimationView.playForEmoji(emoji)
+        reactionAnimationView.playForEmoji(listOf(emoji))
         viewModel.setIsDisplayingReactionAnimation(true)
       }
     }
@@ -526,6 +534,80 @@ class StoryViewerPageFragment :
 
   override fun onDismissForwardSheet() {
     viewModel.setIsDisplayingForwardDialog(false)
+  }
+
+  private fun checkEventIntersectsClickableSpan(cardWrapper: ViewGroup, event: MotionEvent): Boolean {
+    if (viewModel.getPost()?.content?.isText() != true) {
+      textStoryIntersectProcessingEvents = false
+      return false
+    }
+
+    val action = event.action
+    if (action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_UP) {
+      return textStoryIntersectProcessingEvents
+    }
+
+    if (checkTextSpanIntersect(cardWrapper, event)) {
+      textStoryIntersectProcessingEvents = true
+      return true
+    }
+
+    if (checkLinkPreviewIntersect(cardWrapper, event)) {
+      textStoryIntersectProcessingEvents = true
+      return true
+    }
+
+    return false
+  }
+
+  private fun checkTextSpanIntersect(cardWrapper: ViewGroup, event: MotionEvent): Boolean {
+    val textView = cardWrapper.findViewById<TextView>(R.id.text_story_post_text)
+    val spanned = textView.text as? Spanned ?: return false
+
+    val textViewProjection = Projection.relativeToParent(cardWrapper, textView, null)
+    var x = event.x - textViewProjection.x
+    var y = event.y - textViewProjection.y
+
+    textViewProjection.release()
+
+    x -= textView.totalPaddingLeft
+    y -= textView.totalPaddingTop
+
+    x += textView.scrollX
+    y += textView.scrollY
+
+    val layout = textView.layout
+    val line = layout.getLineForVertical(y.toInt())
+    val off = layout.getOffsetForHorizontal(line, x)
+
+    val spoilers = spanned.getSpans(off, off, SpoilerAnnotation.SpoilerClickableSpan::class.java)
+    if (spoilers.isNotEmpty()) {
+      return true
+    }
+
+    val clickables = spanned.getSpans(off, off, ClickableSpan::class.java)
+    return clickables.isNotEmpty()
+  }
+
+  private fun checkLinkPreviewIntersect(cardWrapper: ViewGroup, event: MotionEvent): Boolean {
+    Log.d(TAG, "Checking motion event for link preview intersect: ${event.x} ${event.y}")
+
+    val linkPreviewView = cardWrapper.findViewById<View>(R.id.text_story_post_link_preview)
+    val viewProjection = Projection.relativeToParent(cardWrapper, linkPreviewView, null)
+      .translateY(linkPreviewView.translationY)
+
+    textStoryIntersectHitRect.set(
+      viewProjection.x.toInt(),
+      viewProjection.y.toInt(),
+      viewProjection.x.toInt() + viewProjection.width,
+      viewProjection.y.toInt() + viewProjection.height
+    )
+
+    viewProjection.release()
+
+    Log.d(TAG, "${event.x}, ${event.y} within $textStoryIntersectHitRect? ${textStoryIntersectHitRect.contains(event.x.toInt(), event.y.toInt())}")
+
+    return textStoryIntersectHitRect.contains(event.x.toInt(), event.y.toInt())
   }
 
   private fun calculateDurationForText(textContent: StoryPost.Content.TextContent): Long {
@@ -755,7 +837,7 @@ class StoryViewerPageFragment :
   }
 
   private fun presentSlate(post: StoryPost) {
-    storySlate.setBackground((post.conversationMessage.messageRecord as? MediaMmsMessageRecord)?.slideDeck?.thumbnailSlide?.placeholderBlur)
+    storySlate.setBackground((post.conversationMessage.messageRecord as? MmsMessageRecord)?.slideDeck?.thumbnailSlide?.placeholderBlur)
 
     if (post.conversationMessage.messageRecord.isOutgoing) {
       storySlate.moveToState(StorySlateView.State.HIDDEN, post.id)
@@ -819,7 +901,7 @@ class StoryViewerPageFragment :
   }
 
   @SuppressLint("SetTextI18n")
-  private fun presentCaption(caption: EmojiTextView, largeCaption: TextView, largeCaptionOverlay: View, storyPost: StoryPost) {
+  private fun presentCaption(caption: EmojiTextView, largeCaption: EmojiTextView, largeCaptionOverlay: View, storyPost: StoryPost) {
     val displayBody: CharSequence = if (storyPost.content is StoryPost.Content.AttachmentContent) {
       val displayBodySpan = SpannableString(storyPost.content.attachment.caption ?: "")
       val ranges: BodyRangeList? = storyPost.conversationMessage.messageRecord.messageRanges
@@ -843,6 +925,7 @@ class StoryViewerPageFragment :
     caption.setOverflowText(getString(R.string.StoryViewerPageFragment__see_more))
     caption.maxLines = 5
     caption.text = displayBody
+    caption.setMaxLength(280)
 
     if (caption.text.length == displayBody.length) {
       caption.setOnClickListener(null)
@@ -902,7 +985,7 @@ class StoryViewerPageFragment :
   }
 
   private fun presentDate(date: TextView, storyPost: StoryPost) {
-    val formattedDate = DateUtils.getBriefRelativeTimeSpanString(context, Locale.getDefault(), storyPost.dateInMilliseconds)
+    val formattedDate = DateUtils.getBriefRelativeTimeSpanString(requireContext(), Locale.getDefault(), storyPost.dateInMilliseconds)
     if (date.text != formattedDate) {
       date.text = formattedDate
     }
@@ -927,8 +1010,7 @@ class StoryViewerPageFragment :
   private fun onSenderClicked(senderId: RecipientId) {
     viewModel.setIsDisplayingRecipientBottomSheet(true)
     RecipientBottomSheetDialogFragment
-      .create(senderId, null)
-      .show(childFragmentManager, "BOTTOM")
+      .show(childFragmentManager, senderId, null)
   }
 
   private fun presentBottomBar(post: StoryPost, replyState: StoryViewerPageState.ReplyState, isReceiptsEnabled: Boolean) {
@@ -1078,7 +1160,7 @@ class StoryViewerPageFragment :
         }
       },
       onShare = {
-        StoryContextMenu.share(this, it.conversationMessage.messageRecord as MediaMmsMessageRecord)
+        StoryContextMenu.share(this, it.conversationMessage.messageRecord as MmsMessageRecord)
       },
       onSave = {
         StoryContextMenu.save(requireContext(), it.conversationMessage.messageRecord)
@@ -1225,7 +1307,7 @@ class StoryViewerPageFragment :
       return true
     }
 
-    override fun onScroll(e1: MotionEvent, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
+    override fun onScroll(e1: MotionEvent?, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
       val isFirstStory = sharedViewModel.stateSnapshot.page == 0
       val isLastStory = sharedViewModel.stateSnapshot.pages.lastIndex == sharedViewModel.stateSnapshot.page
       val isXMagnitudeGreaterThanYMagnitude = abs(distanceX) > abs(distanceY) || viewToTranslate.translationX > 0f
@@ -1234,7 +1316,7 @@ class StoryViewerPageFragment :
 
       sharedViewModel.setIsChildScrolling(isXMagnitudeGreaterThanYMagnitude || isFirstAndHasYTranslationOrNegativeY || isLastAndHasYTranslationOrNegativeY)
       if (isFirstStory) {
-        val delta = max(0f, (e2.rawY - e1.rawY)) / 3f
+        val delta = max(0f, (e2.rawY - (e1?.rawY ?: 0f))) / 3f
         val percent = INTERPOLATOR.getInterpolation(delta / maxSlide)
         val distance = maxSlide * percent
 
@@ -1243,7 +1325,7 @@ class StoryViewerPageFragment :
       }
 
       if (isLastStory) {
-        val delta = max(0f, (e1.rawY - e2.rawY)) / 3f
+        val delta = max(0f, ((e1?.rawY ?: 0f) - e2.rawY)) / 3f
         val percent = -INTERPOLATOR.getInterpolation(delta / maxSlide)
         val distance = maxSlide * percent
 
@@ -1251,7 +1333,7 @@ class StoryViewerPageFragment :
         viewToTranslate.translationY = distance
       }
 
-      val delta = max(0f, (e2.rawX - e1.rawX)) / 3f
+      val delta = max(0f, (e2.rawX - (e1?.rawX ?: 0f))) / 3f
       val percent = INTERPOLATOR.getInterpolation(delta / maxSlide)
       val distance = maxSlide * percent
 
@@ -1263,7 +1345,7 @@ class StoryViewerPageFragment :
       return true
     }
 
-    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+    override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
       val isSideSwipe = abs(velocityX) > abs(velocityY)
       if (!isSideSwipe) {
         return false
@@ -1282,34 +1364,6 @@ class StoryViewerPageFragment :
       }
 
       return true
-    }
-  }
-
-  private class FallbackPhotoProvider : Recipient.FallbackPhotoProvider() {
-    override fun getPhotoForGroup(): FallbackContactPhoto {
-      return FallbackPhoto20dp(R.drawable.symbol_group_20)
-    }
-
-    override fun getPhotoForResolvingRecipient(): FallbackContactPhoto {
-      throw UnsupportedOperationException("This provider does not support resolving recipients")
-    }
-
-    override fun getPhotoForLocalNumber(): FallbackContactPhoto {
-      throw UnsupportedOperationException("This provider does not support local number")
-    }
-
-    override fun getPhotoForRecipientWithName(name: String, targetSize: Int): FallbackContactPhoto {
-      return FixedSizeGeneratedContactPhoto(name, R.drawable.symbol_person_20)
-    }
-
-    override fun getPhotoForRecipientWithoutName(): FallbackContactPhoto {
-      return FallbackPhoto20dp(R.drawable.symbol_person_20)
-    }
-  }
-
-  private class FixedSizeGeneratedContactPhoto(name: String, fallbackResId: Int) : GeneratedContactPhoto(name, fallbackResId) {
-    override fun newFallbackDrawable(context: Context, color: AvatarColor, inverted: Boolean): Drawable {
-      return FallbackPhoto20dp(fallbackResId).asDrawable(context, color, inverted)
     }
   }
 

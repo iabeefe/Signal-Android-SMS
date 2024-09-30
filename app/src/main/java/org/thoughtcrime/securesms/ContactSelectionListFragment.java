@@ -35,7 +35,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.Px;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -50,8 +49,11 @@ import androidx.transition.TransitionManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
+import org.signal.core.util.concurrent.LifecycleDisposable;
+import org.signal.core.util.concurrent.RxExtensions;
 import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
+import org.thoughtcrime.securesms.calls.YouAreAlreadyInACallSnackbar;
 import org.thoughtcrime.securesms.components.RecyclerViewFastScroller;
 import org.thoughtcrime.securesms.contacts.ContactChipViewModel;
 import org.thoughtcrime.securesms.contacts.ContactSelectionDisplayMode;
@@ -69,11 +71,13 @@ import org.thoughtcrime.securesms.contacts.paged.ContactSearchState;
 import org.thoughtcrime.securesms.contacts.sync.ContactDiscovery;
 import org.thoughtcrime.securesms.groups.SelectionLimits;
 import org.thoughtcrime.securesms.groups.ui.GroupLimitDialog;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.permissions.Permissions;
+import org.thoughtcrime.securesms.profiles.manage.UsernameRepository;
+import org.thoughtcrime.securesms.profiles.manage.UsernameRepository.UsernameAciFetchResult;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.util.CommunicationActions;
-import org.signal.core.util.concurrent.LifecycleDisposable;
 import org.thoughtcrime.securesms.util.TextSecurePreferences;
 import org.thoughtcrime.securesms.util.UsernameUtil;
 import org.thoughtcrime.securesms.util.ViewUtil;
@@ -85,6 +89,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -121,10 +126,6 @@ public final class ContactSelectionListFragment extends LoggingFragment {
   private TextView                        emptyText;
   private OnContactSelectedListener       onContactSelectedListener;
   private SwipeRefreshLayout              swipeRefresh;
-  private View                            showContactsLayout;
-  private Button                          showContactsButton;
-  private TextView                        showContactsDescription;
-  private ProgressWheel                   showContactsProgress;
   private String                          cursorFilter;
   private RecyclerView                    recyclerView;
   private RecyclerViewFastScroller        fastScroller;
@@ -138,6 +139,7 @@ public final class ContactSelectionListFragment extends LoggingFragment {
   private ContactSearchMediator           contactSearchMediator;
 
   @Nullable private NewConversationCallback              newConversationCallback;
+  @Nullable private FindByCallback                       findByCallback;
   @Nullable private NewCallCallback                      newCallCallback;
   @Nullable private ScrollCallback                       scrollCallback;
   @Nullable private OnItemLongClickListener              onItemLongClickListener;
@@ -145,6 +147,8 @@ public final class ContactSelectionListFragment extends LoggingFragment {
   private           Set<RecipientId>                     currentSelection;
   private           boolean                              isMulti;
   private           boolean                              canSelectSelf;
+  private           boolean                              resetPositionOnCommit = false;
+
   private           ListClickListener                    listClickListener = new ListClickListener();
   @Nullable private SwipeRefreshLayout.OnRefreshListener onRefreshListener;
 
@@ -154,6 +158,10 @@ public final class ContactSelectionListFragment extends LoggingFragment {
 
     if (context instanceof NewConversationCallback) {
       newConversationCallback = (NewConversationCallback) context;
+    }
+
+    if (context instanceof FindByCallback) {
+      findByCallback = (FindByCallback) context;
     }
 
     if (context instanceof NewCallCallback) {
@@ -212,43 +220,25 @@ public final class ContactSelectionListFragment extends LoggingFragment {
   public void onStart() {
     super.onStart();
 
-    Permissions.with(this)
-               .request(Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS)
-               .ifNecessary()
-               .onAllGranted(() -> {
-                 if (!TextSecurePreferences.hasSuccessfullyRetrievedDirectory(getActivity())) {
-                   handleContactPermissionGranted();
-                 } else {
-                   contactSearchMediator.refresh();
-                 }
-               })
-               .onAnyDenied(() -> {
-                 requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-                 if (safeArguments().getBoolean(RECENTS, requireActivity().getIntent().getBooleanExtra(RECENTS, false))) {
-                   contactSearchMediator.refresh();
-                 } else {
-                   initializeNoContactsPermission();
-                 }
-               })
-               .execute();
+    if (hasContactsPermissions(requireContext()) && !TextSecurePreferences.hasSuccessfullyRetrievedDirectory(getActivity())) {
+        handleContactPermissionGranted();
+    } else {
+      requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+      contactSearchMediator.refresh();
+    }
   }
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.contact_selection_list_fragment, container, false);
 
-    emptyText               = view.findViewById(android.R.id.empty);
-    recyclerView            = view.findViewById(R.id.recycler_view);
-    swipeRefresh            = view.findViewById(R.id.swipe_refresh);
-    fastScroller            = view.findViewById(R.id.fast_scroller);
-    showContactsLayout      = view.findViewById(R.id.show_contacts_container);
-    showContactsButton      = view.findViewById(R.id.show_contacts_button);
-    showContactsDescription = view.findViewById(R.id.show_contacts_description);
-    showContactsProgress    = view.findViewById(R.id.progress);
-    chipRecycler            = view.findViewById(R.id.chipRecycler);
-    constraintLayout        = view.findViewById(R.id.container);
-    headerActionView        = view.findViewById(R.id.header_action);
+    emptyText                = view.findViewById(android.R.id.empty);
+    recyclerView             = view.findViewById(R.id.recycler_view);
+    swipeRefresh             = view.findViewById(R.id.swipe_refresh);
+    fastScroller             = view.findViewById(R.id.fast_scroller);
+    chipRecycler             = view.findViewById(R.id.chipRecycler);
+    constraintLayout         = view.findViewById(R.id.container);
+    headerActionView         = view.findViewById(R.id.header_action);
 
     final LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
 
@@ -257,6 +247,11 @@ public final class ContactSelectionListFragment extends LoggingFragment {
       @Override
       public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder viewHolder) {
         return true;
+      }
+
+      @Override
+      public void onAnimationFinished(@NonNull RecyclerView.ViewHolder viewHolder) {
+        recyclerView.setAlpha(1f);
       }
     });
 
@@ -343,7 +338,6 @@ public final class ContactSelectionListFragment extends LoggingFragment {
         selectionLimit,
         new ContactSearchAdapter.DisplayOptions(
             isMulti,
-            ContactSearchAdapter.DisplaySmsTag.DEFAULT,
             ContactSearchAdapter.DisplaySecondaryInformation.ALWAYS,
             newCallCallback != null,
             false
@@ -362,6 +356,19 @@ public final class ContactSelectionListFragment extends LoggingFragment {
             displayOptions,
             new ContactSelectionListAdapter.OnContactSelectionClick() {
               @Override
+              public void onDismissFindContactsBannerClicked() {
+                SignalStore.uiHints().markDismissedContactsPermissionBanner();
+                if (onRefreshListener != null) {
+                  onRefreshListener.onRefresh();
+                }
+              }
+
+              @Override
+              public void onFindContactsClicked() {
+                requestContactPermissions();
+              }
+
+              @Override
               public void onRefreshContactsClicked() {
                 if (onRefreshListener != null) {
                   setRefreshing(true);
@@ -372,6 +379,16 @@ public final class ContactSelectionListFragment extends LoggingFragment {
               @Override
               public void onNewGroupClicked() {
                 newConversationCallback.onNewGroup(false);
+              }
+
+              @Override
+              public void onFindByPhoneNumberClicked() {
+                findByCallback.onFindByPhoneNumber();
+              }
+
+              @Override
+              public void onFindByUsernameClicked() {
+                findByCallback.onFindByUsername();
               }
 
               @Override
@@ -421,6 +438,10 @@ public final class ContactSelectionListFragment extends LoggingFragment {
     super.onDestroyView();
     constraintLayout = null;
     onRefreshListener = null;
+  }
+
+  public int getSelectedMembersSize() {
+    return contactSearchMediator.getSelectedMembersSize();
   }
 
   private @NonNull Bundle safeArguments() {
@@ -473,6 +494,27 @@ public final class ContactSelectionListFragment extends LoggingFragment {
     return isMulti;
   }
 
+  private void requestContactPermissions() {
+    Permissions.with(this)
+               .request(Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS)
+               .ifNecessary()
+               .onAllGranted(() -> {
+                 recyclerView.setAlpha(0.5f);
+                 if (!TextSecurePreferences.hasSuccessfullyRetrievedDirectory(getActivity())) {
+                   handleContactPermissionGranted();
+                 } else {
+                   contactSearchMediator.refresh();
+                   if (onRefreshListener != null) {
+                     swipeRefresh.setRefreshing(true);
+                     onRefreshListener.onRefresh();
+                   }
+                 }
+               })
+               .onAnyDenied(() -> contactSearchMediator.refresh())
+               .withPermanentDenialDialog(getString(R.string.ContactSelectionListFragment_signal_requires_the_contacts_permission_in_order_to_display_your_contacts), null, R.string.ContactSelectionListFragment_allow_access_contacts, R.string.ContactSelectionListFragment_to_find_people, getParentFragmentManager())
+               .execute();
+  }
+
   private void initializeCursor() {
     recyclerView.addItemDecoration(new LetterHeaderDecoration(requireContext(), this::hideLetterHeaders));
     recyclerView.setAdapter(contactSearchMediator.getAdapter());
@@ -496,35 +538,22 @@ public final class ContactSelectionListFragment extends LoggingFragment {
     return hasQueryFilter() || shouldDisplayRecents();
   }
 
-  private void initializeNoContactsPermission() {
-    swipeRefresh.setVisibility(View.GONE);
-
-    showContactsLayout.setVisibility(View.VISIBLE);
-    showContactsProgress.setVisibility(View.INVISIBLE);
-    showContactsDescription.setText(R.string.contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them);
-    showContactsButton.setVisibility(View.VISIBLE);
-
-    showContactsButton.setOnClickListener(v -> {
-      Permissions.with(this)
-                 .request(Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS)
-                 .ifNecessary()
-                 .withPermanentDenialDialog(getString(R.string.ContactSelectionListFragment_signal_requires_the_contacts_permission_in_order_to_display_your_contacts))
-                 .onSomeGranted(permissions -> {
-                   if (permissions.contains(Manifest.permission.WRITE_CONTACTS)) {
-                     handleContactPermissionGranted();
-                   }
-                 })
-                 .execute();
-    });
-  }
-
   public void setQueryFilter(String filter) {
-    this.cursorFilter = filter;
+    if (Objects.equals(filter, this.cursorFilter)) {
+      return;
+    }
+
+    this.resetPositionOnCommit = true;
+    this.cursorFilter          = filter;
+
     contactSearchMediator.onFilterChanged(filter);
   }
 
   public void resetQueryFilter() {
     setQueryFilter(null);
+
+    this.resetPositionOnCommit = true;
+
     swipeRefresh.setRefreshing(false);
   }
 
@@ -542,13 +571,13 @@ public final class ContactSelectionListFragment extends LoggingFragment {
     headerActionView.setVisibility(View.GONE);
   }
 
-  public void setRecyclerViewPaddingBottom(@Px int paddingBottom) {
-    ViewUtil.setPaddingBottom(recyclerView, paddingBottom);
-  }
-
   private void onLoadFinished(int count) {
+    if (resetPositionOnCommit) {
+      resetPositionOnCommit = false;
+      recyclerView.scrollToPosition(0);
+    }
+
     swipeRefresh.setVisibility(View.VISIBLE);
-    showContactsLayout.setVisibility(View.GONE);
 
     emptyText.setText(R.string.contact_selection_group_activity__no_contacts);
     boolean useFastScroller = count > 20;
@@ -579,12 +608,10 @@ public final class ContactSelectionListFragment extends LoggingFragment {
     new AsyncTask<Void, Void, Boolean>() {
       @Override
       protected void onPreExecute() {
-        swipeRefresh.setVisibility(View.GONE);
-        showContactsLayout.setVisibility(View.VISIBLE);
-        showContactsButton.setVisibility(View.INVISIBLE);
-        showContactsDescription.setText(R.string.ConversationListFragment_loading);
-        showContactsProgress.setVisibility(View.VISIBLE);
-        showContactsProgress.spin();
+        if (onRefreshListener != null) {
+          setRefreshing(true);
+          onRefreshListener.onRefresh();
+        }
       }
 
       @Override
@@ -601,14 +628,11 @@ public final class ContactSelectionListFragment extends LoggingFragment {
       @Override
       protected void onPostExecute(Boolean result) {
         if (result) {
-          showContactsLayout.setVisibility(View.GONE);
-          swipeRefresh.setVisibility(View.VISIBLE);
           reset();
         } else {
           Context context = getContext();
           if (context != null) {
             Toast.makeText(getContext(), R.string.ContactSelectionListFragment_error_retrieving_contacts_check_your_network_connection, Toast.LENGTH_LONG).show();
-            initializeNoContactsPermission();
           }
         }
       }
@@ -641,6 +665,10 @@ public final class ContactSelectionListFragment extends LoggingFragment {
     }
   }
 
+  public void addRecipientToSelectionIfAble(@NonNull RecipientId recipientId) {
+    listClickListener.onItemClick(new ContactSearchKey.RecipientSearchKey(recipientId, false));
+  }
+
   private class ListClickListener {
     public void onItemClick(ContactSearchKey contact) {
       boolean         isUnknown       = contact instanceof ContactSearchKey.UnknownRecipientKey;
@@ -666,11 +694,18 @@ public final class ContactSelectionListFragment extends LoggingFragment {
           AlertDialog loadingDialog = SimpleProgressDialog.show(requireContext());
 
           SimpleTask.run(getViewLifecycleOwner().getLifecycle(), () -> {
-            return UsernameUtil.fetchAciForUsername(username);
-          }, uuid -> {
+            try {
+              return RxExtensions.safeBlockingGet(UsernameRepository.fetchAciForUsername(UsernameUtil.sanitizeUsernameFromSearch(username)));
+            } catch (InterruptedException e) {
+              Log.w(TAG, "Interrupted?", e);
+              return UsernameAciFetchResult.NetworkError.INSTANCE;
+            }
+          }, result  -> {
             loadingDialog.dismiss();
-            if (uuid.isPresent()) {
-              Recipient       recipient = Recipient.externalUsername(uuid.get(), username);
+
+            // TODO Could be more specific with errors
+            if (result instanceof UsernameAciFetchResult.Success success) {
+              Recipient       recipient = Recipient.externalUsername(success.getAci(), username);
               SelectedContact selected  = SelectedContact.forUsername(recipient.getId(), username);
 
               if (onContactSelectedListener != null) {
@@ -844,8 +879,20 @@ public final class ContactSelectionListFragment extends LoggingFragment {
     return ContactSearchConfiguration.build(builder -> {
       builder.setQuery(contactSearchState.getQuery());
 
-      if (newConversationCallback != null) {
+      if (newConversationCallback != null                               &&
+          !hasContactsPermissions(requireContext())                     &&
+          !SignalStore.uiHints().getDismissedContactsPermissionBanner() &&
+          !hasQuery) {
+        builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.FIND_CONTACTS_BANNER.getCode());
+      }
+
+      if (newConversationCallback != null && !hasQuery) {
         builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.NEW_GROUP.getCode());
+      }
+
+      if (findByCallback != null && !hasQuery) {
+        builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.FIND_BY_USERNAME.getCode());
+        builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.FIND_BY_PHONE_NUMBER.getCode());
       }
 
       if (transportType != null) {
@@ -862,12 +909,14 @@ public final class ContactSelectionListFragment extends LoggingFragment {
           ));
         }
 
+        boolean hideHeader = newCallCallback != null || (newConversationCallback != null && !hasQuery);
         builder.addSection(new ContactSearchConfiguration.Section.Individuals(
             includeSelf,
             transportType,
-            newCallCallback == null,
+            !hideHeader,
             null,
-            !hideLetterHeaders()
+            !hideLetterHeaders(),
+            newConversationCallback != null ? ContactSearchSortOrder.RECENCY : ContactSearchSortOrder.NATURAL
         ));
       }
 
@@ -893,7 +942,7 @@ public final class ContactSelectionListFragment extends LoggingFragment {
         builder.username(newRowMode);
       }
 
-      if (newCallCallback != null || newConversationCallback != null) {
+      if ((newCallCallback != null || newConversationCallback != null)) {
         addMoreSection(builder);
         builder.withEmptyState(emptyBuilder -> {
           emptyBuilder.addSection(ContactSearchConfiguration.Section.Empty.INSTANCE);
@@ -906,9 +955,17 @@ public final class ContactSelectionListFragment extends LoggingFragment {
     });
   }
 
+  private boolean hasContactsPermissions(@NonNull Context context) {
+    return Permissions.hasAll(context, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS);
+  }
+
   private void addMoreSection(@NonNull ContactSearchConfiguration.Builder builder) {
     builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.MORE_HEADING.getCode());
-    builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.REFRESH_CONTACTS.getCode());
+    if (hasContactsPermissions(requireContext())) {
+      builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.REFRESH_CONTACTS.getCode());
+    } else if (SignalStore.uiHints().getDismissedContactsPermissionBanner()) {
+      builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.FIND_CONTACTS.getCode());
+    }
     builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.INVITE_TO_SIGNAL.getCode());
   }
 
@@ -953,12 +1010,16 @@ public final class ContactSelectionListFragment extends LoggingFragment {
   private class CallButtonClickCallbacks implements ContactSearchAdapter.CallButtonClickCallbacks {
     @Override
     public void onVideoCallButtonClicked(@NonNull Recipient recipient) {
-      CommunicationActions.startVideoCall(ContactSelectionListFragment.this, recipient);
+      CommunicationActions.startVideoCall(ContactSelectionListFragment.this, recipient, () -> {
+        YouAreAlreadyInACallSnackbar.show(requireView());
+      });
     }
 
     @Override
     public void onAudioCallButtonClicked(@NonNull Recipient recipient) {
-      CommunicationActions.startVoiceCall(ContactSelectionListFragment.this, recipient);
+      CommunicationActions.startVoiceCall(ContactSelectionListFragment.this, recipient, () -> {
+        YouAreAlreadyInACallSnackbar.show(requireView());
+      });
     }
   }
 
@@ -983,6 +1044,12 @@ public final class ContactSelectionListFragment extends LoggingFragment {
     void onInvite();
 
     void onNewGroup(boolean forceV1);
+  }
+
+  public interface FindByCallback {
+    void onFindByUsername();
+
+    void onFindByPhoneNumber();
   }
 
   public interface NewCallCallback {

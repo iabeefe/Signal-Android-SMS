@@ -1,11 +1,9 @@
 package org.thoughtcrime.securesms.keyvalue
 
-import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import com.google.protobuf.InvalidProtocolBufferException
 import com.mobilecoin.lib.Mnemonics
 import com.mobilecoin.lib.exceptions.BadMnemonicException
 import org.signal.core.util.logging.Log
@@ -20,19 +18,21 @@ import org.thoughtcrime.securesms.payments.currency.CurrencyUtil
 import org.thoughtcrime.securesms.payments.proto.MobileCoinLedger
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
-import org.thoughtcrime.securesms.util.FeatureFlags
+import org.thoughtcrime.securesms.util.RemoteConfig
 import org.thoughtcrime.securesms.util.Util
 import org.whispersystems.signalservice.api.payments.Money
+import java.io.IOException
 import java.math.BigDecimal
 import java.util.Arrays
 import java.util.Currency
 import java.util.Locale
 
-internal class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreValues(store) {
+class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreValues(store) {
 
   companion object {
     private val TAG = Log.tag(PaymentsValues::class.java)
 
+    private const val MOB_PAYMENTS_ENABLED = "mob_payments_enabled"
     private const val PAYMENTS_ENTROPY = "payments_entropy"
     private const val MOB_LEDGER = "mob_ledger"
     private const val PAYMENTS_CURRENT_CURRENCY = "payments_current_currency"
@@ -50,9 +50,6 @@ internal class PaymentsValues internal constructor(store: KeyValueStore) : Signa
     private const val SHOW_SAVE_RECOVERY_PHRASE = "mob_show_save_recovery_phrase"
 
     private val LARGE_BALANCE_THRESHOLD = Money.mobileCoin(BigDecimal.valueOf(500))
-
-    @VisibleForTesting
-    const val MOB_PAYMENTS_ENABLED = "mob_payments_enabled"
   }
 
   @get:JvmName("isPaymentLockEnabled")
@@ -115,17 +112,17 @@ internal class PaymentsValues internal constructor(store: KeyValueStore) : Signa
    */
   val paymentsAvailability: PaymentsAvailability
     get() {
-      if (!SignalStore.account().isRegistered) {
+      if (!SignalStore.account.isRegistered) {
         return PaymentsAvailability.NOT_IN_REGION
       }
-      return if (FeatureFlags.payments()) {
+      return if (RemoteConfig.payments) {
         if (mobileCoinPaymentsEnabled()) {
-          if (GeographicalRestrictions.e164Allowed(SignalStore.account().e164)) {
+          if (GeographicalRestrictions.e164Allowed(SignalStore.account.e164)) {
             PaymentsAvailability.WITHDRAW_AND_SEND
           } else {
             return PaymentsAvailability.WITHDRAW_ONLY
           }
-        } else if (GeographicalRestrictions.e164Allowed(SignalStore.account().e164)) {
+        } else if (GeographicalRestrictions.e164Allowed(SignalStore.account.e164)) {
           PaymentsAvailability.REGISTRATION_AVAILABLE
         } else {
           PaymentsAvailability.NOT_IN_REGION
@@ -245,8 +242,8 @@ internal class PaymentsValues internal constructor(store: KeyValueStore) : Signa
 
   fun showUpdatePinInfoCard(): Boolean {
     return if (userHasLargeBalance() &&
-      SignalStore.svr().hasPin() &&
-      !SignalStore.svr().hasOptedOut() && SignalStore.pinValues().keyboardType == PinKeyboardType.NUMERIC
+      SignalStore.svr.hasPin() &&
+      !SignalStore.svr.hasOptedOut() && SignalStore.pin.keyboardType == PinKeyboardType.NUMERIC
     ) {
       store.getBoolean(SHOW_CASHING_OUT_INFO_CARD, true)
     } else {
@@ -292,18 +289,18 @@ internal class PaymentsValues internal constructor(store: KeyValueStore) : Signa
   }
 
   fun mobileCoinLatestFullLedger(): MobileCoinLedgerWrapper {
-    val blob = store.getBlob(MOB_LEDGER, null) ?: return MobileCoinLedgerWrapper(MobileCoinLedger.getDefaultInstance())
+    val blob = store.getBlob(MOB_LEDGER, null) ?: return MobileCoinLedgerWrapper(MobileCoinLedger())
     return try {
-      MobileCoinLedgerWrapper(MobileCoinLedger.parseFrom(blob))
-    } catch (e: InvalidProtocolBufferException) {
+      MobileCoinLedgerWrapper(MobileCoinLedger.ADAPTER.decode(blob))
+    } catch (e: IOException) {
       Log.w(TAG, "Bad cached ledger, clearing", e)
-      setMobileCoinFullLedger(MobileCoinLedgerWrapper(MobileCoinLedger.getDefaultInstance()))
+      setMobileCoinFullLedger(MobileCoinLedgerWrapper(MobileCoinLedger()))
       throw AssertionError(e)
     }
   }
 
   private fun determineCurrency(): Currency {
-    val localE164: String = SignalStore.account().e164 ?: ""
+    val localE164: String = SignalStore.account.e164 ?: ""
 
     return Util.firstNonNull(
       CurrencyUtil.getCurrencyByE164(localE164),
@@ -351,14 +348,16 @@ internal class PaymentsValues internal constructor(store: KeyValueStore) : Signa
       .putBoolean(USER_CONFIRMED_MNEMONIC, true)
       .commit()
 
-    liveMobileCoinLedger.postValue(MobileCoinLedgerWrapper(MobileCoinLedger.getDefaultInstance()))
+    liveMobileCoinLedger.postValue(MobileCoinLedgerWrapper(MobileCoinLedger()))
     StorageSyncHelper.scheduleSyncForDataChange()
 
     return WalletRestoreResult.ENTROPY_CHANGED
   }
 
   enum class WalletRestoreResult {
-    ENTROPY_CHANGED, ENTROPY_UNCHANGED, MNEMONIC_ERROR
+    ENTROPY_CHANGED,
+    ENTROPY_UNCHANGED,
+    MNEMONIC_ERROR
   }
 
   private fun userHasLargeBalance(): Boolean {

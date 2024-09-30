@@ -20,11 +20,11 @@ import org.signal.core.util.logging.Log;
 import org.signal.core.util.logging.Scrubber;
 import org.signal.core.util.tracing.Tracer;
 import org.thoughtcrime.securesms.database.LogDatabase;
-import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.net.StandardUserAgentInterceptor;
 import org.thoughtcrime.securesms.providers.BlobProvider;
 import org.thoughtcrime.securesms.push.SignalServiceNetworkAccess;
-import org.thoughtcrime.securesms.util.FeatureFlags;
+import org.thoughtcrime.securesms.util.RemoteConfig;
 import org.signal.core.util.Stopwatch;
 
 import java.io.IOException;
@@ -77,7 +77,7 @@ public class SubmitDebugLogRepository {
     add(new LogSectionCapabilities());
     add(new LogSectionMemory());
     add(new LogSectionLocalMetrics());
-    add(new LogSectionFeatureFlags());
+    add(new LogSectionRemoteConfig());
     add(new LogSectionPin());
     if (Build.VERSION.SDK_INT >= 28) {
       add(new LogSectionPower());
@@ -86,17 +86,18 @@ public class SubmitDebugLogRepository {
     add(new LogSectionNotificationProfiles());
     add(new LogSectionExoPlayerPool());
     add(new LogSectionKeyPreferences());
-    add(new LogSectionSMS());
     add(new LogSectionStories());
     add(new LogSectionBadges());
     add(new LogSectionPermissions());
     add(new LogSectionTrace());
     add(new LogSectionThreads());
     add(new LogSectionThreadDump());
-    if (FeatureFlags.internalUser()) {
+    if (RemoteConfig.internalUser()) {
       add(new LogSectionSenderKey());
     }
+    add(new LogSectionDatabaseSchema());
     add(new LogSectionRemappedRecords());
+    add(new LogSectionAnr());
     add(new LogSectionLogcat());
     add(new LogSectionLoggerHeader());
   }};
@@ -105,7 +106,7 @@ public class SubmitDebugLogRepository {
   private final ExecutorService executor;
 
   public SubmitDebugLogRepository() {
-    this.context  = ApplicationDependencies.getApplication();
+    this.context  = AppDependencies.getApplication();
     this.executor = SignalExecutors.SERIAL;
   }
 
@@ -116,7 +117,7 @@ public class SubmitDebugLogRepository {
   public void buildAndSubmitLog(@NonNull Callback<Optional<String>> callback) {
     SignalExecutors.UNBOUNDED.execute(() -> {
       Log.blockUntilAllWritesFinished();
-      LogDatabase.getInstance(context).trimToSize();
+      LogDatabase.getInstance(context).logs().trimToSize();
       callback.onResult(submitLogInternal(System.currentTimeMillis(), getPrefixLogLinesInternal(), Tracer.getInstance().serialize()));
     });
   }
@@ -140,7 +141,7 @@ public class SubmitDebugLogRepository {
         outputStream.putNextEntry(new ZipEntry("log.txt"));
         outputStream.write(prefixLines.toString().getBytes(StandardCharsets.UTF_8));
 
-        try (LogDatabase.Reader reader = LogDatabase.getInstance(context).getAllBeforeTime(untilTime)) {
+        try (LogDatabase.LogTable.Reader reader = LogDatabase.getInstance(context).logs().getAllBeforeTime(untilTime)) {
           while (reader.hasNext()) {
             outputStream.write(reader.next().getBytes());
             outputStream.write("\n".getBytes());
@@ -193,7 +194,7 @@ public class SubmitDebugLogRepository {
 
       stopwatch.split("front-matter");
 
-      try (LogDatabase.Reader reader = LogDatabase.getInstance(context).getAllBeforeTime(untilTime)) {
+      try (LogDatabase.LogTable.Reader reader = LogDatabase.getInstance(context).logs().getAllBeforeTime(untilTime)) {
         while (reader.hasNext()) {
           gzipOutput.write(reader.next().getBytes());
           gzipOutput.write("\n".getBytes());

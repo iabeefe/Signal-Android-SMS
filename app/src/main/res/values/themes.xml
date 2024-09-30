@@ -19,14 +19,6 @@
         <!-- leave empty to allow overriding -->
     </style>
 
-    <style name="TextSecure.LightNoActionBar.TransparentNavigationBar">
-        <!-- leave empty to allow overriding -->
-    </style>
-
-    <style name="TextSecure.DarkNoActionBar.TransparentNavigationBar">
-        <!-- leave empty to allow overriding -->
-    </style>
-
     <style name="TextSecure.BaseLightNoActionBar" parent="@style/TextSecure.LightTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -105,8 +97,8 @@
     <style name="TextSecure.LightIntroTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="27">default</item>
-        <item name="android:statusBarColor" tools:ignore="NewApi">@color/login_top_background</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/signal_colorSurface</item>
+        <item name="android:navigationBarColor">@color/signal_colorSurface</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -122,8 +114,9 @@
     <style name="TextSecure.DarkIntroTheme" parent="@style/Theme.AppCompat">
         <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="27">default</item>
-        <item name="android:statusBarColor" tools:ignore="NewApi">@color/login_top_background</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/signal_colorSurface</item>
+        <item name="android:navigationBarColor">@color/signal_colorSurface</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -334,21 +327,6 @@
         <item name="android:windowBackground">@drawable/dialog_corners</item>
     </style>
 
-    <style name="Theme.Signal.AlertDialog.Light.Cornered.ColoredAccent">
-        <item name="colorAccent">@color/core_ultramarine</item>
-    </style>
-
-    <style name="Theme.Signal.AlertDialog.Dark.Cornered.ColoredAccent">
-        <item name="colorAccent">@color/core_ultramarine_light</item>
-    </style>
-
-
-    <style name="Theme.Signal.Insights.Modal" parent="@style/Theme.AppCompat.Dialog.MinWidth"></style>
-
-    <style name="TextSecure.MediaSendProgressDialog" parent="@android:style/Theme.Dialog">
-        <item name="android:background">@color/core_grey_95</item>
-    </style>
-
     <style name="TextSecure.LightRegistrationTheme" parent="TextSecure.LightNoActionBar"></style>
 
     <style name="TextSecure.DarkRegistrationTheme" parent="TextSecure.DarkNoActionBar"></style>
@@ -411,7 +389,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
-        <item name="android:navigationBarColor" tools:ignore="NewApi">@color/core_black</item>
+        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -420,10 +398,6 @@
     <style name="Theme.Signal.Light.BottomSheetDialog" parent="Theme.Material3.Light.BottomSheetDialog"></style>
 
     <style name="Theme.Signal.BottomSheetDialog" parent="Theme.Material3.Dark.BottomSheetDialog"></style>
-
-    <style name="Theme.Signal.Light.BottomSheetDialog.Fixed">
-        <item name="android:windowIsFloating">false</item>
-    </style>
 
     <style name="Theme.Signal.BottomSheetDialog.Fixed" parent="Theme.Design.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
@@ -504,14 +478,6 @@
         <item name="cornerSizeTopLeft">10dp</item>
         <item name="cornerSizeBottomLeft">10dp</item>
         <item name="cornerSizeBottomRight">10dp</item>
-    </style>
-
-    <style name="ShapeAppearanceOverlay.Signal.Story.Text" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">18dp</item>
-        <item name="cornerSizeTopLeft">18dp</item>
-        <item name="cornerSizeBottomLeft">18dp</item>
-        <item name="cornerSizeBottomRight">18dp</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.Signal.WallpaperPreview" parent="">

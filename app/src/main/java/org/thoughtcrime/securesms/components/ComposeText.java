@@ -9,13 +9,11 @@ import android.text.Annotation;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Selection;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
-import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -49,7 +47,6 @@ import org.thoughtcrime.securesms.database.model.Mention;
 import org.thoughtcrime.securesms.database.model.databaseprotos.BodyRangeList;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.thoughtcrime.securesms.util.FeatureFlags;
 import org.thoughtcrime.securesms.util.TextSecurePreferences;
 
 import java.util.List;
@@ -60,12 +57,11 @@ import static org.thoughtcrime.securesms.database.MentionUtil.MENTION_STARTER;
 
 public class ComposeText extends EmojiEditText {
 
-  private static final char EMOJI_STARTER       = ':';
-
-  private static final Pattern TIME_PATTERN = Pattern.compile("^[0-9]{1,2}:[0-9]{1,2}$");
+  private static final char    EMOJI_STARTER    = ':';
+  private static final int     MAX_QUERY_LENGTH = 64;
+  private static final Pattern TIME_PATTERN     = Pattern.compile("^[0-9]{1,2}:[0-9]{1,2}$");
 
   private CharSequence            hint;
-  private SpannableString         subHint;
   private MentionRendererDelegate mentionRendererDelegate;
   private SpoilerRendererDelegate spoilerRendererDelegate;
   private MentionValidatorWatcher mentionValidatorWatcher;
@@ -106,13 +102,7 @@ public class ComposeText extends EmojiEditText {
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
     if (getLayout() != null && !TextUtils.isEmpty(hint)) {
-      if (!TextUtils.isEmpty(subHint)) {
-        setHintWithChecks(new SpannableStringBuilder().append(ellipsizeToWidth(hint))
-                                                      .append("\n")
-                                                      .append(ellipsizeToWidth(subHint)));
-      } else {
-        setHintWithChecks(ellipsizeToWidth(hint));
-      }
+      setHintWithChecks(ellipsizeToWidth(hint));
       super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
   }
@@ -173,29 +163,13 @@ public class ComposeText extends EmojiEditText {
                                TruncateAt.END);
   }
 
-  public void setHint(@NonNull String hint, @Nullable CharSequence subHint) {
+  public void setHint(@NonNull String hint) {
     this.hint = hint;
-
-    if (subHint != null) {
-      this.subHint = new SpannableString(subHint);
-      this.subHint.setSpan(new RelativeSizeSpan(0.5f), 0, subHint.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-    } else {
-      this.subHint = null;
-    }
-
-    if (this.subHint != null) {
-      setHintWithChecks(new SpannableStringBuilder().append(ellipsizeToWidth(this.hint))
-                                                    .append("\n")
-                                                    .append(ellipsizeToWidth(this.subHint)));
-    } else {
-      setHintWithChecks(ellipsizeToWidth(this.hint));
-    }
-
-    setHintWithChecks(hint);
+    setHintWithChecks(ellipsizeToWidth(this.hint));
   }
 
   public void setDraftText(@Nullable CharSequence draftText) {
-    setText("");
+    setText("", BufferType.EDITABLE);
 
     if (draftText != null) {
       append(draftText);
@@ -236,23 +210,14 @@ public class ComposeText extends EmojiEditText {
   }
 
   public void setMessageSendType(MessageSendType messageSendType) {
-    final boolean useSystemEmoji = SignalStore.settings().isPreferSystemEmoji();
-
     int imeOptions = (getImeOptions() & ~EditorInfo.IME_MASK_ACTION) | EditorInfo.IME_ACTION_SEND;
     int inputType  = getInputType();
 
     if (isLandscape()) setImeActionLabel(getContext().getString(messageSendType.getComposeHintRes()), EditorInfo.IME_ACTION_SEND);
     else               setImeActionLabel(null, 0);
 
-    if (useSystemEmoji) {
-      inputType = (inputType & ~InputType.TYPE_MASK_VARIATION) | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
-    }
-
     setImeOptions(imeOptions);
-    setHint(getContext().getString(messageSendType.getComposeHintRes()),
-            messageSendType.getSimName() != null
-                ? getContext().getString(R.string.conversation_activity__from_sim_name, messageSendType.getSimName())
-                : null);
+    setHint(getContext().getString(messageSendType.getComposeHintRes()));
     setInputType(inputType);
   }
 
@@ -399,16 +364,16 @@ public class ComposeText extends EmojiEditText {
   }
 
   private void doAfterCursorChange(@NonNull Editable text) {
-    if (enoughToFilter(text, false)) {
-      performFiltering(text, false);
+    if (canFilter(text)) {
+      performFiltering(text);
     } else {
       clearInlineQuery();
     }
   }
 
-  private void performFiltering(@NonNull Editable text, boolean keywordEmojiSearch) {
+  private void performFiltering(@NonNull Editable text) {
     int        end        = getSelectionEnd();
-    QueryStart queryStart = findQueryStart(text, end, keywordEmojiSearch);
+    QueryStart queryStart = findQueryStart(text, end);
     int        start      = queryStart.index;
     String     query      = text.subSequence(start, end).toString();
 
@@ -416,7 +381,7 @@ public class ComposeText extends EmojiEditText {
       if (queryStart.isMentionQuery) {
         inlineQueryChangedListener.onQueryChanged(new InlineQuery.Mention(query));
       } else {
-        inlineQueryChangedListener.onQueryChanged(new InlineQuery.Emoji(query, keywordEmojiSearch));
+        inlineQueryChangedListener.onQueryChanged(new InlineQuery.Emoji(query));
       }
     }
   }
@@ -427,23 +392,25 @@ public class ComposeText extends EmojiEditText {
     }
   }
 
-  private boolean enoughToFilter(@NonNull Editable text, boolean keywordEmojiSearch) {
+  private boolean canFilter(@NonNull Editable text) {
     int end = getSelectionEnd();
     if (end < 0) {
       return false;
     }
-    return findQueryStart(text, end, keywordEmojiSearch).index != -1;
+
+    QueryStart start = findQueryStart(text, end);
+    return start.index != -1 && ((end - start.index) <= MAX_QUERY_LENGTH);
   }
 
   public void replaceTextWithMention(@NonNull String displayName, @NonNull RecipientId recipientId) {
-    replaceText(createReplacementToken(displayName, recipientId), false);
+    replaceText(createReplacementToken(displayName, recipientId));
   }
 
   public void replaceText(@NonNull InlineQueryReplacement replacement) {
-    replaceText(replacement.toCharSequence(getContext()), replacement.isKeywordSearch());
+    replaceText(replacement.toCharSequence(getContext()));
   }
 
-  private void replaceText(@NonNull CharSequence replacement, boolean keywordReplacement) {
+  private void replaceText(@NonNull CharSequence replacement) {
     Editable text = getText();
     if (text == null) {
       return;
@@ -452,7 +419,7 @@ public class ComposeText extends EmojiEditText {
     clearComposingText();
 
     int end   = getSelectionEnd();
-    int start = findQueryStart(text, end, keywordReplacement).index - (keywordReplacement ? 0 : 1);
+    int start = findQueryStart(text, end).index - 1;
 
     text.replace(start, end, "");
     text.insert(start, replacement);
@@ -473,17 +440,7 @@ public class ComposeText extends EmojiEditText {
     return builder;
   }
 
-  private QueryStart findQueryStart(@NonNull CharSequence text, int inputCursorPosition, boolean keywordEmojiSearch) {
-    if (keywordEmojiSearch) {
-      int start = findQueryStart(text, inputCursorPosition, ' ');
-      if (start == -1 && inputCursorPosition != 0) {
-        start = 0;
-      } else if (start == inputCursorPosition) {
-        start = -1;
-      }
-      return new QueryStart(start, false);
-    }
-
+  private QueryStart findQueryStart(@NonNull CharSequence text, int inputCursorPosition) {
     QueryStart queryStart = new QueryStart(findQueryStart(text, inputCursorPosition, MENTION_STARTER), true);
 
     if (queryStart.index < 0) {
