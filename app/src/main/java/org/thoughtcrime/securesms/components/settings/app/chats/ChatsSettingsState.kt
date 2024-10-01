@@ -7,8 +7,29 @@ data class ChatsSettingsState(
   val useSystemEmoji: Boolean,
   val enterKeySends: Boolean,
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+  val chatBackupsEnabled: Boolean,
+  val useAsDefaultSmsApp: Boolean,
+  val smsExportState: SmsExportState = SmsExportState.FETCHING
+  // JW: added extra preferences
+  ,
+  val chatBackupsLocation: Boolean,
+  val chatBackupsLocationApi30: String,
+  val chatBackupZipfile: Boolean,
+  val chatBackupZipfilePlain: Boolean,
+  val keepViewOnceMessages: Boolean,
+  val ignoreRemoteDelete: Boolean,
+  val deleteMediaOnly: Boolean,
+  val googleMapType: String,
+  val whoCanAddYouToGroups: String
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
   val localBackupsEnabled: Boolean,
   val canAccessRemoteBackupsSettings: Boolean
+<<<<<<< HEAD
 =======
   val chatBackupsEnabled: Boolean,
   val useAsDefaultSmsApp: Boolean,
@@ -586,6 +607,7 @@ data class ChatsSettingsState(
   val googleMapType: String,
   val whoCanAddYouToGroups: String
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
 =======
   // JW: added extra preferences
@@ -1034,6 +1056,7 @@ data class ChatsSettingsState(
   val googleMapType: String,
   val whoCanAddYouToGroups: String
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
 =======
   // JW: added extra preferences
@@ -1510,4 +1533,14 @@ data class ChatsSettingsState(
   val googleMapType: String,
   val whoCanAddYouToGroups: String
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| b3a510579d
+=======
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
+>>>>>>> dcc5ec960fd8238f1f67e3c34ef734486d9a4fb1
 )

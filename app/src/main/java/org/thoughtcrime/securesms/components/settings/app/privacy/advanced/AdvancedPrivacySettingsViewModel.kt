@@ -62,6 +62,7 @@ class AdvancedPrivacySettingsViewModel(
     refresh()
   }
 
+<<<<<<< HEAD
   // JW: added
   fun setPushNotificationsViaFCM(enabled: Boolean) {
     SignalStore.account().fcmEnabled = enabled
@@ -266,6 +267,7 @@ class AdvancedPrivacySettingsViewModel(
     refresh()
   }
 
+<<<<<<< HEAD
   // JW: added
   fun setPushNotificationsViaFCM(enabled: Boolean) {
     SignalStore.account().fcmEnabled = enabled
@@ -458,6 +460,7 @@ class AdvancedPrivacySettingsViewModel(
     refresh()
   }
 
+<<<<<<< HEAD
   // JW: added
   fun setPushNotificationsViaFCM(enabled: Boolean) {
     SignalStore.account().fcmEnabled = enabled
@@ -662,6 +665,21 @@ class AdvancedPrivacySettingsViewModel(
     refresh()
   }
 
+||||||| b3a510579d
+=======
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+  // JW: added
+  fun setPushNotificationsViaFCM(enabled: Boolean) {
+    SignalStore.account().fcmEnabled = enabled
+    refresh()
+  }
+
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
+>>>>>>> dcc5ec960fd8238f1f67e3c34ef734486d9a4fb1
   fun refresh() {
     store.update { getState().copy(showProgressSpinner = it.showProgressSpinner) }
   }

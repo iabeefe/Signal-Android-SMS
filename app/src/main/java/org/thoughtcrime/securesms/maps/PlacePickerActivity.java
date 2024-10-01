@@ -306,6 +306,11 @@ import org.thoughtcrime.securesms.util.DynamicTheme;
 <<<<<<< HEAD
 <<<<<<< HEAD
 import org.thoughtcrime.securesms.util.MediaUtil;
+<<<<<<< HEAD
+import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
+import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
+=======
+>>>>>>> upstream/main
 import org.thoughtcrime.securesms.util.views.SimpleProgressDialog;
 =======
 import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added

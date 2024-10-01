@@ -120,8 +120,23 @@ class SelectRecipientsFragment : LoggingFragment(), ContactSelectionListFragment
       ContactSelectionDisplayMode.FLAG_HIDE_NEW or
       ContactSelectionDisplayMode.FLAG_HIDE_RECENT_HEADER or
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+      ContactSelectionDisplayMode.FLAG_GROUPS_AFTER_CONTACTS
+
+    //if (Util.isDefaultSmsProvider(requireContext()) && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+    if (Util.isDefaultSmsProvider(requireContext())) {
+      mode = mode or ContactSelectionDisplayMode.FLAG_SMS
+    }
+
+    return mode or ContactSelectionDisplayMode.FLAG_HIDE_GROUPS_V1
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
       ContactSelectionDisplayMode.FLAG_GROUPS_AFTER_CONTACTS or
       ContactSelectionDisplayMode.FLAG_HIDE_GROUPS_V1
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       ContactSelectionDisplayMode.FLAG_GROUPS_AFTER_CONTACTS
 
@@ -141,6 +156,10 @@ class SelectRecipientsFragment : LoggingFragment(), ContactSelectionListFragment
 
     return mode or ContactSelectionDisplayMode.FLAG_HIDE_GROUPS_V1
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
   }
 
   override fun onBeforeContactSelected(isFromUnknownSearchKey: Boolean, recipientId: Optional<RecipientId>, number: String?, callback: Consumer<Boolean>) {

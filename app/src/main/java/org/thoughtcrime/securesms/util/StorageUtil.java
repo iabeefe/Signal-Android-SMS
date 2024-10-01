@@ -20,8 +20,17 @@ import org.thoughtcrime.securesms.BuildConfig;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.database.NoExternalStorageException;
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
+import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.permissions.PermissionCompat;
+<<<<<<< HEAD
 =======
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
 <<<<<<< HEAD
@@ -257,6 +266,7 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
 =======
 import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
 =======
 import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
@@ -385,6 +395,7 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
 =======
 import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
 =======
 import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
@@ -521,6 +532,16 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
 =======
 import org.thoughtcrime.securesms.keyvalue.SignalStore; // JW: added
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| b3a510579d
+=======
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
+>>>>>>> dcc5ec960fd8238f1f67e3c34ef734486d9a4fb1
 import org.thoughtcrime.securesms.permissions.Permissions;
 import org.thoughtcrime.securesms.util.UriUtils; // JW: added
 
@@ -748,6 +769,20 @@ public class StorageUtil {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| b3a510579d
+=======
+<<<<<<< HEAD
+||||||| 35807f725b
+=======
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
+>>>>>>> dcc5ec960fd8238f1f67e3c34ef734486d9a4fb1
   public static File getOrCreateBackupV2Directory() throws NoExternalStorageException {
     File storage = Environment.getExternalStorageDirectory();
 
@@ -791,6 +826,7 @@ public class StorageUtil {
     return backups;
   }
 
+<<<<<<< HEAD
 =======
 >>>>>>> 66c339aa35 (Added extra options)
 ||||||| parent of 775ec008cc (Added extra options)
@@ -1321,6 +1357,7 @@ public class StorageUtil {
 
 =======
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
   public static File getBackupDirectory() throws NoExternalStorageException {
     File storage = Environment.getExternalStorageDirectory();
@@ -1833,6 +1870,7 @@ public class StorageUtil {
 
 =======
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
   public static File getBackupDirectory() throws NoExternalStorageException {
     File storage = Environment.getExternalStorageDirectory();
@@ -2377,6 +2415,16 @@ public class StorageUtil {
 
 =======
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| b3a510579d
+=======
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
+>>>>>>> dcc5ec960fd8238f1f67e3c34ef734486d9a4fb1
   @RequiresApi(24)
   public static @NonNull String getDisplayPath(@NonNull Context context, @NonNull Uri uri) {
     String lastPathSegment = Objects.requireNonNull(uri.getLastPathSegment());
@@ -2401,6 +2449,7 @@ public class StorageUtil {
     }
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
   public static File getBackupCacheDirectory(Context context) {
@@ -2957,6 +3006,7 @@ public class StorageUtil {
   }
 
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
 =======
   // JW: re-added
@@ -3373,6 +3423,7 @@ public class StorageUtil {
   }
 
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
 =======
   // JW: re-added
@@ -3815,6 +3866,43 @@ public class StorageUtil {
   }
 
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| b3a510579d
+=======
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+  public static File getBackupCacheDirectory(Context context) {
+    // JW: changed.
+    if (TextSecurePreferences.isBackupLocationRemovable(context)) {
+      if (Build.VERSION.SDK_INT >= 19) {
+        File[] directories = context.getExternalCacheDirs();
+
+        if (directories != null) {
+          File result = getNonEmulated(directories);
+          if (result != null) return result;
+        }
+      }
+    }
+    return context.getExternalCacheDir();
+  }
+
+  // JW: re-added
+  private static @Nullable File getNonEmulated(File[] directories) {
+    return Stream.of(directories)
+            .withoutNulls()
+            .filterNot(f -> f.getAbsolutePath().contains("emulated"))
+            .limit(1)
+            .findSingle()
+            .orElse(null);
+  }
+
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
+>>>>>>> dcc5ec960fd8238f1f67e3c34ef734486d9a4fb1
   private static File getSignalStorageDir() throws NoExternalStorageException {
     final File storage = Environment.getExternalStorageDirectory();
 

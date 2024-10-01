@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package org.thoughtcrime.securesms.megaphone
 
 import android.content.Context
@@ -31,3 +32,28 @@ import kotlin.time.Duration.Companion.days
   }
 }
 */
+||||||| 69e1146e2c
+=======
+package org.thoughtcrime.securesms.megaphone
+
+import android.content.Context
+import androidx.annotation.WorkerThread
+import org.thoughtcrime.securesms.util.Util
+/*
+class SmsExportReminderSchedule(private val context: Context) : MegaphoneSchedule {
+
+  companion object {
+    @JvmStatic
+    var showPhase3Megaphone = true
+  }
+
+  @WorkerThread
+  override fun shouldDisplay(seenCount: Int, lastSeen: Long, firstVisible: Long, currentTime: Long): Boolean {
+    return if (Util.isDefaultSmsProvider(context)) {
+      showPhase3Megaphone
+    } else {
+      false
+    }
+  }
+}*/
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e

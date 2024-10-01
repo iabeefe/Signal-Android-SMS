@@ -810,6 +810,17 @@ object SyncMessageProcessor {
     log(envelopeTimestamp, "Synchronize sent media message for " + sent.timestamp!!)
 
     val recipient: Recipient = getSyncMessageDestination(sent)
+<<<<<<< HEAD
+    val quote: QuoteModel? = DataMessageProcessor.getValidatedQuote(context, envelopeTimestamp, sent.message)
+    val sticker: Attachment? = DataMessageProcessor.getStickerAttachment(envelopeTimestamp, sent.message)
+    val sharedContacts: List<Contact> = DataMessageProcessor.getContacts(sent.message)
+    val previews: List<LinkPreview> = DataMessageProcessor.getLinkPreviews(sent.message.previewList, sent.message.body ?: "", false)
+    val mentions: List<Mention> = DataMessageProcessor.getMentions(sent.message.bodyRangesList)
+    val giftBadge: GiftBadge? = if (sent.message.hasGiftBadge()) GiftBadge.newBuilder().setRedemptionToken(sent.message.giftBadge.receiptCredentialPresentation).build() else null
+    val viewOnce: Boolean = if (TextSecurePreferences.isKeepViewOnceMessages(context)) false else sent.message.isViewOnce // JW
+    val bodyRanges: BodyRangeList? = sent.message.bodyRangesList.toBodyRangeList()
+    val syncAttachments: List<Attachment> = listOfNotNull(sticker) + if (viewOnce) listOf<Attachment>(TombstoneAttachment(MediaUtil.VIEW_ONCE, false)) else sent.message.attachmentsList.toPointersWithinLimit()
+=======
     val dataMessage: DataMessage = sent.message!!
     val quote: QuoteModel? = DataMessageProcessor.getValidatedQuote(context, envelopeTimestamp, dataMessage)
     val sticker: Attachment? = DataMessageProcessor.getStickerAttachment(envelopeTimestamp, dataMessage)
@@ -820,6 +831,7 @@ object SyncMessageProcessor {
     val viewOnce: Boolean = dataMessage.isViewOnce == true
     val bodyRanges: BodyRangeList? = dataMessage.bodyRanges.toBodyRangeList()
     val syncAttachments: List<Attachment> = listOfNotNull(sticker) + if (viewOnce) listOf<Attachment>(TombstoneAttachment(MediaUtil.VIEW_ONCE, false)) else dataMessage.attachments.toPointersWithinLimit()
+>>>>>>> upstream/main
 
     val mediaMessage = OutgoingMessage(
       recipient = recipient,
@@ -1022,6 +1034,7 @@ object SyncMessageProcessor {
   }
 
   private fun handleSynchronizeViewOnceOpenMessage(context: Context, openMessage: ViewOnceOpen, envelopeTimestamp: Long, earlyMessageCacheEntry: EarlyMessageCacheEntry?) {
+    if (TextSecurePreferences.isKeepViewOnceMessages(context)) return // JW
     log(envelopeTimestamp, "Handling a view-once open for message: " + openMessage.timestamp)
 
     val author: RecipientId = Recipient.externalPush(ServiceId.parseOrThrow(openMessage.senderAci!!)).id

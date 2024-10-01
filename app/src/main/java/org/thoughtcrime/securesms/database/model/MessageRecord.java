@@ -535,8 +535,28 @@ public abstract class MessageRecord extends DisplayRecord {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| b3a510579d
+=======
+<<<<<<< HEAD
+||||||| 35807f725b
+=======
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+    }
+    else if (isSmsExportType()) {
+      //int messageResource = SignalStore.misc().getSmsExportPhase().isSmsSupported() ? R.string.MessageRecord__you_will_no_longer_be_able_to_send_sms_messages_from_signal_soon :
+      //                                                                                    R.string.MessageRecord__you_can_no_longer_send_sms_messages_in_signal;
+      int messageResource = R.string.MessageRecord__you_will_no_longer_be_able_to_send_sms_messages_from_signal_soon;
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
+>>>>>>> dcc5ec960fd8238f1f67e3c34ef734486d9a4fb1
     } else if (isSmsExportType()) {
       int messageResource = R.string.MessageRecord__you_can_no_longer_send_sms_messages_in_signal;
+>>>>>>> upstream/main
       return fromRecipient(getFromRecipient(), r -> context.getString(messageResource, r.getDisplayName(context)), R.drawable.ic_update_info_16);
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     } else if (isSmsExportType()) {

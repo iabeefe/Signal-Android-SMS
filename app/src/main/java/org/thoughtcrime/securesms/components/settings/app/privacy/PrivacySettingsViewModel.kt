@@ -105,6 +105,26 @@ class PrivacySettingsViewModel(
     return PrivacySettingsState(
       blockedCount = 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+      readReceipts = TextSecurePreferences.isReadReceiptsEnabled(ApplicationDependencies.getApplication()),
+      typingIndicators = TextSecurePreferences.isTypingIndicatorsEnabled(ApplicationDependencies.getApplication()),
+      screenLock = TextSecurePreferences.isScreenLockEnabled(ApplicationDependencies.getApplication()),
+      screenLockActivityTimeout = TextSecurePreferences.getScreenLockTimeout(ApplicationDependencies.getApplication()),
+      screenSecurity = TextSecurePreferences.isScreenSecurityEnabled(ApplicationDependencies.getApplication()),
+      incognitoKeyboard = TextSecurePreferences.isIncognitoKeyboardEnabled(ApplicationDependencies.getApplication()),
+      paymentLock = SignalStore.paymentsValues().paymentLock,
+      isObsoletePasswordEnabled = !TextSecurePreferences.isPasswordDisabled(ApplicationDependencies.getApplication()),
+      isObsoletePasswordTimeoutEnabled = TextSecurePreferences.isPassphraseTimeoutEnabled(ApplicationDependencies.getApplication()),
+      obsoletePasswordTimeout = TextSecurePreferences.getPassphraseTimeoutInterval(ApplicationDependencies.getApplication()),
+      universalExpireTimer = SignalStore.settings().universalExpireTimer
+      // JW: added
+      ,
+      isProtectionMethodPassphrase = TextSecurePreferences.isProtectionMethodPassphrase(ApplicationDependencies.getApplication())
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
       readReceipts = TextSecurePreferences.isReadReceiptsEnabled(AppDependencies.application),
       typingIndicators = TextSecurePreferences.isTypingIndicatorsEnabled(AppDependencies.application),
       screenLock = SignalStore.settings.screenLockEnabled,
@@ -116,6 +136,7 @@ class PrivacySettingsViewModel(
       isObsoletePasswordTimeoutEnabled = SignalStore.settings.passphraseTimeoutEnabled,
       obsoletePasswordTimeout = SignalStore.settings.passphraseTimeout,
       universalExpireTimer = SignalStore.settings.universalExpireTimer
+<<<<<<< HEAD
 =======
       readReceipts = TextSecurePreferences.isReadReceiptsEnabled(ApplicationDependencies.getApplication()),
       typingIndicators = TextSecurePreferences.isTypingIndicatorsEnabled(ApplicationDependencies.getApplication()),
@@ -429,6 +450,7 @@ class PrivacySettingsViewModel(
       ,
       isProtectionMethodPassphrase = TextSecurePreferences.isProtectionMethodPassphrase(ApplicationDependencies.getApplication())
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
 =======
       // JW: added
@@ -621,6 +643,7 @@ class PrivacySettingsViewModel(
       ,
       isProtectionMethodPassphrase = TextSecurePreferences.isProtectionMethodPassphrase(ApplicationDependencies.getApplication())
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
 =======
       // JW: added
@@ -825,6 +848,16 @@ class PrivacySettingsViewModel(
       ,
       isProtectionMethodPassphrase = TextSecurePreferences.isProtectionMethodPassphrase(ApplicationDependencies.getApplication())
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| b3a510579d
+=======
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
+>>>>>>> dcc5ec960fd8238f1f67e3c34ef734486d9a4fb1
     )
   }
 
