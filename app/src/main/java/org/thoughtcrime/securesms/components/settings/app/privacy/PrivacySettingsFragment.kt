@@ -279,6 +279,35 @@ class PrivacySettingsFragment : DSLSettingsFragment(R.string.preferences__privac
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 35807f725b
+=======
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+            if (state.isObsoletePasswordEnabled) { // JW: added if else
+              MaterialAlertDialogBuilder(requireContext()).apply {
+                setTitle(R.string.ApplicationPreferencesActivity_disable_passphrase)
+                setMessage(R.string.ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications)
+                setIcon(R.drawable.ic_warning)
+                setPositiveButton(R.string.ApplicationPreferencesActivity_disable) { _, _ ->
+                  MasterSecretUtil.changeMasterSecretPassphrase(
+                    activity,
+                    KeyCachingService.getMasterSecret(context),
+                    MasterSecretUtil.UNENCRYPTED_PASSPHRASE
+                  )
+                  TextSecurePreferences.setPasswordDisabled(activity, true)
+                  val intent = Intent(activity, KeyCachingService::class.java)
+                  intent.action = KeyCachingService.DISABLE_ACTION
+                  requireActivity().startService(intent)
+                  viewModel.refresh()
+                }
+                setNegativeButton(android.R.string.cancel, null)
+                show()
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
             MaterialAlertDialogBuilder(requireContext()).apply {
               setTitle(R.string.ApplicationPreferencesActivity_disable_passphrase)
               setMessage(R.string.ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications)
@@ -294,6 +323,7 @@ class PrivacySettingsFragment : DSLSettingsFragment(R.string.preferences__privac
                 intent.action = KeyCachingService.DISABLE_ACTION
                 requireActivity().startService(intent)
                 viewModel.refresh()
+<<<<<<< HEAD
 =======
             if (state.isObsoletePasswordEnabled) { // JW: added if else
               MaterialAlertDialogBuilder(requireContext()).apply {
@@ -1536,6 +1566,7 @@ class PrivacySettingsFragment : DSLSettingsFragment(R.string.preferences__privac
                 setNegativeButton(android.R.string.cancel, null)
                 show()
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
             MaterialAlertDialogBuilder(requireContext()).apply {
               setTitle(R.string.ApplicationPreferencesActivity_disable_passphrase)
@@ -2720,6 +2751,13 @@ class PrivacySettingsFragment : DSLSettingsFragment(R.string.preferences__privac
                 setNegativeButton(android.R.string.cancel, null)
                 show()
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
               }
             } else {
               // enable password
@@ -2772,6 +2810,7 @@ class PrivacySettingsFragment : DSLSettingsFragment(R.string.preferences__privac
         val isKeyguardSecure = ServiceUtil.getKeyguardManager(requireContext()).isKeyguardSecure
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         switchPref(
           title = DSLSettingsText.from(R.string.preferences_app_protection__screen_lock),
@@ -2790,6 +2829,28 @@ class PrivacySettingsFragment : DSLSettingsFragment(R.string.preferences__privac
         )
 
 >>>>>>> 66c339aa35 (Added extra options)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+        switchPref(
+          title = DSLSettingsText.from(R.string.preferences_app_protection__screen_lock),
+          summary = DSLSettingsText.from(R.string.preferences_app_protection__lock_signal_access_with_android_screen_lock_or_fingerprint),
+          isChecked = state.screenLock && isKeyguardSecure,
+          isEnabled = isKeyguardSecure,
+          onClick = {
+            viewModel.setOnlyScreenlockEnabled(!state.screenLock) // JW: changed
+
+            val intent = Intent(requireContext(), KeyCachingService::class.java)
+            intent.action = KeyCachingService.LOCK_TOGGLED_EVENT
+            requireContext().startService(intent)
+
+            ConversationUtil.refreshRecipientShortcuts()
+          }
+        )
+
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
         clickPref(
           title = DSLSettingsText.from(R.string.preferences_app_protection__screen_lock),
           summary = DSLSettingsText.from(getScreenLockInactivityTimeoutSummary(isKeyguardSecure && state.screenLock, state.screenLockActivityTimeout)),

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package org.thoughtcrime.securesms.keyvalue
 
 import org.thoughtcrime.securesms.dependencies.ApplicationDependencies
@@ -33,3 +34,31 @@ enum class SmsExportPhase(val duration: Long) {
   }
 }
 */
+||||||| 69e1146e2c
+=======
+package org.thoughtcrime.securesms.keyvalue
+/*
+enum class SmsExportPhase(val duration: Long) {
+  PHASE_3(0);
+
+  fun allowSmsFeatures(): Boolean {
+    return false
+  }
+
+  fun isSmsSupported(): Boolean {
+    return false
+  }
+
+  fun isBlockingUi(): Boolean {
+    return true
+  }
+
+  companion object {
+    @JvmStatic
+    fun getCurrentPhase(): SmsExportPhase {
+      return PHASE_3
+    }
+  }
+}
+*/
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e

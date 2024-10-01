@@ -502,7 +502,21 @@ public class ApplicationContext extends Application implements AppForegroundObse
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 35807f725b
+=======
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+// JW: this code bluntly removes the password setting and makes password protected installs crash.
+/*
+    } else if (!TextSecurePreferences.isPasswordDisabled(this) && VersionTracker.getDaysSinceFirstInstalled(this) < 90) {
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
     } else if (!SignalStore.settings().getPassphraseDisabled() && VersionTracker.getDaysSinceFirstInstalled(this) < 90) {
+<<<<<<< HEAD
 =======
 // JW: this code bluntly removes the password setting and makes password protected installs crash.
 /*
@@ -833,12 +847,25 @@ public class ApplicationContext extends Application implements AppForegroundObse
 >>>>>>> 6b57469a94 (Added extra options)
     } else if (!TextSecurePreferences.isPasswordDisabled(this) && VersionTracker.getDaysSinceFirstInstalled(this) < 90) {
 >>>>>>> 66c339aa35 (Added extra options)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
       Log.i(TAG, "Detected a new install that doesn't have passphrases disabled -- assuming bad initialization.");
       AppInitialization.onRepairFirstEverAppLaunch(this);
     } else if (!SignalStore.settings().getPassphraseDisabled() && VersionTracker.getDaysSinceFirstInstalled(this) < 912) {
       Log.i(TAG, "Detected a not-recent install that doesn't have passphrases disabled -- disabling now.");
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+      TextSecurePreferences.setPasswordDisabled(this, true);
+*/
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
       SignalStore.settings().setPassphraseDisabled(true);
+<<<<<<< HEAD
 =======
       TextSecurePreferences.setPasswordDisabled(this, true);
 <<<<<<< HEAD
@@ -1040,6 +1067,7 @@ public class ApplicationContext extends Application implements AppForegroundObse
 =======
 */
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
 =======
 */
@@ -1168,6 +1196,13 @@ public class ApplicationContext extends Application implements AppForegroundObse
 =======
 */
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
     }
   }
 

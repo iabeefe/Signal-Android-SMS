@@ -64,8 +64,41 @@ sealed class MessageSendType(
   companion object {
     @JvmStatic
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+    fun getAllAvailable(context: Context, isMedia: Boolean = false): List<MessageSendType> {
+      val options: MutableList<MessageSendType> = mutableListOf()
+
+      options += SignalMessageSendType
+
+      //if (SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+        try {
+          val subscriptions: Collection<SubscriptionInfoCompat> = SubscriptionManagerCompat(context).activeAndReadySubscriptionInfos
+
+          if (subscriptions.size < 2) {
+            options += if (isMedia) MmsMessageSendType() else SmsMessageSendType()
+          } else {
+            options += subscriptions.map {
+              if (isMedia) {
+                MmsMessageSendType(simName = it.displayName, simSubscriptionId = it.subscriptionId)
+              } else {
+                SmsMessageSendType(simName = it.displayName, simSubscriptionId = it.subscriptionId)
+              }
+            }
+          }
+        } catch (e: SecurityException) {
+          Log.w(TAG, "Did not have permission to get SMS subscription details!")
+        }
+      //}
+
+      return options
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
     fun getAllAvailable(): List<MessageSendType> {
       return listOf(SignalMessageSendType)
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     fun getAllAvailable(context: Context, isMedia: Boolean = false): List<MessageSendType> {
       val options: MutableList<MessageSendType> = mutableListOf()
@@ -121,6 +154,10 @@ sealed class MessageSendType(
 
       return options
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
     }
 
     @JvmStatic

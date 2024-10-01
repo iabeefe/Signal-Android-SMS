@@ -38,6 +38,7 @@ class SendButton(context: Context, attributeSet: AttributeSet?) : AppCompatImage
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
   private fun onSelectionChanged(newType: MessageSendType, isManualSelection: Boolean) {
     setImageResource(newType.buttonDrawableRes)
@@ -83,6 +84,33 @@ class SendButton(context: Context, attributeSet: AttributeSet?) : AppCompatImage
   }
 
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+  private fun onSelectionChanged(newType: MessageSendType, isManualSelection: Boolean) {
+    setImageResource(newType.buttonDrawableRes)
+    contentDescription = context.getString(newType.titleRes)
+
+    for (listener in listeners) {
+      listener.onSendTypeChanged(newType, isManualSelection)
+    }
+  }
+
+  fun showSendTypeMenu(): Boolean {
+    return if (availableSendTypes.size == 1) {
+      /*if (scheduledSendListener == null && !SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+        Snackbar.make(snackbarContainer, R.string.InputPanel__sms_messaging_is_no_longer_supported_in_signal, Snackbar.LENGTH_SHORT).show()
+      }*/
+      false
+    } else {
+      showSendTypeContextMenu(false)
+      true
+    }
+  }
+
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
   override fun onLongClick(v: View): Boolean {
     if (!isEnabled) {
       return false
@@ -90,12 +118,29 @@ class SendButton(context: Context, attributeSet: AttributeSet?) : AppCompatImage
 
     val scheduleListener = scheduledSendListener
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+    if (availableSendTypes.size == 1) {
+      return if (scheduleListener?.canSchedule() == true && selectedSendType.transportType != MessageSendType.TransportType.SMS) {
+        scheduleListener.onSendScheduled()
+        true
+      }/* else if (!SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+        Snackbar.make(snackbarContainer, R.string.InputPanel__sms_messaging_is_no_longer_supported_in_signal, Snackbar.LENGTH_SHORT).show()
+        true
+      }*/ else {
+        false
+      }
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
 
     return if (scheduleListener?.canSchedule() == true) {
       scheduleListener.onSendScheduled()
       true
     } else {
       false
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     if (availableSendTypes.size == 1) {
       return if (scheduleListener?.canSchedule() == true && selectedSendType.transportType != MessageSendType.TransportType.SMS) {
@@ -119,6 +164,10 @@ class SendButton(context: Context, attributeSet: AttributeSet?) : AppCompatImage
         false
       }
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
     }
   }
 

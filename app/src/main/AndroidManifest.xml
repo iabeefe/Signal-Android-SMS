@@ -436,6 +436,7 @@
     <meta-data android:name="firebase_messaging_auto_init_enabled" android:value="false" />
     <meta-data android:name="android.webkit.WebView.MetricsOptOut" android:value="true" />
 
+<<<<<<< HEAD
     <!-- JW: added. This is currently only relevant for captchas. -->
     <meta-data android:name="android.webkit.WebView.MetricsOptOut"
                android:value="true" />
@@ -572,6 +573,7 @@
     <meta-data android:name="android.webkit.WebView.MetricsOptOut"
                android:value="true" />
 
+<<<<<<< HEAD
     <!-- JW: added. This is currently only relevant for captchas. -->
     <meta-data android:name="android.webkit.WebView.MetricsOptOut"
                android:value="true" />
@@ -700,6 +702,16 @@
     <meta-data android:name="android.webkit.WebView.MetricsOptOut"
                android:value="true" />
 
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+    <!-- JW: added. This is currently only relevant for captchas. -->
+    <meta-data android:name="android.webkit.WebView.MetricsOptOut"
+               android:value="true" />
+
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
     <activity android:name=".WebRtcCallActivity"
               android:theme="@style/TextSecure.DarkTheme.WebRTCCall"
               android:excludeFromRecents="true"
@@ -1290,7 +1302,16 @@
               android:launchMode="singleTask"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+              android:theme="@style/TextSecure.LightIntroTheme"
+              android:windowSoftInputMode="stateAlwaysVisible"
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
               android:theme="@style/Theme.Signal.DayNight.NoActionBar"
+<<<<<<< HEAD
 ||||||| parent of 83146b3342 (Added extra options)
               android:theme="@style/TextSecure.LightIntroTheme"
 <<<<<<< HEAD
@@ -1349,6 +1370,7 @@
 =======
               android:windowSoftInputMode="stateAlwaysVisible"
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 83146b3342 (Added extra options)
 =======
               android:windowSoftInputMode="stateAlwaysVisible"
@@ -1369,6 +1391,13 @@
 =======
               android:windowSoftInputMode="stateAlwaysVisible"
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
               android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"
               android:exported="false"/>
 =======
@@ -1757,6 +1786,7 @@
     <activity android:name=".ExitActivity"
               android:theme="@android:style/Theme.NoDisplay" />
 
+<<<<<<< HEAD
     <!-- JW: Add activity used in plaintext backup import / export -->
     <activity android:name=".ImportExportActivity"
               android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"/>
@@ -2013,6 +2043,17 @@
     <activity android:name=".ExitActivity"
               android:theme="@android:style/Theme.NoDisplay" />
 
+||||||| 35807f725b
+=======
+    <!-- JW: Add activity used in plaintext backup import / export -->
+    <activity android:name=".ImportExportActivity"
+              android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"/>
+
+    <!-- JW: Add activity used in encrypted backup import -->
+    <activity android:name=".ExitActivity"
+              android:theme="@android:style/Theme.NoDisplay" />
+
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
     <activity android:name=".NewConversationActivity"
               android:theme="@style/Theme.Signal.DayNight.NoActionBar"
               android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"
@@ -2451,6 +2492,7 @@
               android:launchMode="singleTask"
               android:exported="false"/>
 
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
               android:launchMode="singleTask" />
 
@@ -2472,6 +2514,7 @@
 =======
 -->
 >>>>>>> 5f1eac242f (Bumped to upstream version 6.16.1.0-JW.)
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     <activity android:name=".megaphone.SmsExportMegaphoneActivity"
 ||||||| parent of 5f1eac242f (Bumped to upstream version 6.16.1.0-JW.)
@@ -2492,6 +2535,22 @@
 =======
 -->
 >>>>>>> 5f1eac242f (Bumped to upstream version 6.16.1.0-JW.)
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+<!--    <activity android:name=".megaphone.SmsExportMegaphoneActivity"
+              android:theme="@style/Theme.Signal.DayNight.NoActionBar"
+              android:screenOrientation="portrait"
+              android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize|uiMode"
+              android:launchMode="singleTask"
+              android:exported="false"/>
+-->
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
     <activity android:name=".ratelimit.RecaptchaProofActivity"
               android:theme="@style/Theme.Signal.DayNight.NoActionBar"
               android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize|uiMode"

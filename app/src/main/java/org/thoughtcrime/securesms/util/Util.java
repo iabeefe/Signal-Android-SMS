@@ -352,6 +352,15 @@ public class Util {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+  public static long getTimeUntilBuildExpiry() {
+    // JW never expire builds. This is an ugly hack but it prevents me from making changes all over the code with each new release.
+    return Integer.MAX_VALUE;
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
   public static long getTimeUntilBuildExpiry(long currentTime) {
     if (SignalStore.misc().isClientDeprecated()) {
       return 0;
@@ -367,6 +376,7 @@ public class Util {
     } else {
       return Math.max(timeUntilBuildDeprecation, 0);
     }
+<<<<<<< HEAD
 =======
   public static long getTimeUntilBuildExpiry() {
 <<<<<<< HEAD
@@ -1650,6 +1660,10 @@ public class Util {
   public static boolean isMmsCapable(Context context) {
     return (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) || OutgoingLegacyMmsConnection.isConnectionPossible(context);
 >>>>>>> 775ec008cc (Added extra options)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
   }
 
   public static <T> T getRandomElement(T[] elements) {

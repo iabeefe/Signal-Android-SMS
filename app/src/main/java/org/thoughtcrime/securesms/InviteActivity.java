@@ -121,9 +121,29 @@ public class InviteActivity extends PassphraseRequiredActivity implements Contac
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 35807f725b
+=======
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+    //if (Util.isDefaultSmsProvider(this) && SignalStore.misc().getSmsExportPhase().isSmsSupported()) {
+    if (Util.isDefaultSmsProvider(this)) {
+      shareButton.setOnClickListener(new ShareClickListener());
+      smsButton.setOnClickListener(new SmsClickListener());
+    } else {
+      smsButton.setVisibility(View.GONE);
+      shareText.setText(R.string.InviteActivity_share);
+      shareButton.setOnClickListener(new ShareClickListener());
+    }
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
     smsButton.setVisibility(View.GONE);
     shareText.setText(R.string.InviteActivity_share);
     shareButton.setOnClickListener(new ShareClickListener());
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     if (Util.isDefaultSmsProvider(this) && SignalStore.misc().getSmsExportPhase().isSmsSupported()) {
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
@@ -150,6 +170,10 @@ public class InviteActivity extends PassphraseRequiredActivity implements Contac
       shareButton.setOnClickListener(new ShareClickListener());
     }
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
   }
 
   private Animation loadAnimation(@AnimRes int animResId) {

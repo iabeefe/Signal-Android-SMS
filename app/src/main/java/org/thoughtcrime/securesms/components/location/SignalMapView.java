@@ -86,6 +86,11 @@ import org.thoughtcrime.securesms.R;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 35807f725b
+=======
+<<<<<<< HEAD
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
 ||||||| parent of 32b4182676 (Added extra options)
 ||||||| parent of d8cd38511b (Added extra options)
 =======
@@ -320,6 +325,16 @@ import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
 import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
 import org.thoughtcrime.securesms.util.concurrent.SettableFuture;
 >>>>>>> 32b4182676 (Added extra options)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+import org.thoughtcrime.securesms.dependencies.ApplicationDependencies; // JW: added
+import org.thoughtcrime.securesms.util.TextSecurePreferences; // JW: added
+import org.thoughtcrime.securesms.util.concurrent.ListenableFuture;
+import org.thoughtcrime.securesms.util.concurrent.SettableFuture;
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
 
 import java.util.concurrent.ExecutionException;
 =======
@@ -499,6 +514,11 @@ public class SignalMapView extends LinearLayout {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 35807f725b
+=======
+<<<<<<< HEAD
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
   // JW: set the maptype
   public void setGoogleMapType(GoogleMap googleMap) {
     String mapType = TextSecurePreferences.getGoogleMapType(ApplicationDependencies.getApplication());
@@ -736,6 +756,7 @@ public class SignalMapView extends LinearLayout {
   }
 
 >>>>>>> 6b57469a94 (Added extra options)
+<<<<<<< HEAD
 ||||||| parent of 66c339aa35 (Added extra options)
 =======
   // JW: set the maptype
@@ -1248,6 +1269,25 @@ public class SignalMapView extends LinearLayout {
   }
 
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+  // JW: set the maptype
+  public static void setGoogleMapType(GoogleMap googleMap) {
+    String mapType = TextSecurePreferences.getGoogleMapType(ApplicationDependencies.getApplication());
+
+    if (googleMap != null) {
+      if      (mapType.equals("hybrid"))    { googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); }
+      else if (mapType.equals("satellite")) { googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE); }
+      else if (mapType.equals("terrain"))   { googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); }
+      else if (mapType.equals("none"))      { googleMap.setMapType(GoogleMap.MAP_TYPE_NONE); }
+      else                                  { googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL); }
+    }
+  }
+
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
   public ListenableFuture<Bitmap> display(final SignalPlace place) {
     final SettableFuture<Bitmap> future = new SettableFuture<>();
 

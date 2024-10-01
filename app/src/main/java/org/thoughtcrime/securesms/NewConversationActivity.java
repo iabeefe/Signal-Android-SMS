@@ -137,6 +137,7 @@ public class NewConversationActivity extends ContactSelectionActivity
   @Override
 <<<<<<< HEAD
   public void onBeforeContactSelected(boolean isFromUnknownSearchKey, @NonNull Optional<RecipientId> recipientId, String number, @NonNull Consumer<Boolean> callback) {
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
   public void onBeforeContactSelected(@NonNull Optional<RecipientId> recipientId, String number, @NonNull Consumer<Boolean> callback) {
     //boolean smsSupported = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
@@ -146,6 +147,14 @@ public class NewConversationActivity extends ContactSelectionActivity
     //boolean smsSupported = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
 
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+    //boolean smsSupported = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
+
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
     if (recipientId.isPresent()) {
       launch(Recipient.resolved(recipientId.get()));
     } else {
@@ -160,6 +169,23 @@ public class NewConversationActivity extends ContactSelectionActivity
           progress.dismiss();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+          if (resolved != null) {
+            launch(resolved);
+            //if (smsSupported || resolved.isRegistered() && resolved.hasServiceId()) {
+            /*if (resolved.hasServiceId()) {
+              launch(resolved);
+            } else {
+              new MaterialAlertDialogBuilder(this)
+                  .setMessage(getString(R.string.NewConversationActivity__s_is_not_a_signal_user, resolved.getDisplayName(this)))
+                  .setPositiveButton(android.R.string.ok, null)
+                  .show();
+            }*/
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
           if (result instanceof RecipientRepository.LookupResult.Success) {
             Recipient resolved = Recipient.resolved(((RecipientRepository.LookupResult.Success) result).getRecipientId());
             if (resolved.isRegistered() && resolved.getHasServiceId()) {
@@ -204,6 +230,7 @@ public class NewConversationActivity extends ContactSelectionActivity
                 .setMessage(getString(R.string.NewConversationActivity__s_is_not_a_signal_user, number))
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
+<<<<<<< HEAD
 ||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
             } else {
               new MaterialAlertDialogBuilder(this)
@@ -220,11 +247,19 @@ public class NewConversationActivity extends ContactSelectionActivity
                   .show();
             }*/
 >>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+<<<<<<< HEAD
 ||||||| parent of 1472ab38ad (Enable SMS sending also for unregistered numbers.)
             }
 =======
             }*/
 >>>>>>> 1472ab38ad (Enable SMS sending also for unregistered numbers.)
+||||||| 35807f725b
+=======
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
           } else {
            /* new MaterialAlertDialogBuilder(this)
                 .setMessage(R.string.NetworkFailure__network_error_check_your_connection_and_try_again)
@@ -250,6 +285,15 @@ public class NewConversationActivity extends ContactSelectionActivity
       } else {
         launch(Recipient.external(this, number));
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+      //} else if (smsSupported) {
+      } else {
+        launch(Recipient.external(this, number));
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
       }
     }
 
@@ -401,6 +445,18 @@ public class NewConversationActivity extends ContactSelectionActivity
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 35807f725b
+=======
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+    //if (recipient.isRegistered() || (SignalStore.misc().getSmsExportPhase().allowSmsFeatures())) {
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
+>>>>>>> e80bceeb3a3de89c781e259a97c5b8344e20afe5
     if (recipient.isRegistered()) {
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     if (recipient.isRegistered() || (SignalStore.misc().getSmsExportPhase().allowSmsFeatures())) {
