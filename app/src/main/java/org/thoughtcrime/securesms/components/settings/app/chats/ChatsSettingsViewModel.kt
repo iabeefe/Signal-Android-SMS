@@ -14,6 +14,7 @@ import org.thoughtcrime.securesms.util.ConversationUtil
 import org.thoughtcrime.securesms.util.TextSecurePreferences // JW: added
 import org.thoughtcrime.securesms.util.ThrottledDebouncer
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import org.thoughtcrime.securesms.util.Util
 <<<<<<< HEAD
@@ -183,6 +184,14 @@ import org.thoughtcrime.securesms.util.UriUtils // JW: added
 =======
 import org.thoughtcrime.securesms.util.UriUtils // JW: added
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+import org.thoughtcrime.securesms.util.Util
+import org.thoughtcrime.securesms.util.UriUtils // JW: added
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
 import org.thoughtcrime.securesms.util.livedata.Store
 
 class ChatsSettingsViewModel @JvmOverloads constructor(
@@ -194,6 +203,30 @@ class ChatsSettingsViewModel @JvmOverloads constructor(
   private val store: Store<ChatsSettingsState> = Store(
     ChatsSettingsState(
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+      generateLinkPreviews = SignalStore.settings().isLinkPreviewsEnabled,
+      useAddressBook = SignalStore.settings().isPreferSystemContactPhotos,
+      keepMutedChatsArchived = SignalStore.settings().shouldKeepMutedChatsArchived(),
+      useSystemEmoji = SignalStore.settings().isPreferSystemEmoji,
+      enterKeySends = SignalStore.settings().isEnterKeySends,
+      chatBackupsEnabled = SignalStore.settings().isBackupEnabled && BackupUtil.canUserAccessBackupDirectory(ApplicationDependencies.getApplication()),
+      useAsDefaultSmsApp = Util.isDefaultSmsProvider(ApplicationDependencies.getApplication())
+      // JW: added
+      ,
+      chatBackupsLocation = TextSecurePreferences.isBackupLocationRemovable(ApplicationDependencies.getApplication()),
+      chatBackupsLocationApi30 = UriUtils.getFullPathFromTreeUri(ApplicationDependencies.getApplication(), SignalStore.settings().signalBackupDirectory),
+      chatBackupZipfile = TextSecurePreferences.isRawBackupInZipfile(ApplicationDependencies.getApplication()),
+      chatBackupZipfilePlain = TextSecurePreferences.isPlainBackupInZipfile(ApplicationDependencies.getApplication()),
+      keepViewOnceMessages = TextSecurePreferences.isKeepViewOnceMessages(ApplicationDependencies.getApplication()),
+      ignoreRemoteDelete = TextSecurePreferences.isIgnoreRemoteDelete(ApplicationDependencies.getApplication()),
+      deleteMediaOnly = TextSecurePreferences.isDeleteMediaOnly(ApplicationDependencies.getApplication()),
+      googleMapType = TextSecurePreferences.getGoogleMapType(ApplicationDependencies.getApplication()),
+      whoCanAddYouToGroups = TextSecurePreferences.whoCanAddYouToGroups(ApplicationDependencies.getApplication())
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
       generateLinkPreviews = SignalStore.settings.isLinkPreviewsEnabled,
       useAddressBook = SignalStore.settings.isPreferSystemContactPhotos,
       keepMutedChatsArchived = SignalStore.settings.shouldKeepMutedChatsArchived(),
@@ -201,6 +234,7 @@ class ChatsSettingsViewModel @JvmOverloads constructor(
       enterKeySends = SignalStore.settings.isEnterKeySends,
       localBackupsEnabled = SignalStore.settings.isBackupEnabled && BackupUtil.canUserAccessBackupDirectory(AppDependencies.application),
       canAccessRemoteBackupsSettings = SignalStore.backup.areBackupsEnabled
+<<<<<<< HEAD
 =======
       generateLinkPreviews = SignalStore.settings().isLinkPreviewsEnabled,
       useAddressBook = SignalStore.settings().isPreferSystemContactPhotos,
@@ -716,6 +750,10 @@ class ChatsSettingsViewModel @JvmOverloads constructor(
       googleMapType = TextSecurePreferences.getGoogleMapType(ApplicationDependencies.getApplication()),
       whoCanAddYouToGroups = TextSecurePreferences.whoCanAddYouToGroups(ApplicationDependencies.getApplication())
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
     )
   )
 

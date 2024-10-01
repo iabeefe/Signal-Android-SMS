@@ -169,6 +169,7 @@ class ShareRepository(context: Context) {
       return null
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 
     private fun asUriAttachment(uri: Uri, mimeType: String, size: Long): UriAttachment {
@@ -205,5 +206,28 @@ class ShareRepository(context: Context) {
       return mmsConstraints.isSatisfied(context, attachment) || mmsConstraints.canResize(attachment)
     }
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+
+    private fun asUriAttachment(uri: Uri, mimeType: String, size: Long): UriAttachment {
+      return UriAttachment(uri, mimeType, -1, size, null, false, false, false, false, null, null, null, null, null)
+    }
+
+    private fun isMmsSupported(context: Context, attachment: Attachment): Boolean {
+      val canReadPhoneState = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
+
+      //if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context) || !SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+      if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context)) {
+        return false
+      }
+
+      val sendType: MessageSendType = MessageSendType.getFirstForTransport(context, true, MessageSendType.TransportType.SMS)
+      val mmsConstraints = MediaConstraints.getMmsMediaConstraints(sendType.simSubscriptionId ?: -1)
+      return mmsConstraints.isSatisfied(context, attachment) || mmsConstraints.canResize(attachment)
+    }
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
   }
 }

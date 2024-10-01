@@ -59,8 +59,19 @@ public class CreateGroupActivity extends ContactSelectionActivity implements Con
     intent.putExtra(ContactSelectionActivity.EXTRA_LAYOUT_RES_ID, R.layout.create_group_activity);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+    //boolean smsEnabled = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
+    //int displayMode = smsEnabled ? ContactSelectionDisplayMode.FLAG_SMS | ContactSelectionDisplayMode.FLAG_PUSH
+    //                             : ContactSelectionDisplayMode.FLAG_PUSH;
+    int displayMode = ContactSelectionDisplayMode.FLAG_SMS | ContactSelectionDisplayMode.FLAG_PUSH;
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
     int displayMode = ContactSelectionDisplayMode.FLAG_PUSH;
 
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     boolean smsEnabled = SignalStore.misc().getSmsExportPhase().allowSmsFeatures();
     int displayMode = smsEnabled ? ContactSelectionDisplayMode.FLAG_SMS | ContactSelectionDisplayMode.FLAG_PUSH
@@ -72,6 +83,10 @@ public class CreateGroupActivity extends ContactSelectionActivity implements Con
     //                             : ContactSelectionDisplayMode.FLAG_PUSH;
     int displayMode = ContactSelectionDisplayMode.FLAG_SMS | ContactSelectionDisplayMode.FLAG_PUSH;
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
     intent.putExtra(ContactSelectionListFragment.DISPLAY_MODE, displayMode);
     intent.putExtra(ContactSelectionListFragment.SELECTION_LIMITS, RemoteConfig.groupLimits().excludingSelf());
     intent.putExtra(ContactSelectionListFragment.RV_PADDING_BOTTOM, (int) DimensionUnit.DP.toPixels(64f));

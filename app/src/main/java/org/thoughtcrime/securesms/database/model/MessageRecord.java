@@ -365,8 +365,20 @@ public abstract class MessageRecord extends DisplayRecord {
         throw new AssertionError(e);
       }
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+    }
+    else if (isSmsExportType()) {
+      //int messageResource = SignalStore.misc().getSmsExportPhase().isSmsSupported() ? R.string.MessageRecord__you_will_no_longer_be_able_to_send_sms_messages_from_signal_soon :
+      //                                                                                    R.string.MessageRecord__you_can_no_longer_send_sms_messages_in_signal;
+      int messageResource = R.string.MessageRecord__you_will_no_longer_be_able_to_send_sms_messages_from_signal_soon;
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
     } else if (isSmsExportType()) {
       int messageResource = R.string.MessageRecord__you_can_no_longer_send_sms_messages_in_signal;
+>>>>>>> upstream/main
       return fromRecipient(getFromRecipient(), r -> context.getString(messageResource, r.getDisplayName(context)), R.drawable.ic_update_info_16);
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
     } else if (isSmsExportType()) {

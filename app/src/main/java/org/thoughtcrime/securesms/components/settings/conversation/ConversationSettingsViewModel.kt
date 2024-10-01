@@ -158,13 +158,26 @@ sealed class ConversationSettingsViewModel(
 
       store.update(liveRecipient.liveData) { recipient, state ->
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+        //val isAudioAvailable = (recipient.isRegistered || SignalStore.misc().smsExportPhase.allowSmsFeatures()) &&
+        val isAudioAvailable = (recipient.isRegistered) &&
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
         val isAudioAvailable = recipient.isRegistered &&
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
         val isAudioAvailable = (recipient.isRegistered || SignalStore.misc().smsExportPhase.allowSmsFeatures()) &&
 =======
         //val isAudioAvailable = (recipient.isRegistered || SignalStore.misc().smsExportPhase.allowSmsFeatures()) &&
         val isAudioAvailable = (recipient.isRegistered) &&
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
           !recipient.isGroup &&
           !recipient.isBlocked &&
           !recipient.isSelf &&

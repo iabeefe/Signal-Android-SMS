@@ -1,6 +1,7 @@
 package org.thoughtcrime.securesms.components.settings.app.chats
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import android.app.Activity
 import android.content.Intent
@@ -171,6 +172,15 @@ import android.os.Build // JW: added
 =======
 import android.os.Build // JW: added
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+import android.app.Activity
+import android.content.Intent
+import android.os.Build // JW: added
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -216,7 +226,19 @@ import org.thoughtcrime.securesms.components.settings.configure
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+import org.thoughtcrime.securesms.service.LocalBackupListener // JW: added
+import org.thoughtcrime.securesms.util.TextSecurePreferences // JW: added
+import org.thoughtcrime.securesms.exporter.flow.SmsExportActivity
+import org.thoughtcrime.securesms.exporter.flow.SmsExportDialogs
+import org.thoughtcrime.securesms.keyvalue.SignalStore // JW: added
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
 import org.thoughtcrime.securesms.util.RemoteConfig
+<<<<<<< HEAD
 =======
 import org.thoughtcrime.securesms.service.LocalBackupListener // JW: added
 import org.thoughtcrime.securesms.util.TextSecurePreferences // JW: added
@@ -554,6 +576,10 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore // JW: added
 =======
 import org.thoughtcrime.securesms.keyvalue.SignalStore // JW: added
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
 import org.thoughtcrime.securesms.util.UriUtils // JW: added
@@ -562,7 +588,20 @@ class ChatsSettingsFragment : DSLSettingsFragment(R.string.preferences_chats__ch
 
   private lateinit var viewModel: ChatsSettingsViewModel
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+  private lateinit var smsExportLauncher: ActivityResultLauncher<Intent>
+  private val mapLabels by lazy { resources.getStringArray(R.array.pref_map_type_entries) } // JW: added
+  private val mapValues by lazy { resources.getStringArray(R.array.pref_map_type_values) }  // JW: added
+  private val groupAddLabels by lazy { resources.getStringArray(R.array.pref_group_add_entries) } // JW: added
+  private val groupAddValues by lazy { resources.getStringArray(R.array.pref_group_add_values) }  // JW: added
+  val CHOOSE_BACKUPS_LOCATION_REQUEST_CODE = 1201 // JW: added
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
   private lateinit var checkoutLauncher: ActivityResultLauncher<Unit>
+<<<<<<< HEAD
 =======
   private lateinit var smsExportLauncher: ActivityResultLauncher<Intent>
 <<<<<<< HEAD
@@ -868,6 +907,10 @@ class ChatsSettingsFragment : DSLSettingsFragment(R.string.preferences_chats__ch
   private val groupAddValues by lazy { resources.getStringArray(R.array.pref_group_add_values) }  // JW: added
   val CHOOSE_BACKUPS_LOCATION_REQUEST_CODE = 1201 // JW: added
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
 
   override fun onResume() {
     super.onResume()

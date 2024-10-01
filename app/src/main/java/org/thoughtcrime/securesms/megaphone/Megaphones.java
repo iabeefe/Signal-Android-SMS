@@ -28,12 +28,24 @@ import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint;
 import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues.PhoneNumberDiscoverabilityMode;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+//import org.thoughtcrime.securesms.keyvalue.SmsExportPhase;
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
 import org.thoughtcrime.securesms.keyvalue.protos.LeastActiveLinkedDevice;
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 import org.thoughtcrime.securesms.keyvalue.SmsExportPhase;
 =======
 //import org.thoughtcrime.securesms.keyvalue.SmsExportPhase;
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
 import org.thoughtcrime.securesms.lock.SignalPinReminderDialog;
 import org.thoughtcrime.securesms.lock.SignalPinReminders;
 import org.thoughtcrime.securesms.lock.v2.CreateSvrPinActivity;
@@ -118,6 +130,18 @@ public final class Megaphones {
       put(Event.CLIENT_DEPRECATED, SignalStore.misc().isClientDeprecated() ? ALWAYS : NEVER);
       put(Event.NOTIFICATIONS, shouldShowNotificationsMegaphone(context) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(30)) : NEVER);
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+      //put(Event.SMS_EXPORT, new SmsExportReminderSchedule(context));
+      put(Event.BACKUP_SCHEDULE_PERMISSION, shouldShowBackupSchedulePermissionMegaphone(context) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(3)) : NEVER);
+      put(Event.ONBOARDING, shouldShowOnboardingMegaphone(context) ? ALWAYS : NEVER);
+      put(Event.TURN_OFF_CENSORSHIP_CIRCUMVENTION, shouldShowTurnOffCircumventionMegaphone() ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(7)) : NEVER);
+      //put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER); // JW
+      //put(Event.REMOTE_MEGAPHONE, shouldShowRemoteMegaphone(records) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(1)) : NEVER); // JW
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
       put(Event.GRANT_FULL_SCREEN_INTENT, shouldShowGrantFullScreenIntentPermission(context) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(3)) : NEVER);
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       put(Event.SMS_EXPORT, new SmsExportReminderSchedule(context));
@@ -246,6 +270,7 @@ public final class Megaphones {
 >>>>>>> f611d03385 (Added extra options)
       put(Event.REMOTE_MEGAPHONE, shouldShowRemoteMegaphone(records) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(1)) : NEVER);
       put(Event.LINKED_DEVICE_INACTIVE, shouldShowLinkedDeviceInactiveMegaphone() ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(3)): NEVER);
+<<<<<<< HEAD
 ||||||| parent of 8a72cb26f4 (Added extra options)
       put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER);
       put(Event.REMOTE_MEGAPHONE, shouldShowRemoteMegaphone(records) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(1)) : NEVER);
@@ -365,6 +390,10 @@ public final class Megaphones {
       //put(Event.DONATE_Q2_2022, shouldShowDonateMegaphone(context, Event.DONATE_Q2_2022, records) ? ShowForDurationSchedule.showForDays(7) : NEVER); // JW
       //put(Event.REMOTE_MEGAPHONE, shouldShowRemoteMegaphone(records) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(1)) : NEVER); // JW
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
       put(Event.PIN_REMINDER, new SignalPinReminderSchedule());
       put(Event.SET_UP_YOUR_USERNAME, shouldShowSetUpYourUsernameMegaphone(records) ? ALWAYS : NEVER);
 
@@ -400,6 +429,7 @@ public final class Megaphones {
         return buildNotificationsMegaphone(context);
       case ADD_A_PROFILE_PHOTO:
         return buildAddAProfilePhotoMegaphone(context);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -803,6 +833,23 @@ public final class Megaphones {
 //      case DONATE_Q2_2022:
 //        return buildDonateQ2Megaphone(context);
 >>>>>>> 6b57469a94 (Added extra options)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+//      case BECOME_A_SUSTAINER:                           // JW I see these way too often
+//        return buildBecomeASustainerMegaphone(context);
+//      case DONATE_Q2_2022:
+//        return buildDonateQ2Megaphone(context);
+      case TURN_OFF_CENSORSHIP_CIRCUMVENTION:
+        return buildTurnOffCircumventionMegaphone(context);
+//      case REMOTE_MEGAPHONE:
+//        return buildRemoteMegaphone(context);
+      case BACKUP_SCHEDULE_PERMISSION:
+        return buildBackupPermissionMegaphone(context);
+      //case SMS_EXPORT:
+      //  return buildSmsExportMegaphone(context);
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
       case TURN_OFF_CENSORSHIP_CIRCUMVENTION:
         return buildTurnOffCircumventionMegaphone(context);
 <<<<<<< HEAD
@@ -852,6 +899,7 @@ public final class Megaphones {
       case BACKUP_SCHEDULE_PERMISSION:
         return buildBackupPermissionMegaphone(context);
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       case SMS_EXPORT:
         return buildSmsExportMegaphone(context);
@@ -859,6 +907,10 @@ public final class Megaphones {
       //case SMS_EXPORT:
       //  return buildSmsExportMegaphone(context);
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
       case SET_UP_YOUR_USERNAME:
         return buildSetUpYourUsernameMegaphone(context);
       case GRANT_FULL_SCREEN_INTENT:
@@ -1063,6 +1115,7 @@ public final class Megaphones {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
   private static @NonNull Megaphone buildSmsExportMegaphone(@NonNull Context context) {
     SmsExportPhase phase = SignalStore.misc().getSmsExportPhase();
@@ -1130,6 +1183,31 @@ public final class Megaphones {
   }
 */
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+  /*
+  private static @NonNull Megaphone buildSmsExportMegaphone(@NonNull Context context) {
+    SmsExportPhase phase = SignalStore.misc().getSmsExportPhase();
+
+    Megaphone.Builder builder = new Megaphone.Builder(Event.SMS_EXPORT, Megaphone.Style.FULLSCREEN)
+        .setOnVisibleListener((megaphone, controller) -> {
+          if (phase.isBlockingUi()) {
+            SmsExportReminderSchedule.setShowPhase3Megaphone(false);
+          }
+          controller.onMegaphoneNavigationRequested(new Intent(context, SmsExportMegaphoneActivity.class), SmsExportMegaphoneActivity.REQUEST_CODE);
+        });
+
+    if (phase.isBlockingUi()) {
+      builder.disableSnooze();
+    }
+
+    return builder.build();
+  }
+*/
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
   public static @NonNull Megaphone buildSetUpYourUsernameMegaphone(@NonNull Context context) {
     return new Megaphone.Builder(Event.SET_UP_YOUR_USERNAME, Megaphone.Style.BASIC)
         .setTitle(R.string.NewWaysToConnectDialogFragment__new_ways_to_connect)

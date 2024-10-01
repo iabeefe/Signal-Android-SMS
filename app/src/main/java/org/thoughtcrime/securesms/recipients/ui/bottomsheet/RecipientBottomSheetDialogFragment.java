@@ -244,13 +244,26 @@ public final class RecipientBottomSheetDialogFragment extends BottomSheetDialogF
       }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+      //boolean isAudioAvailable = (recipient.isRegistered() || SignalStore.misc().getSmsExportPhase().allowSmsFeatures()) &&
+      boolean isAudioAvailable = (recipient.isRegistered()) &&
+=======
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
       boolean isAudioAvailable = recipient.isRegistered() &&
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
       boolean isAudioAvailable = (recipient.isRegistered() || SignalStore.misc().getSmsExportPhase().allowSmsFeatures()) &&
 =======
       //boolean isAudioAvailable = (recipient.isRegistered() || SignalStore.misc().getSmsExportPhase().allowSmsFeatures()) &&
       boolean isAudioAvailable = (recipient.isRegistered()) &&
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
                                  !recipient.isGroup() &&
                                  !recipient.isBlocked() &&
                                  !recipient.isSelf() &&

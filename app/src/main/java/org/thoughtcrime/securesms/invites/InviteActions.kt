@@ -31,8 +31,18 @@ object InviteActions {
     )
     val intent = CommunicationActions.createIntentToShareTextViaShareSheet(inviteText)
 
+<<<<<<< HEAD
+    //if (appendInviteToComposer != null && Util.isDefaultSmsProvider(context) && SignalStore.misc().smsExportPhase.isSmsSupported()) {
+    if (appendInviteToComposer != null && Util.isDefaultSmsProvider(context)) {
+      appendInviteToComposer(inviteText)
+    } else if (recipient.hasSmsAddress()) {
+      launchIntent(
+        CommunicationActions.createIntentToComposeSmsThroughDefaultApp(recipient, inviteText)
+      )
+=======
     if (intent.resolveActivity(context.packageManager) != null) {
       launchIntent(Intent.createChooser(intent, context.getString(R.string.InviteActivity_invite_to_signal)))
+>>>>>>> upstream/main
     } else {
       Toast.makeText(context, R.string.InviteActivity_no_app_to_share_to, Toast.LENGTH_LONG).show()
     }

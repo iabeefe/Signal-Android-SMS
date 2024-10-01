@@ -198,6 +198,7 @@ internal object ConversationOptionsMenu {
 >>>>>>> f04b383b47 (Bumped to upstream version 6.18.0.0-JW.)
           menuInflater.inflate(R.menu.conversation_callable_secure, menu)
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of b6f2d1016b (Bump upstream version to 6.15.3.0-JW)
         } else if (!recipient!!.isReleaseNotes && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
           menuInflater.inflate(R.menu.conversation_callable_insecure, menu)
@@ -206,6 +207,15 @@ internal object ConversationOptionsMenu {
         } else if (!recipient!!.isReleaseNotes) {
           menuInflater.inflate(R.menu.conversation_callable_insecure, menu)
 >>>>>>> b6f2d1016b (Bump upstream version to 6.15.3.0-JW)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+        //} else if (!recipient!!.isReleaseNotes && SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+        } else if (!recipient!!.isReleaseNotes) {
+          menuInflater.inflate(R.menu.conversation_callable_insecure, menu)
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
         }
 <<<<<<< HEAD
       } else if (recipient.isGroup) {

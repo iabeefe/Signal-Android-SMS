@@ -62,6 +62,7 @@ class AdvancedPrivacySettingsViewModel(
     refresh()
   }
 
+<<<<<<< HEAD
   // JW: added
   fun setPushNotificationsViaFCM(enabled: Boolean) {
     SignalStore.account().fcmEnabled = enabled
@@ -266,6 +267,15 @@ class AdvancedPrivacySettingsViewModel(
     refresh()
   }
 
+||||||| 69e1146e2c
+=======
+  // JW: added
+  fun setPushNotificationsViaFCM(enabled: Boolean) {
+    SignalStore.account().fcmEnabled = enabled
+    refresh()
+  }
+
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
   fun refresh() {
     store.update { getState().copy(showProgressSpinner = it.showProgressSpinner) }
   }

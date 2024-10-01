@@ -55,6 +55,7 @@ object Multiselect {
     return parts
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| parent of 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
 
   fun canSendToNonPush(context: Context, multiselectPart: MultiselectPart): Boolean {
@@ -154,4 +155,59 @@ object Multiselect {
     return mmsConstraints.isSatisfied(context, attachment) || mmsConstraints.canResize(attachment)
   }
 >>>>>>> 55894bc674 ( Inital commit. Re-enable SMS sending. Remove SMS export megaphone.)
+||||||| 69e1146e2c
+=======
+<<<<<<< HEAD
+
+  fun canSendToNonPush(context: Context, multiselectPart: MultiselectPart): Boolean {
+    return when (multiselectPart) {
+      is MultiselectPart.Attachments -> canSendAllAttachmentsToNonPush(context, multiselectPart.conversationMessage.messageRecord)
+      is MultiselectPart.Message -> canSendAllAttachmentsToNonPush(context, multiselectPart.conversationMessage.messageRecord)
+      is MultiselectPart.Text -> true
+      is MultiselectPart.Update -> throw AssertionError("Should never get to here.")
+    }
+  }
+
+  /**
+   * Helper function to determine whether a given attachment can be sent via MMS.
+   */
+  fun isMmsSupported(context: Context, mediaUri: Uri, mediaType: String, mediaSize: Long): Boolean {
+    val canReadPhoneState = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
+    //if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context) || !SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+    if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context)) {
+      return false
+    }
+
+    val sendType: MessageSendType = MessageSendType.getFirstForTransport(context, true, MessageSendType.TransportType.SMS)
+
+    val mmsConstraints = MediaConstraints.getMmsMediaConstraints(sendType.simSubscriptionId ?: -1)
+    return mmsConstraints.isSatisfied(context, mediaUri, mediaType, mediaSize) || mmsConstraints.canResize(mediaType)
+  }
+
+  private fun canSendAllAttachmentsToNonPush(context: Context, messageRecord: MessageRecord): Boolean {
+    return if (messageRecord is MmsMessageRecord) {
+      messageRecord.slideDeck.asAttachments().all { isMmsSupported(context, it) }
+    } else {
+      true
+    }
+  }
+
+  /**
+   * Helper function to determine whether a given attachment can be sent via MMS.
+   */
+  private fun isMmsSupported(context: Context, attachment: Attachment): Boolean {
+    val canReadPhoneState = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
+    //if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context) || !SignalStore.misc().smsExportPhase.allowSmsFeatures()) {
+    if (!Util.isDefaultSmsProvider(context) || !canReadPhoneState || !Util.isMmsCapable(context)) {
+      return false
+    }
+
+    val sendType: MessageSendType = MessageSendType.getFirstForTransport(context, true, MessageSendType.TransportType.SMS)
+
+    val mmsConstraints = MediaConstraints.getMmsMediaConstraints(sendType.simSubscriptionId ?: -1)
+    return mmsConstraints.isSatisfied(context, attachment) || mmsConstraints.canResize(attachment)
+  }
+=======
+>>>>>>> upstream/main
+>>>>>>> 94387f59e83f9be48a18536ad0b22f950783b09e
 }
